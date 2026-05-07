@@ -1,117 +1,251 @@
-import { Reveal } from "@/components/Reveal";
+"use client";
+
 import Link from "next/link";
+import { Reveal } from "@/components/Reveal";
+import { motion } from "framer-motion";
+import dynamic from "next/dynamic";
+
+const PeopleThreeScene = dynamic(() => import("@/components/PeopleThreeScene"), { ssr: false });
+
+const bcrSteps = [
+  {
+    num: "01",
+    letter: "B",
+    name: "Belief",
+    desc: "What the founder, board and operating leadership actually hold to be true about people, scale, performance, and risk. Often inconsistent across the room. Always upstream of every other failure.",
+    breakMode: "Belief drift",
+  },
+  {
+    num: "02",
+    letter: "C",
+    name: "Conviction",
+    desc: "The compressed point of view the institution is willing to defend in public, in policy, and in pay. The bridge layer. Where most organisations stop investing — and where the architecture quietly collapses.",
+    breakMode: "Conviction-to-rhythm gap",
+  },
+  {
+    num: "03",
+    letter: "R",
+    name: "Rhythm",
+    desc: "The operating cadence that turns conviction into behaviour — calendars, reviews, decisions, signals. Codified once, run weekly. The rhythm is where culture actually lives.",
+    breakMode: "Rhythm decay",
+  },
+];
+
+const surfaces = [
+  {
+    num: "01",
+    name: "Strategy",
+    desc: "What the business is asking the workforce to do. Sized, sequenced, scenarioed against capital and time.",
+    owner: "CEO + CFO",
+  },
+  {
+    num: "02",
+    name: "Structure",
+    desc: "Org design, role taxonomy, decision rights. The skeleton. Where the strategy actually meets gravity.",
+    owner: "CEO + CHRO",
+  },
+  {
+    num: "03",
+    name: "Systems",
+    desc: "Comp, performance, talent, succession. The mechanics. Where conviction either gets paid for or gets hollowed out.",
+    owner: "CHRO",
+  },
+  {
+    num: "04",
+    name: "Signalling",
+    desc: "What the institution actually rewards, tolerates, and punishes — in public and in private. The truth-test for everything above it.",
+    owner: "CEO + Board",
+  },
+];
 
 export default function PeopleArchitecture() {
   return (
-    <div className="shell">
-      <Reveal>
-        <section className="page-hero">
-          <div className="breadcrumb mb-6">
-            <Link href="/">Home</Link><span className="mx-2 text-[var(--cyan)]">/</span><Link href="/#practices">Practices</Link><span className="mx-2 text-[var(--cyan)]">/</span><span>People Architecture</span>
-          </div>
-          <span className="ill-eyebrow"><span className="num">§PA</span> · The Foundation Practice</span>
-          <h1 className="ill-display mt-6 max-w-[18ch]">The architecture that lets the organisation <em>survive the person</em>.</h1>
-          <p className="text-[18px] leading-[1.55] text-[var(--fg-soft)] mt-6 max-w-[64ch]">People Architecture is the foundation practice. Every other practice — Labour Codes, AI Edge Lab, Family Business — sits on top of it. Without architecture, the rest is intervention without ground.</p>
-        </section>
-      </Reveal>
+    <div className="min-h-screen">
+      <PeopleThreeScene />
 
-      <section className="py-20" id="bcr">
-        <header className="grid grid-cols-1 md:grid-cols-[minmax(180px,240px)_1fr] gap-8 md:gap-16 mb-12">
-          <div className="flex flex-col gap-2">
-            <Reveal><span className="ill-eyebrow"><span className="num">§PA · 02</span> · The BCR framework</span></Reveal>
-            <Reveal delay={0.1}><span className="ill-eyebrow"><span className="dim">Belief → Conviction → Rhythm</span></span></Reveal>
-          </div>
-          <div>
-            <Reveal delay={0.2}><h2 className="ill-display">Three stages. <em>One sequence.</em></h2></Reveal>
-            <Reveal delay={0.3}><p className="ill-lede mt-4">Every engagement diagnoses where the organisation is stuck. The break is almost always at the same place — between Conviction and Rhythm. Belief is loud; rhythm is quiet; conviction is what bridges them.</p></Reveal>
-          </div>
-        </header>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 border-t border-l border-[var(--ink-line)] mt-12">
-          {[
-            {
-              num: "B · Stage 01",
-              name: "<span class='font-serif italic text-[var(--gold)] mr-2'>— </span>Belief",
-              desc: "What the founder, board and operating leadership actually hold to be true about people, scale, performance, and risk. Often inconsistent across the room. Always upstream of every other failure.",
-              break: "Break · belief drift"
-            },
-            {
-              num: "C · Stage 02",
-              name: "<span class='font-serif italic text-[var(--gold)] mr-2'>— </span><em>Conviction</em>",
-              desc: "The compressed point of view the institution is willing to defend in public, in policy, and in pay. The bridge layer. Where most organisations stop investing — and where the architecture quietly collapses.",
-              break: "Break · conviction-to-rhythm gap"
-            },
-            {
-              num: "R · Stage 03",
-              name: "<span class='font-serif italic text-[var(--gold)] mr-2'>— </span>Rhythm",
-              desc: "The operating cadence that turns conviction into behaviour — calendars, reviews, decisions, signals. Codified once, run weekly. The rhythm is where culture actually lives.",
-              break: "Break · rhythm decay"
-            }
-          ].map((step, i) => (
-            <Reveal key={i} delay={i * 0.1}>
-              <div className="border-r border-b border-[var(--ink-line)] p-8 md:p-10 bg-[rgba(11,13,20,0.5)] flex flex-col gap-4 min-h-[280px] relative">
-                <span className="font-mono text-[11px] tracking-widest uppercase text-[var(--gold)]">{step.num}</span>
-                <h3 className="font-serif text-[44px] font-medium leading-none text-[var(--fg)]" dangerouslySetInnerHTML={{ __html: step.name }} />
-                <p className="text-[15px] leading-[1.55] text-[var(--fg-soft)]">{step.desc}</p>
-                <div className="mt-auto pt-4 border-t border-[rgba(255,255,255,0.05)] font-mono text-[10.5px] tracking-widest uppercase text-[var(--accent-2)]">{step.break}</div>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-
-        <Reveal delay={0.4} className="mt-10 max-w-[780px] p-6 bg-[rgba(181,102,58,0.05)] border-l-2 border-[var(--accent-2)]">
-          <div className="font-mono text-[10px] tracking-widest uppercase text-[var(--accent-2)]">The diagnostic</div>
-          <p className="text-[16px] text-[var(--fg-soft)] mt-2">You are not stuck on three things. You are stuck on <em>one</em> — at one of these three stages. The diagnostic finds it. The redesign installs it.</p>
-        </Reveal>
-      </section>
-
-      <section className="bg-[rgba(11,13,20,0.4)] -mx-[32px] px-[32px] py-20 border-y border-[var(--ink-line)]" id="surfaces">
-        <div className="max-w-[1280px] mx-auto">
-          <header className="grid grid-cols-1 md:grid-cols-[minmax(180px,240px)_1fr] gap-8 md:gap-16 mb-12">
-            <div className="flex flex-col gap-2">
-              <Reveal><span className="ill-eyebrow"><span className="num">§PA · 03</span> · The surfaces and their owners</span></Reveal>
-            </div>
-            <div>
-              <Reveal delay={0.2}><h2 className="ill-display">People architecture works across <em>four surfaces</em> — each with a different owner.</h2></Reveal>
-              <Reveal delay={0.3}><p className="ill-lede mt-4">People architecture is not "HR work". It is four distinct surfaces with four distinct owners. Confusion at this layer is why most organisations cannot tell whether their people problem is a strategy, structure, system, or signalling problem.</p></Reveal>
-            </div>
-          </header>
-
-          <div className="grid grid-cols-1 md:grid-cols-4 border-t border-l border-[var(--ink-line)]">
-            {[
-              { name: "Strategy", desc: "What the business is asking the workforce to do. Sized, sequenced, scenarioed against capital and time.", owner: "Owner · CEO + CFO" },
-              { name: "Structure", desc: "Org design, role taxonomy, decision rights. The skeleton. Where the strategy actually meets gravity.", owner: "Owner · CEO + CHRO" },
-              { name: "Systems", desc: "Comp, performance, talent, succession. The mechanics. Where conviction either gets paid for or gets hollowed out.", owner: "Owner · CHRO" },
-              { name: "Signalling", desc: "What the institution actually rewards, tolerates, and punishes — in public and in private. The truth-test for everything above it.", owner: "Owner · CEO + Board" }
-            ].map((surface, i) => (
-              <Reveal key={i} delay={i * 0.1}>
-                <article className="border-r border-b border-[var(--ink-line)] p-8 bg-[rgba(11,13,20,0.5)] flex flex-col gap-4 min-h-[280px]">
-                  <span className="font-serif italic font-medium text-[56px] text-[var(--gold)] leading-[0.85]">{i + 1}</span>
-                  <h4 className="font-serif text-[26px] font-medium leading-[1.05] text-[var(--fg)]">{surface.name}</h4>
-                  <p className="text-[14px] leading-[1.55] text-[var(--fg-soft)]">{surface.desc}</p>
-                  <div className="mt-auto pt-4 border-t border-[rgba(255,255,255,0.05)] font-mono text-[10px] tracking-widest uppercase text-[var(--fg)]">{surface.owner}</div>
-                </article>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="py-24">
-        <div className="max-w-[680px]">
-          <Reveal><span className="ill-eyebrow"><span className="num">§PA · 04</span> · Engagement</span></Reveal>
-          <Reveal delay={0.1}><h2 className="ill-display mt-6">Diagnose. Codify. Redesign. <em>Operate.</em></h2></Reveal>
+      {/* HERO */}
+      <header className="relative min-h-screen flex items-center justify-center bg-transparent pt-20 overflow-hidden">
+        <div className="shell text-center relative z-10">
+          <Reveal>
+            <div className="eyebrow eyebrow--center mb-8 text-[var(--accent)]">AXION&nbsp;&nbsp;·&nbsp;&nbsp;PEOPLE ARCHITECTURE</div>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <h1 className="hero-glow mb-8 drop-shadow-2xl">
+              <span className="block font-serif font-medium text-[clamp(28px,3.5vw,52px)] leading-[1.15] tracking-[-0.01em] text-[var(--fg-2)] mb-2">
+                The architecture that lets the organisation
+              </span>
+              <em className="block font-serif font-medium text-[clamp(28px,3.5vw,52px)] leading-[1.15] tracking-[-0.01em] text-[var(--accent)] italic">
+                survive the person.
+              </em>
+            </h1>
+          </Reveal>
           <Reveal delay={0.2}>
-            <p className="text-[17px] leading-[1.55] text-[var(--fg-soft)] mt-6">
-              A People Architecture engagement runs across all four surfaces and ends with a redesign and an operating handover. Most engagements run 12–16 weeks for the diagnostic and codification, with the operating layer continuing into HROS.
+            <p className="lead mx-auto mb-12 opacity-90 text-[var(--fg-2)] max-w-[52ch]">
+              People Architecture is the foundation practice. Every other practice — Labour Codes, AI Edge Lab, Family Business — sits on top of it.
             </p>
           </Reveal>
-          <Reveal delay={0.3} className="flex flex-wrap gap-4 mt-8">
-            <Link className="ill-btn ill-btn--primary" href="/connect?practice=people-architecture">Begin a Diagnostic <span className="arrow">→</span></Link>
-            <Link className="ill-btn" href="/#practices">Other practices <span className="arrow">→</span></Link>
+          <Reveal delay={0.3}>
+            <div className="flex flex-col items-center gap-10">
+              <Link
+                href="/connect?practice=people-architecture"
+                className="nav-cta scale-125 px-12 py-5 bg-[var(--fg)] text-[var(--bg)] border-none hover:bg-[var(--accent)] hover:text-[var(--bg)] transition-all duration-500 shadow-[0_0_30px_rgba(255,255,255,0.1)]"
+              >
+                Begin a Diagnostic
+              </Link>
+              <a className="kbd-arrow text-[var(--fg-3)] hover:text-[var(--accent)]" href="#bcr">
+                Read the BCR framework
+              </a>
+            </div>
           </Reveal>
         </div>
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(201,168,92,0.03)_0%,transparent_50%)] pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-full h-[40vh] bg-gradient-to-t from-[#06070B] to-transparent pointer-events-none" />
+      </header>
+
+      {/* BCR FRAMEWORK */}
+      <section className="chapter section-dark relative" id="bcr">
+        <div className="shell">
+          <div className="mb-20">
+            <Reveal><span className="eyebrow mb-6 text-[var(--accent)]">The BCR framework</span></Reveal>
+            <Reveal delay={0.1}>
+              <h2 className="h-section">
+                Three stages.<br />
+                <em className="text-[var(--accent)]">One sequence.</em>
+              </h2>
+            </Reveal>
+            <Reveal delay={0.2}>
+              <p className="lead text-[var(--fg-3)] mt-6 max-w-[52ch]">
+                Every engagement diagnoses where the organisation is stuck. The break is almost always between Conviction and Rhythm.
+              </p>
+            </Reveal>
+          </div>
+
+          <div className="flex flex-col">
+            {bcrSteps.map((step, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, x: i % 2 === 0 ? -70 : 70 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-10% 0px" }}
+                transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1], delay: 0.04 }}
+                className="grid grid-cols-1 md:grid-cols-[80px_1fr_1fr_260px] gap-8 md:gap-10 py-12 border-b border-[rgba(255,255,255,0.05)] group items-start hover:bg-[rgba(255,255,255,0.01)] transition-colors px-4 -mx-4"
+              >
+                <div>
+                  <span className="font-serif italic text-[64px] text-[var(--accent)] leading-[0.85] opacity-30 group-hover:opacity-90 transition-opacity duration-500 block">
+                    {step.letter}
+                  </span>
+                </div>
+                <div>
+                  <span className="font-mono text-[10px] tracking-[0.4em] text-[var(--accent)] mb-2 block opacity-60">[ {step.num} ]</span>
+                  <h3 className="font-serif text-[clamp(22px,2.4vw,34px)] font-medium leading-[1.1] text-[var(--fg)] group-hover:text-[var(--accent)] transition-colors duration-500">
+                    {step.name}
+                  </h3>
+                </div>
+                <p className="text-[15px] leading-[1.65] text-[var(--fg-3)]">{step.desc}</p>
+                <div className="p-5 bg-[rgba(255,255,255,0.02)] backdrop-blur-[12px] border border-[rgba(255,255,255,0.06)] hover:border-[rgba(201,168,92,0.25)] transition-colors duration-500 self-start">
+                  <strong className="font-mono text-[10px] tracking-widest uppercase text-[var(--accent)] opacity-60 block mb-2">Break</strong>
+                  <p className="font-mono text-[11px] tracking-wide text-[var(--fg-3)] leading-[1.6]">{step.breakMode}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Diagnostic callout */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-12 p-8 bg-[rgba(255,255,255,0.02)] backdrop-blur-[12px] border border-[rgba(255,255,255,0.06)] border-l-2 border-l-[var(--accent)] max-w-[780px]"
+          >
+            <span className="font-mono text-[10px] tracking-widest uppercase text-[var(--accent)] opacity-60 block mb-3">The diagnostic</span>
+            <p className="text-[16px] text-[var(--fg-3)] leading-relaxed">
+              You are not stuck on three things. You are stuck on <em className="text-[var(--fg)]">one</em> — at one of these three stages. The diagnostic finds it. The redesign installs it.
+            </p>
+          </motion.div>
+        </div>
       </section>
+
+      {/* FOUR SURFACES */}
+      <section className="chapter section-deep relative" id="surfaces">
+        <div className="shell">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-20 items-start">
+            <div className="lg:sticky lg:top-32 h-fit">
+              <Reveal><span className="eyebrow mb-6 text-[var(--accent)]">The surfaces</span></Reveal>
+              <Reveal delay={0.1}>
+                <h2 className="h-section mb-8">
+                  Four surfaces.<br />
+                  <em className="text-[var(--accent)]">Four owners.</em>
+                </h2>
+              </Reveal>
+              <Reveal delay={0.2}>
+                <p className="body-text text-[var(--fg-3)]">
+                  People architecture is not "HR work". It is four distinct surfaces with four distinct owners. Confusion at this layer is why most organisations cannot tell whether their people problem is a strategy, structure, system, or signalling problem.
+                </p>
+              </Reveal>
+            </div>
+
+            <div className="flex flex-col border-t border-[rgba(255,255,255,0.05)]">
+              {surfaces.map((surface, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, x: i % 2 === 0 ? -60 : 60 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, margin: "-10% 0px" }}
+                  transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1], delay: i * 0.08 }}
+                  className="py-10 border-b border-[rgba(255,255,255,0.05)] group hover:bg-[rgba(255,255,255,0.01)] transition-colors px-4 -mx-4"
+                >
+                  <div className="flex items-start gap-8">
+                    <span className="font-serif italic text-[48px] text-[var(--accent)] leading-[0.85] opacity-25 group-hover:opacity-80 transition-opacity duration-500 shrink-0">{i + 1}</span>
+                    <div>
+                      <h3 className="font-serif text-[clamp(20px,2.2vw,30px)] leading-[1.15] text-[var(--fg)] mb-3 group-hover:text-[var(--accent)] transition-colors duration-500">
+                        {surface.name}
+                      </h3>
+                      <p className="text-[15px] leading-[1.65] text-[var(--fg-3)] mb-3">{surface.desc}</p>
+                      <span className="font-mono text-[10px] tracking-widest uppercase text-[var(--accent)] opacity-50">Owner · {surface.owner}</span>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ENGAGEMENT — centered with BCR recap cards */}
+      <section className="chapter section-dark relative overflow-hidden">
+        <div className="shell">
+          <div className="max-w-[720px] mx-auto text-center">
+            <Reveal>
+              <span className="eyebrow eyebrow--center mb-6 text-[var(--accent)]">Engagement</span>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <h2 className="h-section mb-8">
+                Diagnose. Codify.<br />
+                <em className="text-[var(--accent)]">Redesign. Operate.</em>
+              </h2>
+            </Reveal>
+            <Reveal delay={0.2}>
+              <p className="lead text-[var(--fg-3)] mb-12 mx-auto">
+                A People Architecture engagement runs across all four surfaces and ends with a redesign and an operating handover. Most engagements run 12–16 weeks for the diagnostic and codification.
+              </p>
+            </Reveal>
+            <Reveal delay={0.3}>
+              <div className="flex flex-wrap justify-center gap-4 mb-20">
+                <Link
+                  href="/connect?practice=people-architecture"
+                  className="nav-cta bg-[var(--fg)] text-[var(--bg)] border-none hover:bg-[var(--accent)] transition-all duration-500"
+                >
+                  Begin a Diagnostic
+                </Link>
+                <Link href="/#practices" className="nav-cta">Other practices</Link>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(201,168,92,0.04)_0%,transparent_70%)] pointer-events-none" />
+      </section>
+
     </div>
   );
 }
