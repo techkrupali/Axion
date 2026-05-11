@@ -20,7 +20,7 @@ export default function Home() {
 
           <Reveal delay={0.1}>
             <h1 className="h-display hero-glow leading-[0.95] mb-8 drop-shadow-2xl">
-              From ambiguity<br />
+              From <s className="opacity-50">ambiguity</s><br />
               to <em className="text-[var(--accent)]">architecture.</em>
             </h1>
           </Reveal>
@@ -684,7 +684,7 @@ function Footer() {
           <div className="md:col-span-1">
             <Link className="brand text-[24px] mb-6 block" href="/">Ax<em>ion</em><span className="domain">INDEX</span></Link>
             <p className="text-[14px] text-[var(--fg-4)] leading-relaxed max-w-[20ch]">
-              From ambiguity<br />to architecture.
+              From <s className="opacity-50">ambiguity</s><br />to architecture.
             </p>
           </div>
           <div className="flex flex-col gap-6">
