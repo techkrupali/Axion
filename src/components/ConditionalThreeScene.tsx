@@ -7,6 +7,6 @@ const ThreeScene = dynamic(() => import("@/components/ThreeScene"), { ssr: false
 
 export default function ConditionalThreeScene() {
   const pathname = usePathname();
-  if (pathname === "/about" || pathname === "/expertise/ai-edge" || pathname === "/expertise/family" || pathname === "/expertise/people" || pathname === "/connect" || pathname === "/founder" || pathname === "/expertise/labour") return null;
+  if (pathname === "/" || pathname === "/about" || pathname === "/expertise/ai-edge" || pathname === "/expertise/family" || pathname === "/expertise/people" || pathname === "/connect" || pathname === "/founder" || pathname === "/expertise/labour") return null;
   return <ThreeScene />;
 }

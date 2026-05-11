@@ -98,7 +98,7 @@ export default function PeopleArchitecture() {
             </div>
           </Reveal>
         </div>
-        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(201,168,92,0.03)_0%,transparent_50%)] pointer-events-none" />
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(160,160,160,0.03)_0%,transparent_50%)] pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-full h-[40vh] bg-gradient-to-t from-[#06070B] to-transparent pointer-events-none" />
       </header>
 
@@ -142,7 +142,7 @@ export default function PeopleArchitecture() {
                   </h3>
                 </div>
                 <p className="text-[15px] leading-[1.65] text-[var(--fg-3)]">{step.desc}</p>
-                <div className="p-5 bg-[rgba(255,255,255,0.02)] backdrop-blur-[12px] border border-[rgba(255,255,255,0.06)] hover:border-[rgba(201,168,92,0.25)] transition-colors duration-500 self-start">
+                <div className="p-5 bg-[rgba(255,255,255,0.02)] backdrop-blur-[12px] border border-[rgba(255,255,255,0.06)] hover:border-[rgba(160,160,160,0.25)] transition-colors duration-500 self-start">
                   <strong className="font-mono text-[10px] tracking-widest uppercase text-[var(--accent)] opacity-60 block mb-2">Break</strong>
                   <p className="font-mono text-[11px] tracking-wide text-[var(--fg-3)] leading-[1.6]">{step.breakMode}</p>
                 </div>
@@ -243,7 +243,7 @@ export default function PeopleArchitecture() {
             </Reveal>
           </div>
         </div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(201,168,92,0.04)_0%,transparent_70%)] pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(160,160,160,0.04)_0%,transparent_70%)] pointer-events-none" />
       </section>
 
     </div>

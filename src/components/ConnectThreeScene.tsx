@@ -55,7 +55,7 @@ function SignalWaves() {
             <bufferAttribute attach="attributes-position" args={[wave.pos.slice(), 3]} />
           </bufferGeometry>
           <pointsMaterial
-            color="#C9A85C"
+            color="#A0A0A0"
             size={i < 3 ? 0.05 : 0.03}
             sizeAttenuation
             transparent
@@ -90,7 +90,7 @@ function CenterPulse() {
       <bufferGeometry>
         <bufferAttribute attach="attributes-position" args={[positions, 3]} />
       </bufferGeometry>
-      <pointsMaterial color="#C9A85C" size={0.18} sizeAttenuation transparent opacity={0.9} blending={THREE.AdditiveBlending} depthWrite={false} />
+      <pointsMaterial color="#A0A0A0" size={0.18} sizeAttenuation transparent opacity={0.9} blending={THREE.AdditiveBlending} depthWrite={false} />
     </points>
   );
 }
@@ -131,7 +131,7 @@ function FallingDots() {
       <bufferGeometry>
         <bufferAttribute attach="attributes-position" args={[positions, 3]} />
       </bufferGeometry>
-      <pointsMaterial color="#C9A85C" size={0.03} sizeAttenuation transparent opacity={0.28} blending={THREE.AdditiveBlending} depthWrite={false} />
+      <pointsMaterial color="#A0A0A0" size={0.03} sizeAttenuation transparent opacity={0.28} blending={THREE.AdditiveBlending} depthWrite={false} />
     </points>
   );
 }
@@ -140,8 +140,8 @@ function Scene() {
   return (
     <>
       <ambientLight intensity={0.1} />
-      <pointLight position={[0, 5, 5]} intensity={1.0} color="#C9A85C" />
-      <pointLight position={[-5, -4, 3]} intensity={0.4} color="#B5663A" />
+      <pointLight position={[0, 5, 5]} intensity={1.0} color="#A0A0A0" />
+      <pointLight position={[-5, -4, 3]} intensity={0.4} color="#707070" />
       <Suspense fallback={null}>
         <SignalWaves />
         <CenterPulse />

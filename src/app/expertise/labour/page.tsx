@@ -112,7 +112,7 @@ export default function LabourCodes() {
             </div>
           </Reveal>
         </div>
-        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(201,168,92,0.03)_0%,transparent_50%)] pointer-events-none" />
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(160,160,160,0.03)_0%,transparent_50%)] pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-full h-[40vh] bg-gradient-to-t from-[#06070B] to-transparent pointer-events-none" />
       </header>
 
@@ -127,7 +127,7 @@ export default function LabourCodes() {
                 The better question: where does it hit first — cost · classification · credibility · control?
               </p>
             </motion.div>
-            <motion.div initial={{ opacity: 0, x: 60 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: "-10% 0px" }} transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1], delay: 0.15 }} className="p-10 bg-[rgba(255,255,255,0.02)] backdrop-blur-[12px] border border-[rgba(255,255,255,0.06)] hover:border-[rgba(201,168,92,0.25)] transition-colors duration-500">
+            <motion.div initial={{ opacity: 0, x: 60 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: "-10% 0px" }} transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1], delay: 0.15 }} className="p-10 bg-[rgba(255,255,255,0.02)] backdrop-blur-[12px] border border-[rgba(255,255,255,0.06)] hover:border-[rgba(160,160,160,0.25)] transition-colors duration-500">
               <span className="font-mono text-[10px] tracking-widest uppercase text-[var(--accent)] opacity-60 block mb-6">Four pressure points</span>
               {["Cost", "Classification", "Credibility", "Control"].map((p, i) => (
                 <div key={i} className="flex items-center gap-4 py-3 border-b border-[rgba(255,255,255,0.05)] last:border-0">
@@ -192,12 +192,12 @@ export default function LabourCodes() {
                     }}
                     className={`relative flex-1 min-w-[300px] max-w-[340px] h-[480px] p-8 rounded-[24px] border transition-all duration-500 flex flex-col ${
                       isActive 
-                        ? "border-[var(--accent)] bg-[rgba(201,168,92,0.03)] shadow-[0_0_40px_rgba(201,168,92,0.05)]" 
+                        ? "border-[var(--accent)] bg-[rgba(160,160,160,0.03)] shadow-[0_0_40px_rgba(160,160,160,0.05)]" 
                         : "border-[rgba(255,255,255,0.05)] bg-[rgba(255,255,255,0.01)] scale-90 cursor-pointer hover:border-[rgba(255,255,255,0.2)]"
                     }`}
                   >
                     <div className="flex justify-between items-start mb-10">
-                      <span className="px-3 py-1 bg-[rgba(201,168,92,0.1)] text-[var(--accent)] font-mono text-[9px] tracking-widest uppercase rounded-sm border border-[rgba(201,168,92,0.2)]">
+                      <span className="px-3 py-1 bg-[rgba(160,160,160,0.1)] text-[var(--accent)] font-mono text-[9px] tracking-widest uppercase rounded-sm border border-[rgba(160,160,160,0.2)]">
                         {cls.meta[0].split(" ")[0]}
                       </span>
                       {isActive && (
@@ -399,7 +399,7 @@ export default function LabourCodes() {
             </Reveal>
           </div>
         </div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(201,168,92,0.04)_0%,transparent_70%)] pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(160,160,160,0.04)_0%,transparent_70%)] pointer-events-none" />
       </section>
 
       {/* SOURCES */}

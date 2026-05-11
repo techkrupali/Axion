@@ -99,7 +99,7 @@ export default function AIEdgeLab() {
           </Reveal>
         </div>
 
-        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(201,168,92,0.03)_0%,transparent_50%)] pointer-events-none" />
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(160,160,160,0.03)_0%,transparent_50%)] pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-full h-[40vh] bg-gradient-to-t from-[#06070B] to-transparent pointer-events-none" />
       </header>
 
@@ -277,7 +277,7 @@ export default function AIEdgeLab() {
                   </h3>
                   <p className="text-[16px] leading-[1.65] text-[var(--fg-3)] max-w-[52ch]">{law.body}</p>
                 </div>
-                <div className="self-start p-6 font-mono text-[11px] tracking-widest uppercase leading-[1.6] bg-[rgba(255,255,255,0.03)] backdrop-blur-[12px] border border-[rgba(255,255,255,0.08)] hover:border-[rgba(201,168,92,0.3)] transition-colors duration-500">
+                <div className="self-start p-6 font-mono text-[11px] tracking-widest uppercase leading-[1.6] bg-[rgba(255,255,255,0.03)] backdrop-blur-[12px] border border-[rgba(255,255,255,0.08)] hover:border-[rgba(160,160,160,0.3)] transition-colors duration-500">
                   <strong className="block mb-2 font-semibold text-[var(--accent)] opacity-70">Verdict</strong>
                   <span className="text-[var(--fg-2)]">{law.verdict}</span>
                 </div>
@@ -360,7 +360,7 @@ export default function AIEdgeLab() {
             </Reveal>
           </div>
         </div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(201,168,92,0.04)_0%,transparent_70%)] pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(160,160,160,0.04)_0%,transparent_70%)] pointer-events-none" />
       </section>
 
     </div>

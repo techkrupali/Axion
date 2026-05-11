@@ -111,7 +111,7 @@ function NeuralMesh() {
           />
         </bufferGeometry>
         <lineBasicMaterial
-          color="#C9A85C"
+          color="#A0A0A0"
           transparent
           opacity={0.1}
           blending={THREE.AdditiveBlending}
@@ -129,7 +129,7 @@ function NeuralMesh() {
         </bufferGeometry>
         <pointsMaterial
           ref={nodeMatRef}
-          color="#C9A85C"
+          color="#A0A0A0"
           size={0.06}
           sizeAttenuation
           transparent
@@ -177,7 +177,7 @@ function SignalPulses() {
         <bufferAttribute attach="attributes-position" args={[positions, 3]} />
       </bufferGeometry>
       <pointsMaterial
-        color="#B5663A"
+        color="#707070"
         size={0.018}
         sizeAttenuation
         transparent
@@ -193,8 +193,8 @@ function Scene() {
   return (
     <>
       <ambientLight intensity={0.1} />
-      <pointLight position={[5, 5, 5]} intensity={0.8} color="#C9A85C" />
-      <pointLight position={[-5, -5, 3]} intensity={0.4} color="#B5663A" />
+      <pointLight position={[5, 5, 5]} intensity={0.8} color="#A0A0A0" />
+      <pointLight position={[-5, -5, 3]} intensity={0.4} color="#707070" />
       <Suspense fallback={null}>
         <NeuralMesh />
         <SignalPulses />

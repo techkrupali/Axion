@@ -43,7 +43,7 @@ export default function Home() {
         </div>
         
         {/* Animated gradients for depth */}
-        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(201,168,92,0.03)_0%,transparent_50%)] pointer-events-none" />
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(160,160,160,0.03)_0%,transparent_50%)] pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-full h-[40vh] bg-gradient-to-t from-[#06070B] to-transparent pointer-events-none" />
       </header>
 
@@ -150,7 +150,7 @@ export default function Home() {
               </div>
               
               {[
-                { title: "Where the system is breaking", step: "01", icon: "DIAGNOSE", bg: "linear-gradient(180deg, rgba(201,168,92,0.08) 0%, transparent 100%)" },
+                { title: "Where the system is breaking", step: "01", icon: "DIAGNOSE", bg: "linear-gradient(180deg, rgba(160,160,160,0.08) 0%, transparent 100%)" },
                 { title: "What is holding it together artificially", step: "02", icon: "CODIFY", bg: "linear-gradient(180deg, rgba(56,225,255,0.04) 0%, transparent 100%)" },
                 { title: "What will fail next", step: "03", icon: "PREDICT", bg: "linear-gradient(180deg, rgba(255,61,138,0.04) 0%, transparent 100%)" },
                 { title: "Then we redesign it so it holds", step: "04", icon: "INSTALL", bg: "linear-gradient(180deg, rgba(255,255,255,0.04) 0%, transparent 100%)" }
@@ -232,7 +232,7 @@ export default function Home() {
         </div>
 
         {/* Abstract background detail */}
-        <div className="absolute left-[-5%] bottom-[-10%] w-[40%] aspect-square bg-[radial-gradient(circle,rgba(201,168,92,0.03)_0%,transparent_70%)] pointer-events-none" />
+        <div className="absolute left-[-5%] bottom-[-10%] w-[40%] aspect-square bg-[radial-gradient(circle,rgba(160,160,160,0.03)_0%,transparent_70%)] pointer-events-none" />
       </section>
 
       {/* BELIEF TO SYSTEM SECTION - Unique Sequential Flow */}
@@ -373,7 +373,7 @@ export default function Home() {
                   onMouseEnter={() => setActivePractice(i)}
                   className={`relative overflow-hidden cursor-pointer rounded-[32px] border transition-colors duration-500 ${
                     isActive 
-                      ? "flex-[3] bg-[var(--bg-1)] border-[rgba(201,168,92,0.3)] shadow-[0_30px_60px_rgba(0,0,0,0.5)]" 
+                      ? "flex-[3] bg-[var(--bg-1)] border-[rgba(160,160,160,0.3)] shadow-[0_30px_60px_rgba(0,0,0,0.5)]" 
                       : "flex-1 bg-[rgba(14,17,23,0.4)] border-[var(--line)] hover:border-[rgba(255,255,255,0.15)]"
                   }`}
                   layout
@@ -449,7 +449,7 @@ export default function Home() {
                     <motion.div 
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
-                      className="absolute bottom-[-10%] right-[-5%] w-[60%] aspect-square bg-[radial-gradient(circle,rgba(201,168,92,0.08)_0%,transparent_70%)] pointer-events-none"
+                      className="absolute bottom-[-10%] right-[-5%] w-[60%] aspect-square bg-[radial-gradient(circle,rgba(160,160,160,0.08)_0%,transparent_70%)] pointer-events-none"
                     />
                   )}
                 </motion.div>
@@ -519,7 +519,7 @@ export default function Home() {
         </div>
 
         {/* Background Detail */}
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] aspect-square bg-[radial-gradient(circle,rgba(201,168,92,0.03)_0%,transparent_70%)] pointer-events-none" />
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] aspect-square bg-[radial-gradient(circle,rgba(160,160,160,0.03)_0%,transparent_70%)] pointer-events-none" />
       </section>
 
       {/* ROLES SECTION - What this changes */}
@@ -577,7 +577,7 @@ export default function Home() {
         </div>
         
         {/* Abstract background detail */}
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(201,168,92,0.03)_0%,transparent_70%)] pointer-events-none" />
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(160,160,160,0.03)_0%,transparent_70%)] pointer-events-none" />
       </section>
 
       {/* HELD SECTION - Case Studies */}
@@ -668,7 +668,7 @@ export default function Home() {
         </div>
         
         {/* Animated background glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[radial-gradient(circle,rgba(201,168,92,0.05)_0%,transparent_70%)] pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[radial-gradient(circle,rgba(160,160,160,0.05)_0%,transparent_70%)] pointer-events-none" />
       </section>
       
       <Footer />
