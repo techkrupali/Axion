@@ -10,7 +10,8 @@ import {
   LogOut, 
   BarChart3, 
   Shield,
-  CreditCard
+  CreditCard,
+  Package
 } from "lucide-react";
 import { signOut } from "next-auth/react";
 
@@ -44,8 +45,14 @@ export function Sidebar() {
         <NavItem 
           href="/admin/subscriptions" 
           icon={<CreditCard className="w-5 h-5" />} 
-          label="Subscriptions" 
+          label="Subscribers" 
           active={pathname === "/admin/subscriptions"} 
+        />
+        <NavItem 
+          href="/admin/subscription-plans" 
+          icon={<Package className="w-5 h-5" />} 
+          label="Plan Tiers" 
+          active={pathname === "/admin/subscription-plans"} 
         />
         <NavItem 
           href="/admin/analytics" 
