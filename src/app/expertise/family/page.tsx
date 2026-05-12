@@ -70,10 +70,10 @@ export default function FamilyBusiness() {
           </Reveal>
           <Reveal delay={0.1}>
             <h1 className="hero-glow mb-8 drop-shadow-2xl">
-              <span className="block font-serif font-medium text-[clamp(40px,4vw,70px)] leading-[1.15] tracking-[-0.01em] text-[var(--fg-2)] mb-2">
+              <span className="block font-serif font-medium text-[clamp(28px,3.5vw,52px)] leading-[1.15] tracking-[-0.01em] text-[var(--fg-2)] mb-2">
                 Family enterprises don&apos;t fail at strategy.
               </span>
-              <em className="block font-serif font-medium text-[clamp(50px,5vw,80px)] leading-[1.15] tracking-[-0.01em] text-[var(--accent)] italic">
+              <em className="block font-serif font-medium text-[clamp(28px,3.5vw,52px)] leading-[1.15] tracking-[-0.01em] text-[var(--accent)] italic">
                 They fail at architecture.
               </em>
             </h1>

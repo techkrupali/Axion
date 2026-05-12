@@ -61,7 +61,7 @@ export default function About() {
           </Reveal>
 
           <Reveal delay={0.1}>
-            <h1 className="h-display hero-glow leading-[0.95] mb-8 drop-shadow-2xl">
+            <h1 className="h-display hero-glow text-[clamp(28px,3.5vw,52px)] leading-[0.95] mb-8 drop-shadow-2xl">
               The patterns that let<br />
               organisations <em className="text-[var(--accent)]">survive the person.</em>
             </h1>

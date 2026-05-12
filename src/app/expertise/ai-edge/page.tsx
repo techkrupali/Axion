@@ -73,7 +73,7 @@ export default function AIEdgeLab() {
             <div className="eyebrow eyebrow--center mb-8 text-[var(--accent)]">AXION&nbsp;&nbsp;·&nbsp;&nbsp;AI EDGE LAB</div>
           </Reveal>
           <Reveal delay={0.1}>
-            <h1 className="h-display hero-glow leading-[0.95] mb-8 drop-shadow-2xl">
+            <h1 className="h-display hero-glow text-[clamp(28px,3.5vw,52px)] leading-[0.95] mb-8 drop-shadow-2xl">
               AI doesn't disrupt jobs.<br />
               <em className="text-[var(--accent)]">It disrupts judgment.</em>
             </h1>
