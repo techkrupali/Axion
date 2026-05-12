@@ -42,12 +42,12 @@ export function Sidebar() {
           label="Users" 
           active={pathname === "/admin/users"} 
         />
-        <NavItem 
+        {/* <NavItem 
           href="/admin/subscriptions" 
           icon={<CreditCard className="w-5 h-5" />} 
           label="Subscribers" 
           active={pathname === "/admin/subscriptions"} 
-        />
+        /> */}
         <NavItem 
           href="/admin/subscription-plans" 
           icon={<Package className="w-5 h-5" />} 
