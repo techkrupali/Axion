@@ -12,7 +12,7 @@ const Navbar = () => {
   const pathname = usePathname();
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 60);
+    const handleScroll = () => setIsScrolled(window.scrollY > 10);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -27,10 +27,8 @@ const Navbar = () => {
   }
 
   const expertiseLinks = [
-    { name: "Labour Codes", href: "/expertise/labour", desc: "Cost · Classification · Compliance" },
-    { name: "AI Edge Lab", href: "/expertise/ai-edge", desc: "Judgment · Architecture · Governance" },
-    { name: "Family Business", href: "/expertise/family", desc: "Ownership · Succession · Institution" },
     { name: "People Architecture", href: "/expertise/people", desc: "BCR · Structure · Signalling" },
+    { name: "AI Edge Lab", href: "/expertise/ai-edge", desc: "Judgment · Architecture · Governance" },
   ];
 
   return (
@@ -63,7 +61,7 @@ const Navbar = () => {
                 : "text-[var(--fg-3)] hover:text-[var(--fg)]"
             }`}
           >
-            Expertise
+            Practice Areas
             <motion.div
               animate={{ rotate: isExpertiseOpen ? 180 : 0 }}
               transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
@@ -106,10 +104,13 @@ const Navbar = () => {
           </AnimatePresence>
         </div>
 
+        <NavLink href="/expertise/labour" label="Labour Codes" active={pathname === "/expertise/labour"} />
+        <NavLink href="/expertise/family" label="Family Business" active={pathname === "/expertise/family"} />
         <NavLink href="/founder" label="Founder" active={pathname === "/founder"} />
+        <NavLink href="/research" label="Research & Journals" active={pathname === "/research"} />
 
         <Link href="/connect" className="nav-cta">
-          Connect
+          Reach us
         </Link>
 
         <Link

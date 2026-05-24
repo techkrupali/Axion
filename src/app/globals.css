@@ -152,16 +152,18 @@ body::before {
   /* ── Navbar ── */
   .nav {
     @apply fixed top-0 left-0 right-0 z-[80] px-8 py-5 flex items-center justify-between;
-    transition: all 0.4s var(--ease);
+    transition: all 0.5s var(--ease);
     background: transparent;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.35);
   }
   .nav.is-scrolled {
-    background: rgba(8, 10, 15, 0.82);
-    backdrop-filter: blur(24px) saturate(160%);
-    -webkit-backdrop-filter: blur(24px) saturate(160%);
-    border-bottom: 1px solid var(--line);
-    padding-top: 16px;
-    padding-bottom: 16px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(32px) saturate(160%);
+    -webkit-backdrop-filter: blur(32px) saturate(160%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.06);
+    padding-top: 14px;
+    padding-bottom: 14px;
   }
 
   /* ── Brand ── */
@@ -189,10 +191,11 @@ body::before {
   /* ── Dropdown ── */
   .nav-dropdown {
     @apply absolute top-full left-0 mt-3 min-w-[240px] p-2 flex flex-col gap-1 z-[90];
-    background: rgba(8, 10, 15, 0.95);
-    backdrop-filter: blur(28px);
-    border: 1px solid var(--line-strong);
-    box-shadow: 0 24px 48px rgba(0,0,0,0.6), 0 0 0 1px rgba(201,168,76,0.05);
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(32px) saturate(140%);
+    -webkit-backdrop-filter: blur(32px) saturate(140%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 24px 48px rgba(0,0,0,0.35), 0 0 0 1px rgba(201,168,76,0.04);
   }
   .nav-dropdown-item {
     @apply px-4 py-3 text-[10.5px] font-mono tracking-[0.2em] uppercase text-[var(--fg-3)] flex items-center justify-between;

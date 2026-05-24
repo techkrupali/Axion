@@ -23,6 +23,120 @@ export default function Founder() {
   return (
     <div className="min-h-screen">
 
+      {/* BUILT BY A PRACTITIONER */}
+      <section className="chapter section-deep relative" id="built-by">
+        <div className="shell">
+          <div className="mb-12">
+            <Reveal>
+              <span className="eyebrow mb-4 text-[var(--accent)]">04 — FOUNDER</span>
+            </Reveal>
+            <Reveal delay={0.08}>
+              <h2 className="font-serif font-normal leading-[1.1] tracking-[-0.02em] text-[var(--fg)]"
+                style={{ fontSize: "clamp(28px,3.5vw,52px)" }}>
+                Built by a{" "}
+                <em className="italic" style={{ color: "var(--accent)" }}>practitioner</em>
+              </h2>
+            </Reveal>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-[220px_1fr] gap-10 items-start">
+
+            {/* Photo placeholder card */}
+            <Reveal delay={0.1}>
+              <div
+                className="relative flex items-end justify-center"
+                style={{
+                  aspectRatio: "3 / 4",
+                  background: "rgba(18,18,18,0.8)",
+                  border: "1px solid rgba(255,255,255,0.08)",
+                }}
+              >
+                <span
+                  className="font-jetbrains tracking-[0.25em] uppercase mb-4 text-center block"
+                  style={{ fontSize: "9px", color: "rgba(201,168,76,0.45)" }}
+                >
+                  NITIN NAHATA
+                </span>
+              </div>
+            </Reveal>
+
+            {/* Details */}
+            <Reveal delay={0.15}>
+              <div>
+                {/* Name */}
+                <h3
+                  className="font-serif font-normal text-[var(--fg)] mb-2"
+                  style={{ fontSize: "clamp(22px,2.4vw,34px)" }}
+                >
+                  Nitin Nahata
+                </h3>
+
+                {/* Role tags */}
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-6">
+                  {["FOUNDER, AXION INDEX", "GROUP CHRO, GAMESKRAFT"].map((tag, i) => (
+                    <span key={i} className="font-jetbrains tracking-[0.2em] uppercase"
+                      style={{ fontSize: "9px", color: "var(--accent)" }}>
+                      {tag}
+                      {i < 1 && <span className="ml-3" style={{ color: "rgba(201,168,76,0.3)" }}>·</span>}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Bio paragraphs */}
+                <p
+                  className="font-sans font-normal leading-[1.7] mb-5"
+                  style={{ fontSize: "clamp(13px,1.1vw,15px)", color: "rgba(200,200,200,0.6)", maxWidth: "60ch" }}
+                >
+                  Two decades building people architecture across startups and enterprises. Currently Group CHRO at Gameskraft, leading workforce strategy for one of India&apos;s largest gaming companies.
+                </p>
+                <p
+                  className="font-sans font-normal leading-[1.7] mb-8"
+                  style={{ fontSize: "clamp(13px,1.1vw,15px)", color: "rgba(200,200,200,0.6)", maxWidth: "60ch" }}
+                >
+                  Axion Index is the codification of a simple belief: workforce decisions are board-level governance matters, not HR administrative tasks. The tools organisations need should make them self-sufficient, not consultant-dependent.
+                </p>
+
+                {/* CTA buttons */}
+                <div className="flex flex-wrap gap-3">
+                  <motion.a
+                    href="https://linkedin.com/in/nitin-nahata"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ borderColor: "rgba(201,168,76,0.5)", color: "var(--accent)" }}
+                    className="inline-flex items-center gap-2 px-4 py-2 font-jetbrains text-[9px] tracking-[0.22em] uppercase text-[var(--fg-3)]"
+                    style={{
+                      border: "1px solid rgba(255,255,255,0.12)",
+                      background: "rgba(255,255,255,0.02)",
+                      transition: "all 0.3s ease",
+                    }}
+                  >
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+                    </svg>
+                    LinkedIn
+                  </motion.a>
+                  <motion.a
+                    href="mailto:nitin@axionindex.com"
+                    whileHover={{ borderColor: "rgba(201,168,76,0.5)", color: "var(--accent)" }}
+                    className="inline-flex items-center gap-2 px-4 py-2 font-jetbrains text-[9px] tracking-[0.22em] uppercase text-[var(--fg-3)]"
+                    style={{
+                      border: "1px solid rgba(255,255,255,0.12)",
+                      background: "rgba(255,255,255,0.02)",
+                      transition: "all 0.3s ease",
+                    }}
+                  >
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                    </svg>
+                    Email
+                  </motion.a>
+                </div>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
       {/* HERO */}
       <header className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
