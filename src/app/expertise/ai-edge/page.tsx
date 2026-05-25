@@ -898,23 +898,23 @@ export default function AIEdgeLab() {
           {/* CTA bottom */}
           <Reveal delay={0.3}>
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
-              <p
-                className="font-mono text-[var(--fg-3)] tracking-[0.15em] uppercase"
-                style={{ fontSize: "clamp(10px,0.9vw,12px)" }}
-              >
-                Opening soon. Follow for early access.
-              </p>
               <motion.a
-                href="#"
-                whileHover={{ borderColor: "rgba(201,168,76,0.6)", color: "var(--accent)" }}
-                className="font-mono text-[10.5px] tracking-[0.22em] uppercase text-[var(--fg)] inline-flex items-center gap-3 px-6 py-3"
+                href="/expertise/ai-edge/diagnostic"
+                whileHover={{ borderColor: "rgba(201,168,76,0.8)" }}
+                className="inline-flex items-center gap-3 px-8 py-4 font-jetbrains text-[10.5px] tracking-[0.22em] uppercase text-[#080A0F] font-semibold"
                 style={{
-                  border: "1px solid rgba(255,255,255,0.15)",
+                  background: "var(--accent)",
                   transition: "all 0.3s ease",
                 }}
               >
-                Follow Axion Index →
+                Start Your Diagnostic →
               </motion.a>
+              <p
+                className="font-mono text-[var(--fg-4)] tracking-[0.15em] uppercase"
+                style={{ fontSize: "clamp(10px,0.9vw,12px)" }}
+              >
+                Free · 4–6 minutes · Instant results
+              </p>
             </div>
           </Reveal>
         </div>

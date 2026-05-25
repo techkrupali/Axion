@@ -23,176 +23,340 @@ export default function Founder() {
   return (
     <div className="min-h-screen">
 
-      {/* BUILT BY A PRACTITIONER */}
-      <section className="chapter section-deep relative" id="built-by">
-        <div className="shell">
-          <div className="mb-12">
-            <Reveal>
-              <span className="eyebrow mb-4 text-[var(--accent)]">04 — FOUNDER</span>
-            </Reveal>
-            <Reveal delay={0.08}>
-              <h2 className="font-serif font-normal leading-[1.1] tracking-[-0.02em] text-[var(--fg)]"
-                style={{ fontSize: "clamp(28px,3.5vw,52px)" }}>
-                Built by a{" "}
-                <em className="italic" style={{ color: "var(--accent)" }}>practitioner</em>
-              </h2>
-            </Reveal>
+
+      {/* ══════════════════════════════════════════════════════════════════
+          HERO — The Making of the Operating Architect
+      ══════════════════════════════════════════════════════════════════ */}
+      <header
+        className="relative min-h-screen flex items-stretch overflow-hidden"
+        style={{ background: "#080808" }}
+      >
+        {/* LEFT — full-height B&W photo */}
+        <div className="hidden md:block w-[42%] lg:w-[45%] relative shrink-0">
+          <div
+            className="absolute inset-0"
+            style={{
+              background: "linear-gradient(to right, #080808 0%, transparent 18%), linear-gradient(to left, #080808 0%, transparent 12%)",
+              zIndex: 2,
+            }}
+          />
+          {/* Photo placeholder — replace src with real image */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background: "linear-gradient(160deg, #1a1a1a 0%, #0a0a0a 100%)",
+            }}
+          >
+            <img
+              src="/nitishpic.png"
+              alt="Nitin Nahata"
+              className="w-full h-full object-cover object-top"
+              style={{ filter: "grayscale(100%)" }}
+            />
           </div>
+        </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-[220px_1fr] gap-10 items-start">
+        {/* RIGHT — content */}
+        <div
+          className="flex-1 flex flex-col justify-center px-8 sm:px-12 lg:px-16 relative z-10"
+          style={{ paddingTop: "clamp(100px,14vh,160px)", paddingBottom: "clamp(60px,8vh,100px)" }}
+        >
+          {/* Name label */}
+          <Reveal>
+            <span
+              className="font-jetbrains tracking-[0.35em] uppercase mb-8 block"
+              style={{ fontSize: "clamp(9px,0.75vw,11px)", color: "#C9A84C" }}
+            >
+              NITIN NAHATA
+            </span>
+          </Reveal>
 
-            {/* Photo placeholder card */}
-            <Reveal delay={0.1}>
-              <div
-                className="relative flex items-end justify-center"
-                style={{
-                  aspectRatio: "3 / 4",
-                  background: "rgba(18,18,18,0.8)",
-                  border: "1px solid rgba(255,255,255,0.08)",
-                }}
+          {/* Main title */}
+          <Reveal delay={0.1}>
+            <h1
+              className="font-serif font-normal leading-[1.0] tracking-[-0.02em] mb-10"
+              style={{
+                fontSize: "clamp(36px,5.5vw,76px)",
+                color: "#F5F0E8",
+              }}
+            >
+              The Making<br />
+              of the<br />
+              Operating<br />
+              Architect
+            </h1>
+          </Reveal>
+
+          {/* Subtitle */}
+          <Reveal delay={0.18}>
+            <p
+              className="font-sans font-light leading-[1.5] mb-12"
+              style={{
+                fontSize: "clamp(16px,1.5vw,20px)",
+                color: "rgba(200,195,185,0.7)",
+                maxWidth: "36ch",
+              }}
+            >
+              A 23-Year Journey Through Collision, Scars &amp; Conviction
+            </p>
+          </Reveal>
+
+          {/* Italic quote — gold, no border */}
+          <Reveal delay={0.26}>
+            <p
+              className="font-serif italic leading-[1.75]"
+              style={{
+                fontSize: "clamp(14px,1.2vw,18px)",
+                color: "#C9A84C",
+                maxWidth: "42ch",
+              }}
+            >
+              &ldquo;A bamboo plant spends years building roots underground. No visible shoot. No measurable progress. Then, in what looks like weeks, it rises. The speed is not sudden. It was always happening — invisibly, structurally, below the surface.&rdquo;
+            </p>
+          </Reveal>
+
+          {/* Thin vertical line below quote */}
+          <Reveal delay={0.34}>
+            <div
+              className="mt-8"
+              style={{ width: "1px", height: "48px", background: "rgba(255,255,255,0.2)" }}
+            />
+          </Reveal>
+        </div>
+
+        {/* Bottom fade */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute bottom-0 left-0 w-full h-[20vh]"
+          style={{ background: "linear-gradient(to top, #080808 0%, transparent 100%)", zIndex: 3 }}
+        />
+      </header>
+      {/* ══════════════════════════════════════════════════════════════════
+          THE SOIL — BEFORE 2003
+      ══════════════════════════════════════════════════════════════════ */}
+      <section
+        className="relative"
+        style={{
+          background: "#080808",
+          borderTop: "1px solid rgba(255,255,255,0.05)",
+          padding: "clamp(80px,12vh,160px) 0",
+        }}
+      >
+        <div className="shell">
+
+          {/* Section header */}
+          <Reveal>
+            <div className="mb-14 max-w-[680px] mx-auto">
+              <span
+                className="font-jetbrains tracking-[0.35em] uppercase block mb-1"
+                style={{ fontSize: "12px", color: "#C9A84C" }}
               >
-                <span
-                  className="font-jetbrains tracking-[0.25em] uppercase mb-4 text-center block"
-                  style={{ fontSize: "9px", color: "rgba(201,168,76,0.45)" }}
-                >
-                  NITIN NAHATA
-                </span>
-              </div>
-            </Reveal>
+                THE SOIL
+              </span>
+              <span
+                className="font-jetbrains tracking-[0.3em] uppercase block mb-8"
+                style={{ fontSize: "12px", color: "rgba(255,255,255,0.35)" }}
+              >
+                BEFORE 2003
+              </span>
+              <h2
+                className="font-serif font-normal leading-[1.05] tracking-[-0.02em] mb-8"
+                style={{ fontSize: "clamp(28px,3.8vw,54px)", color: "#F5F0E8", maxWidth: "18ch" }}
+              >
+                Where the operating<br />
+                system began writing itself
+              </h2>
+              <p
+                className="font-sans font-light leading-[1.7]"
+                style={{ fontSize: "clamp(13px,1.1vw,16px)", color: "rgba(200,195,185,0.55)", maxWidth: "62ch" }}
+              >
+                Every architect needs material to work with. For buildings, it is steel and concrete. For people systems, it is something less visible: a way of reading the world, a comfort with responsibility, an internal compass that holds when external certainty disappears.
+              </p>
+            </div>
+          </Reveal>
 
-            {/* Details */}
-            <Reveal delay={0.15}>
-              <div>
-                {/* Name */}
-                <h3
-                  className="font-serif font-normal text-[var(--fg)] mb-2"
-                  style={{ fontSize: "clamp(22px,2.4vw,34px)" }}
-                >
-                  Nitin Nahata
-                </h3>
+          {/* Story cards */}
+          <div className="flex flex-col gap-6 max-w-[680px] mx-auto">
 
-                {/* Role tags */}
-                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-6">
-                  {["FOUNDER, AXION INDEX", "GROUP CHRO, GAMESKRAFT"].map((tag, i) => (
-                    <span key={i} className="font-jetbrains tracking-[0.2em] uppercase"
-                      style={{ fontSize: "9px", color: "var(--accent)" }}>
-                      {tag}
-                      {i < 1 && <span className="ml-3" style={{ color: "rgba(201,168,76,0.3)" }}>·</span>}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Bio paragraphs */}
+            {/* Card 1 — The Origins */}
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-8% 0px" }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+              className="p-8 sm:p-10"
+              style={{
+                background: "rgba(18,18,18,0.7)",
+                border: "1px solid rgba(255,255,255,0.07)",
+                borderRadius: "12px",
+              }}
+            >
+              <span
+                className="font-jetbrains tracking-[0.3em] uppercase block mb-4"
+                style={{ fontSize: "9px", color: "rgba(255,255,255,0.35)" }}
+              >
+                DELHI · A MARWARI HOUSEHOLD
+              </span>
+              <h3
+                className="font-serif font-normal mb-5"
+                style={{ fontSize: "clamp(22px,2.4vw,34px)", color: "#F5F0E8" }}
+              >
+                The Origins
+              </h3>
+              <p
+                className="font-sans font-light leading-[1.7] mb-6"
+                style={{ fontSize: "clamp(13px,1.1vw,15px)", color: "rgba(200,195,185,0.6)" }}
+              >
+                Born into a world where the script was laid out early: Commerce, CA, Business, Respectability. But within that structure lived a different kind of influence. A maternal grandfather who began working at thirteen, who embodied responsibility before teaching it.
+              </p>
+              <div
+                className="pl-5"
+                style={{ borderLeft: "2px solid rgba(201,168,76,0.35)" }}
+              >
                 <p
-                  className="font-sans font-normal leading-[1.7] mb-5"
-                  style={{ fontSize: "clamp(13px,1.1vw,15px)", color: "rgba(200,200,200,0.6)", maxWidth: "60ch" }}
+                  className="font-serif italic leading-[1.7]"
+                  style={{ fontSize: "clamp(13px,1.1vw,15px)", color: "#C9A84C" }}
                 >
-                  Two decades building people architecture across startups and enterprises. Currently Group CHRO at Gameskraft, leading workforce strategy for one of India&apos;s largest gaming companies.
+                  &ldquo;The first operating system is not designed. It is absorbed — from the people who raise you, the values they embody without declaring, and the quiet conviction that thinking for yourself is not defiance but duty.&rdquo;
                 </p>
-                <p
-                  className="font-sans font-normal leading-[1.7] mb-8"
-                  style={{ fontSize: "clamp(13px,1.1vw,15px)", color: "rgba(200,200,200,0.6)", maxWidth: "60ch" }}
-                >
-                  Axion Index is the codification of a simple belief: workforce decisions are board-level governance matters, not HR administrative tasks. The tools organisations need should make them self-sufficient, not consultant-dependent.
-                </p>
-
-                {/* CTA buttons */}
-                <div className="flex flex-wrap gap-3">
-                  <motion.a
-                    href="https://linkedin.com/in/nitin-nahata"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{ borderColor: "rgba(201,168,76,0.5)", color: "var(--accent)" }}
-                    className="inline-flex items-center gap-2 px-4 py-2 font-jetbrains text-[9px] tracking-[0.22em] uppercase text-[var(--fg-3)]"
-                    style={{
-                      border: "1px solid rgba(255,255,255,0.12)",
-                      background: "rgba(255,255,255,0.02)",
-                      transition: "all 0.3s ease",
-                    }}
-                  >
-                    <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
-                    </svg>
-                    LinkedIn
-                  </motion.a>
-                  <motion.a
-                    href="mailto:nitin@axionindex.com"
-                    whileHover={{ borderColor: "rgba(201,168,76,0.5)", color: "var(--accent)" }}
-                    className="inline-flex items-center gap-2 px-4 py-2 font-jetbrains text-[9px] tracking-[0.22em] uppercase text-[var(--fg-3)]"
-                    style={{
-                      border: "1px solid rgba(255,255,255,0.12)",
-                      background: "rgba(255,255,255,0.02)",
-                      transition: "all 0.3s ease",
-                    }}
-                  >
-                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
-                    </svg>
-                    Email
-                  </motion.a>
-                </div>
               </div>
-            </Reveal>
+            </motion.div>
+
+            {/* Card 2 — The First Collision */}
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-8% 0px" }}
+              transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+              className="p-8 sm:p-10"
+              style={{
+                background: "rgba(18,18,18,0.7)",
+                border: "1px solid rgba(255,255,255,0.07)",
+                borderRadius: "12px",
+              }}
+            >
+              <span
+                className="font-jetbrains tracking-[0.3em] uppercase block mb-4"
+                style={{ fontSize: "9px", color: "rgba(255,255,255,0.35)" }}
+              >
+                DELHI · 2002 — SRCC VS. BANGALORE
+              </span>
+              <h3
+                className="font-serif font-normal mb-5"
+                style={{ fontSize: "clamp(22px,2.4vw,34px)", color: "#F5F0E8" }}
+              >
+                The First Collision
+              </h3>
+              <p
+                className="font-sans font-light leading-[1.7] mb-6"
+                style={{ fontSize: "clamp(13px,1.1vw,15px)", color: "rgba(200,195,185,0.6)" }}
+              >
+                SRCC held firm within my consciousness — not simply a college but a verdict. When the letter came confirming what everyone expected, the path seemed settled. But life rarely honours the scripts we write for ourselves. At eighteen, standing between certainty and duty, I chose Bangalore. Not because I wanted to leave. But because accountability felt familiar.
+              </p>
+              <div
+                className="pl-5"
+                style={{ borderLeft: "2px solid rgba(201,168,76,0.35)" }}
+              >
+                <p
+                  className="font-serif italic leading-[1.7]"
+                  style={{ fontSize: "clamp(13px,1.1vw,15px)", color: "#C9A84C" }}
+                >
+                  &ldquo;The choices that are easy do not form identity. The ones that arrive at the worst possible time and demand an answer — those reflect character, not convenience.&rdquo;
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Card 3 — The Anonymous Years */}
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-8% 0px" }}
+              transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+              className="p-8 sm:p-10"
+              style={{
+                background: "rgba(18,18,18,0.7)",
+                border: "1px solid rgba(255,255,255,0.07)",
+                borderRadius: "12px",
+              }}
+            >
+              <span
+                className="font-jetbrains tracking-[0.3em] uppercase block mb-4"
+                style={{ fontSize: "9px", color: "rgba(255,255,255,0.35)" }}
+              >
+                BANGALORE · 2002–2005
+              </span>
+              <h3
+                className="font-serif font-normal mb-5"
+                style={{ fontSize: "clamp(22px,2.4vw,34px)", color: "#F5F0E8" }}
+              >
+                The Anonymous Years
+              </h3>
+              <p
+                className="font-sans font-light leading-[1.7] mb-6"
+                style={{ fontSize: "clamp(13px,1.1vw,15px)", color: "rgba(200,195,185,0.6)" }}
+              >
+                Bangalore did not welcome me with clarity. It met me with stillness — the kind that unnerves you when you are eighteen and suddenly invisible in a city that does not know your past or care about your promise. Anonymity has a strange discipline. It cleans out the noise you did not know you were carrying.
+              </p>
+              <div
+                className="pl-5"
+                style={{ borderLeft: "2px solid rgba(201,168,76,0.35)" }}
+              >
+                <p
+                  className="font-serif italic leading-[1.7]"
+                  style={{ fontSize: "clamp(13px,1.1vw,15px)", color: "#C9A84C" }}
+                >
+                  &ldquo;Anonymity is the crucible that separates those who need validation from those who generate their own momentum.&rdquo;
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Card 4 — HR at TISS */}
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-8% 0px" }}
+              transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              className="p-8 sm:p-10"
+              style={{
+                background: "rgba(18,18,18,0.7)",
+                border: "1px solid rgba(255,255,255,0.07)",
+                borderRadius: "12px",
+              }}
+            >
+              <span
+                className="font-jetbrains tracking-[0.3em] uppercase block mb-4"
+                style={{ fontSize: "9px", color: "rgba(255,255,255,0.35)" }}
+              >
+                MUMBAI
+              </span>
+              <h3
+                className="font-serif font-normal mb-5"
+                style={{ fontSize: "clamp(22px,2.4vw,34px)", color: "#F5F0E8" }}
+              >
+                HR at TISS
+              </h3>
+              <p
+                className="font-sans font-light leading-[1.7] mb-6"
+                style={{ fontSize: "clamp(13px,1.1vw,15px)", color: "rgba(200,195,185,0.6)" }}
+              >
+                I did not choose HR as a fallback. I chose it because I finally recognised that my instinct for people and my instinct for business were not separate — they were the same instinct. Solve people problems with a business mind. Solve business problems with a people heart.
+              </p>
+              <div
+                className="pl-5"
+                style={{ borderLeft: "2px solid rgba(201,168,76,0.35)" }}
+              >
+                <p
+                  className="font-serif italic leading-[1.7]"
+                  style={{ fontSize: "clamp(13px,1.1vw,15px)", color: "#C9A84C" }}
+                >
+                  &ldquo;The people instinct and the business instinct are not separate. They are the same instinct expressed through different lenses.&rdquo;
+                </p>
+              </div>
+            </motion.div>
+
           </div>
         </div>
       </section>
-
-      {/* HERO */}
-      <header className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-          <svg className="absolute inset-0 w-full h-full opacity-[0.02]" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <pattern id="grid-founder" width="80" height="80" patternUnits="userSpaceOnUse">
-                <path d="M 80 0 L 0 0 0 80" fill="none" stroke="rgba(201,168,76,1)" strokeWidth="0.5"/>
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#grid-founder)" />
-          </svg>
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_50%,transparent_30%,var(--bg)_100%)]" />
-        </div>
-        <div className="absolute top-[20%] left-[10%] w-[400px] h-[400px] rounded-full opacity-[0.04] pointer-events-none"
-          style={{ background: "radial-gradient(circle, #C9A84C 0%, transparent 70%)", animation: "float 16s ease-in-out infinite" }} />
-
-        <div className="shell text-center relative z-10 pt-20">
-          <Reveal>
-            <div className="eyebrow eyebrow--center mb-10 text-[var(--accent)]">AXION&nbsp;&nbsp;·&nbsp;&nbsp;FOUNDER</div>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <h1 className="hero-glow mb-6">
-              <span className="block font-serif font-normal text-[clamp(28px,3.5vw,52px)] leading-[1.15] tracking-[-0.01em] text-[var(--fg-2)] mb-2">
-                The Operating Architect
-              </span>
-              <em className="block font-serif font-medium text-[clamp(28px,3.5vw,52px)] leading-[1.15] tracking-[-0.01em] text-[var(--accent)] italic">
-                Nitin Nahata.
-              </em>
-            </h1>
-          </Reveal>
-          <Reveal delay={0.15}>
-            <p className="font-mono text-[10px] tracking-widest uppercase text-[var(--fg-5)] mb-8">
-              Portrait · Considered, not corporate · 2026
-            </p>
-          </Reveal>
-          <Reveal delay={0.2}>
-            <p className="lead mx-auto mb-14 text-[var(--fg-3)] max-w-[50ch]">
-              The practitioner whose work codified the patterns Axion Index now deploys.
-            </p>
-          </Reveal>
-          <Reveal delay={0.3}>
-            <div className="flex flex-col items-center gap-8">
-              <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
-                <Link href="/connect" className="inline-flex items-center gap-3 px-10 py-5 font-mono text-[11px] tracking-[0.28em] uppercase rounded-full font-semibold"
-                  style={{ background: "linear-gradient(135deg, #C9A84C 0%, #E8C97A 50%, #C9A84C 100%)", color: "#080A0F", boxShadow: "0 0 40px rgba(201,168,76,0.2)" }}>
-                  Begin a Diagnostic <ArrowRight size={14} />
-                </Link>
-              </motion.div>
-              <a className="kbd-arrow text-[var(--fg-4)] hover:text-[var(--accent)]" href="#insight">
-                Read the defining insight
-              </a>
-            </div>
-          </Reveal>
-        </div>
-        <div className="absolute bottom-0 left-0 w-full h-[35vh] bg-gradient-to-t from-[var(--bg)] to-transparent pointer-events-none" />
-      </header>
 
       {/* DEFINING INSIGHT */}
       <section className="chapter section-dark relative" id="insight">
