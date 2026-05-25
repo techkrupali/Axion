@@ -26,7 +26,8 @@ const Navbar = () => {
     pathname?.startsWith("/user") ||
     pathname === "/login" ||
     pathname === "/register" ||
-    pathname === "/founder"
+    pathname === "/founder" ||
+    pathname?.startsWith("/expertise/ai-edge")
   ) {
     return null;
   }
