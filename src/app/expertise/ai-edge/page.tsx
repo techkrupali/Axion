@@ -46,7 +46,7 @@ export default function AIEdgeLab() {
           <div style={{ position: "absolute", inset: 0, background: "repeating-linear-gradient(90deg,transparent 0px,transparent 2px,rgba(255,255,255,0.008) 2px,rgba(255,255,255,0.008) 4px)" }} />
           <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "52%", background: "#1A1A18", clipPath: "polygon(0% 100%,0% 65%,2% 65%,2% 45%,3% 45%,3% 35%,4% 35%,4% 45%,5% 45%,5% 65%,6% 65%,6% 50%,7% 50%,7% 30%,7.5% 30%,7.5% 28%,8% 28%,8% 30%,8.5% 30%,8.5% 50%,9% 50%,9% 65%,10% 65%,10% 40%,11% 40%,11% 20%,11.5% 20%,11.5% 15%,12% 15%,12% 20%,12.5% 20%,12.5% 40%,13% 40%,13% 65%,14% 65%,14% 50%,14.5% 50%,14.5% 42%,15% 42%,15% 50%,15.5% 50%,15.5% 65%,16% 65%,16% 35%,17% 35%,17% 20%,17.5% 20%,17.5% 10%,18% 10%,18.5% 10%,18.5% 20%,19% 20%,19% 35%,20% 35%,20% 65%,21% 65%,21% 45%,21.5% 45%,21.5% 38%,22% 38%,22% 45%,22.5% 45%,22.5% 65%,24% 65%,24% 42%,25% 42%,25% 28%,25.5% 28%,25.5% 22%,26% 22%,26% 28%,26.5% 28%,26.5% 42%,27% 42%,27% 65%,29% 65%,29% 48%,30% 48%,30% 35%,31% 35%,31% 48%,32% 48%,32% 65%,35% 65%,35% 52%,36% 52%,36% 40%,37% 40%,37% 25%,37.5% 25%,37.5% 18%,38% 18%,38% 25%,38.5% 25%,38.5% 40%,39% 40%,39% 52%,40% 52%,40% 65%,42% 65%,42% 55%,43% 55%,43% 45%,43.5% 45%,43.5% 38%,44% 38%,44% 45%,44.5% 45%,44.5% 55%,45% 55%,45% 65%,48% 65%,48% 48%,49% 48%,49% 32%,50% 32%,50% 20%,50.5% 20%,50.5% 14%,51% 14%,51% 20%,51.5% 20%,51.5% 32%,52% 32%,52% 48%,53% 48%,53% 65%,55% 65%,55% 52%,56% 52%,56% 44%,57% 44%,57% 52%,58% 52%,58% 65%,60% 65%,60% 42%,61% 42%,61% 30%,62% 30%,62% 42%,63% 42%,63% 65%,65% 65%,65% 55%,66% 55%,66% 48%,66.5% 48%,66.5% 42%,67% 42%,67% 48%,67.5% 48%,67.5% 55%,68% 55%,68% 65%,70% 65%,70% 40%,71% 40%,71% 28%,72% 28%,72% 40%,73% 40%,73% 65%,75% 65%,75% 52%,76% 52%,76% 44%,77% 44%,77% 52%,78% 52%,78% 65%,80% 65%,80% 48%,81% 48%,81% 36%,82% 36%,82% 48%,83% 48%,83% 65%,85% 65%,85% 56%,86% 56%,86% 50%,87% 50%,87% 56%,88% 56%,88% 65%,90% 65%,90% 44%,91% 44%,91% 32%,92% 32%,92% 44%,93% 44%,93% 65%,95% 65%,95% 55%,96% 55%,96% 65%,100% 65%,100% 100%)" }} />
           <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right,rgba(10,11,14,0.6) 0%,rgba(10,11,14,0.1) 50%,transparent 100%)" }} />
-          <div className="hidden md:block" style={{ position: "absolute", right: "44px", top: "50%", transform: "translateY(-50%) rotate(90deg)", transformOrigin: "center center", fontFamily: "'Bebas Neue','DM Sans',sans-serif", fontSize: "48px", letterSpacing: "0.12em", color: "rgba(247,246,243,0.12)", whiteSpace: "nowrap" }}>AI EDGE LAB</div>
+          <div className="hidden md:block" style={{ position: "absolute", right: "-20px", top: "50%", transform: "translateY(-50%) rotate(90deg)", transformOrigin: "center center", fontFamily: "'Bebas Neue','DM Sans',sans-serif", fontSize: "28px", letterSpacing: "0.12em", color: "rgba(247,246,243,0.12)", whiteSpace: "nowrap" }}>AI EDGE LAB</div>
           <div style={{ position: "absolute", bottom: "32px", left: "clamp(16px,4vw,52px)", fontFamily: "'DM Mono',monospace", fontSize: "11px", letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(247,246,243,0.35)" }}>The Architecture of Work in the Post-AI Era · 2026</div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2" style={{ borderBottom: "1px solid rgba(13,13,11,0.1)" }}>
@@ -131,30 +131,35 @@ export default function AIEdgeLab() {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3" style={{ gap: "1px", background: "rgba(13,13,11,0.1)" }}>
+        {/* Law cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 px-6 md:px-[52px] pb-6 md:pb-[52px]" style={{ gap: "16px", marginTop: "0" }}>
           {[
             { num: "Law I · Intelligence Abundance", title: "AS INTELLIGENCE APPROACHES ZERO COST, ITS VALUE IN WORK DECLINES.", body: "Research synthesis, data modelling, report generation — now accessible at marginal cost. Roles that derived value from producing structured intelligence face direct structural repricing. This is not a future risk. It is a present economic condition." },
             { num: "Law II · Judgment Scarcity", title: "AS INTELLIGENCE BECOMES CHEAP, JUDGMENT BECOMES THE SCARCE RESOURCE.", body: "Judgment operates where inputs are ambiguous, stakes are high, and consequences are owned by a person. AI can be directed by judgment. It cannot exercise it. The economic premium migrates from intelligence to judgment." },
             { num: "Law III · The Compression Curve", title: "AI COMPRESSES WORK FROM EXECUTION UPWARD UNTIL JUDGMENT BECOMES THE BOUNDARY.", body: "Compression moves in predictable sequence: execution first, analysis next, insight partially, judgment last. This creates a structural line: above it, human value compounds; below it, it compresses." },
           ].map((law, i) => (
-            <div key={i} style={{ background: "#F7F6F3", padding: "40px 32px" }}>
-              <div style={{ fontFamily: "'DM Mono',monospace", fontSize: "10px", letterSpacing: "0.22em", textTransform: "uppercase", color: "#A07830", marginBottom: "20px" }}>{law.num}</div>
-              <div style={{ fontFamily: "'Bebas Neue','DM Sans',sans-serif", fontSize: "22px", lineHeight: 1.15, color: "#0D0D0B", marginBottom: "14px", letterSpacing: "0.02em" }}>{law.title}</div>
+            <div key={i} style={{ background: "#FFFFFF", border: "1px solid rgba(13,13,11,0.12)", borderTop: "3px solid #A07830", padding: "32px 28px", boxShadow: "0 2px 12px rgba(13,13,11,0.06)" }}>
+              <div style={{ fontFamily: "'DM Mono',monospace", fontSize: "10px", letterSpacing: "0.22em", textTransform: "uppercase", color: "#A07830", marginBottom: "16px" }}>{law.num}</div>
+              <div style={{ fontFamily: "'Bebas Neue','DM Sans',sans-serif", fontSize: "20px", lineHeight: 1.2, color: "#0D0D0B", marginBottom: "16px", letterSpacing: "0.02em" }}>{law.title}</div>
               <p style={{ fontSize: "13px", color: "#7A7870", lineHeight: 1.85, fontWeight: 300 }}>{law.body}</p>
             </div>
           ))}
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3" style={{ gap: "1px", background: "rgba(13,13,11,0.1)", marginTop: "1px" }}>
+
+        {/* Era cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 px-6 md:px-[52px] pb-[52px]" style={{ gap: "16px" }}>
           {[
-            { label: "Industrial Age", resource: "Physical Labour", desc: "Organisations built for efficiency of physical execution. Headcount = capacity. Management = coordination of effort.", dark: false },
-            { label: "Knowledge Economy", resource: "Analytical Intelligence", desc: "Organisations built for production of structured thinking. Talent = premium intelligence. Management = analysis to decisions.", dark: false },
-            { label: "AI Era · Present", resource: "Judgment", desc: "Organisations built for consequence-bearing decision ownership. Advantage = framing, deciding, being accountable. Architecture = concentration of judgment.", dark: false },
+            { label: "Industrial Age", resource: "Physical Labour", desc: "Organisations built for efficiency of physical execution. Headcount = capacity. Management = coordination of effort.", now: false },
+            { label: "Knowledge Economy", resource: "Analytical Intelligence", desc: "Organisations built for production of structured thinking. Talent = premium intelligence. Management = analysis to decisions.", now: false },
+            { label: "AI Era · Present", resource: "Judgment", desc: "Organisations built for consequence-bearing decision ownership. Advantage = framing, deciding, being accountable. Architecture = concentration of judgment.", now: true },
           ].map((era, i) => (
-            <div key={i} style={{ background: era.dark ? "#0D0D0B" : "#F7F6F3", padding: "36px 28px", position: "relative" }}>
-              {era.dark && <div style={{ position: "absolute", top: "16px", right: "16px", fontFamily: "'DM Mono',monospace", fontSize: "10px", letterSpacing: "0.14em", textTransform: "uppercase", background: "#A07830", color: "#F7F6F3", padding: "3px 8px" }}>Now</div>}
-              <div style={{ fontFamily: "'DM Mono',monospace", fontSize: "10px", letterSpacing: "0.2em", textTransform: "uppercase", color: era.dark ? "rgba(247,246,243,0.4)" : "#B0AEA8", marginBottom: "16px" }}>{era.label}</div>
-              <div style={{ fontFamily: "'Bebas Neue','DM Sans',sans-serif", fontSize: "clamp(24px,2.5vw,32px)", letterSpacing: "0.02em", color: era.dark ? "#C49848" : "#0D0D0B", marginBottom: "10px" }}>{era.resource}</div>
-              <p style={{ fontSize: "13px", color: era.dark ? "rgba(247,246,243,0.55)" : "#7A7870", lineHeight: 1.75, fontWeight: 300 }}>{era.desc}</p>
+            <div key={i} style={{ background: "#FFFFFF", border: "1px solid rgba(13,13,11,0.12)", borderTop: "3px solid #A07830", padding: "32px 28px", position: "relative", boxShadow: "0 2px 12px rgba(13,13,11,0.06)" }}>
+              {era.now && (
+                <div style={{ position: "absolute", top: "16px", right: "16px", fontFamily: "'DM Mono',monospace", fontSize: "9px", letterSpacing: "0.14em", textTransform: "uppercase", background: "#A07830", color: "#F7F6F3", padding: "3px 8px" }}>Now</div>
+              )}
+              <div style={{ fontFamily: "'DM Mono',monospace", fontSize: "10px", letterSpacing: "0.2em", textTransform: "uppercase", color: "#B0AEA8", marginBottom: "16px" }}>{era.label}</div>
+              <div style={{ fontFamily: "'Bebas Neue','DM Sans',sans-serif", fontSize: "clamp(24px,2.5vw,32px)", letterSpacing: "0.02em", color: "#0D0D0B", marginBottom: "12px" }}>{era.resource}</div>
+              <p style={{ fontSize: "13px", color: "#7A7870", lineHeight: 1.75, fontWeight: 300 }}>{era.desc}</p>
             </div>
           ))}
         </div>
@@ -162,11 +167,11 @@ export default function AIEdgeLab() {
 
       {/* ── PULLQUOTE ── */}
       <div style={{ padding: "52px", background: "#0D0D0B", borderBottom: "1px solid rgba(255,255,255,0.08)" }} className="px-6 md:px-[52px]">
-        <div style={{ fontFamily: "'DM Mono',monospace", fontSize: "10px", letterSpacing: "0.26em", textTransform: "uppercase", color: "rgba(247,246,243,0.3)", marginBottom: "24px" }}>The Doctrine in One Sentence · AI Edge Lab · 2026</div>
+        <div style={{ fontFamily: "'DM Mono',monospace", fontSize: "10px", letterSpacing: "0.26em", textTransform: "uppercase", color: "#A07830", marginBottom: "24px" }}>The Doctrine in One Sentence · AI Edge Lab · 2026</div>
         <div style={{ fontFamily: "'Bebas Neue','DM Sans',sans-serif", fontSize: "clamp(28px,4.5vw,54px)", lineHeight: 1.05, letterSpacing: "0.02em", color: "#F7F6F3", maxWidth: "900px" }}>
           AI DOES NOT ELIMINATE WORK FIRST. IT ELIMINATES THE <span style={{ color: "#C49848" }}>STRUCTURAL PREMIUM</span> ON INTELLIGENCE INSIDE WORK.
         </div>
-        <div style={{ fontFamily: "'DM Mono',monospace", fontSize: "11px", color: "rgba(247,246,243,0.3)", marginTop: "24px", letterSpacing: "0.12em", textTransform: "uppercase" }}>Nitin Nahata · CHRO, Gameskraft · Founder, Axionindex</div>
+        <div style={{ fontFamily: "'DM Mono',monospace", fontSize: "11px", color: "#A07830", marginTop: "24px", letterSpacing: "0.12em", textTransform: "uppercase" }}>Nitin Nahata · CHRO, Gameskraft · Founder, Axionindex</div>
       </div>
 
       {/* ── FRAMEWORK ── */}
@@ -265,7 +270,7 @@ export default function AIEdgeLab() {
                   </div>
                 ))}
               </div>
-              <a href="#" style={{ display: "inline-block", fontFamily: "'DM Mono',monospace", fontSize: "11px", letterSpacing: "0.18em", textTransform: "uppercase", padding: "12px 24px", border: "1px solid rgba(13,13,11,0.18)", color: "#0D0D0B", textDecoration: "none" }}>Start Quick Mirror →</a>
+              <a href="#" style={{ display: "inline-block", fontFamily: "'DM Mono',monospace", fontSize: "11px", letterSpacing: "0.18em", textTransform: "uppercase", padding: "12px 24px", background: "#A07830", color: "#F7F6F3", textDecoration: "none" }}>Start Quick Mirror →</a>
             </div>
             <div style={{ background: "#0D0D0B", padding: "48px 40px" }}>
               <div style={{ fontFamily: "'DM Mono',monospace", fontSize: "10px", letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(247,246,243,0.4)", marginBottom: "16px" }}>AI Replaceability Index™</div>
@@ -345,8 +350,8 @@ export default function AIEdgeLab() {
         <div className="p-6 md:p-10 lg:p-[52px]">
           <div className="grid grid-cols-1 md:grid-cols-[280px_1fr]" style={{ gap: "0" }}>
             <div className="md:border-r pr-0 md:pr-[52px] pb-8 md:pb-0" style={{ borderColor: "rgba(13,13,11,0.1)" }}>
-              <div style={{ width: "100%", aspectRatio: "3/4", background: "linear-gradient(145deg,#2A2C30 0%,#1A1C1F 100%)", marginBottom: "24px", display: "flex", alignItems: "flex-end", padding: "20px" }}>
-                <span style={{ fontFamily: "'DM Mono',monospace", fontSize: "10px", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(247,246,243,0.35)" }}>Nitin Nahata · CHRO · Founder</span>
+              <div style={{ width: "100%", aspectRatio: "3/4", marginBottom: "24px", overflow: "hidden" }}>
+                <img src="/nitishhh.png" alt="Nitin Nahata" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 39%", display: "block" }} />
               </div>
               <div style={{ fontFamily: "'Bebas Neue','DM Sans',sans-serif", fontSize: "32px", letterSpacing: "0.02em", color: "#0D0D0B", marginBottom: "4px" }}>NITIN NAHATA</div>
               <div style={{ fontFamily: "'DM Mono',monospace", fontSize: "10px", letterSpacing: "0.18em", color: "#A07830", textTransform: "uppercase", marginBottom: "20px" }}>CHRO · Organisational Architect · Founder</div>
@@ -403,13 +408,13 @@ export default function AIEdgeLab() {
 
       {/* ── FOOTER ── */}
       <footer style={{ padding: "28px 52px", background: "#0D0D0B", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "14px", borderTop: "1px solid rgba(255,255,255,0.06)" }} className="px-6 md:px-[52px]">
-        <div style={{ fontFamily: "'Bebas Neue','DM Sans',sans-serif", fontSize: "16px", letterSpacing: "0.04em", color: "rgba(247,246,243,0.25)" }}>AI EDGE LAB · AXIONINDEX · 2026</div>
+        <div style={{ fontFamily: "'Bebas Neue','DM Sans',sans-serif", fontSize: "16px", letterSpacing: "0.04em", color: "#F7F6F3" }}>AI EDGE LAB · AXIONINDEX · 2026</div>
         <div style={{ display: "flex", gap: "20px" }}>
           {[["#doctrine","Doctrine"],["#framework","Framework"],["#diagnostic","Diagnostic"],["#about","About"],["mailto:nitin@axionindex.org","Contact"]].map(([href, label]) => (
-            <a key={href} href={href} style={{ fontFamily: "'DM Mono',monospace", fontSize: "10px", letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(247,246,243,0.25)", textDecoration: "none" }}>{label}</a>
+            <a key={href} href={href} style={{ fontFamily: "'DM Mono',monospace", fontSize: "10px", letterSpacing: "0.16em", textTransform: "uppercase", color: "#F7F6F3", textDecoration: "none" }}>{label}</a>
           ))}
         </div>
-        <div style={{ fontFamily: "'DM Mono',monospace", fontSize: "10px", color: "rgba(247,246,243,0.2)", letterSpacing: "0.06em" }}>© 2026 AI Edge Lab · axionindex.org</div>
+        <div style={{ fontFamily: "'DM Mono',monospace", fontSize: "10px", color: "#F7F6F3", letterSpacing: "0.06em" }}>© 2026 AI Edge Lab · axionindex.org</div>
       </footer>
 
     </div>
