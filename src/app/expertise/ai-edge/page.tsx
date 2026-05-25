@@ -214,7 +214,7 @@ export default function AIEdgeLab() {
 
           {/* Task grid — 3 columns, 3 rows */}
           <Reveal delay={0.15}>
-          <div className="grid grid-cols-3 gap-3 mb-14">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-14">
             {[...aiTasks, "And more →"].map((task, i) => {
               const isLast = i === aiTasks.length;
               return (
@@ -514,7 +514,7 @@ export default function AIEdgeLab() {
               style={{ fontSize: "clamp(32px,5.5vw,82px)" }}
             >
               <span className="block" style={{ color: "rgba(180,180,175,0.55)" }}>Organisations have</span>
-              <em className="block italic whitespace-nowrap" style={{ color: "rgba(240,241,245,0.95)", fontStyle: "italic" }}>transformation strategies.</em>
+              <em className="block italic" style={{ color: "rgba(240,241,245,0.95)", fontStyle: "italic" }}>transformation strategies.</em>
               <span className="block" style={{ color: "rgba(180,180,175,0.55)" }}>Individuals have nothing.</span>
             </h2>
           </Reveal>

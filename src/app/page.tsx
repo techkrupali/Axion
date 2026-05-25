@@ -195,8 +195,8 @@ export default function Home() {
       ══════════════════════════════════════════ */}
       <section className="chapter section-deep relative py-0" id="bridge">
         <div className="shell">
-          <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-0 items-start min-h-[300vh]">
-            <div className="lg:sticky lg:top-0 h-screen flex flex-col justify-center py-20 pr-10 z-30 pointer-events-none">
+          <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-0 items-start lg:min-h-[300vh]">
+            <div className="lg:sticky lg:top-0 h-auto lg:h-screen flex flex-col justify-center py-16 lg:py-20 lg:pr-10 z-30 pointer-events-none">
               <div className="pointer-events-auto">
                 <Reveal>
                   <span className="eyebrow mb-8 text-[var(--accent)]">How We Do It</span>
@@ -324,7 +324,7 @@ export default function Home() {
             </Reveal>
           </div>
 
-          <div className="flex flex-col lg:flex-row gap-3 h-[620px] lg:h-[520px]">
+          <div className="flex flex-col lg:flex-row gap-3 min-h-[400px] lg:h-[520px]">
             {[
               { num: "01", name: "People Architecture", sub: "The foundation. The other three sit on top of this one.", href: "/expertise/people", label: "Enter People Architecture →" },
               { num: "02", name: "Labour Codes", sub: "When cost, classification, and compliance stop aligning.", href: "/expertise/labour", label: "Enter Labour Codes →" },

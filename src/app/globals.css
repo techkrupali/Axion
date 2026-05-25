@@ -95,7 +95,7 @@ body::before {
 
   /* Shell */
   .shell {
-    @apply w-full max-w-[1200px] mx-auto px-8;
+    @apply w-full max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8;
   }
   .shell--narrow { @apply max-w-[900px]; }
 

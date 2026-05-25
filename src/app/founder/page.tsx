@@ -244,7 +244,7 @@ export default function Founder() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-10% 0px" }}
                 transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1], delay: 0.04 }}
-                className="grid grid-cols-1 md:grid-cols-[100px_1fr_1fr_160px] gap-8 md:gap-10 py-12 border-b border-[var(--line)] group items-start hover:bg-[rgba(201,168,76,0.01)] transition-colors px-4 -mx-4"
+                className="grid grid-cols-1 md:grid-cols-[100px_1fr] lg:grid-cols-[100px_1fr_1fr_160px] gap-6 md:gap-8 lg:gap-10 py-12 border-b border-[var(--line)] group items-start hover:bg-[rgba(201,168,76,0.01)] transition-colors px-4 -mx-4"
               >
                 <div>
                   <span className="font-serif italic text-[clamp(28px,3vw,42px)] text-[var(--accent)] leading-[0.85] opacity-25 group-hover:opacity-90 transition-opacity duration-500 block">
