@@ -48,6 +48,101 @@ function Orbs() {
   );
 }
 
+function StatementCard({ item, i }: { item: { num: string; title: string; desc: string }; i: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [pos, setPos] = useState({ x: 0, y: 0 });
+  const [hovered, setHovered] = useState(false);
+
+  function onMouseMove(e: React.MouseEvent<HTMLDivElement>) {
+    const rect = ref.current?.getBoundingClientRect();
+    if (!rect) return;
+    setPos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+  }
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-10%" }}
+      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: i * 0.12 }}
+      animate={hovered ? { y: -10, scale: 1.03 } : { y: 0, scale: 1 }}
+      onMouseMove={onMouseMove}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      className="group relative p-8 border rounded-[24px] bg-[var(--bg-1)] overflow-hidden cursor-default"
+      style={{
+        borderColor: hovered ? "rgba(201,168,76,0.6)" : "var(--line)",
+        boxShadow: hovered ? "0 20px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(201,168,76,0.2)" : "none",
+        transition: "border-color 0.4s, box-shadow 0.4s",
+      }}
+    >
+      {/* Mouse spotlight */}
+      {hovered && (
+        <div
+          className="absolute pointer-events-none rounded-full"
+          style={{
+            width: 220,
+            height: 220,
+            top: pos.y - 110,
+            left: pos.x - 110,
+            background: "radial-gradient(circle, rgba(201,168,76,0.12) 0%, transparent 70%)",
+            transition: "top 0.05s, left 0.05s",
+          }}
+        />
+      )}
+
+      {/* Animated top border beam */}
+      <motion.div
+        className="absolute top-0 left-0 h-[2px] bg-gradient-to-r from-transparent via-[var(--accent)] to-transparent"
+        initial={{ scaleX: 0, originX: 0 }}
+        whileInView={{ scaleX: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1, delay: 0.3 + i * 0.12, ease: "easeOut" }}
+        style={{ width: "100%" }}
+      />
+
+      {/* Number tag */}
+      <div className="font-mono text-[10px] tracking-[0.4em] text-[var(--accent)] mb-6" style={{ opacity: hovered ? 1 : 0.5, transition: "opacity 0.3s" }}>
+        [ {item.num} ]
+      </div>
+
+      {/* Title */}
+      <motion.h3
+        className="font-serif text-[28px] mb-4"
+        animate={{ color: hovered ? "var(--accent)" : "var(--fg)" }}
+        transition={{ duration: 0.35 }}
+      >
+        {item.title}
+      </motion.h3>
+
+      {/* Desc — slides up on hover */}
+      <motion.p
+        className="text-[14px] text-[var(--fg-3)] leading-relaxed max-w-[20ch]"
+        animate={{ y: hovered ? -2 : 0, opacity: hovered ? 1 : 0.7 }}
+        transition={{ duration: 0.35 }}
+      >
+        {item.desc}
+      </motion.p>
+
+      {/* Expanding gold line */}
+      <motion.div
+        className="mt-8 h-[1px] bg-[var(--accent)]"
+        animate={{ width: hovered ? "100%" : "40px" }}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      />
+
+      {/* Bottom glow */}
+      <motion.div
+        className="absolute bottom-0 left-0 w-full h-20 pointer-events-none"
+        animate={{ opacity: hovered ? 1 : 0 }}
+        transition={{ duration: 0.4 }}
+        style={{ background: "linear-gradient(to top, rgba(201,168,76,0.08), transparent)" }}
+      />
+    </motion.div>
+  );
+}
+
 export default function Home() {
   const [activePractice, setActivePractice] = useState(0);
   const heroRef = useRef<HTMLElement>(null);
@@ -278,25 +373,44 @@ export default function Home() {
               </p>
             </Reveal>
 
-            <div className="flex flex-wrap justify-center items-center gap-4 md:gap-6 mb-4">
-              {[{ label: "Belief" }, { label: "Conviction" }, { label: "Rhythm" }].map((item, i) => (
-                <div key={i} className="flex items-center gap-4 md:gap-6">
-                  <Reveal delay={0.3 + i * 0.15} y={10}>
-                    <motion.div
-                      whileHover={{ y: -8 }}
-                      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                      className="group relative px-8 py-6 border border-[var(--line)] rounded-[20px] bg-[var(--bg-1)] hover:border-[var(--line-gold)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.5),0_0_30px_var(--accent-glow)] transition-all duration-500 cursor-default"
-                    >
-                      <span className="font-serif text-[clamp(22px,2.8vw,38px)] text-[var(--fg)] group-hover:text-[var(--accent)] transition-colors duration-500">
-                        {item.label}
-                      </span>
-                      <div className="absolute top-0 right-0 w-16 h-16 rounded-[20px] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                        style={{ background: "radial-gradient(circle at top right, var(--accent-glow), transparent 70%)" }} />
-                    </motion.div>
+            <div className="flex flex-col md:flex-row justify-center items-center gap-0 md:gap-0 w-full mt-8 mb-4">
+              {[
+                { label: "Belief", desc: "Absorbed in the Soil. Tested at Udaan. Every founder starts here.", active: false },
+                { label: "Conviction", desc: "Earned through collisions at SCB, HSBC, TGB. Data, proof, and lived experience.", active: true },
+                { label: "Rhythm", desc: "Designed at Gameskraft. When conviction becomes repeatable behaviour.", active: false },
+              ].map((item, i) => (
+                <div key={i} className="flex flex-col md:flex-row items-center">
+                  <Reveal delay={0.3 + i * 0.15} y={20}>
+                    <div className="flex flex-col items-center gap-6">
+                      {/* Circle */}
+                      <motion.div
+                        whileHover={{ scale: 1.06 }}
+                        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                        className="flex items-center justify-center rounded-full cursor-default"
+                        style={{
+                          width: "clamp(160px,18vw,220px)",
+                          height: "clamp(160px,18vw,220px)",
+                          border: item.active ? "2px solid rgba(201,168,76,0.8)" : "1px solid rgba(201,168,76,0.35)",
+                          background: item.active ? "rgba(201,168,76,0.06)" : "rgba(12,14,20,0.6)",
+                          boxShadow: item.active ? "0 0 40px rgba(201,168,76,0.1)" : "none",
+                        }}
+                      >
+                        <span className="font-serif italic text-[var(--accent)]" style={{ fontSize: "clamp(22px,2.5vw,32px)" }}>
+                          {item.label}
+                        </span>
+                      </motion.div>
+                      {/* Description below circle */}
+                      <p className="font-serif text-[var(--fg-4)] text-center leading-relaxed max-w-[18ch]" style={{ fontSize: "clamp(13px,1.1vw,15px)" }}>
+                        {item.desc}
+                      </p>
+                    </div>
                   </Reveal>
+                  {/* Arrow between circles */}
                   {i < 2 && (
-                    <Reveal delay={0.4 + i * 0.15} scale={0.8}>
-                      <span className="text-[var(--accent)] opacity-40 text-[24px] font-light">→</span>
+                    <Reveal delay={0.4 + i * 0.15}>
+                      <span className="text-[var(--accent)] opacity-40 text-[22px] mx-6 md:mx-10 my-4 md:my-0 md:mb-16">
+                        →
+                      </span>
                     </Reveal>
                   )}
                 </div>
@@ -332,21 +446,7 @@ export default function Home() {
               { num: "03", title: "Redesign", desc: "We redesign the architecture." },
               { num: "04", title: "Hold", desc: "We make it hold under pressure." },
             ].map((item, i) => (
-              <Reveal key={i} delay={i * 0.1}>
-                <motion.div
-                  whileHover={{ y: -4 }}
-                  transition={{ duration: 0.3 }}
-                  className="group relative p-8 border border-[var(--line)] rounded-[24px] bg-[var(--bg-1)] hover:border-[var(--line-gold)] transition-all duration-500"
-                >
-                  <div className="font-mono text-[10px] tracking-[0.4em] text-[var(--accent)] mb-6 opacity-60">[ {item.num} ]</div>
-                  <h3 className="font-serif text-[28px] mb-4 group-hover:text-[var(--accent)] transition-colors duration-500">{item.title}</h3>
-                  <p className="text-[14px] text-[var(--fg-3)] leading-relaxed max-w-[20ch]">{item.desc}</p>
-                  <div className="mt-8 w-10 h-[1px] bg-[var(--line-strong)] group-hover:w-full group-hover:bg-[var(--accent)] transition-all duration-700" />
-                  {/* Corner glow */}
-                  <div className="absolute top-0 right-0 w-24 h-24 rounded-[24px] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                    style={{ background: "radial-gradient(circle at top right, var(--accent-glow), transparent 70%)" }} />
-                </motion.div>
-              </Reveal>
+              <StatementCard key={i} item={item} i={i} />
             ))}
           </div>
         </div>
