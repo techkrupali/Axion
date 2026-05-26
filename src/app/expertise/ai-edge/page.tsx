@@ -166,12 +166,13 @@ export default function AIEdgeLab() {
       </section>
 
       {/* ── PULLQUOTE ── */}
-      <div style={{ padding: "52px", background: "#0D0D0B", borderBottom: "1px solid rgba(255,255,255,0.08)" }} className="px-6 md:px-[52px]">
-        <div style={{ fontFamily: "'DM Mono',monospace", fontSize: "10px", letterSpacing: "0.26em", textTransform: "uppercase", color: "#A07830", marginBottom: "24px" }}>The Doctrine in One Sentence · AI Edge Lab · 2026</div>
-        <div style={{ fontFamily: "'Bebas Neue','DM Sans',sans-serif", fontSize: "clamp(28px,4.5vw,54px)", lineHeight: 1.05, letterSpacing: "0.02em", color: "#F7F6F3", maxWidth: "900px" }}>
-          AI DOES NOT ELIMINATE WORK FIRST. IT ELIMINATES THE <span style={{ color: "#C49848" }}>STRUCTURAL PREMIUM</span> ON INTELLIGENCE INSIDE WORK.
+      <div style={{ padding: "52px", background: "#0D0D0B", borderBottom: "1px solid rgba(255,255,255,0.08)", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center" }} className="px-6 md:px-[52px]">
+        <div style={{ fontFamily: "'DM Mono',monospace", fontSize: "10px", letterSpacing: "0.26em", textTransform: "uppercase", color: "#A07830", marginBottom: "32px" }}>The Doctrine in One Sentence · AI Edge Lab · 2026</div>
+        <div style={{ fontFamily: "'Bebas Neue','DM Sans',sans-serif", fontSize: "clamp(28px,4.5vw,54px)", lineHeight: 1.1, letterSpacing: "0.02em", color: "#F7F6F3", width: "100%" }}>
+          <div>AI DOES NOT ELIMINATE WORK FIRST.</div>
+          <div>IT ELIMINATES THE <span style={{ color: "#C49848" }}>STRUCTURAL PREMIUM</span> ON INTELLIGENCE INSIDE WORK.</div>
         </div>
-        <div style={{ fontFamily: "'DM Mono',monospace", fontSize: "11px", color: "#A07830", marginTop: "24px", letterSpacing: "0.12em", textTransform: "uppercase" }}>Nitin Nahata · CHRO, Gameskraft · Founder, Axionindex</div>
+        <div style={{ fontFamily: "'DM Mono',monospace", fontSize: "11px", color: "#A07830", marginTop: "32px", letterSpacing: "0.12em", textTransform: "uppercase" }}>Nitin Nahata · CHRO, Gameskraft · Founder, Axionindex</div>
       </div>
 
       {/* ── FRAMEWORK ── */}
