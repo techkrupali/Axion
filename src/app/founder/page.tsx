@@ -195,9 +195,7 @@ const HONOURS = [
 
 export default function FounderPage() {
   const [activeTab, setActiveTab] = useState(0);
-  const [emailDiag, setEmailDiag] = useState("");
   const [emailNews, setEmailNews] = useState("");
-  const [submittedDiag, setSubmittedDiag] = useState(false);
   const [submittedNews, setSubmittedNews] = useState(false);
   const [navScrolled, setNavScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -211,7 +209,7 @@ export default function FounderPage() {
 
   // Intersection observer for active nav link
   useEffect(() => {
-    const sections = ["story", "roots", "patterns", "system", "writing", "vision"];
+    const sections = ["story", "roots", "synthesis", "patterns", "writing", "vision"];
     const obs = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
@@ -231,7 +229,6 @@ export default function FounderPage() {
     { href: "#story",    label: "Story" },
     { href: "#roots",    label: "Roots" },
     { href: "#patterns", label: "Patterns" },
-    { href: "#system",   label: "System" },
     { href: "#writing",  label: "Writing" },
     { href: "#vision",   label: "Vision" },
   ];
@@ -251,12 +248,36 @@ export default function FounderPage() {
         .fn-nav-inner { max-width: 1160px; margin: 0 auto; padding: 0 38px; display: flex; align-items: center; justify-content: space-between; width: 100%; }
         .fn-brand { font-family: var(--font-serif), Georgia, serif; font-size: 20px; font-weight: 400; color: #EDEBE3; letter-spacing: .01em; text-decoration: none; }
         .fn-nl { display: flex; align-items: center; gap: 30px; }
-        .fn-nl a { font-family: var(--font-mono), monospace; font-size: 11px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: #6A6A70; transition: color .2s; padding: 5px 0; position: relative; text-decoration: none; }
+        .fn-nl a { font-family: var(--font-sans), Inter, sans-serif; font-size: 11px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: #6A6A70; transition: color .2s; padding: 5px 0; position: relative; text-decoration: none; }
         .fn-nl a:hover, .fn-nl a.on { color: #E2C078; }
         .fn-nl a.on::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; background: #C9A24A; }
         .fn-nl .fn-btn { color: #C9A24A; border: 1px solid rgba(201,162,74,.28); border-radius: 2px; padding: 8px 15px; }
         .fn-nl .fn-btn:hover { background: rgba(201,162,74,.08); }
         .fn-hamb { display: none; background: none; border: 1px solid rgba(237,235,227,.08); color: #EDEBE3; width: 42px; height: 38px; border-radius: 4px; cursor: pointer; align-items: center; justify-content: center; }
+
+        /* Spine draw animation */
+        @keyframes spineGrow {
+          from { transform: scaleY(0); transform-origin: top; }
+          to   { transform: scaleY(1); transform-origin: top; }
+        }
+        .spine-line { animation: spineGrow 1.4s cubic-bezier(0.22,1,0.36,1) forwards; transform-origin: top; }
+
+        /* Pattern card hover */
+        .pattern-card { transition: border-color .25s, box-shadow .25s, transform .25s; }
+        .pattern-card:hover { border-color: rgba(201,162,74,.32) !important; box-shadow: 0 8px 32px -12px rgba(201,162,74,.18); transform: translateY(-3px); }
+
+        /* Tab underline slide */
+        .roots-tab { position: relative; transition: color .2s; }
+        .roots-tab::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: #C9A24A; transform: scaleX(0); transform-origin: left; transition: transform .28s cubic-bezier(0.22,1,0.36,1); }
+        .roots-tab[aria-selected="true"]::after { transform: scaleX(1); }
+
+        /* Reduced motion — kill all animations */
+        @media (prefers-reduced-motion: reduce) {
+          *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+          .spine-line { animation: none !important; transform: none !important; }
+          .pattern-card:hover { transform: none !important; }
+        }
+
         @media (max-width: 960px) {
           .fn-nl { position: fixed; inset: 64px 0 auto 0; flex-direction: column; gap: 0; background: #0D0D0F; border-bottom: 1px solid rgba(201,162,74,.28); max-height: 0; overflow: hidden; transition: max-height .35s; padding: 0 38px; }
           .fn-nl.open { max-height: 580px; padding: 12px 38px 26px; }
@@ -268,13 +289,19 @@ export default function FounderPage() {
           .founder-hero { grid-template-columns: 1fr !important; }
           .founder-hero-img { height: 42vh; min-height: 300px; }
           .founder-hero-img::after { top: auto !important; left: 0; right: 0; bottom: 0; width: 100% !important; height: 42%; background: linear-gradient(0deg, #0A0A0B, transparent) !important; }
-          .founder-hero-txt { padding: 40px 38px 52px !important; }
-          .founder-sys-map { grid-template-columns: 1fr 1fr !important; }
+          .founder-hero-txt { padding: 40px 28px 52px !important; }
           .founder-loop { grid-template-columns: 1fr !important; }
           .founder-loop .loop-arrow { transform: rotate(90deg); padding: 4px 0; }
+          .synthesis-timeline > div { width: 100% !important; left: 0 !important; text-align: left !important; padding-left: 28px !important; padding-right: 12px !important; }
+          .synthesis-timeline > div .tl-dot { left: -3.5px !important; right: auto !important; }
+          .synthesis-center-line { left: 0 !important; }
+          .bedrock-grid { grid-template-columns: 1fr !important; }
+          .bedrock-arrow { display: none !important; }
+          .bridge-grid { grid-template-columns: 1fr !important; }
+          .patterns-grid { grid-template-columns: 1fr 1fr !important; }
         }
         @media (max-width: 480px) {
-          .founder-sys-map { grid-template-columns: 1fr !important; }
+          .patterns-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
 
@@ -288,7 +315,6 @@ export default function FounderPage() {
             aria-expanded={mobileOpen}
             aria-controls="fn-nl"
             onClick={() => setMobileOpen(!mobileOpen)}
-            style={{ display: "none" }}
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" style={{ width: 20, height: 20 }}>
               <line x1="3" y1="7" x2="21" y2="7" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="17" x2="21" y2="17" />
@@ -503,12 +529,17 @@ export default function FounderPage() {
             className="relative"
             style={{ maxWidth: 860, margin: "0 auto" }}
           >
-            {/* Vertical line */}
-            <div
-              className="absolute pointer-events-none"
+            {/* Vertical spine — draws on scroll-enter */}
+            <motion.div
+              className="absolute pointer-events-none spine-line"
+              initial={{ scaleY: 0 }}
+              whileInView={{ scaleY: 1 }}
+              viewport={{ once: true, margin: "-5%" }}
+              transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
               style={{
                 left: 26, top: 18, bottom: 64, width: 1,
-                background: "linear-gradient(180deg, var(--accent), rgba(201,162,74,.28) 40%, rgba(201,162,74,.28))",
+                background: "linear-gradient(180deg, #C9A24A, rgba(201,162,74,.28) 40%, rgba(201,162,74,.28))",
+                transformOrigin: "top",
               }}
             />
 
@@ -518,11 +549,11 @@ export default function FounderPage() {
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-8%" }}
-                transition={{ duration: 0.6, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: 0.65, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
                 className="relative"
                 style={{
                   padding: "30px 0 30px 72px",
-                  borderBottom: s.last ? "none" : "1px solid var(--line)",
+                  borderBottom: s.last ? "none" : "1px solid rgba(237,235,227,.08)",
                 }}
               >
                 {/* Number dot */}
@@ -612,14 +643,14 @@ export default function FounderPage() {
                 aria-controls={`panel-${t.id}`}
                 id={`tab-${t.id}`}
                 onClick={() => setActiveTab(i)}
-                className="font-mono transition-colors duration-200"
+                className="roots-tab font-sans transition-colors duration-200"
                 style={{
-                  fontSize: "11.5px", fontWeight: 500, letterSpacing: ".13em",
+                  fontSize: "11px", fontWeight: 500, letterSpacing: ".16em",
                   textTransform: "uppercase",
-                  color: activeTab === i ? "var(--accent-2)" : "var(--fg-5)",
+                  color: activeTab === i ? "#E2C078" : "#6A6A70",
                   background: "none", border: "none",
-                  borderBottom: activeTab === i ? "2px solid var(--accent)" : "2px solid transparent",
-                  padding: "13px 16px", cursor: "pointer",
+                  borderBottom: "2px solid transparent",
+                  padding: "13px 18px", cursor: "pointer",
                   marginBottom: -1,
                 }}
               >
@@ -801,6 +832,7 @@ export default function FounderPage() {
 
       {/* ── SYNTHESIS ── */}
       <section
+        id="synthesis"
         className="relative"
         style={{ padding: "clamp(80px,12vh,140px) 0", borderTop: "1px solid var(--line)" }}
       >
@@ -815,14 +847,19 @@ export default function FounderPage() {
           </Reveal>
 
           {/* Timeline */}
-          <div className="relative" style={{ maxWidth: 780, margin: "0 auto 52px" }}>
+          <div className="synthesis-timeline relative" style={{ maxWidth: 780, margin: "0 auto 52px" }}>
             {/* Center line */}
-            <div
-              className="absolute pointer-events-none"
+            <motion.div
+              className="synthesis-center-line absolute pointer-events-none"
+              initial={{ scaleY: 0 }}
+              whileInView={{ scaleY: 1 }}
+              viewport={{ once: true, margin: "-5%" }}
+              transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
               style={{
                 left: "50%", top: 8, bottom: 8, width: 1,
-                background: "linear-gradient(180deg, var(--line), rgba(201,162,74,.28) 60%, var(--accent))",
+                background: "linear-gradient(180deg, rgba(237,235,227,.08), rgba(201,162,74,.28) 60%, #C9A24A)",
                 transform: "translateX(-50%)",
+                transformOrigin: "top",
               }}
             />
             {TIMELINE_ITEMS.map((item, i) => {
@@ -845,10 +882,10 @@ export default function FounderPage() {
                 >
                   {/* Dot */}
                   <div
-                    className="absolute rounded-full"
+                    className="tl-dot absolute rounded-full"
                     style={{
                       top: 19, width: i === 6 ? 11 : 7, height: i === 6 ? 11 : 7,
-                      background: i === 0 ? "rgba(201,162,74,.4)" : "var(--accent)",
+                      background: i === 0 ? "rgba(201,162,74,.4)" : "#C9A24A",
                       right: isOdd ? (i === 6 ? -5.5 : -3.5) : "auto",
                       left: !isOdd ? (i === 6 ? -5.5 : -3.5) : "auto",
                       boxShadow: i === 6 ? "0 0 16px 1px rgba(201,162,74,.6)" : "none",
@@ -877,7 +914,7 @@ export default function FounderPage() {
             </p>
           </div>
           <div
-            className="grid grid-cols-1 md:grid-cols-3 gap-5"
+            className="bedrock-grid grid grid-cols-1 md:grid-cols-3 gap-5"
             style={{ maxWidth: 1080, margin: "0 auto" }}
           >
             {[
@@ -891,26 +928,26 @@ export default function FounderPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-                className="relative"
+                className="relative pattern-card"
                 style={{
                   background: "var(--bg-1)",
-                  border: "1px solid var(--line)",
-                  borderTop: `2px solid ${i === 2 ? "var(--accent-2)" : "var(--accent)"}`,
+                  border: "1px solid rgba(237,235,227,.08)",
+                  borderTop: `2px solid ${i === 2 ? "#E2C078" : "#C9A24A"}`,
                   borderRadius: 14,
                   padding: "44px 34px",
                   boxShadow: `0 0 ${44 + i * 10}px -${26 - i * 4}px rgba(201,162,74,${0.4 + i * 0.1})`,
                 }}
               >
-                <span className="font-mono block mb-4" style={{ fontSize: 11, fontWeight: 500, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--accent)" }}>
+                <span className="font-mono block mb-4" style={{ fontSize: 11, fontWeight: 500, letterSpacing: ".2em", textTransform: "uppercase", color: "#C9A24A" }}>
                   {card.k}
                 </span>
-                <p className="font-serif" style={{ fontWeight: 500, fontSize: 28, lineHeight: 1.12, color: "var(--fg)" }}>
+                <p className="font-serif" style={{ fontWeight: 500, fontSize: 28, lineHeight: 1.12, color: "#EDEBE3" }}>
                   {card.v}
                 </p>
                 {i < 2 && (
                   <span
-                    className="absolute font-serif"
-                    style={{ right: -17, top: "50%", transform: "translateY(-50%)", color: "var(--accent-2)", fontSize: 20, zIndex: 2 }}
+                    className="bedrock-arrow absolute font-serif"
+                    style={{ right: -17, top: "50%", transform: "translateY(-50%)", color: "#E2C078", fontSize: 20, zIndex: 2 }}
                   >
                     →
                   </span>
@@ -965,7 +1002,7 @@ export default function FounderPage() {
             <p style={{ fontSize: 14, color: "var(--fg-3)", maxWidth: "74ch", marginBottom: 16, lineHeight: 1.55 }}>
               The mechanics every organisation runs on — the foundation for clarity and execution. Get these wrong and nothing above them holds.
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
+            <div className="patterns-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
               {PATTERNS_THRESHOLD.map((p, i) => (
                 <motion.div
                   key={i}
@@ -973,18 +1010,17 @@ export default function FounderPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-6%" }}
                   transition={{ duration: 0.5, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-                  whileHover={{ y: -2, borderColor: "rgba(201,162,74,.28)" }}
+                  className="pattern-card"
                   style={{
                     background: "var(--bg-1)",
-                    border: "1px solid var(--line)",
-                    borderRadius: 12, padding: "22px",
-                    transition: "border-color .2s",
+                    border: "1px solid rgba(237,235,227,.08)",
+                    borderRadius: 12, padding: "24px",
                   }}
                 >
-                  <div className="font-serif italic mb-1" style={{ fontSize: 17, color: "var(--accent)" }}>{p.num}</div>
-                  <div className="font-serif mb-2" style={{ fontWeight: 500, fontSize: 19, color: "var(--fg)", lineHeight: 1.12 }}>{p.name}</div>
-                  <div className="font-serif italic mb-2" style={{ fontSize: "13.5px", lineHeight: 1.4, color: "var(--accent)" }}>{p.signal}</div>
-                  <div style={{ fontSize: 13, color: "var(--fg-3)", lineHeight: 1.5 }}>{p.desc}</div>
+                  <div className="font-serif italic mb-1" style={{ fontSize: 17, color: "#C9A24A" }}>{p.num}</div>
+                  <div className="font-serif mb-2" style={{ fontWeight: 500, fontSize: 19, color: "#EDEBE3", lineHeight: 1.12 }}>{p.name}</div>
+                  <div className="font-serif italic mb-2" style={{ fontSize: "13.5px", lineHeight: 1.4, color: "#C9A24A" }}>{p.signal}</div>
+                  <div style={{ fontSize: 13, color: "#97979C", lineHeight: 1.5 }}>{p.desc}</div>
                 </motion.div>
               ))}
             </div>
@@ -1004,7 +1040,7 @@ export default function FounderPage() {
             <p style={{ fontSize: 14, color: "var(--fg-3)", maxWidth: "74ch", marginBottom: 16, lineHeight: 1.55 }}>
               What separates a good organisation from a great one — the thinking, designed in deliberately rather than improvised, that turns a working system into a winning one.
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
+            <div className="patterns-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
               {PATTERNS_SIGNATURE.map((p, i) => (
                 <motion.div
                   key={i}
@@ -1012,18 +1048,17 @@ export default function FounderPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-6%" }}
                   transition={{ duration: 0.5, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-                  whileHover={{ y: -2, borderColor: "rgba(201,162,74,.28)" }}
+                  className="pattern-card"
                   style={{
                     background: "var(--bg-1)",
-                    border: "1px solid var(--line)",
-                    borderRadius: 12, padding: "22px",
-                    transition: "border-color .2s",
+                    border: "1px solid rgba(237,235,227,.08)",
+                    borderRadius: 12, padding: "24px",
                   }}
                 >
-                  <div className="font-serif italic mb-1" style={{ fontSize: 17, color: "var(--accent)" }}>{p.num}</div>
-                  <div className="font-serif mb-2" style={{ fontWeight: 500, fontSize: 19, color: "var(--fg)", lineHeight: 1.12 }}>{p.name}</div>
-                  <div className="font-serif italic mb-2" style={{ fontSize: "13.5px", lineHeight: 1.4, color: "var(--accent)" }}>{p.signal}</div>
-                  <div style={{ fontSize: 13, color: "var(--fg-3)", lineHeight: 1.5 }}>{p.desc}</div>
+                  <div className="font-serif italic mb-1" style={{ fontSize: 17, color: "#C9A24A" }}>{p.num}</div>
+                  <div className="font-serif mb-2" style={{ fontWeight: 500, fontSize: 19, color: "#EDEBE3", lineHeight: 1.12 }}>{p.name}</div>
+                  <div className="font-serif italic mb-2" style={{ fontSize: "13.5px", lineHeight: 1.4, color: "#C9A24A" }}>{p.signal}</div>
+                  <div style={{ fontSize: 13, color: "#97979C", lineHeight: 1.5 }}>{p.desc}</div>
                 </motion.div>
               ))}
             </div>
@@ -1038,129 +1073,6 @@ export default function FounderPage() {
         </div>
       </section>
 
-      {/* ── AXION INDEX SYSTEM ── */}
-      <section
-        id="system"
-        className="relative"
-        style={{ padding: "clamp(80px,12vh,140px) 0", borderTop: "1px solid var(--line)", background: "var(--bg-1)" }}
-      >
-        <div className="shell">
-          <Reveal>
-            <div className="text-center mb-8">
-              <span className="eyebrow eyebrow--center mb-4 block">The Axion Index System</span>
-              <h2 className="h-section mx-auto" style={{ maxWidth: "16ch" }}>One system, choreographed</h2>
-            </div>
-          </Reveal>
-          <Reveal delay={0.08}>
-            <p className="text-center" style={{ fontSize: 16, color: "var(--fg-3)", maxWidth: "62ch", margin: "0 auto 8px", lineHeight: 1.66 }}>
-              Built for the <em style={{ color: "var(--accent-2)", fontStyle: "italic", fontFamily: "var(--font-serif)" }}>unfinished organisation</em> — the startup, the scaling company, the family business still writing its own operating system. Not the mature enterprise that already has one.
-            </p>
-          </Reveal>
-          <Reveal delay={0.14}>
-            <p className="font-serif italic text-center" style={{ fontSize: "clamp(18px,2.05vw,23px)", lineHeight: 1.5, color: "var(--accent)", maxWidth: "50ch", margin: "18px auto 46px" }}>
-              The founder explains the doctrine. Axion Index installs it. The diagnostics measure it. The products scale it.
-            </p>
-          </Reveal>
-
-          {/* System map */}
-          <div
-            className="founder-sys-map grid gap-3"
-            style={{ gridTemplateColumns: "repeat(5, 1fr)", maxWidth: 1080, margin: "0 auto" }}
-          >
-            {SYS_MAP.map((s, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-                className="relative"
-                style={{
-                  background: "var(--bg-1)",
-                  border: `1px solid ${s.entry ? "rgba(201,162,74,.28)" : "var(--line)"}`,
-                  borderRadius: 12, padding: "24px 20px",
-                  opacity: s.future ? 0.78 : 1,
-                  boxShadow: s.entry ? "0 0 40px -22px rgba(201,162,74,.5)" : "none",
-                }}
-              >
-                <span className="font-mono block mb-2" style={{ fontSize: "9.5px", fontWeight: 500, letterSpacing: ".16em", textTransform: "uppercase", color: "var(--accent)" }}>
-                  {s.n}
-                </span>
-                <h4 className="font-serif mb-2" style={{ fontWeight: 500, fontSize: 18, color: "var(--fg)", lineHeight: 1.15 }}>
-                  {s.title}
-                  {s.future && (
-                    <span className="font-mono inline-block ml-2 align-middle" style={{ fontSize: "8.5px", fontWeight: 500, letterSpacing: ".12em", textTransform: "uppercase", color: "var(--accent)", border: "1px solid rgba(201,162,74,.28)", borderRadius: 20, padding: "2px 8px" }}>
-                      In development
-                    </span>
-                  )}
-                </h4>
-                <p style={{ fontSize: 13, color: "var(--fg-3)", lineHeight: 1.5 }}>{s.desc}</p>
-                {i < SYS_MAP.length - 1 && (
-                  <span className="absolute font-serif" style={{ right: -13, top: "50%", transform: "translateY(-50%)", color: "var(--accent)", fontSize: 15, zIndex: 2, opacity: .6 }}>→</span>
-                )}
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Who this is for */}
-          <p className="font-mono text-center mt-14 mb-5" style={{ fontSize: 11, fontWeight: 500, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--fg-5)" }}>
-            Who this is for
-          </p>
-          <div
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3"
-            style={{ maxWidth: 1080, margin: "0 auto" }}
-          >
-            {WHO_GRID.map((w, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 14 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.07, ease: [0.22, 1, 0.36, 1] }}
-                style={{ background: "var(--bg)", border: "1px solid var(--line)", borderRadius: 12, padding: "24px 22px" }}
-              >
-                <div className="font-serif mb-2" style={{ fontWeight: 500, fontSize: 18, color: "var(--accent-2)" }}>{w.aud}</div>
-                <p style={{ fontSize: 14, color: "var(--fg-2)", lineHeight: 1.55 }}>{w.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* CTA */}
-          <div className="text-center mt-14">
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-3" style={{ maxWidth: 460, margin: "0 auto 12px" }}>
-              <input
-                type="email"
-                placeholder="you@company.com"
-                aria-label="Email for diagnostic"
-                value={emailDiag}
-                onChange={e => setEmailDiag(e.target.value)}
-                className="flex-1 font-sans"
-                style={{ fontSize: 14, padding: "14px 16px", border: "1px solid rgba(201,162,74,.28)", borderRadius: 6, background: "var(--bg)", color: "var(--fg)", outline: "none" }}
-              />
-              {submittedDiag ? (
-                <span className="font-mono" style={{ fontSize: 14, color: "var(--accent)" }}>✓ You're on the list.</span>
-              ) : (
-                <button
-                  type="button"
-                  onClick={() => setSubmittedDiag(true)}
-                  className="font-mono shrink-0"
-                  style={{ fontSize: 12, fontWeight: 500, letterSpacing: ".08em", textTransform: "uppercase", background: "var(--accent)", color: "#000", border: "none", borderRadius: 6, padding: "0 22px", height: 48, cursor: "pointer", whiteSpace: "nowrap" }}
-                >
-                  Request the Diagnostic
-                </button>
-              )}
-            </div>
-            <p style={{ fontSize: "12.5px", color: "var(--fg-5)", marginBottom: 24 }}>
-              The diagnostic maps your organisation against the eight patterns — in development. Request early access.
-            </p>
-            <div className="flex flex-wrap items-center justify-center gap-6">
-              <a href="https://axionindex.org" target="_blank" rel="noopener noreferrer" className="font-mono" style={{ fontSize: 12, fontWeight: 500, letterSpacing: ".1em", textTransform: "uppercase", color: "var(--accent)" }}>
-                Request an advisory conversation →
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* ── WRITING & MEDIA ── */}
       <section
@@ -1290,89 +1202,6 @@ export default function FounderPage() {
         </div>
       </section>
 
-      {/* ── RECOGNITION ── */}
-      <section
-        id="recognition"
-        className="relative"
-        style={{ padding: "clamp(80px,12vh,140px) 0", borderTop: "1px solid var(--line)" }}
-      >
-        <div className="shell">
-          <Reveal>
-            <div className="mb-10">
-              <span className="eyebrow mb-4 block">Recognition</span>
-              <h2 className="h-section" style={{ maxWidth: "16ch" }}>Awards &amp; Education</h2>
-            </div>
-          </Reveal>
-          <div
-            className="grid grid-cols-1 md:grid-cols-3 gap-4"
-            style={{ maxWidth: 1080, margin: "0 auto" }}
-          >
-            {/* Honours */}
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              style={{ background: "var(--bg-1)", border: "1px solid var(--line)", borderRadius: 12, padding: "30px 28px" }}
-            >
-              <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="1.4" style={{ width: 26, height: 26, marginBottom: 14 }}>
-                <circle cx="12" cy="9" r="6"/><path d="M8.5 14l-1.5 7 5-3 5 3-1.5-7"/>
-              </svg>
-              <h4 className="font-mono mb-4" style={{ fontSize: 11, fontWeight: 500, letterSpacing: ".16em", textTransform: "uppercase", color: "var(--accent)" }}>Honours</h4>
-              <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-                {HONOURS.map((h, i) => (
-                  <li key={i} style={{ padding: "8px 0", borderBottom: i < HONOURS.length - 1 ? "1px solid var(--line)" : "none", color: "var(--fg-2)", fontSize: 15 }}>{h}</li>
-                ))}
-              </ul>
-            </motion.div>
-
-            {/* Education */}
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-              style={{ background: "var(--bg-1)", border: "1px solid var(--line)", borderRadius: 12, padding: "30px 28px" }}
-            >
-              <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="1.4" style={{ width: 26, height: 26, marginBottom: 14 }}>
-                <path d="M2 8l10-4 10 4-10 4z"/><path d="M6 10v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/>
-              </svg>
-              <h4 className="font-mono mb-4" style={{ fontSize: 11, fontWeight: 500, letterSpacing: ".16em", textTransform: "uppercase", color: "var(--accent)" }}>Education</h4>
-              <p style={{ color: "var(--fg-3)", fontSize: "14.5px" }}>
-                <strong style={{ color: "var(--fg)" }}>TISS Mumbai</strong><br />
-                Tata Institute of Social Sciences — academic rigour paired with lived experience across corporate giants and startup insurgents.
-              </p>
-            </motion.div>
-
-            {/* Based In */}
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              style={{ background: "var(--bg-1)", border: "1px solid var(--line)", borderRadius: 12, padding: "30px 28px" }}
-            >
-              <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="1.4" style={{ width: 26, height: 26, marginBottom: 14 }}>
-                <path d="M12 2C8 2 5 5 5 9c0 5 7 13 7 13s7-8 7-13c0-4-3-7-7-7z"/><circle cx="12" cy="9" r="2.4"/>
-              </svg>
-              <h4 className="font-mono mb-4" style={{ fontSize: 11, fontWeight: 500, letterSpacing: ".16em", textTransform: "uppercase", color: "var(--accent)" }}>Based In</h4>
-              <p style={{ color: "var(--fg-3)", fontSize: "14.5px" }}>
-                <strong style={{ color: "var(--fg)" }}>Bangalore, India</strong><br />
-                Advising organisations on scaling, leadership design and culture architecture.
-              </p>
-              <a
-                href="https://axionindex.org"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-mono inline-block mt-3"
-                style={{ fontSize: "10.5px", letterSpacing: ".05em", color: "var(--accent)" }}
-              >
-                Advisory work through Axion Index →
-              </a>
-            </motion.div>
-          </div>
-        </div>
-      </section>
 
       {/* ── VISION ── */}
       <section
@@ -1440,19 +1269,55 @@ export default function FounderPage() {
               "The founders who once watched me build are part of what comes next. The rest, I'm still building."
             </blockquote>
             <div className="flex flex-col items-center gap-1 mt-8">
-              <span style={{ color: "var(--accent)", fontSize: 18 }}>◇</span>
-              <span className="font-serif" style={{ fontSize: 22, color: "var(--accent-2)" }}>Nitin Nahata</span>
-              <span className="font-mono" style={{ fontSize: "10.5px", fontWeight: 500, letterSpacing: ".18em", textTransform: "uppercase", color: "var(--fg-5)" }}>The Operating Architect</span>
+              <span style={{ color: "#C9A24A", fontSize: 18 }}>◇</span>
+              <span className="font-serif" style={{ fontSize: 22, color: "#E2C078" }}>Nitin Nahata</span>
+              <span className="font-sans" style={{ fontSize: "10.5px", fontWeight: 500, letterSpacing: ".18em", textTransform: "uppercase", color: "#6A6A70" }}>The Operating Architect</span>
               <a
                 href="https://www.linkedin.com/in/nitinnahata"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-mono mt-2"
-                style={{ fontSize: "10.5px", color: "var(--accent)" }}
+                className="font-sans mt-2"
+                style={{ fontSize: "10.5px", color: "#C9A24A" }}
               >
                 LinkedIn ↗
               </a>
             </div>
+
+            {/* Axion CTA */}
+            <Reveal delay={0.1}>
+              <div
+                className="mt-14 mx-auto"
+                style={{
+                  maxWidth: 560,
+                  background: "rgba(201,162,74,.04)",
+                  border: "1px solid rgba(201,162,74,.22)",
+                  borderRadius: 14,
+                  padding: "40px 44px",
+                  textAlign: "center",
+                }}
+              >
+                <span className="font-sans block mb-3" style={{ fontSize: "10.5px", fontWeight: 500, letterSpacing: ".22em", textTransform: "uppercase", color: "#C9A24A" }}>
+                  Axion Index
+                </span>
+                <p className="font-serif" style={{ fontSize: "clamp(18px,2vw,22px)", lineHeight: 1.36, color: "#EDEBE3", marginBottom: 22 }}>
+                  The operating-architecture advisory practice — for founders and operators building the unfinished organisation.
+                </p>
+                <a
+                  href="https://axionindex.org"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-sans inline-flex items-center gap-2"
+                  style={{
+                    fontSize: "11.5px", fontWeight: 500, letterSpacing: ".12em", textTransform: "uppercase",
+                    color: "#000", background: "#C9A24A",
+                    borderRadius: 4, padding: "13px 26px",
+                    textDecoration: "none",
+                  }}
+                >
+                  Visit Axion Index ↗
+                </a>
+              </div>
+            </Reveal>
           </div>
         </div>
       </section>
