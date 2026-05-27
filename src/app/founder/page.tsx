@@ -558,7 +558,7 @@ export default function FounderPage() {
         <div className="shell">
           <Reveal>
             <div className="mb-14" style={{ maxWidth: 880 }}>
-              <span className="eyebrow mb-4 block">The Soil · Before 2003</span>
+              <span className="eyebrow mb-4 block" style={{ paddingLeft: 85, color: "var(--accent)" }}>The Soil · Before 2003</span>
               <h2
                 className="font-serif mb-5"
                 style={{
@@ -568,13 +568,14 @@ export default function FounderPage() {
                   letterSpacing: "-0.008em",
                   color: "var(--fg)",
                   maxWidth: "18ch",
+                  paddingLeft: 85,
                 }}
               >
                 Where the operating system began writing itself
               </h2>
               <p
                 className="font-sans"
-                style={{ marginTop: 18, fontSize: 18, color: "var(--fg-3)", maxWidth: "62ch", lineHeight: 1.74, fontWeight: 300 }}
+                style={{ marginTop: 18, fontSize: 18, color: "var(--fg-3)", maxWidth: "62ch", lineHeight: 1.74, fontWeight: 300, paddingLeft: 85 }}
               >
                 Every architect needs material to work with. For buildings, it is steel and concrete. For people systems, it is something less visible: a way of reading the world, a comfort with responsibility, an internal compass that holds when external certainty disappears.
               </p>
@@ -602,7 +603,7 @@ export default function FounderPage() {
 
             {STRATA.map((s, i) => {
               /* depth: layer I faintest, layer IV richest */
-              const depthOpacity = 0.55 + i * 0.15; // 0.55 → 1.0
+              const depthOpacity = 1; // all full opacity
               const isLast = !!s.last;
               return (
                 <div
@@ -646,13 +647,13 @@ export default function FounderPage() {
                   >
                     <span
                       className="font-sans block mb-2"
-                      style={{ fontSize: "10px", letterSpacing: ".22em", textTransform: "uppercase", color: "#6A6A70" }}
+                      style={{ fontSize: "12px", letterSpacing: ".22em", textTransform: "uppercase", color: "#A8ADBE" }}
                     >
                       {s.loc}
                     </span>
                     <h3
                       className="font-serif mb-3"
-                      style={{ fontSize: isLast ? 26 : 23, fontWeight: isLast ? 500 : 400, color: isLast ? "#EDEBE3" : "#CCCAC2", lineHeight: 1.15 }}
+                      style={{ fontSize: isLast ? 28 : 25, fontWeight: isLast ? 500 : 400, color: "#F0F1F5", lineHeight: 1.15 }}
                     >
                       {s.title}
                     </h3>
