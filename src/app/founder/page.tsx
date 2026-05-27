@@ -758,166 +758,294 @@ export default function FounderPage() {
                   id={`panel-${t.id}`}
                   role="tabpanel"
                   aria-labelledby={`tab-${t.id}`}
-                  initial={{ opacity: 0, y: 8 }}
+                  initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 8 }}
-                  transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                  exit={{ opacity: 0, y: -6 }}
+                  transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
                   style={{
-                    background: "var(--bg-1)",
-                    border: "1px solid var(--line)",
+                    background: "rgba(14,13,12,.7)",
+                    border: "1px solid rgba(237,235,227,.07)",
                     borderTop: "none",
                     borderRadius: "0 0 14px 14px",
-                    padding: "36px 40px",
+                    padding: "40px 44px",
                     maxWidth: 1080,
                   }}
                 >
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-                    {/* Left */}
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+
+                    {/* ── LEFT COLUMN ── */}
                     <div>
-                      <div className="font-mono mb-2" style={{ fontSize: 12, letterSpacing: ".14em", textTransform: "uppercase", color: "var(--fg-3)" }}>
-                        <span className="font-serif italic" style={{ fontSize: 16, color: "var(--accent)", marginRight: 6 }}>{t.num}</span>
-                        {t.label.toUpperCase()} · {t.period}
+                      {/* Era / label */}
+                      <div className="font-sans mb-3" style={{ fontSize: "10px", letterSpacing: ".2em", textTransform: "uppercase", color: "#6A6A70" }}>
+                        <span className="font-serif italic" style={{ fontSize: 15, color: "#C9A24A", marginRight: 8 }}>{t.num}</span>
+                        {t.label} · {t.period}
                       </div>
-                      <h3 className="font-serif mb-1" style={{ fontSize: "clamp(22px,2.4vw,32px)", fontWeight: 500, color: "var(--fg)", lineHeight: 1.1 }}>
+
+                      {/* Title */}
+                      <h3 className="font-serif mb-1" style={{ fontSize: "clamp(22px,2.3vw,30px)", fontWeight: 400, color: "#EDEBE3", lineHeight: 1.1 }}>
                         {t.title}
                       </h3>
-                      <p className="font-mono mb-4" style={{ fontSize: "10.5px", letterSpacing: ".18em", textTransform: "uppercase", color: "var(--fg-5)" }}>
+
+                      {/* Sub */}
+                      <p className="font-sans mb-5" style={{ fontSize: "10px", letterSpacing: ".18em", textTransform: "uppercase", color: "#4A4A52" }}>
                         {t.sub}
                       </p>
-                      <p style={{ color: "var(--fg-2)", fontWeight: 300, fontSize: 15, lineHeight: 1.66 }}>
+
+                      {/* Body */}
+                      <p style={{ color: "#97979C", fontWeight: 300, fontSize: 15, lineHeight: 1.7 }}>
                         {t.body}
                       </p>
-                      {/* Scar box */}
+
+                      {/* ── SCAR BOX — cinematic ── */}
                       <div
-                        className="mt-5"
+                        className="mt-6"
                         style={{
-                          background: "rgba(25,22,15,.8)",
-                          borderLeft: "3px solid var(--accent)",
+                          background: "rgba(18,15,8,.9)",
+                          borderLeft: "2.5px solid #C9A24A",
                           borderRadius: "0 10px 10px 0",
-                          padding: "20px 24px",
+                          padding: "22px 26px 24px",
+                          boxShadow: "0 0 40px -18px rgba(201,162,74,.35), inset 0 0 24px -16px rgba(201,162,74,.08)",
                         }}
                       >
-                        <span className="font-mono block mb-2" style={{ fontSize: "10.5px", fontWeight: 500, letterSpacing: ".22em", textTransform: "uppercase", color: "var(--accent)" }}>
+                        <span className="font-sans block mb-3" style={{ fontSize: "9.5px", fontWeight: 600, letterSpacing: ".28em", textTransform: "uppercase", color: "#C9A24A", opacity: .7 }}>
                           The Scar
                         </span>
-                        <p className="font-serif italic" style={{ fontSize: 18, lineHeight: 1.46, color: "var(--accent-2)", margin: 0 }}>
+                        <p className="font-serif italic" style={{ fontSize: "clamp(18px,1.8vw,22px)", lineHeight: 1.44, color: "#E2C078", margin: 0 }}>
                           {t.scar}
                         </p>
                       </div>
                     </div>
 
-                    {/* Right */}
+                    {/* ── RIGHT COLUMN ── */}
                     <div>
-                      <span className="font-mono block mb-3" style={{ fontSize: "10.5px", fontWeight: 500, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--fg-5)" }}>
-                        The installations
+                      {/* Installations header */}
+                      <span className="font-sans block mb-4" style={{ fontSize: "9.5px", fontWeight: 500, letterSpacing: ".22em", textTransform: "uppercase", color: "#4A4A52" }}>
+                        The Installations
                       </span>
-                      {t.installations.map((inst, j) => (
+
+                      {/* Stepped ledger — mini spine */}
+                      <div className="relative">
+                        {/* Mini spine */}
                         <div
-                          key={j}
-                          className="flex gap-3 py-3"
-                          style={{ borderTop: j === 0 ? "none" : "1px solid var(--line)" }}
-                        >
-                          <span className="font-serif italic shrink-0" style={{ fontSize: 16, color: "var(--accent)", minWidth: 24 }}>{inst.n}</span>
-                          <div>
-                            <strong className="block font-sans" style={{ fontWeight: 500, fontSize: "14.5px", color: "var(--fg)", marginBottom: 2 }}>{inst.title}</strong>
-                            <span style={{ fontSize: 14, color: "var(--fg-3)", lineHeight: 1.5 }}>{inst.desc}</span>
-                          </div>
-                        </div>
-                      ))}
-                      <div className="mt-4">
-                        <span className="font-mono block mb-2" style={{ fontSize: "10.5px", fontWeight: 500, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--fg-5)" }}>
+                          className="absolute pointer-events-none"
+                          style={{
+                            left: 18, top: 6, bottom: 6, width: 1,
+                            background: "linear-gradient(180deg, rgba(201,162,74,.12), rgba(201,162,74,.22))",
+                          }}
+                        />
+
+                        {t.installations.map((inst, j) => (
+                          <motion.div
+                            key={j}
+                            whileHover={{ x: 3, backgroundColor: "rgba(201,162,74,.03)" }}
+                            transition={{ duration: 0.18 }}
+                            className="relative flex gap-4 py-3 px-2 rounded-lg"
+                            style={{
+                              borderTop: j === 0 ? "none" : "1px solid rgba(237,235,227,.06)",
+                              cursor: "default",
+                            }}
+                          >
+                            {/* Numeral node on mini spine */}
+                            <div
+                              className="shrink-0 font-serif italic"
+                              style={{
+                                width: 36, height: 36,
+                                display: "flex", alignItems: "center", justifyContent: "center",
+                                borderRadius: "50%",
+                                background: "#0A0A0B",
+                                border: "1px solid rgba(201,162,74,.22)",
+                                fontSize: 13,
+                                color: "#C9A24A",
+                                zIndex: 2,
+                                flexShrink: 0,
+                              }}
+                            >
+                              {inst.n}
+                            </div>
+                            <div style={{ paddingTop: 6 }}>
+                              <strong className="block font-sans" style={{ fontWeight: 500, fontSize: "14px", color: "#CCCAC2", marginBottom: 3, lineHeight: 1.2 }}>
+                                {inst.title}
+                              </strong>
+                              <span style={{ fontSize: "13.5px", color: "#6A6A70", lineHeight: 1.52 }}>
+                                {inst.desc}
+                              </span>
+                            </div>
+                          </motion.div>
+                        ))}
+                      </div>
+
+                      {/* What this installed */}
+                      <div className="mt-5 pt-4" style={{ borderTop: "1px solid rgba(237,235,227,.07)" }}>
+                        <span className="font-sans block mb-2" style={{ fontSize: "9.5px", fontWeight: 500, letterSpacing: ".2em", textTransform: "uppercase", color: "#4A4A52" }}>
                           What this collision installed
                         </span>
-                        <p style={{ color: "var(--fg-2)", fontSize: "14.5px", lineHeight: 1.55 }}>{t.installed}</p>
+                        <p style={{ color: "#97979C", fontSize: "14px", lineHeight: 1.58 }}>{t.installed}</p>
                       </div>
+
+                      {/* Tag pill */}
                       <span
-                        className="inline-flex items-center font-mono mt-4"
+                        className="inline-flex items-center font-sans mt-4"
                         style={{
-                          fontSize: "11.5px", letterSpacing: ".06em",
-                          color: "var(--accent-2)",
-                          border: "1px solid rgba(201,162,74,.28)",
+                          fontSize: "10.5px", fontWeight: 500, letterSpacing: ".08em",
+                          color: "#E2C078",
+                          border: "1px solid rgba(201,162,74,.22)",
                           borderRadius: 30, padding: "7px 16px",
                         }}
                       >
                         {t.tag}
                       </span>
-                      {/* Doctrine progress */}
-                      <div className="flex flex-wrap gap-2 mt-6 pt-5" style={{ borderTop: "1px solid var(--line)" }}>
-                        <span className="font-mono w-full mb-1" style={{ fontSize: "9.5px", fontWeight: 500, letterSpacing: ".18em", textTransform: "uppercase", color: "var(--accent)" }}>
+
+                      {/* ── DOCTRINE PROGRESS ── */}
+                      <div className="mt-6 pt-5" style={{ borderTop: "1px solid rgba(237,235,227,.07)" }}>
+                        <span className="font-sans block mb-3" style={{ fontSize: "9px", fontWeight: 500, letterSpacing: ".2em", textTransform: "uppercase", color: "#C9A24A", opacity: .6 }}>
                           Operating Architect · Doctrine Progress
                         </span>
-                        {ALL_DOCTRINE.map((d) => (
-                          <span
-                            key={d}
-                            className="font-mono"
-                            style={{
-                              fontSize: "9.5px", fontWeight: 500, letterSpacing: ".13em",
-                              textTransform: "uppercase",
-                              color: t.doctrine.includes(d) ? "#000" : "var(--fg-5)",
-                              background: t.doctrine.includes(d) ? "var(--accent)" : "transparent",
-                              border: "1px solid var(--line)",
-                              borderRadius: 20, padding: "5px 11px",
-                            }}
-                          >
-                            {d}
-                          </span>
-                        ))}
+                        <div className="flex flex-wrap gap-2">
+                          {ALL_DOCTRINE.map((d, di) => {
+                            const tabIndex = ROOTS_TABS.findIndex(tab => tab.doctrine.includes(d));
+                            const isEarned = tabIndex !== -1 && tabIndex < i;
+                            const isCurrent = t.doctrine.includes(d);
+                            const isUpcoming = !isEarned && !isCurrent;
+                            return (
+                              <span
+                                key={d}
+                                className="font-sans"
+                                style={{
+                                  fontSize: "9px", fontWeight: isCurrent ? 600 : 400,
+                                  letterSpacing: ".13em", textTransform: "uppercase",
+                                  color: isCurrent ? "#000" : isEarned ? "#C9A24A" : "#3A3A40",
+                                  background: isCurrent ? "#C9A24A" : isEarned ? "rgba(201,162,74,.10)" : "transparent",
+                                  border: `1px solid ${isCurrent ? "#C9A24A" : isEarned ? "rgba(201,162,74,.28)" : "rgba(237,235,227,.07)"}`,
+                                  borderRadius: 20, padding: "5px 12px",
+                                  transition: "all .25s",
+                                }}
+                              >
+                                {isEarned && !isCurrent ? "✓ " : ""}{d}
+                              </span>
+                            );
+                          })}
+                        </div>
                       </div>
                     </div>
+
                   </div>
                 </motion.div>
               )}
             </AnimatePresence>
           ))}
 
-          {/* Bridge */}
+          {/* ── BRIDGE ── */}
+          <Reveal delay={0.1}>
           <div
-            className="text-center relative mt-16 pt-4"
-            style={{ maxWidth: 880, margin: "60px auto 0" }}
+            className="relative"
+            style={{ maxWidth: 860, margin: "72px auto 0" }}
           >
+            {/* Ambient glow */}
             <div
               className="absolute pointer-events-none"
               style={{
-                left: "50%", top: -30, width: 560, height: 260, maxWidth: "100%",
+                left: "50%", top: "10%", width: 480, height: 320,
                 transform: "translateX(-50%)",
-                background: "radial-gradient(ellipse at center, rgba(201,162,74,.06), transparent 68%)",
+                background: "radial-gradient(ellipse at center, rgba(201,162,74,.055), transparent 70%)",
               }}
             />
-            <div className="relative">
-              <span className="eyebrow eyebrow--center mb-2 block">The Bridge</span>
-              <p className="font-mono block mb-4" style={{ fontSize: "10.5px", fontWeight: 500, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--fg-5)" }}>
-                Rest Points
-              </p>
-              <div style={{ width: 48, height: 1, background: "var(--accent)", margin: "18px auto 24px", opacity: .6 }} />
+
+            {/* Gold-framed signature container */}
+            <div
+              className="relative text-center"
+              style={{
+                border: "1px solid rgba(201,162,74,.18)",
+                borderRadius: 16,
+                padding: "52px 60px 48px",
+                background: "rgba(12,11,9,.5)",
+              }}
+            >
+              {/* Corner accents — top */}
+              <div className="absolute pointer-events-none" style={{ top: -1, left: 28, width: 48, height: 1, background: "#C9A24A", opacity: .5 }} />
+              <div className="absolute pointer-events-none" style={{ top: -1, right: 28, width: 48, height: 1, background: "#C9A24A", opacity: .5 }} />
+
+              {/* Label */}
+              <span className="font-sans block mb-1" style={{ fontSize: "9.5px", fontWeight: 600, letterSpacing: ".32em", textTransform: "uppercase", color: "#C9A24A", opacity: .65 }}>
+                The Bridge
+              </span>
+              <span className="font-sans block mb-8" style={{ fontSize: "9px", fontWeight: 400, letterSpacing: ".22em", textTransform: "uppercase", color: "#4A4A52" }}>
+                Two pauses that reset the lens
+              </span>
+
+              {/* Central quote */}
               <blockquote
                 className="font-serif italic mx-auto"
-                style={{ fontSize: "clamp(20px,2.5vw,26px)", lineHeight: 1.42, color: "var(--fg)", maxWidth: "24ch" }}
+                style={{ fontSize: "clamp(21px,2.4vw,28px)", lineHeight: 1.44, color: "#EDEBE3", maxWidth: "26ch", marginBottom: 28 }}
               >
                 "Not every chapter in a career needs to be a collision. Some need to be a clearing."
               </blockquote>
-              <p className="font-mono mt-5 mb-3" style={{ fontSize: "10.5px", fontWeight: 500, letterSpacing: ".24em", textTransform: "uppercase", color: "var(--accent)" }}>
-                Marico · Lodha
-              </p>
-              <p style={{ fontSize: 15, color: "var(--fg-3)", maxWidth: "58ch", margin: "0 auto" }}>
+
+              {/* Recalibration line — quiet, centered, no box */}
+              <p
+                className="font-serif italic mx-auto"
+                style={{ fontSize: "15.5px", lineHeight: 1.62, color: "#6A6A70", maxWidth: "52ch", marginBottom: 32 }}
+              >
                 Recognising when the professional timeline and the personal timeline need realignment is not weakness — it is the same first-principles thinking, applied to your own life.
               </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mt-10 text-left" style={{ maxWidth: 820, margin: "40px auto 0" }}>
+
+              {/* Divider */}
+              <div style={{ width: 1, height: 32, background: "rgba(201,162,74,.22)", margin: "0 auto 32px" }} />
+
+              {/* Two connector cards */}
+              <div className="bridge-grid grid grid-cols-1 md:grid-cols-2 gap-5 text-left">
                 {[
-                  { t: "The Discipline Bridge — Marico", h: "Where intensity paused and refocus began", p: "Between the decade at Tata and the velocity of Udaan, a deliberate clearing — a mature, consumer-first organisation where the challenge was not building systems but sustaining and refining them.", chips: ["Focus as Architecture", "Self-Architecture"] },
-                  { t: "The Reality Bridge — Lodha", h: "When the plan and the situation diverge", p: "A different sector, a different velocity. Conditions shifted from what had been anticipated — and navigating that shift compressed significant adaptability learning into a short, intense window.", chips: ["Adaptability as Design", "Context Reading"] },
+                  {
+                    label: "The Discipline Bridge — Marico",
+                    heading: "Where intensity paused and refocus began",
+                    body: "Between the decade at Tata and the velocity of Udaan, a deliberate clearing — a mature, consumer-first organisation where the challenge was not building systems but sustaining and refining them.",
+                    chips: ["Focus as Architecture", "Self-Architecture"],
+                  },
+                  {
+                    label: "The Reality Bridge — Lodha",
+                    heading: "When the plan and the situation diverge",
+                    body: "A different sector, a different velocity. Conditions shifted from what had been anticipated — and navigating that shift compressed significant adaptability learning into a short, intense window.",
+                    chips: ["Adaptability as Design", "Context Reading"],
+                  },
                 ].map((c, i) => (
-                  <div key={i} style={{ borderTop: "1px solid rgba(201,162,74,.28)", padding: "20px 4px 0" }}>
-                    <span className="font-mono block mb-2" style={{ fontSize: "10.5px", fontWeight: 500, letterSpacing: ".16em", textTransform: "uppercase", color: "var(--accent)" }}>{c.t}</span>
-                    <h4 className="font-serif mb-3" style={{ fontWeight: 500, fontSize: 19, color: "var(--fg)", lineHeight: 1.2 }}>{c.h}</h4>
-                    <p style={{ color: "var(--fg-3)", fontSize: 14, fontWeight: 300, marginBottom: 12, lineHeight: 1.6 }}>{c.p}</p>
-                    {c.chips.map((ch) => (
-                      <span key={ch} className="font-mono inline-block mr-2 mb-2" style={{ fontSize: "10.5px", color: "var(--fg-3)", border: "1px solid var(--line)", borderRadius: 20, padding: "5px 12px" }}>{ch}</span>
-                    ))}
-                  </div>
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 12 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-8%" }}
+                    transition={{ duration: 0.6, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] }}
+                    style={{
+                      border: "1px solid rgba(201,162,74,.14)",
+                      borderRadius: 10,
+                      padding: "24px 26px",
+                      background: "rgba(10,10,11,.6)",
+                    }}
+                  >
+                    <span className="font-sans block mb-2" style={{ fontSize: "9.5px", fontWeight: 500, letterSpacing: ".18em", textTransform: "uppercase", color: "#C9A24A", opacity: .75 }}>
+                      {c.label}
+                    </span>
+                    <h4 className="font-serif mb-3" style={{ fontWeight: 400, fontSize: 18, color: "#CCCAC2", lineHeight: 1.22 }}>
+                      {c.heading}
+                    </h4>
+                    <p style={{ color: "#6A6A70", fontSize: "13.5px", fontWeight: 300, marginBottom: 14, lineHeight: 1.62 }}>
+                      {c.body}
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {c.chips.map((ch) => (
+                        <span key={ch} className="font-sans inline-block" style={{ fontSize: "9px", fontWeight: 400, letterSpacing: ".1em", textTransform: "uppercase", color: "#4A4A52", border: "1px solid rgba(237,235,227,.07)", borderRadius: 20, padding: "4px 11px" }}>
+                          {ch}
+                        </span>
+                      ))}
+                    </div>
+                  </motion.div>
                 ))}
               </div>
+
+              {/* Corner accents — bottom */}
+              <div className="absolute pointer-events-none" style={{ bottom: -1, left: 28, width: 48, height: 1, background: "#C9A24A", opacity: .5 }} />
+              <div className="absolute pointer-events-none" style={{ bottom: -1, right: 28, width: 48, height: 1, background: "#C9A24A", opacity: .5 }} />
             </div>
           </div>
+          </Reveal>
         </div>
       </section>
 
