@@ -379,25 +379,36 @@ export default function FounderPage() {
           />
           {/* Monogram */}
           <div className="relative z-10 text-center">
+            {/* Outer halo ring */}
             <div
               style={{
-                width: 188, height: 188, borderRadius: "50%",
-                border: "1px solid rgba(201,162,74,.28)",
+                width: 220, height: 220, borderRadius: "50%",
+                border: "1px solid rgba(201,162,74,.10)",
                 display: "flex", alignItems: "center", justifyContent: "center",
                 margin: "0 auto",
-                boxShadow: "0 0 80px -40px rgba(201,162,74,.6)",
               }}
             >
-              <span
-                className="font-serif"
-                style={{ fontSize: 78, fontWeight: 400, color: "#3a3a40", letterSpacing: ".04em" }}
+              {/* Inner ring */}
+              <div
+                style={{
+                  width: 188, height: 188, borderRadius: "50%",
+                  border: "1px solid rgba(201,162,74,.32)",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  boxShadow: "0 0 80px -30px rgba(201,162,74,.55), inset 0 0 40px -20px rgba(201,162,74,.06)",
+                }}
               >
-                NN
-              </span>
+                <span
+                  className="font-serif"
+                  style={{ fontSize: 72, fontWeight: 400, color: "#3e3d44", letterSpacing: ".06em", userSelect: "none" }}
+                >
+                  NN
+                </span>
+              </div>
             </div>
+            {/* Caption */}
             <p
-              className="font-mono"
-              style={{ marginTop: 22, fontSize: 10, fontWeight: 500, letterSpacing: ".32em", textTransform: "uppercase", color: "#6A6A70" }}
+              className="font-sans"
+              style={{ marginTop: 24, fontSize: "9.5px", fontWeight: 500, letterSpacing: ".38em", textTransform: "uppercase", color: "#4A4A52" }}
             >
               The Operating Architect
             </p>
@@ -421,8 +432,8 @@ export default function FounderPage() {
           <div style={{ position: "relative" }}>
             <Reveal>
               <span
-                className="font-mono"
-                style={{ display: "block", marginBottom: 22, fontSize: "11.5px", fontWeight: 500, letterSpacing: ".3em", textTransform: "uppercase", color: "#C9A24A" }}
+                className="font-sans"
+                style={{ display: "block", marginBottom: 24, fontSize: "10.5px", fontWeight: 500, letterSpacing: ".32em", textTransform: "uppercase", color: "#C9A24A" }}
               >
                 Nitin Nahata
               </span>
@@ -432,20 +443,22 @@ export default function FounderPage() {
                 className="font-serif"
                 style={{
                   fontWeight: 400,
-                  fontSize: "clamp(46px, 6.1vw, 80px)",
-                  lineHeight: 1.03,
-                  letterSpacing: "-.012em",
+                  fontSize: "clamp(44px, 5.8vw, 76px)",
+                  lineHeight: 1.04,
+                  letterSpacing: "-.014em",
                   color: "#EDEBE3",
-                  marginBottom: 22,
+                  marginBottom: 24,
                 }}
               >
-                The Making of the Operating Architect
+                The{" "}
+                <em style={{ fontStyle: "italic", color: "#C9A24A" }}>Making</em>
+                {" "}of the<br />Operating Architect
               </h1>
             </Reveal>
             <Reveal delay={0.18}>
               <p
                 className="font-sans"
-                style={{ fontWeight: 300, fontSize: "clamp(16px,1.6vw,20px)", color: "#97979C", maxWidth: "36ch", marginBottom: 30 }}
+                style={{ fontWeight: 300, fontSize: "clamp(15px,1.45vw,18px)", color: "#97979C", maxWidth: "38ch", marginBottom: 32, lineHeight: 1.6, letterSpacing: ".01em" }}
               >
                 A 23-year journey through collision, scars &amp; conviction.
               </p>
@@ -455,12 +468,13 @@ export default function FounderPage() {
                 className="font-serif"
                 style={{
                   fontStyle: "italic",
-                  fontSize: "16.5px",
-                  lineHeight: 1.64,
-                  color: "#C9A24A",
-                  maxWidth: "46ch",
-                  borderLeft: "1.5px solid #8A7338",
+                  fontSize: "15.5px",
+                  lineHeight: 1.68,
+                  color: "#8A7338",
+                  maxWidth: "44ch",
+                  borderLeft: "1.5px solid rgba(138,115,56,.4)",
                   paddingLeft: 20,
+                  marginBottom: 0,
                 }}
               >
                 A bamboo plant spends years building roots underground. No visible shoot. No measurable progress. Then, in what looks like weeks, it rises — the speed is not sudden. It was always happening, invisibly, structurally, below the surface.
@@ -468,26 +482,56 @@ export default function FounderPage() {
             </Reveal>
             <Reveal delay={0.34}>
               <div
-                className="font-mono"
                 style={{
-                  marginTop: 32,
-                  paddingTop: 22,
-                  borderTop: "1px solid rgba(237,235,227,.08)",
-                  fontSize: "10.5px",
-                  letterSpacing: ".1em",
-                  color: "#6A6A70",
-                  lineHeight: 2.1,
-                  textTransform: "uppercase",
+                  marginTop: 34,
+                  paddingTop: 24,
+                  borderTop: "1px solid rgba(237,235,227,.07)",
                 }}
               >
-                <b style={{ color: "#C9A24A", fontWeight: 500 }}>WIPRO</b> ·{" "}
-                <b style={{ color: "#C9A24A", fontWeight: 500 }}>STANDARD CHARTERED</b> ·{" "}
-                <b style={{ color: "#C9A24A", fontWeight: 500 }}>HSBC</b> ·{" "}
-                <b style={{ color: "#C9A24A", fontWeight: 500 }}>TATA</b> ·{" "}
-                <b style={{ color: "#C9A24A", fontWeight: 500 }}>UDAAN</b> ·{" "}
-                <b style={{ color: "#C9A24A", fontWeight: 500 }}>GAMESKRAFT</b>
-                <br />
-                40 Under 40 · Global HR across the Americas, Australia, the Middle East, Europe &amp; Asia · TISS
+                {/* Tier 1 — Companies */}
+                <div
+                  className="font-sans"
+                  style={{
+                    fontSize: "10px",
+                    fontWeight: 600,
+                    letterSpacing: ".16em",
+                    textTransform: "uppercase",
+                    color: "#C9A24A",
+                    lineHeight: 1.9,
+                    marginBottom: 10,
+                  }}
+                >
+                  Wipro&nbsp;<span style={{ color: "#3A3A40", fontWeight: 400 }}>|</span>&nbsp;Standard Chartered&nbsp;<span style={{ color: "#3A3A40", fontWeight: 400 }}>|</span>&nbsp;HSBC&nbsp;<span style={{ color: "#3A3A40", fontWeight: 400 }}>|</span>&nbsp;Tata&nbsp;<span style={{ color: "#3A3A40", fontWeight: 400 }}>|</span>&nbsp;Udaan&nbsp;<span style={{ color: "#3A3A40", fontWeight: 400 }}>|</span>&nbsp;Gameskraft
+                </div>
+                {/* Tier 2 — Sectors */}
+                <div
+                  className="font-sans"
+                  style={{
+                    fontSize: "9.5px",
+                    fontWeight: 400,
+                    letterSpacing: ".12em",
+                    textTransform: "uppercase",
+                    color: "#5A5A62",
+                    lineHeight: 1.9,
+                    marginBottom: 8,
+                  }}
+                >
+                  IT&nbsp;<span style={{ color: "#2E2E34" }}>|</span>&nbsp;Manufacturing&nbsp;<span style={{ color: "#2E2E34" }}>|</span>&nbsp;Banking&nbsp;<span style={{ color: "#2E2E34" }}>|</span>&nbsp;Real Estate&nbsp;<span style={{ color: "#2E2E34" }}>|</span>&nbsp;FMCG&nbsp;<span style={{ color: "#2E2E34" }}>|</span>&nbsp;Retail&nbsp;<span style={{ color: "#2E2E34" }}>|</span>&nbsp;B2B &amp; B2C Startups&nbsp;<span style={{ color: "#2E2E34" }}>|</span>&nbsp;Gaming &amp; Tech
+                </div>
+                {/* Tier 3 — Geography */}
+                <div
+                  className="font-sans"
+                  style={{
+                    fontSize: "9.5px",
+                    fontWeight: 400,
+                    letterSpacing: ".12em",
+                    textTransform: "uppercase",
+                    color: "#4A4A52",
+                    lineHeight: 1.9,
+                  }}
+                >
+                  Asia&nbsp;<span style={{ color: "#2E2E34" }}>|</span>&nbsp;Americas&nbsp;<span style={{ color: "#2E2E34" }}>|</span>&nbsp;Australia&nbsp;<span style={{ color: "#2E2E34" }}>|</span>&nbsp;Europe&nbsp;<span style={{ color: "#2E2E34" }}>|</span>&nbsp;Middle East
+                </div>
               </div>
             </Reveal>
           </div>
