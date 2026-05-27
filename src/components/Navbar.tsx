@@ -129,31 +129,10 @@ const Navbar = () => {
           <Link href="/connect" className="nav-cta">
             Reach us
           </Link>
-
-          <Link
-            href="/login"
-            className="ml-1 px-4 py-2 font-mono text-[9.5px] tracking-[0.22em] uppercase font-semibold rounded-full transition-all duration-300 active:scale-[0.97]"
-            style={{
-              background: "linear-gradient(135deg, #C9A84C 0%, #E8C97A 50%, #C9A84C 100%)",
-              color: "#080A0F",
-            }}
-          >
-            Login
-          </Link>
         </div>
 
-        {/* Mobile: Login + Hamburger */}
+        {/* Mobile: Hamburger only */}
         <div className="flex lg:hidden items-center gap-3">
-          <Link
-            href="/login"
-            className="px-4 py-2 font-mono text-[9px] tracking-[0.2em] uppercase font-semibold rounded-full"
-            style={{
-              background: "linear-gradient(135deg, #C9A84C 0%, #E8C97A 50%, #C9A84C 100%)",
-              color: "#080A0F",
-            }}
-          >
-            Login
-          </Link>
           <button
             onClick={() => setIsMobileOpen(!isMobileOpen)}
             className="p-2 text-[var(--fg-3)] hover:text-[var(--fg)] transition-colors"

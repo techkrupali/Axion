@@ -167,8 +167,13 @@ export default function Home() {
 
         <motion.div style={{ y: heroY, opacity: heroOpacity }} className="shell text-center relative z-10 pt-20">
           <Reveal>
-            <div className="eyebrow eyebrow--center mb-10 text-[var(--accent)]">
+            <div className="eyebrow eyebrow--center mb-4 text-[var(--accent)]">
               AXION&nbsp;&nbsp;·&nbsp;&nbsp;INDEX
+            </div>
+            <div className="flex justify-center mb-10">
+              <span className="font-mono text-[10px] tracking-[0.32em] uppercase text-[var(--fg-3)] border border-[var(--line-strong)] rounded-full px-4 py-1.5">
+                Organisational Advisory
+              </span>
             </div>
           </Reveal>
 
@@ -245,7 +250,7 @@ export default function Home() {
               </Reveal>
             </div>
 
-            <div className="flex flex-col gap-[10vh] pb-0">
+            <div className="flex flex-col gap-[6vh] md:gap-[10vh] pb-0">
               {[
                 { num: "01", text: "Growth is <em>accelerating.</em><br>Stability is not.", href: "/expertise/people", icon: <Layers size={18} /> },
                 { num: "02", text: "The organisation behaves differently<br><em>depending on who is in the room.</em>", href: "/expertise/people", icon: <Target size={18} /> },
@@ -348,7 +353,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="absolute right-[-10%] top-[20%] font-serif italic text-[28vw] text-white opacity-[0.012] pointer-events-none select-none whitespace-nowrap">
+        <div className="absolute right-0 bottom-[-5%] font-serif italic text-[20vw] text-white opacity-[0.015] pointer-events-none select-none whitespace-nowrap overflow-hidden max-w-full">
           ARCHITECTURE
         </div>
       </section>
@@ -468,7 +473,7 @@ export default function Home() {
             </Reveal>
           </div>
 
-          <div className="flex flex-col lg:flex-row gap-3 min-h-[400px] lg:h-[520px]">
+          <div className="flex flex-col lg:flex-row gap-3 lg:h-[520px]">
             {[
               { num: "01", name: "People Architecture", sub: "The foundation. The other three sit on top of this one.", href: "/expertise/people", label: "Enter People Architecture →" },
               { num: "02", name: "Labour Codes", sub: "When cost, classification, and compliance stop aligning.", href: "/expertise/labour", label: "Enter Labour Codes →" },
@@ -638,7 +643,7 @@ export default function Home() {
               {item.num}
             </div>
 
-            <div className={`shell py-16 lg:py-20 flex flex-col lg:flex-row items-start lg:items-center gap-10 lg:gap-0 ${item.align === "right" ? "lg:flex-row-reverse" : ""}`}>
+            <div className={`shell py-12 lg:py-20 flex flex-col lg:flex-row items-start lg:items-center gap-8 lg:gap-0 ${item.align === "right" ? "lg:flex-row-reverse" : ""}`}>
               {/* Step tag */}
               <div className={`lg:w-1/4 flex flex-col gap-3 ${item.align === "right" ? "lg:items-end lg:text-right" : ""}`}>
                 <span className="font-mono text-[9px] tracking-[0.5em] uppercase text-[var(--fg-5)] opacity-50 group-hover:opacity-100 group-hover:text-[var(--accent)] transition-all duration-500">{item.label}</span>
