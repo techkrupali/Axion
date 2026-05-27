@@ -246,9 +246,9 @@ export default function FounderPage() {
         }
         .fn-nav.s { background: rgba(10,10,11,.95); }
         .fn-nav-inner { max-width: 1160px; margin: 0 auto; padding: 0 38px; display: flex; align-items: center; justify-content: space-between; width: 100%; }
-        .fn-brand { font-family: var(--font-serif), Georgia, serif; font-size: 20px; font-weight: 400; color: #EDEBE3; letter-spacing: .01em; text-decoration: none; }
+        .fn-brand { font-family: var(--font-serif), 'Cormorant Garamond', Georgia, serif; font-size: 20px; font-weight: 400; color: #EDEBE3; letter-spacing: .01em; text-decoration: none; }
         .fn-nl { display: flex; align-items: center; gap: 30px; }
-        .fn-nl a { font-family: var(--font-sans), Inter, sans-serif; font-size: 11px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: #6A6A70; transition: color .2s; padding: 5px 0; position: relative; text-decoration: none; }
+        .fn-nl a { font-family: var(--font-geist-sans), system-ui, sans-serif; font-size: 11px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: #6A6A70; transition: color .2s; padding: 5px 0; position: relative; text-decoration: none; }
         .fn-nl a:hover, .fn-nl a.on { color: #E2C078; }
         .fn-nl a.on::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; background: #C9A24A; }
         .fn-nl .fn-btn { color: #C9A24A; border: 1px solid rgba(201,162,74,.28); border-radius: 2px; padding: 8px 15px; }
@@ -559,10 +559,23 @@ export default function FounderPage() {
           <Reveal>
             <div className="mb-14" style={{ maxWidth: 880 }}>
               <span className="eyebrow mb-4 block">The Soil · Before 2003</span>
-              <h2 className="h-section mb-5" style={{ maxWidth: "18ch" }}>
+              <h2
+                className="font-serif mb-5"
+                style={{
+                  fontWeight: 400,
+                  fontSize: "clamp(32px,4.3vw,54px)",
+                  lineHeight: 1.06,
+                  letterSpacing: "-0.008em",
+                  color: "var(--fg)",
+                  maxWidth: "18ch",
+                }}
+              >
                 Where the operating system began writing itself
               </h2>
-              <p className="lead" style={{ maxWidth: "62ch" }}>
+              <p
+                className="font-sans"
+                style={{ marginTop: 18, fontSize: 18, color: "var(--fg-3)", maxWidth: "62ch", lineHeight: 1.74, fontWeight: 300 }}
+              >
                 Every architect needs material to work with. For buildings, it is steel and concrete. For people systems, it is something less visible: a way of reading the world, a comfort with responsibility, an internal compass that holds when external certainty disappears.
               </p>
             </div>
