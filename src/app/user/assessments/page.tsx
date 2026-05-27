@@ -1,30 +1,15 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { ClipboardCheck, Plus, Filter, Loader2 } from "lucide-react";
+import React from "react";
+import { ClipboardCheck, Plus, Filter } from "lucide-react";
 
 export default function AssessmentsPage() {
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    setTimeout(() => setLoading(false), 800);
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
-        <Loader2 className="w-8 h-8 animate-spin text-[#d4af37]" />
-        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#737373]">Syncing Assessment Pipeline...</p>
-      </div>
-    );
-  }
-
   return (
     <div className="space-y-10">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div className="flex flex-col gap-2">
           <h1 className="text-4xl font-bold tracking-tight">Assessments</h1>
-          <p className="text-[#737373] font-medium">Run six-agent compliance diagnostics on your entities. (Ref: Doc 16 §12)</p>
+          <p className="text-[#737373] font-medium">Run six-agent compliance diagnostics on your entities.</p>
         </div>
         <button className="flex items-center justify-center gap-3 bg-[#d4af37] text-black px-8 py-4 rounded-xl text-[10px] font-bold uppercase tracking-[0.2em] transition-all active:scale-[0.98]">
           <Plus className="w-4 h-4" />

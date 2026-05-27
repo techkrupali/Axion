@@ -1,23 +1,13 @@
-"use client";
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
+import { User, Shield, Key, Bell } from "lucide-react";
 
-import React, { useState, useEffect } from "react";
-import { Settings, User, Shield, Key, Bell, Loader2 } from "lucide-react";
+export default async function SettingsPage() {
+  const session = await auth();
+  if (!session) redirect("/login");
 
-export default function SettingsPage() {
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    setTimeout(() => setLoading(false), 800);
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
-        <Loader2 className="w-8 h-8 animate-spin text-[#d4af37]" />
-        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#737373]">Configuring Node Settings...</p>
-      </div>
-    );
-  }
+  const userName = session.user?.name ?? "";
+  const userEmail = session.user?.email ?? "";
 
   return (
     <div className="space-y-12">
@@ -34,11 +24,11 @@ export default function SettingsPage() {
             { icon: Key, label: "Security & Access" },
             { icon: Bell, label: "Notification Nodes" },
           ].map((item, idx) => (
-            <button 
-              key={idx} 
+            <button
+              key={idx}
               className={`w-full flex items-center gap-4 px-6 py-4 rounded-2xl border transition-all ${
-                item.active 
-                  ? "bg-[#111] border-[#d4af37]/30 text-[#e5e5e5]" 
+                item.active
+                  ? "bg-[#111] border-[#d4af37]/30 text-[#e5e5e5]"
                   : "bg-transparent border-transparent text-[#525252] hover:text-[#a3a3a3]"
               }`}
             >
@@ -55,11 +45,21 @@ export default function SettingsPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="text-[10px] font-bold uppercase tracking-widest text-[#525252] px-1">Full Name</label>
-                  <input type="text" className="w-full bg-[#0a0a0a] border border-[#2a2a2a] rounded-xl px-5 py-4 text-sm text-[#a3a3a3]" disabled value="Axion User" />
+                  <input
+                    type="text"
+                    className="w-full bg-[#0a0a0a] border border-[#2a2a2a] rounded-xl px-5 py-4 text-sm text-[#a3a3a3]"
+                    disabled
+                    defaultValue={userName}
+                  />
                 </div>
                 <div className="space-y-2">
                   <label className="text-[10px] font-bold uppercase tracking-widest text-[#525252] px-1">Email Node</label>
-                  <input type="text" className="w-full bg-[#0a0a0a] border border-[#2a2a2a] rounded-xl px-5 py-4 text-sm text-[#a3a3a3]" disabled value="user@axion.com" />
+                  <input
+                    type="text"
+                    className="w-full bg-[#0a0a0a] border border-[#2a2a2a] rounded-xl px-5 py-4 text-sm text-[#a3a3a3]"
+                    disabled
+                    defaultValue={userEmail}
+                  />
                 </div>
               </div>
             </div>
