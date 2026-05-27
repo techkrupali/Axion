@@ -379,77 +379,145 @@ export default function Home() {
               </p>
             </Reveal>
 
-            {/* Circles — intensity increases left → right */}
-            <div className="flex flex-col md:flex-row justify-center items-start gap-0 w-full mb-16">
+            {/* ── Three-panel architectural cards ── */}
+            <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-4 mb-16">
               {[
                 {
+                  num: "01",
                   label: "Belief",
                   desc: "Where every operating logic begins. A conviction about how an organisation should hold — before the pressure arrives.",
-                  intensity: 0,
+                  accent: "rgba(201,168,76,0.35)",
+                  glow: "rgba(201,168,76,0.06)",
+                  tag: "ORIGIN",
                 },
                 {
+                  num: "02",
                   label: "Conviction",
                   desc: "Belief that has survived collision with reality. Tested against data, cost, and consequence — not opinion.",
-                  intensity: 1,
+                  accent: "rgba(201,168,76,0.65)",
+                  glow: "rgba(201,168,76,0.10)",
+                  tag: "TESTED",
                 },
                 {
+                  num: "03",
                   label: "Rhythm",
                   desc: "When conviction stops depending on the person. Codified into repeatable behaviour the organisation keeps on its own.",
-                  intensity: 2,
+                  accent: "#C9A84C",
+                  glow: "rgba(201,168,76,0.18)",
+                  tag: "CODIFIED",
                 },
-              ].map((item, i) => {
-                const styles = [
-                  // Belief — faint
-                  { border: "1px solid rgba(201,168,76,0.2)", background: "rgba(12,14,20,0.4)", boxShadow: "none", labelColor: "rgba(201,168,76,0.5)" },
-                  // Conviction — medium
-                  { border: "1px solid rgba(201,168,76,0.5)", background: "rgba(201,168,76,0.04)", boxShadow: "0 0 30px rgba(201,168,76,0.07)", labelColor: "rgba(201,168,76,0.8)" },
-                  // Rhythm — brightest / gold-filled
-                  { border: "2px solid rgba(201,168,76,0.9)", background: "rgba(201,168,76,0.1)", boxShadow: "0 0 60px rgba(201,168,76,0.18), 0 0 120px rgba(201,168,76,0.06)", labelColor: "#E8C97A" },
-                ][i];
-                return (
-                  <div key={i} className="flex flex-col md:flex-row items-center flex-1">
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.88 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      viewport={{ once: true, margin: "-10%" }}
-                      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: i * 0.18 }}
-                      className="flex flex-col items-center gap-5 w-full"
-                    >
-                      <motion.div
-                        whileHover={{ scale: 1.05 }}
-                        transition={{ duration: 0.35 }}
-                        className="flex items-center justify-center rounded-full cursor-default"
-                        style={{
-                          width: "clamp(150px,16vw,210px)",
-                          height: "clamp(150px,16vw,210px)",
-                          border: styles.border,
-                          background: styles.background,
-                          boxShadow: styles.boxShadow,
-                        }}
-                      >
-                        <span className="font-serif italic" style={{ fontSize: "clamp(20px,2.2vw,30px)", color: styles.labelColor }}>
-                          {item.label}
-                        </span>
-                      </motion.div>
-                      <p className="text-[var(--fg-2)] text-center leading-relaxed max-w-[22ch] font-serif" style={{ fontSize: "clamp(13px,1.1vw,15px)" }}>
-                        {item.desc}
-                      </p>
-                    </motion.div>
-                    {i < 2 && (
-                      <motion.span
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: i * 0.18 + 0.4 }}
-                        className="text-[var(--accent)] text-[20px] mx-4 md:mx-8 my-6 md:my-0 md:mb-20 shrink-0"
-                        style={{ opacity: 0.5 + i * 0.2 }}
-                      >
-                        →
-                      </motion.span>
-                    )}
+              ].map((item, i) => (
+                <motion.div
+                  key={item.num}
+                  initial={{ opacity: 0, y: 32 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-8%" }}
+                  transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: i * 0.15 }}
+                  whileHover={{ y: -6 }}
+                  className="group relative overflow-hidden cursor-default text-left"
+                  style={{
+                    background: `linear-gradient(160deg, rgba(12,14,20,0.95) 0%, rgba(8,10,15,0.98) 100%)`,
+                    border: `1px solid ${i === 2 ? "rgba(201,168,76,0.3)" : "rgba(240,241,245,0.07)"}`,
+                    borderRadius: 20,
+                    padding: "36px 32px 32px",
+                    boxShadow: i === 2 ? `0 0 60px ${item.glow}, 0 20px 40px rgba(0,0,0,0.4)` : "0 8px 32px rgba(0,0,0,0.3)",
+                    transition: "box-shadow 0.5s, border-color 0.5s",
+                  }}
+                >
+                  {/* Animated top beam */}
+                  <motion.div
+                    className="absolute top-0 left-0 h-[2px]"
+                    initial={{ scaleX: 0, originX: 0 }}
+                    whileInView={{ scaleX: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1.2, delay: 0.3 + i * 0.15, ease: "easeOut" }}
+                    style={{
+                      width: "100%",
+                      background: `linear-gradient(90deg, transparent, ${item.accent}, transparent)`,
+                    }}
+                  />
+
+                  {/* Scan line on hover */}
+                  <motion.div
+                    className="absolute left-0 w-full h-[1px] pointer-events-none"
+                    style={{ background: `linear-gradient(90deg, transparent, ${item.accent}, transparent)`, opacity: 0 }}
+                    animate={{ top: ["0%", "100%"], opacity: [0, 0.6, 0] }}
+                    transition={{ duration: 2.8, repeat: Infinity, ease: "linear", delay: i * 0.9 }}
+                  />
+
+                  {/* Corner tag */}
+                  <div className="absolute top-5 right-5 font-mono text-[8px] tracking-[0.4em]" style={{ color: item.accent, opacity: 0.7 }}>
+                    {item.tag}
                   </div>
-                );
-              })}
+
+                  {/* Number */}
+                  <div
+                    className="font-serif italic mb-6 leading-none"
+                    style={{ fontSize: "clamp(52px,6vw,80px)", color: item.accent, opacity: i === 2 ? 0.25 : 0.12, lineHeight: 1 }}
+                  >
+                    {item.num}
+                  </div>
+
+                  {/* Label */}
+                  <h3
+                    className="font-serif mb-4"
+                    style={{ fontSize: "clamp(22px,2.2vw,30px)", color: i === 2 ? "#E8C97A" : "var(--fg)", fontWeight: 400, lineHeight: 1.1 }}
+                  >
+                    <em>{item.label}</em>
+                  </h3>
+
+                  {/* Desc */}
+                  <p style={{ fontSize: "clamp(13px,1.1vw,14.5px)", color: "var(--fg-3)", lineHeight: 1.7 }}>
+                    {item.desc}
+                  </p>
+
+                  {/* Bottom expanding line */}
+                  <motion.div
+                    className="mt-8 h-[1px]"
+                    style={{ background: item.accent }}
+                    initial={{ width: "28px" }}
+                    whileInView={{ width: "48px" }}
+                    whileHover={{ width: "100%" }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                  />
+
+                  {/* Hover glow overlay */}
+                  <div
+                    className="absolute inset-0 rounded-[20px] pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                    style={{ background: `radial-gradient(ellipse at 50% 100%, ${item.glow} 0%, transparent 70%)` }}
+                  />
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Connector rail */}
+            <div className="w-full relative flex items-center mb-16" style={{ height: 8 }}>
+              {/* Full line behind dots */}
+              <motion.div
+                className="absolute left-[calc(100%/6)] right-[calc(100%/6)] h-[1px]"
+                initial={{ scaleX: 0, originX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1.2, delay: 0.2, ease: "easeOut" }}
+                style={{ background: "linear-gradient(90deg, rgba(201,168,76,0.3), rgba(201,168,76,0.6), #C9A84C)" }}
+              />
+              {/* Dots at 1/6, 3/6, 5/6 = center of each third */}
+              {[0, 1, 2].map((i) => (
+                <motion.div
+                  key={i}
+                  initial={{ scale: 0 }}
+                  whileInView={{ scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: i * 0.25, ease: [0.22, 1, 0.36, 1] }}
+                  className="absolute w-2 h-2 rounded-full -translate-x-1/2"
+                  style={{
+                    left: `${(i * 2 + 1) * (100 / 6)}%`,
+                    background: i === 2 ? "#C9A84C" : `rgba(201,168,76,${0.35 + i * 0.2})`,
+                    boxShadow: i === 2 ? "0 0 8px rgba(201,168,76,0.6)" : "none",
+                  }}
+                />
+              ))}
             </div>
 
             {/* Closing line */}
@@ -580,9 +648,14 @@ export default function Home() {
           {/* Catch-all line */}
           <Reveal delay={0.2}>
             <div className="mt-16 pt-10 border-t border-[var(--line)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-              <p className="font-serif text-[clamp(15px,1.3vw,18px)] text-[var(--fg-3)] max-w-[56ch] leading-relaxed">
-                Four practices. One method. If what's breaking doesn't fit a category, that is still a signal — bring it, and we read the architecture wherever it lives.
-              </p>
+              <div className="flex flex-col gap-3">
+                <p className="font-serif text-[clamp(18px,1.7vw,24px)] text-[var(--fg-3)] leading-relaxed">
+                  Four practices. <em style={{ color: "var(--accent)" }}>One method.</em>
+                </p>
+                <p className="font-serif text-[clamp(14px,1.2vw,17px)] text-[var(--fg-4)] max-w-[56ch] leading-relaxed">
+                  If what's breaking doesn't fit a category, that is still a signal — bring it, and we read the architecture wherever it lives.
+                </p>
+              </div>
               <Link
                 href="/connect"
                 className="shrink-0 inline-flex items-center gap-2 px-6 py-3 font-mono text-[10px] tracking-[0.28em] uppercase rounded-full font-semibold"
