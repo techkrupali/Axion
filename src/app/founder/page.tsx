@@ -1250,115 +1250,156 @@ export default function FounderPage() {
         style={{ padding: "clamp(80px,12vh,140px) 0", borderTop: "1px solid var(--line)", background: "var(--bg-1)" }}
       >
         <div className="shell">
-          <div style={{ maxWidth: 1120, margin: "0 auto 34px" }}>
+
+          {/* Intro */}
+          <div style={{ maxWidth: 1120, margin: "0 auto 56px" }}>
             <Reveal>
               <span className="eyebrow mb-4 block">The Operating Patterns</span>
             </Reveal>
             <Reveal delay={0.08}>
-              <p className="font-serif" style={{ fontSize: "clamp(20px,2.2vw,26px)", lineHeight: 1.34, color: "var(--fg-2)", maxWidth: "34ch" }}>
-                HR has been defined by role and measured by maturity. This work asks a narrower, more practical question —{" "}
-                <strong className="font-serif italic" style={{ color: "var(--accent-2)", fontWeight: 500 }}>
-                  what are the operating patterns a new-age organisation actually runs on?
-                </strong>
+              <p className="font-serif" style={{ fontSize: "clamp(19px,2vw,24px)", lineHeight: 1.38, color: "#CCCAC2", maxWidth: "36ch" }}>
+                What does an organisation actually run on — beneath the strategy, beneath the talent?
+                Eight patterns. Two tiers. The difference between a system that holds and one that doesn't.
               </p>
             </Reveal>
             <Reveal delay={0.14}>
-              <p style={{ marginTop: 16, fontSize: "15.5px", color: "var(--fg-3)", maxWidth: "66ch", lineHeight: 1.66 }}>
+              <p style={{ marginTop: 14, fontSize: "15px", color: "#6A6A70", maxWidth: "62ch", lineHeight: 1.68 }}>
                 The startup, the scaling company, the family business — the{" "}
-                <em style={{ color: "var(--accent-2)", fontStyle: "italic" }}>unfinished organisation</em>{" "}
-                — is still writing that operating system. This work is for them. Eight patterns, in two tiers.
+                <em style={{ color: "#97979C", fontStyle: "italic" }}>unfinished organisation</em>{" "}
+                — is still writing its operating system. These patterns are for them.
               </p>
             </Reveal>
           </div>
 
-          {/* Threshold tier */}
           <div style={{ maxWidth: 1120, margin: "0 auto" }}>
-            <div className="flex items-center gap-3 mb-2">
-              <span className="font-mono" style={{ fontSize: 11, fontWeight: 500, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--fg-5)" }}>
-                Threshold — the floor
-              </span>
-              <span
-                className="font-mono"
-                style={{ fontSize: 9, fontWeight: 500, letterSpacing: ".13em", textTransform: "uppercase", color: "var(--accent)", border: "1px solid var(--accent)", borderRadius: 20, padding: "4px 9px" }}
-              >
-                Threshold
-              </span>
-            </div>
-            <p style={{ fontSize: 14, color: "var(--fg-3)", maxWidth: "74ch", marginBottom: 16, lineHeight: 1.55 }}>
-              The mechanics every organisation runs on — the foundation for clarity and execution. Get these wrong and nothing above them holds.
-            </p>
-            <div className="patterns-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
-              {PATTERNS_THRESHOLD.map((p, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-6%" }}
-                  transition={{ duration: 0.5, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-                  className="pattern-card"
-                  style={{
-                    background: "var(--bg-1)",
-                    border: "1px solid rgba(237,235,227,.08)",
-                    borderRadius: 12, padding: "24px",
-                  }}
-                >
-                  <div className="font-serif italic mb-1" style={{ fontSize: 17, color: "#C9A24A" }}>{p.num}</div>
-                  <div className="font-serif mb-2" style={{ fontWeight: 500, fontSize: 19, color: "#EDEBE3", lineHeight: 1.12 }}>{p.name}</div>
-                  <div className="font-serif italic mb-2" style={{ fontSize: "13.5px", lineHeight: 1.4, color: "#C9A24A" }}>{p.signal}</div>
-                  <div style={{ fontSize: 13, color: "#97979C", lineHeight: 1.5 }}>{p.desc}</div>
-                </motion.div>
-              ))}
-            </div>
 
-            {/* Signature tier */}
-            <div className="flex items-center gap-3 mb-2">
-              <span className="font-mono" style={{ fontSize: 11, fontWeight: 500, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--fg-5)" }}>
-                Signature — the ceiling
-              </span>
-              <span
-                className="font-mono"
-                style={{ fontSize: 9, fontWeight: 500, letterSpacing: ".13em", textTransform: "uppercase", color: "#000", background: "var(--accent)", borderRadius: 20, padding: "4px 9px" }}
-              >
-                Signature
-              </span>
-            </div>
-            <p style={{ fontSize: 14, color: "var(--fg-3)", maxWidth: "74ch", marginBottom: 16, lineHeight: 1.55 }}>
-              What separates a good organisation from a great one — the thinking, designed in deliberately rather than improvised, that turns a working system into a winning one.
-            </p>
-            <div className="patterns-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
-              {PATTERNS_SIGNATURE.map((p, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-6%" }}
-                  transition={{ duration: 0.5, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-                  className="pattern-card"
-                  style={{
-                    background: "var(--bg-1)",
-                    border: "1px solid rgba(237,235,227,.08)",
-                    borderRadius: 12, padding: "24px",
-                  }}
-                >
-                  <div className="font-serif italic mb-1" style={{ fontSize: 17, color: "#C9A24A" }}>{p.num}</div>
-                  <div className="font-serif mb-2" style={{ fontWeight: 500, fontSize: 19, color: "#EDEBE3", lineHeight: 1.12 }}>{p.name}</div>
-                  <div className="font-serif italic mb-2" style={{ fontSize: "13.5px", lineHeight: 1.4, color: "#C9A24A" }}>{p.signal}</div>
-                  <div style={{ fontSize: 13, color: "#97979C", lineHeight: 1.5 }}>{p.desc}</div>
-                </motion.div>
-              ))}
-            </div>
-
+            {/* ── THRESHOLD FRAME ── */}
             <Reveal>
-              <p className="font-serif italic text-center" style={{ fontSize: "clamp(21px,2.5vw,28px)", color: "var(--fg)", margin: "6px auto 26px", maxWidth: "30ch" }}>
-                <strong className="font-serif" style={{ color: "var(--accent-2)", fontWeight: 500 }}>Talent guarantees the ceiling.</strong>{" "}
-                Patterns guarantee the floor.
-              </p>
+              <div
+                className="relative mb-10"
+                style={{
+                  border: "1px solid rgba(237,235,227,.08)",
+                  borderRadius: 16,
+                  padding: "36px 36px 32px",
+                  background: "rgba(10,10,11,.5)",
+                }}
+              >
+                {/* Tier header */}
+                <div className="flex items-baseline gap-4 mb-3">
+                  <span className="font-sans" style={{ fontSize: "10px", fontWeight: 600, letterSpacing: ".22em", textTransform: "uppercase", color: "#6A6A70" }}>
+                    Threshold — the floor
+                  </span>
+                  <span
+                    className="font-sans"
+                    style={{ fontSize: "8.5px", fontWeight: 500, letterSpacing: ".14em", textTransform: "uppercase", color: "#C9A24A", border: "1px solid rgba(201,162,74,.3)", borderRadius: 20, padding: "3px 9px" }}
+                  >
+                    Foundation
+                  </span>
+                </div>
+                <p style={{ fontSize: "13.5px", color: "#4A4A52", maxWidth: "72ch", marginBottom: 24, lineHeight: 1.58 }}>
+                  The mechanics every organisation runs on. Get these wrong and nothing above them holds.
+                </p>
+
+                <div className="patterns-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                  {PATTERNS_THRESHOLD.map((p, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, y: 16 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, margin: "-6%" }}
+                      transition={{ duration: 0.55, delay: i * 0.09, ease: [0.22, 1, 0.36, 1] }}
+                      className="pattern-card"
+                      style={{
+                        background: "rgba(14,13,11,.7)",
+                        border: "1px solid rgba(237,235,227,.07)",
+                        borderRadius: 10, padding: "22px 20px",
+                      }}
+                    >
+                      <div className="font-serif italic mb-2" style={{ fontSize: 15, color: "rgba(201,162,74,.55)" }}>{p.num}</div>
+                      <div className="font-serif mb-2" style={{ fontWeight: 400, fontSize: 18, color: "#CCCAC2", lineHeight: 1.14 }}>{p.name}</div>
+                      <div className="font-serif italic mb-3" style={{ fontSize: "13px", lineHeight: 1.42, color: "rgba(201,162,74,.65)" }}>{p.signal}</div>
+                      <div style={{ fontSize: "12.5px", color: "#5A5A62", lineHeight: 1.54 }}>{p.desc}</div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
             </Reveal>
+
+            {/* ── SIGNATURE FRAME ── */}
+            <Reveal delay={0.06}>
+              <div
+                className="relative mb-16"
+                style={{
+                  border: "1px solid rgba(201,162,74,.14)",
+                  borderRadius: 16,
+                  padding: "36px 36px 32px",
+                  background: "rgba(12,11,9,.6)",
+                  boxShadow: "0 0 60px -30px rgba(201,162,74,.12)",
+                }}
+              >
+                {/* Tier header */}
+                <div className="flex items-baseline gap-4 mb-3">
+                  <span className="font-sans" style={{ fontSize: "10px", fontWeight: 600, letterSpacing: ".22em", textTransform: "uppercase", color: "#6A6A70" }}>
+                    Signature — the ceiling
+                  </span>
+                  <span
+                    className="font-sans"
+                    style={{ fontSize: "8.5px", fontWeight: 600, letterSpacing: ".14em", textTransform: "uppercase", color: "#000", background: "#C9A24A", borderRadius: 20, padding: "3px 9px" }}
+                  >
+                    Differentiator
+                  </span>
+                </div>
+                <p style={{ fontSize: "13.5px", color: "#4A4A52", maxWidth: "72ch", marginBottom: 24, lineHeight: 1.58 }}>
+                  What separates a good organisation from a great one — designed in deliberately, not improvised under pressure.
+                </p>
+
+                <div className="patterns-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                  {PATTERNS_SIGNATURE.map((p, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, y: 16 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, margin: "-6%" }}
+                      transition={{ duration: 0.55, delay: i * 0.09, ease: [0.22, 1, 0.36, 1] }}
+                      className="pattern-card"
+                      style={{
+                        background: "rgba(14,13,11,.7)",
+                        border: "1px solid rgba(201,162,74,.10)",
+                        borderRadius: 10, padding: "22px 20px",
+                      }}
+                    >
+                      <div className="font-serif italic mb-2" style={{ fontSize: 15, color: "rgba(201,162,74,.7)" }}>{p.num}</div>
+                      <div className="font-serif mb-2" style={{ fontWeight: 400, fontSize: 18, color: "#EDEBE3", lineHeight: 1.14 }}>{p.name}</div>
+                      <div className="font-serif italic mb-3" style={{ fontSize: "13px", lineHeight: 1.42, color: "rgba(201,162,74,.75)" }}>{p.signal}</div>
+                      <div style={{ fontSize: "12.5px", color: "#6A6A70", lineHeight: 1.54 }}>{p.desc}</div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
+
+            {/* ── STATEMENT OF BELIEF ── */}
+            <Reveal>
+              <div className="text-center" style={{ padding: "20px 0 8px" }}>
+                <p
+                  className="font-serif italic mx-auto"
+                  style={{
+                    fontSize: "clamp(26px,3.2vw,40px)",
+                    lineHeight: 1.28,
+                    color: "#EDEBE3",
+                    maxWidth: "22ch",
+                    letterSpacing: "-.01em",
+                  }}
+                >
+                  <span style={{ color: "#C9A24A" }}>Talent</span> guarantees the ceiling.{" "}
+                  <span style={{ color: "#C9A24A" }}>Patterns</span> guarantee the floor.
+                </p>
+              </div>
+            </Reveal>
+
           </div>
         </div>
       </section>
-
-
       {/* ── WRITING & MEDIA ── */}
       <section
         id="writing"
