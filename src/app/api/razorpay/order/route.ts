@@ -3,8 +3,8 @@ import Razorpay from "razorpay";
 import { auth } from "@/auth";
 
 const razorpay = new Razorpay({
-  key_id: "rzp_test_RlUAkt1HzIvV4j",
-  key_secret: "sJTXltlLKxoz1f0tjwf8hdTM",
+  key_id: process.env.RAZORPAY_KEY_ID!,
+  key_secret: process.env.RAZORPAY_KEY_SECRET!,
 });
 
 export const POST = auth(async (req) => {

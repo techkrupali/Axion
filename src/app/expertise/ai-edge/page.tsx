@@ -412,7 +412,7 @@ export default function AIEdgeLab() {
                     </div>
                   ))}
                 </div>
-                <button onClick={() => openModal(actor.ctaKey)} style={{ fontFamily: S.mono, fontSize: "8px", letterSpacing: "0.16em", textTransform: "uppercase", color: S.ink, display: "inline-flex", alignItems: "center", gap: "8px", borderBottom: `1px solid ${S.rule}`, paddingBottom: "4px", background: "none", border: "none", borderBottom: `1px solid ${S.rule}`, cursor: "pointer", transition: "all .2s" }}>
+                <button onClick={() => openModal(actor.ctaKey)} style={{ fontFamily: S.mono, fontSize: "8px", letterSpacing: "0.16em", textTransform: "uppercase", color: S.ink, display: "inline-flex", alignItems: "center", gap: "8px", paddingBottom: "4px", background: "none", border: "none", borderBottom: `1px solid ${S.rule}`, cursor: "pointer", transition: "all .2s" }}>
                   {actor.cta} <span style={{ color: S.gold }}>→</span>
                 </button>
               </div>
