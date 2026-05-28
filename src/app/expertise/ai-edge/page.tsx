@@ -453,8 +453,8 @@ export default function AIEdgeLab() {
         {/* ── DOCTRINE ── */}
         <section id="doctrine" style={{ borderBottom: `1px solid ${S.rule}` }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 52px", borderBottom: `1px solid ${S.rule}`, background: S.white2 }}>
-            <span style={{ fontFamily: S.mono, fontSize: "8px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.mid }}>The AI Edge Doctrine — Three Laws</span>
-            <span style={{ fontFamily: S.mono, fontSize: "9px", color: S.dim }}>03 / 06</span>
+            <span style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.mid }}>The AI Edge Doctrine — Three Laws</span>
+            <span style={{ fontFamily: S.mono, fontSize: "12px", color: S.dim }}>03 / 06</span>
           </div>
           <div style={{ padding: "52px" }} className="p-6 md:p-[52px]">
             <div className="grid grid-cols-1 md:grid-cols-2" style={{ marginBottom: "40px" }}>
@@ -462,7 +462,7 @@ export default function AIEdgeLab() {
                 <h2 style={{ fontFamily: S.display, fontSize: "clamp(52px,7vw,88px)", lineHeight: 0.95, color: S.ink, marginBottom: "28px" }}>THE<br />THREE<br /><span style={{ color: S.gold }}>LAWS.</span></h2>
               </div>
               <div style={{ paddingLeft: "52px", display: "flex", flexDirection: "column", justifyContent: "center" }} className="pl-0 md:pl-[52px]">
-                <p style={{ fontSize: "13px", color: S.mid, lineHeight: 1.9, fontWeight: 300, maxWidth: "460px" }}>These are not predictions. They are structural observations about what is already happening — in the data, in organisations, in the careers of professionals who feel the compression without yet having a name for it.</p>
+                <p style={{ fontSize: "16px", color: S.mid, lineHeight: 1.9, fontWeight: 300, maxWidth: "460px" }}>These are not predictions. They are structural observations about what is already happening — in the data, in organisations, in the careers of professionals who feel the compression without yet having a name for it.</p>
               </div>
             </div>
           </div>
@@ -476,11 +476,11 @@ export default function AIEdgeLab() {
               <div key={i} className="law-row" style={{ borderBottom: `1px solid ${S.rule}`, padding: "38px 52px", cursor: "default", position: "relative", transition: "background .3s ease,padding-left .3s ease", overflow: "hidden" }}>
                 <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 0, background: S.gold, transition: "width .3s ease" }} className="law-before" />
                 <div style={{ display: "flex", alignItems: "baseline", gap: "20px", flexWrap: "wrap" }}>
-                  <span style={{ fontFamily: S.mono, fontSize: "8px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.gold, flexShrink: 0, width: "160px" }}>{law.num}</span>
+                  <span style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.gold, flexShrink: 0, whiteSpace: "nowrap" }}>{law.num}</span>
                   <span className="law-arrow" style={{ fontFamily: S.sans, fontSize: "18px", color: S.gold, opacity: 0, transform: "translateX(-8px)", transition: "opacity .3s ease,transform .3s ease", marginLeft: "auto" }}>→</span>
                 </div>
                 <div style={{ fontFamily: S.display, fontSize: "clamp(26px,3vw,40px)", lineHeight: 1.05, color: S.ink, letterSpacing: "0.02em", marginTop: "8px" }}>{law.title}</div>
-                <div className="law-body" style={{ fontSize: "13px", color: S.mid, lineHeight: 1.85, fontWeight: 300, maxWidth: "760px", marginTop: 0, maxHeight: 0, opacity: 0, transition: "max-height .45s ease,opacity .4s ease,margin-top .4s ease", overflow: "hidden" }}>{law.body}</div>
+                <div className="law-body" style={{ fontSize: "15px", color: S.mid, lineHeight: 1.85, fontWeight: 300, maxWidth: "760px", marginTop: 0, maxHeight: 0, opacity: 0, transition: "max-height .45s ease,opacity .4s ease,margin-top .4s ease", overflow: "hidden" }}>{law.body}</div>
               </div>
             ))}
           </div>
@@ -492,10 +492,10 @@ export default function AIEdgeLab() {
               { label: "AI Era · Present", resource: "Judgment", desc: "Organisations built for consequence-bearing decision ownership. Advantage = framing, deciding, being accountable. Architecture = concentration of judgment.", bg: S.ink, resourceColor: S.gold2, descColor: "rgba(247,246,243,0.55)", labelColor: "rgba(247,246,243,0.4)", now: true },
             ].map((era, i) => (
               <div key={i} style={{ padding: "36px 28px", position: "relative", background: era.bg }}>
-                {era.now && <div style={{ position: "absolute", top: "16px", right: "16px", fontFamily: S.mono, fontSize: "7px", letterSpacing: "0.14em", textTransform: "uppercase", background: S.gold, color: S.white, padding: "3px 8px" }}>Now</div>}
-                <div style={{ fontFamily: S.mono, fontSize: "7px", letterSpacing: "0.2em", textTransform: "uppercase", color: era.labelColor, marginBottom: "16px" }}>{era.label}</div>
+                {era.now && <div style={{ position: "absolute", top: "16px", right: "16px", fontFamily: S.mono, fontSize: "11px", letterSpacing: "0.14em", textTransform: "uppercase", background: S.gold, color: S.white, padding: "6px 14px" }}>Now</div>}
+                <div style={{ fontFamily: S.mono, fontSize: "11px", letterSpacing: "0.2em", textTransform: "uppercase", color: era.labelColor, marginBottom: "16px" }}>{era.label}</div>
                 <div style={{ fontFamily: S.display, fontSize: "clamp(24px,2.5vw,32px)", letterSpacing: "0.02em", color: era.resourceColor, marginBottom: "10px" }}>{era.resource}</div>
-                <p style={{ fontSize: "11px", color: era.descColor, lineHeight: 1.75, fontWeight: 300 }}>{era.desc}</p>
+                <p style={{ fontSize: "14px", color: era.descColor, lineHeight: 1.75, fontWeight: 300 }}>{era.desc}</p>
               </div>
             ))}
           </div>
