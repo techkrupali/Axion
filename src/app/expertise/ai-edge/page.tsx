@@ -502,9 +502,9 @@ export default function AIEdgeLab() {
           {/* Logic Table */}
           <div style={{ marginTop: "1px", borderTop: `1px solid ${S.rule}`, background: S.white }}>
             <div className="grid" style={{ gridTemplateColumns: "1fr 60px 1fr", padding: "18px 52px", borderBottom: `1px solid ${S.rule}`, background: S.white2 }}>
-              <span style={{ fontFamily: S.mono, fontSize: "8px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.mid }}>The old career logic</span>
+              <span style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.mid }}>The old career logic</span>
               <span />
-              <span style={{ fontFamily: S.mono, fontSize: "8px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.gold }}>The AI-era career logic</span>
+              <span style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.gold }}>The AI-era career logic</span>
             </div>
             {[["Skill accumulation","Judgment density"],["More output","Better decisions"],["Role security","Work defensibility"],["Experience years","Consequence ownership"],["Functional expertise","Decision architecture"]].map(([old, neo], i) => (
               <div key={i} className="grid" style={{ gridTemplateColumns: "1fr 60px 1fr", padding: "20px 52px", borderBottom: i < 4 ? `1px solid ${S.rule}` : "none", alignItems: "center" }}>
@@ -517,26 +517,26 @@ export default function AIEdgeLab() {
         </section>
 
         {/* ── PULLQUOTE ── */}
-        <div style={{ padding: "52px", background: S.ink, borderBottom: "1px solid rgba(255,255,255,0.08)" }} className="px-6 md:px-[52px]">
-          <div style={{ fontFamily: S.mono, fontSize: "7px", letterSpacing: "0.26em", textTransform: "uppercase", color: "rgba(247,246,243,0.3)", marginBottom: "24px" }}>The Doctrine in One Sentence · AI Edge Lab · 2026</div>
-          <div style={{ fontFamily: S.display, fontSize: "clamp(28px,4.5vw,54px)", lineHeight: 1.05, letterSpacing: "0.02em", color: S.white, maxWidth: "900px" }}>
-            AI DOES NOT ELIMINATE WORK FIRST. IT ELIMINATES THE <span style={{ color: S.gold2 }}>STRUCTURAL PREMIUM</span> ON INTELLIGENCE INSIDE WORK.
+        <div style={{ padding: "52px", background: S.ink, borderBottom: "1px solid rgba(255,255,255,0.08)", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center" }} className="px-6 md:px-[52px]">
+          <div style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.26em", textTransform: "uppercase", color: S.gold, marginBottom: "24px" }}>The Doctrine in One Sentence · AI Edge Lab · 2026</div>
+          <div style={{ fontFamily: S.display, fontSize: "clamp(28px,4vw,56px)", lineHeight: 1.05, letterSpacing: "0.02em", color: S.white, maxWidth: "1200px" }}>
+            AI DOES NOT ELIMINATE WORK FIRST.<br /><span style={{ whiteSpace: "nowrap" }}>IT ELIMINATES THE <span style={{ color: S.gold2 }}>STRUCTURAL PREMIUM</span> ON INTELLIGENCE INSIDE WORK.</span>
           </div>
-          <div style={{ fontFamily: S.mono, fontSize: "8px", color: "rgba(247,246,243,0.3)", marginTop: "24px", letterSpacing: "0.12em", textTransform: "uppercase" }}>Nitin Nahata · CHRO, Gameskraft · Founder, Axionindex</div>
+          <div style={{ fontFamily: S.mono, fontSize: "12px", color: S.gold, marginTop: "24px", letterSpacing: "0.12em", textTransform: "uppercase" }}>Nitin Nahata · CHRO, Gameskraft · Founder, Axionindex</div>
         </div>
 
         {/* ── FRAMEWORK ── */}
         <section id="framework" style={{ borderBottom: `1px solid ${S.rule}` }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 52px", borderBottom: `1px solid ${S.rule}`, background: S.white2 }}>
-            <span style={{ fontFamily: S.mono, fontSize: "8px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.mid }}>The E.D.G.E. Framework — The Six Work Types</span>
-            <span style={{ fontFamily: S.mono, fontSize: "9px", color: S.dim }}>04 / 06</span>
+            <span style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.mid }}>The E.D.G.E. Framework — The Six Work Types</span>
+            <span style={{ fontFamily: S.mono, fontSize: "12px", color: S.dim }}>04 / 06</span>
           </div>
           <div style={{ padding: "52px" }} className="p-6 md:p-[52px]">
             <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: 0 }}>
               <div style={{ borderRight: `1px solid ${S.rule}`, paddingRight: "52px" }} className="pr-0 md:pr-[52px] pb-8 md:pb-0">
                 <h3 style={{ fontFamily: S.display, fontSize: "clamp(28px,3vw,38px)", letterSpacing: "0.02em", color: S.ink, lineHeight: 1, marginBottom: "8px" }}>Your structural position.</h3>
-                <p style={{ fontFamily: S.mono, fontSize: "8px", letterSpacing: "0.1em", color: S.dim, marginBottom: 0, textTransform: "uppercase" }}>Four dimensions · the measurement architecture</p>
-                <p style={{ fontSize: "13px", color: S.mid, lineHeight: 1.9, fontWeight: 300, maxWidth: "460px", marginTop: "22px", marginBottom: "8px" }}>Four dimensions that make your structural position visible — the measurement architecture behind the AI Edge Diagnostic.</p>
+                <p style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.1em", color: S.dim, marginBottom: 0, textTransform: "uppercase" }}>Four dimensions · the measurement architecture</p>
+                <p style={{ fontSize: "15px", color: S.mid, lineHeight: 1.9, fontWeight: 300, maxWidth: "460px", marginTop: "22px", marginBottom: "8px" }}>Four dimensions that make your structural position visible — the measurement architecture behind the AI Edge Diagnostic.</p>
                 <div style={{ display: "flex", flexDirection: "column", gap: "1px", background: S.rule, marginTop: "24px" }}>
                   {[
                     { letter: "E", name: "Exposure", desc: "Proportion of work that is AI-compressible.", dir: "Lower = structurally stronger" },
@@ -547,9 +547,9 @@ export default function AIEdgeLab() {
                     <div key={i} style={{ background: S.white, padding: "20px 24px", display: "grid", gridTemplateColumns: "36px 1fr", gap: 0, alignItems: "start" }}>
                       <div style={{ fontFamily: S.display, fontSize: "28px", color: S.gold, lineHeight: 1, marginTop: "2px" }}>{item.letter}</div>
                       <div style={{ paddingLeft: "12px" }}>
-                        <div style={{ fontSize: "12px", fontWeight: 500, color: S.ink, marginBottom: "4px", letterSpacing: "0.01em" }}>{item.name}</div>
-                        <div style={{ fontSize: "11px", color: S.mid, lineHeight: 1.6, fontWeight: 300 }}>{item.desc}</div>
-                        <div style={{ fontFamily: S.mono, fontSize: "8px", color: S.gold, marginTop: "5px", letterSpacing: "0.06em" }}>{item.dir}</div>
+                        <div style={{ fontSize: "14px", fontWeight: 500, color: S.ink, marginBottom: "4px", letterSpacing: "0.01em" }}>{item.name}</div>
+                        <div style={{ fontSize: "13px", color: S.mid, lineHeight: 1.6, fontWeight: 300 }}>{item.desc}</div>
+                        <div style={{ fontFamily: S.mono, fontSize: "11px", color: S.gold, marginTop: "5px", letterSpacing: "0.06em" }}>{item.dir}</div>
                       </div>
                     </div>
                   ))}
@@ -557,11 +557,11 @@ export default function AIEdgeLab() {
               </div>
               <div style={{ paddingLeft: "52px" }} className="pl-0 md:pl-[52px]">
                 <h3 style={{ fontFamily: S.display, fontSize: "clamp(28px,3vw,38px)", letterSpacing: "0.02em", color: S.ink, lineHeight: 1, marginBottom: "8px" }}>The six work types.</h3>
-                <p style={{ fontFamily: S.mono, fontSize: "8px", letterSpacing: "0.1em", color: S.dim, marginBottom: 0, textTransform: "uppercase" }}>AI compression coefficients by work type</p>
+                <p style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.1em", color: S.dim, marginBottom: 0, textTransform: "uppercase" }}>AI compression coefficients by work type</p>
                 <div style={{ marginTop: "22px" }}>
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 80px 60px", padding: "8px 0", borderBottom: `1px solid ${S.rule2}` }}>
                     {["Work Type","Compression","%"].map((h, i) => (
-                      <span key={i} style={{ fontFamily: S.mono, fontSize: "7px", letterSpacing: "0.16em", textTransform: "uppercase", color: S.dim, textAlign: i === 2 ? "right" : "left" }}>{h}</span>
+                      <span key={i} style={{ fontFamily: S.mono, fontSize: "11px", letterSpacing: "0.16em", textTransform: "uppercase", color: S.dim, textAlign: i === 2 ? "right" : "left" }}>{h}</span>
                     ))}
                   </div>
                   {[
@@ -575,16 +575,16 @@ export default function AIEdgeLab() {
                     <div key={i}>
                       {row.divider && <div style={{ height: "1px", background: S.gold, opacity: 0.2, margin: "2px 0" }} />}
                       <div style={{ display: "grid", gridTemplateColumns: "1fr 80px 60px", alignItems: "center", padding: "12px 0", borderBottom: `1px solid ${S.rule}` }}>
-                        <div style={{ fontSize: "12px", color: S.ink, fontWeight: 300 }}>{row.name}</div>
+                        <div style={{ fontSize: "14px", color: S.ink, fontWeight: 300 }}>{row.name}</div>
                         <div style={{ position: "relative", height: "3px", background: S.white3, borderRadius: "2px", overflow: "hidden" }}>
                           <div style={{ height: "100%", borderRadius: "2px", background: row.color, width: `${row.pct}%` }} />
                         </div>
-                        <div style={{ fontFamily: S.mono, fontSize: "9px", textAlign: "right", color: row.color }}>~{row.pct}%</div>
+                        <div style={{ fontFamily: S.mono, fontSize: "12px", textAlign: "right", color: row.color }}>~{row.pct}%</div>
                       </div>
                     </div>
                   ))}
                 </div>
-                <p style={{ fontFamily: S.mono, fontSize: "7px", color: S.dim, marginTop: "12px", letterSpacing: "0.06em" }}>AI Edge Lab methodology, 2026. Coefficients represent the proportion of work type deliverables that AI can produce at comparable quality.</p>
+                <p style={{ fontFamily: S.mono, fontSize: "11px", color: S.dim, marginTop: "12px", letterSpacing: "0.06em" }}>AI Edge Lab methodology, 2026. Coefficients represent the proportion of work type deliverables that AI can produce at comparable quality.</p>
               </div>
             </div>
           </div>
