@@ -2,17 +2,17 @@ import { NextResponse } from "next/server";
 import Razorpay from "razorpay";
 import { auth } from "@/auth";
 
-const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID!,
-  key_secret: process.env.RAZORPAY_KEY_SECRET!,
-});
-
 export const POST = auth(async (req) => {
   if (!req.auth) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   try {
+    const razorpay = new Razorpay({
+      key_id: process.env.RAZORPAY_KEY_ID!,
+      key_secret: process.env.RAZORPAY_KEY_SECRET!,
+    });
+
     const { amount, currency = "INR" } = await req.json();
 
     if (!amount) {
