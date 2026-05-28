@@ -187,6 +187,94 @@ function BridgeCards() {
   );
 }
 
+const SIGNALS = [
+  { num: "01", text: "Growth is <em>accelerating.</em><br>Stability is not.", href: "/expertise/people", dest: "People Architecture" },
+  { num: "02", text: "The organisation behaves differently<br><em>depending on who is in the room.</em>", href: "/expertise/people", dest: "People Architecture" },
+  { num: "03", text: "AI is increasing <em>output.</em><br>Decision quality is dropping.", href: "/expertise/ai-edge", dest: "AI Edge Lab" },
+  { num: "04", text: "Cost is rising.<br><em>You don't know why.</em>", href: "/expertise/labour", dest: "Labour Codes" },
+  { num: "05", text: "The business is stable.<br><em>The future is not.</em>", href: "/expertise/family", dest: "Family Business" },
+  { num: "06", text: "You have <em>strong people.</em><br>You do not have a strong system.", href: "/expertise/people", dest: "People Architecture" },
+];
+
+function SignalsSection() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end end"],
+  });
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    return scrollYProgress.on("change", (v) => {
+      const idx = Math.min(SIGNALS.length - 1, Math.floor(v * SIGNALS.length));
+      setActiveIndex(idx);
+    });
+  }, [scrollYProgress]);
+
+  return (
+    <section
+      ref={sectionRef}
+      id="signals"
+      className="section-dark relative"
+      style={{ height: `${100 + SIGNALS.length * 50}vh` }}
+    >
+      <div className="sticky top-0 h-screen flex items-center overflow-hidden">
+        <div className="shell w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-20 items-center">
+            {/* Left — static */}
+            <div>
+              <Reveal>
+                <span className="eyebrow mb-6">If this feels familiar</span>
+              </Reveal>
+              <Reveal delay={0.1}>
+                <h2 className="h-section mb-8">
+                  You don't need a service.<br />
+                  You need to read <em>what is breaking.</em>
+                </h2>
+              </Reveal>
+              <Reveal delay={0.2}>
+                <div className="gold-line" />
+              </Reveal>
+            </div>
+
+            {/* Right — stacking cards, contained */}
+            <div className="relative" style={{ height: `${SIGNALS.length * 56 + 80}px` }}>
+              {SIGNALS.map((signal, i) => (
+                <div
+                  key={i}
+                  className="absolute left-0 right-0 transition-all duration-500"
+                  style={{
+                    top: i <= activeIndex ? `${i * 56}px` : `${SIGNALS.length * 56 + 40}px`,
+                    zIndex: 10 + i,
+                    opacity: i <= activeIndex ? 1 : 0,
+                    transform: i <= activeIndex ? "translateY(0)" : "translateY(24px)",
+                  }}
+                >
+                  <Link
+                    href={signal.href}
+                    className="group block bg-[var(--bg-1)] border border-[var(--line-strong)] hover:border-[var(--line-gold)] transition-all duration-400 shadow-[0_8px_32px_rgba(0,0,0,0.4)] rounded-[24px] px-6 py-5"
+                  >
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="font-mono text-[10px] text-[var(--accent)] tracking-[0.35em] font-semibold">SIGNAL {signal.num}</span>
+                      <span className="font-mono text-[9px] tracking-[0.2em] uppercase text-[var(--fg-5)] group-hover:text-[var(--accent)] transition-colors duration-300 flex items-center gap-1">
+                        → {signal.dest}
+                      </span>
+                    </div>
+                    <h3
+                      className="text-[clamp(18px,2.2vw,26px)] font-serif leading-[1.35] text-[var(--fg-2)] group-hover:text-[var(--fg)] transition-colors duration-400"
+                      dangerouslySetInnerHTML={{ __html: signal.text }}
+                    />
+                  </Link>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function Home() {
   const [activePractice, setActivePractice] = useState(0);
   const [diagOpen, setDiagOpen] = useState(false);
@@ -284,63 +372,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════
           SIGNALS — Stacking Cards
       ══════════════════════════════════════════ */}
-      <section className="chapter section-dark relative" id="signals">
-        <div className="shell">
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-20 items-start">
-            <div className="lg:sticky lg:top-32 h-fit">
-              <Reveal>
-                <span className="eyebrow mb-6">If this feels familiar</span>
-              </Reveal>
-              <Reveal delay={0.1}>
-                <h2 className="h-section mb-8">
-                  You don't need a service.<br />
-                  You need to read <em>what is breaking.</em>
-                </h2>
-              </Reveal>
-              <Reveal delay={0.2}>
-                <div className="gold-line" />
-              </Reveal>
-            </div>
-
-            <div className="flex flex-col gap-4 pb-0">
-              {[
-                { num: "01", text: "Growth is <em>accelerating.</em><br>Stability is not.", href: "/expertise/people", dest: "People Architecture" },
-                { num: "02", text: "The organisation behaves differently<br><em>depending on who is in the room.</em>", href: "/expertise/people", dest: "People Architecture" },
-                { num: "03", text: "AI is increasing <em>output.</em><br>Decision quality is dropping.", href: "/expertise/ai-edge", dest: "AI Edge Lab" },
-                { num: "04", text: "Cost is rising.<br><em>You don't know why.</em>", href: "/expertise/labour", dest: "Labour Codes" },
-                { num: "05", text: "The business is stable.<br><em>The future is not.</em>", href: "/expertise/family", dest: "Family Business" },
-                { num: "06", text: "You have <em>strong people.</em><br>You do not have a strong system.", href: "/expertise/people", dest: "People Architecture" },
-              ].map((signal, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-8%" }}
-                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: i * 0.07 }}
-                  className="lg:sticky"
-                  style={{ top: `${128 + i * 44}px`, zIndex: 10 + i }}
-                >
-                  <Link
-                    href={signal.href}
-                    className="group block bg-[var(--bg-1)] border border-[var(--line-strong)] hover:border-[var(--line-gold)] transition-all duration-400 shadow-[0_8px_32px_rgba(0,0,0,0.4)] rounded-[24px] px-6 py-5"
-                  >
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="font-mono text-[10px] text-[var(--accent)] tracking-[0.35em] font-semibold">SIGNAL {signal.num}</span>
-                      <span className="font-mono text-[9px] tracking-[0.2em] uppercase text-[var(--fg-5)] group-hover:text-[var(--accent)] transition-colors duration-300 flex items-center gap-1">
-                        → {signal.dest}
-                      </span>
-                    </div>
-                    <h3
-                      className="text-[clamp(18px,2.2vw,26px)] font-serif leading-[1.35] text-[var(--fg-2)] group-hover:text-[var(--fg)] transition-colors duration-400"
-                      dangerouslySetInnerHTML={{ __html: signal.text }}
-                    />
-                  </Link>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      <SignalsSection />
 
       {/* ══════════════════════════════════════════
           BRIDGE — How We Do It
