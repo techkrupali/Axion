@@ -239,17 +239,17 @@ export default function AIEdgeLab() {
       <div style={{ background: S.white, color: S.ink, fontFamily: S.sans, fontWeight: 300, overflowX: "hidden" }}>
 
         {/* ── HEADER ── */}
-        <header style={{ position: "sticky", top: 0, zIndex: 200, height: "44px", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 52px", background: "rgba(247,246,243,0.94)", backdropFilter: "blur(12px)", borderBottom: `1px solid ${S.rule}` }}>
-          <div style={{ fontFamily: S.mono, fontSize: "9px", letterSpacing: "0.24em", textTransform: "uppercase" }}>AI Edge Lab · <Link href="/" style={{ color: "inherit", textDecoration: "none" }}>Axionindex</Link></div>
+        <header style={{ position: "sticky", top: 0, zIndex: 200, height: "56px", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 52px", background: "rgba(247,246,243,0.94)", backdropFilter: "blur(12px)", borderBottom: `1px solid ${S.rule}` }}>
+          <div style={{ fontFamily: S.mono, fontSize: "13px", letterSpacing: "0.24em", textTransform: "uppercase" }}>AI Edge Lab · <Link href="/" style={{ color: "inherit", textDecoration: "none" }}>Axionindex</Link></div>
           <nav className="hidden md:flex" style={{ alignItems: "center", gap: "28px" }}>
             {(["#actors","#doctrine","#framework","#diagnostic","#evidence","#about"] as const).map((href, i) => (
-              <a key={href} href={href} className="hdr-link" style={{ fontFamily: S.mono, fontSize: "8px", letterSpacing: "0.18em", textTransform: "uppercase", color: S.mid, textDecoration: "none", transition: "color .2s" }}>
+              <a key={href} href={href} className="hdr-link" style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.18em", textTransform: "uppercase", color: S.mid, textDecoration: "none", transition: "color .2s" }}>
                 {["Workplace","Doctrine","Framework","Diagnostic","Research","About"][i]}
               </a>
             ))}
-            <button onClick={() => openModal("working")} style={{ fontFamily: S.mono, fontSize: "8px", letterSpacing: "0.18em", textTransform: "uppercase", background: S.ink, color: S.white, padding: "8px 18px", border: "none", cursor: "pointer" }}>Find My AI Edge</button>
+            <button onClick={() => openModal("working")} style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.18em", textTransform: "uppercase", background: S.ink, color: S.white, padding: "9px 20px", border: "none", cursor: "pointer" }}>Find My AI Edge</button>
           </nav>
-          <div className="hidden md:block" style={{ fontFamily: S.mono, fontSize: "9px", color: S.dim, letterSpacing: "0.08em" }}>axionindex.org · 2026</div>
+          <div className="hidden md:block" style={{ fontFamily: S.mono, fontSize: "12px", color: S.dim, letterSpacing: "0.08em" }}>axionindex.org · 2026</div>
           <button className="flex md:hidden" onClick={() => setMobileOpen(!mobileOpen)} style={{ background: "none", border: "none", cursor: "pointer", fontSize: "18px", color: S.ink }}>
             {mobileOpen ? "✕" : "☰"}
           </button>
@@ -271,33 +271,33 @@ export default function AIEdgeLab() {
             <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "55%", background: "linear-gradient(to top,#0A0B0E 0%,#0E1014 20%,transparent 100%)" }} />
             <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "52%", background: S.ink2, clipPath: "polygon(0% 100%,0% 65%,2% 65%,2% 45%,3% 45%,3% 35%,4% 35%,4% 45%,5% 45%,5% 65%,6% 65%,6% 50%,7% 50%,7% 30%,7.5% 30%,7.5% 28%,8% 28%,8% 30%,8.5% 30%,8.5% 50%,9% 50%,9% 65%,10% 65%,10% 40%,11% 40%,11% 20%,11.5% 20%,11.5% 15%,12% 15%,12% 20%,12.5% 20%,12.5% 40%,13% 40%,13% 65%,14% 65%,14% 50%,14.5% 50%,14.5% 42%,15% 42%,15% 50%,15.5% 50%,15.5% 65%,16% 65%,16% 35%,17% 35%,17% 20%,17.5% 20%,17.5% 10%,18% 10%,18.5% 10%,18.5% 20%,19% 20%,19% 35%,20% 35%,20% 65%,21% 65%,21% 45%,21.5% 45%,21.5% 38%,22% 38%,22% 45%,22.5% 45%,22.5% 65%,24% 65%,24% 42%,25% 42%,25% 28%,25.5% 28%,25.5% 22%,26% 22%,26% 28%,26.5% 28%,26.5% 42%,27% 42%,27% 65%,29% 65%,29% 48%,30% 48%,30% 35%,31% 35%,31% 48%,32% 48%,32% 65%,35% 65%,35% 52%,36% 52%,36% 40%,37% 40%,37% 25%,37.5% 25%,37.5% 18%,38% 18%,38% 25%,38.5% 25%,38.5% 40%,39% 40%,39% 52%,40% 52%,40% 65%,42% 65%,42% 55%,43% 55%,43% 45%,43.5% 45%,43.5% 38%,44% 38%,44% 45%,44.5% 45%,44.5% 55%,45% 55%,45% 65%,48% 65%,48% 48%,49% 48%,49% 32%,50% 32%,50% 20%,50.5% 20%,50.5% 14%,51% 14%,51% 20%,51.5% 20%,51.5% 32%,52% 32%,52% 48%,53% 48%,53% 65%,55% 65%,55% 52%,56% 52%,56% 44%,57% 44%,57% 52%,58% 52%,58% 65%,60% 65%,60% 42%,61% 42%,61% 30%,62% 30%,62% 42%,63% 42%,63% 65%,65% 65%,65% 55%,66% 55%,66% 48%,66.5% 48%,66.5% 42%,67% 42%,67% 48%,67.5% 48%,67.5% 55%,68% 55%,68% 65%,70% 65%,70% 40%,71% 40%,71% 28%,72% 28%,72% 40%,73% 40%,73% 65%,75% 65%,75% 52%,76% 52%,76% 44%,77% 44%,77% 52%,78% 52%,78% 65%,80% 65%,80% 48%,81% 48%,81% 36%,82% 36%,82% 48%,83% 48%,83% 65%,85% 65%,85% 56%,86% 56%,86% 50%,87% 50%,87% 56%,88% 56%,88% 65%,90% 65%,90% 44%,91% 44%,91% 32%,92% 32%,92% 44%,93% 44%,93% 65%,95% 65%,95% 55%,96% 55%,96% 65%,100% 65%,100% 100%)" }} />
             <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right,rgba(10,11,14,0.6) 0%,rgba(10,11,14,0.1) 50%,transparent 100%)" }} />
-            <div className="hidden md:block" style={{ position: "absolute", right: "44px", top: "50%", transform: "translateY(-50%) rotate(90deg)", transformOrigin: "center center", fontFamily: S.display, fontSize: "48px", letterSpacing: "0.12em", color: "rgba(247,246,243,0.12)", whiteSpace: "nowrap" }}>AI EDGE LAB</div>
-            <div style={{ position: "absolute", bottom: "32px", left: "52px", fontFamily: S.mono, fontSize: "8px", letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(247,246,243,0.35)" }}>The Architecture of Work in the Post-AI Era · 2026</div>
+            <div className="hidden md:block" style={{ position: "absolute", right: "44px", top: "50%", transform: "translateY(-50%) rotate(90deg)", transformOrigin: "center center", fontFamily: S.display, fontSize: "48px", letterSpacing: "0.12em", color: "#FFFFFF", whiteSpace: "nowrap" }}>AI EDGE LAB</div>
+            <div style={{ position: "absolute", bottom: "32px", left: "52px", fontFamily: S.mono, fontSize: "8px", letterSpacing: "0.22em", textTransform: "uppercase", color: "#FFFFFF" }}>The Architecture of Work in the Post-AI Era · 2026</div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2" style={{ borderBottom: `1px solid ${S.rule}` }}>
             <div style={{ padding: "52px", borderRight: `1px solid ${S.rule}` }} className="p-6 md:p-[52px]">
-              <div style={{ fontFamily: S.mono, fontSize: "8px", letterSpacing: "0.24em", textTransform: "uppercase", color: S.mid, marginBottom: "20px" }}>AI Edge Lab · Four Actors · One Transformation</div>
+              <div style={{ fontFamily: S.mono, fontSize: "13px", letterSpacing: "0.24em", textTransform: "uppercase", color: S.mid, marginBottom: "20px" }}>AI Edge Lab · Four Actors · One Transformation</div>
               <h1 style={{ fontFamily: S.display, fontSize: "clamp(64px,9vw,110px)", lineHeight: 0.95, letterSpacing: "0.01em", color: S.ink }}>THE<br />WORK<br /><span style={{ color: S.gold }}>SHIFT.</span></h1>
               <p style={{ fontFamily: S.display, fontSize: "clamp(20px,2.2vw,30px)", color: S.ink, lineHeight: 1.15, letterSpacing: "0.015em", textTransform: "uppercase", marginTop: "28px", maxWidth: "520px" }}>
                 Measure where you stand in the AI Era — and how long your <span style={{ color: S.gold }}>edge will hold.</span>
               </p>
-              <button onClick={() => openModal("working")} className="explore-link" style={{ display: "inline-flex", alignItems: "center", gap: "12px", fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.ink, borderBottom: `1px solid ${S.ink}`, paddingBottom: "10px", transition: "gap .25s ease,color .25s ease,border-color .25s ease", marginTop: "36px", background: "none", border: "none", borderBottom: `1px solid ${S.ink}`, cursor: "pointer" }}>
+              <button onClick={() => openModal("working")} className="explore-link" style={{ display: "inline-flex", alignItems: "center", gap: "12px", fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.ink, paddingBottom: "10px", transition: "gap .25s ease,color .25s ease,border-color .25s ease", marginTop: "36px", background: "none", border: "none", borderBottom: `1px solid ${S.ink}`, cursor: "pointer" }}>
                 Find My AI Edge <span style={{ fontSize: "18px", fontFamily: S.display }}>→</span>
               </button>
             </div>
             <div style={{ padding: "52px", display: "flex", flexDirection: "column", justifyContent: "space-between" }} className="p-6 md:p-[52px]">
               <div>
-                <p style={{ fontSize: "13px", color: S.mid, lineHeight: 1.9, fontWeight: 300, marginBottom: "32px", maxWidth: "400px" }}>The workplace now has four actors: the Employee, the CXO, the Organisation — and AI. Each is being reshaped by a different kind of pressure. AI Edge Lab maps that pressure, measures your exposure, and shows where judgment still creates advantage.</p>
+                <p style={{ fontSize: "16px", color: S.mid, lineHeight: 1.9, fontWeight: 300, marginBottom: "32px", maxWidth: "400px" }}>The workplace now has four actors: the Employee, the CXO, the Organisation — and AI. Each is being reshaped by a different kind of pressure. AI Edge Lab maps that pressure, measures your exposure, and shows where judgment still creates advantage.</p>
                 <div style={{ display: "flex", gap: "32px", marginBottom: "0", flexWrap: "wrap" }}>
                   {[{ n: "39%", l: "Skills change by 2030 · WEF" },{ n: "23%", l: "Scaled AI · McKinsey" },{ n: "95%", l: "No P&L impact · MIT NANDA" }].map((s, i) => (
                     <div key={i} style={{ borderLeft: `1px solid ${S.rule2}`, paddingLeft: "16px" }}>
-                      <div style={{ fontFamily: S.display, fontSize: "32px", color: S.ink, lineHeight: 1 }}>{s.n}</div>
-                      <div style={{ fontFamily: S.mono, fontSize: "7px", letterSpacing: "0.14em", textTransform: "uppercase", color: S.mid, marginTop: "4px" }}>{s.l}</div>
+                      <div style={{ fontFamily: S.display, fontSize: "36px", color: S.ink, lineHeight: 1 }}>{s.n}</div>
+                      <div style={{ fontFamily: S.mono, fontSize: "11px", letterSpacing: "0.14em", textTransform: "uppercase", color: S.mid, marginTop: "4px" }}>{s.l}</div>
                     </div>
                   ))}
                 </div>
-                <button onClick={() => openModal()} className="framework-link" style={{ display: "inline-flex", alignItems: "center", gap: "12px", fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.ink, borderBottom: `1px solid ${S.ink}`, paddingBottom: "10px", transition: "gap .25s ease,color .25s ease,border-color .25s ease", marginTop: "36px", background: "none", border: "none", borderBottom: `1px solid ${S.ink}`, cursor: "pointer" }}>
-                  Explore the Framework <span style={{ fontSize: "18px", fontFamily: S.display }}>→</span>
+                <button onClick={() => openModal()} className="framework-link" style={{ display: "inline-flex", alignItems: "center", gap: "12px", fontFamily: S.mono, fontSize: "14px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.ink, paddingBottom: "10px", transition: "gap .25s ease,color .25s ease,border-color .25s ease", marginTop: "36px", background: "none", border: "none", borderBottom: `1px solid ${S.ink}`, cursor: "pointer" }}>
+                  Explore the Framework <span style={{ fontSize: "20px", fontFamily: S.display }}>→</span>
                 </button>
               </div>
             </div>
