@@ -687,9 +687,9 @@ export default function Home() {
       ══════════════════════════════════════════ */}
       <section className="chapter section-dark" id="roles">
         <div className="shell">
-          <div className="grid grid-cols-1 md:grid-cols-[minmax(280px,1fr)_1.6fr] gap-16 items-start">
+          <div className="grid grid-cols-1 md:grid-cols-[minmax(280px,1fr)_2.4fr] gap-16 items-center">
             {/* Left col */}
-            <div className="md:sticky md:top-32 h-fit flex flex-col gap-10">
+            <div className="md:sticky md:top-[30vh] h-fit flex flex-col gap-10">
               <Reveal>
                 <h2 className="h-statement">
                   What changes — depending on <em>where you sit.</em>
@@ -711,8 +711,8 @@ export default function Home() {
               </Reveal>
             </div>
 
-            {/* Right col — roles */}
-            <div className="flex flex-col border-t border-[var(--line)]">
+            {/* Right col — 2x2 grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               {[
                 {
                   role: "Founder / CEO",
@@ -736,9 +736,9 @@ export default function Home() {
                 },
               ].map((item, i) => (
                 <Reveal key={i} delay={i * 0.08}>
-                  <div className="py-10 border-b border-[var(--line)] group hover:bg-[rgba(201,168,76,0.02)] transition-colors px-4 -mx-4">
-                    <span className="font-mono text-[10px] tracking-widest uppercase text-[var(--accent)] mb-5 block">{item.role}</span>
-                    <p className="font-serif text-[clamp(17px,1.6vw,22px)] leading-snug text-[var(--fg-2)] group-hover:text-[var(--fg)] transition-colors mb-3">
+                  <div className="h-full p-7 rounded-[20px] border border-[var(--line)] hover:border-[var(--line-gold)] bg-[var(--bg-1)] group hover:shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-all duration-500">
+                    <span className="font-mono text-[10px] tracking-widest uppercase text-[var(--accent)] mb-4 block">{item.role}</span>
+                    <p className="font-serif text-[clamp(15px,1.4vw,19px)] leading-snug text-[var(--fg-2)] group-hover:text-[var(--fg)] transition-colors mb-3">
                       {item.pull}
                     </p>
                     <p className="font-mono text-[11px] tracking-[0.12em] text-[var(--fg-4)] group-hover:text-[var(--fg-3)] transition-colors leading-relaxed">
