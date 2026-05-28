@@ -381,11 +381,11 @@ export default function AIEdgeLab() {
         <section style={{ borderBottom: `1px solid ${S.rule}` }}>
           <div className="grid grid-cols-1 md:grid-cols-2" style={{ padding: "56px 52px 36px", gap: 0 }}>
             <div style={{ borderRight: `1px solid ${S.rule}`, paddingRight: "52px" }} className="pr-0 md:pr-[52px] pb-6 md:pb-0">
-              <div style={{ fontFamily: S.mono, fontSize: "9px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.gold, marginBottom: "12px" }}>The Diagnostic Journey · 12 minutes · 48 hours</div>
+              <div style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.gold, marginBottom: "12px" }}>The Diagnostic Journey · 12 minutes · 48 hours</div>
               <h2 style={{ fontFamily: S.display, fontSize: "clamp(36px,5vw,60px)", letterSpacing: "0.02em", color: S.ink, lineHeight: 1 }}>Measure. <span style={{ color: S.gold }}>Decode.</span><br />Reposition.</h2>
             </div>
             <div style={{ paddingLeft: "52px", display: "flex", alignItems: "center" }} className="pl-0 md:pl-[52px]">
-              <p style={{ fontSize: "14px", color: S.ink2, lineHeight: 1.7, maxWidth: "480px" }}>What happens between choosing your instrument and acting on the result. Three steps. One report. A practical direction for what to do next.</p>
+              <p style={{ fontSize: "16px", color: S.ink2, lineHeight: 1.7, maxWidth: "480px" }}>What happens between choosing your instrument and acting on the result. Three steps. One report. A practical direction for what to do next.</p>
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3" style={{ gap: 0, background: S.rule }}>
@@ -395,9 +395,9 @@ export default function AIEdgeLab() {
               { n: "§ 03 · Reposition", verb: "Reposition", body: "A practical 12-month direction — what to protect, what to shift, what to build. The action, not just the diagnosis.", bg: S.ink, verbColor: S.gold, bodyColor: "rgba(247,246,243,0.65)" },
             ].map((step, i) => (
               <div key={i} style={{ padding: "44px 36px", position: "relative", minHeight: "240px", display: "flex", flexDirection: "column", background: step.bg }}>
-                <div style={{ fontFamily: S.mono, fontSize: "9px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.gold2, marginBottom: "22px" }}>{step.n}</div>
+                <div style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.gold2, marginBottom: "22px" }}>{step.n}</div>
                 <div style={{ fontFamily: S.display, fontSize: "clamp(38px,4.5vw,56px)", letterSpacing: "0.02em", lineHeight: 0.95, marginBottom: "18px", color: step.verbColor }}>{step.verb}</div>
-                <p style={{ fontSize: "13px", lineHeight: 1.7, marginTop: "auto", color: step.bodyColor }}>{step.body}</p>
+                <p style={{ fontSize: "15px", lineHeight: 1.7, marginTop: "auto", color: step.bodyColor }}>{step.body}</p>
                 {i < 2 && <span style={{ position: "absolute", right: "-10px", top: "50%", transform: "translateY(-50%)", fontSize: "18px", color: S.gold, zIndex: 2 }} className="hidden md:block">→</span>}
               </div>
             ))}
@@ -407,8 +407,8 @@ export default function AIEdgeLab() {
         {/* ── FOUR ACTORS ── */}
         <section id="actors" style={{ borderBottom: `1px solid ${S.rule}` }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 52px", borderBottom: `1px solid ${S.rule}`, background: S.white2 }}>
-            <span style={{ fontFamily: S.mono, fontSize: "8px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.mid }}>The Four Actors of the AI Workplace</span>
-            <span style={{ fontFamily: S.mono, fontSize: "9px", color: S.dim }}>02 / 06</span>
+            <span style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.mid }}>The Four Actors of the AI Workplace</span>
+            <span style={{ fontFamily: S.mono, fontSize: "12px", color: S.dim }}>02 / 06</span>
           </div>
           <div style={{ padding: "52px" }} className="p-6 md:p-[52px]">
             <div className="grid grid-cols-1 md:grid-cols-2" style={{ marginBottom: "48px" }}>
@@ -416,7 +416,7 @@ export default function AIEdgeLab() {
                 <h2 style={{ fontFamily: S.display, fontSize: "clamp(52px,7vw,88px)", lineHeight: 0.95, letterSpacing: "0.01em", color: S.ink, marginBottom: "28px" }}>THE<br />FOUR<br /><span style={{ color: S.gold }}>ACTORS.</span></h2>
               </div>
               <div style={{ paddingLeft: "52px", display: "flex", flexDirection: "column", justifyContent: "center" }} className="pl-0 md:pl-[52px]">
-                <p style={{ fontSize: "13px", color: S.mid, lineHeight: 1.9, fontWeight: 300, maxWidth: "460px" }}>For decades, three actors shaped work: the employee, the leader, and the organisation. AI has entered as a fourth — not as a tool in the org chart, but as an actor that absorbs work, reprices what humans do, and forces every other actor to reckon with their structural position.</p>
+                <p style={{ fontSize: "16px", color: S.mid, lineHeight: 1.9, fontWeight: 300, maxWidth: "460px" }}>For decades, three actors shaped work: the employee, the leader, and the organisation. AI has entered as a fourth — not as a tool in the org chart, but as an actor that absorbs work, reprices what humans do, and forces every other actor to reckon with their structural position.</p>
               </div>
             </div>
           </div>
