@@ -410,8 +410,8 @@ export default function AIEdgeLab() {
             <span style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.mid }}>The Four Actors of the AI Workplace</span>
             <span style={{ fontFamily: S.mono, fontSize: "12px", color: S.dim }}>02 / 06</span>
           </div>
-          <div style={{ padding: "52px" }} className="p-6 md:p-[52px]">
-            <div className="grid grid-cols-1 md:grid-cols-2" style={{ marginBottom: "48px" }}>
+          <div style={{ padding: "28px 52px 28px" }} className="p-6 md:p-[52px]">
+            <div className="grid grid-cols-1 md:grid-cols-2" style={{ marginBottom: "28px" }}>
               <div style={{ borderRight: `1px solid ${S.rule}`, paddingRight: "52px" }} className="pr-0 md:pr-[52px] pb-6 md:pb-0">
                 <h2 style={{ fontFamily: S.display, fontSize: "clamp(52px,7vw,88px)", lineHeight: 0.95, letterSpacing: "0.01em", color: S.ink, marginBottom: "28px" }}>THE<br />FOUR<br /><span style={{ color: S.gold }}>ACTORS.</span></h2>
               </div>
@@ -424,25 +424,25 @@ export default function AIEdgeLab() {
             {[
               { num: "01", badge: "Individual", name: "THE ", nameAccent: "EMPLOYEE.", q: '"Am I structurally positioned for the AI era — or am I in the compression zone without knowing it?"', body: "Structural risk: the value of specific work types is being compressed silently. Most professionals do not know which zone they occupy until the correction arrives.", sigs: ["Is your decision authority expanding or contracting?"], cta: "ARI© Diagnostic", ctaKey: "working" },
               { num: "02", badge: "Leadership", name: "THE ", nameAccent: "CXO.", q: '"My model was built on informational advantage. AI has eliminated that advantage. What is my new structural role?"', body: "Structural risk: the CXO who controlled information had structural authority. That model is broken. The leadership premium must migrate to judgment architecture and consequence ownership.", sigs: ["Do you know your organisation's Brainpower Density?"], cta: "BDI© for Leaders", ctaKey: "leader" },
-              { num: "03", badge: "The New Entrant", name: "", nameAccent: "ARTIFICIAL\nINTELLIGENCE.", q: '"AI is not a tool in the org chart. It is an actor that absorbs work. Which work does it absorb — and where does it stop?"', body: "Structural risk: AI compresses work in a predictable sequence — execution and analysis first, judgment last. Organisations that understand where AI stops design architecture that compounds.", sigs: ["Executing & coordinating ~85%, framing & deciding ~5–8%."], cta: "Compression Framework", ctaKey: "working" },
+              { num: "03", badge: "The New Entrant", name: "ARTIFICIAL ", nameAccent: "INTELLIGENCE.", q: '"AI is not a tool in the org chart. It is an actor that absorbs work. Which work does it absorb — and where does it stop?"', body: "Structural risk: AI compresses work in a predictable sequence — execution and analysis first, judgment last. Organisations that understand where AI stops design architecture that compounds.", sigs: ["Executing & coordinating ~85%, framing & deciding ~5–8%."], cta: "Compression Framework", ctaKey: "working" },
               { num: "04", badge: "The System", name: "THE ", nameAccent: "ORGANISATION.", q: '"We are investing in AI at scale. Why aren\'t outcomes matching investment — and what are we measuring wrong?"', body: "Structural risk: organisations run AI projects inside a technology frame and never answer the two structural questions — why should employees support this, and what should they actually do differently?", sigs: ["Have you redesigned decision architecture — or only deployed tools?"], cta: "ORG AI DARS©", ctaKey: "org" },
             ].map((actor, i) => (
               <div key={i} className="actor" style={{ background: S.white, padding: "44px 40px", position: "relative", transition: "background .25s" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "28px" }}>
                   <div style={{ fontFamily: S.display, fontSize: "56px", lineHeight: 0.9, color: "rgba(13,13,11,0.07)", letterSpacing: "0.01em" }}>{actor.num}</div>
-                  <div style={{ fontFamily: S.mono, fontSize: "7px", letterSpacing: "0.2em", textTransform: "uppercase", color: S.mid, border: `1px solid ${S.rule2}`, padding: "4px 10px" }}>{actor.badge}</div>
+                  <div style={{ fontFamily: S.mono, fontSize: "11px", letterSpacing: "0.2em", textTransform: "uppercase", color: S.gold, border: `1px solid ${S.gold}`, padding: "4px 10px" }}>{actor.badge}</div>
                 </div>
-                <div style={{ fontFamily: S.display, fontSize: "clamp(28px,3vw,38px)", letterSpacing: "0.02em", color: S.ink, marginBottom: "12px", lineHeight: 1, whiteSpace: "pre-line" }}>{actor.name}<span style={{ color: S.gold }}>{actor.nameAccent}</span></div>
-                <div style={{ fontSize: "11px", fontStyle: "italic", color: S.mid, lineHeight: 1.75, borderLeft: `2px solid ${S.rule2}`, paddingLeft: "14px", marginBottom: "20px", fontWeight: 300 }}>{actor.q}</div>
-                <p style={{ fontSize: "12px", color: S.mid, lineHeight: 1.85, marginBottom: "22px", fontWeight: 300 }}>{actor.body}</p>
+                <div style={{ fontFamily: S.display, fontSize: "clamp(32px,3.5vw,46px)", letterSpacing: "0.02em", color: S.ink, marginBottom: "12px", lineHeight: 1, whiteSpace: "pre-line" }}>{actor.name}<span style={{ color: S.gold }}>{actor.nameAccent}</span></div>
+                <div style={{ fontSize: "14px", fontStyle: "italic", color: S.mid, lineHeight: 1.75, borderLeft: `2px solid ${S.rule2}`, paddingLeft: "14px", marginBottom: "20px", fontWeight: 300 }}>{actor.q}</div>
+                <p style={{ fontSize: "14px", color: S.mid, lineHeight: 1.85, marginBottom: "22px", fontWeight: 300 }}>{actor.body}</p>
                 <div style={{ marginBottom: "24px" }}>
                   {actor.sigs.map((sig, j) => (
-                    <div key={j} style={{ fontFamily: S.mono, fontSize: "8px", letterSpacing: "0.04em", color: S.ink3, padding: "7px 0", borderBottom: `1px solid ${S.rule}`, display: "flex", alignItems: "center", gap: "8px" }}>
+                    <div key={j} style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.04em", color: S.ink3, padding: "7px 0", borderBottom: `1px solid ${S.rule}`, display: "flex", alignItems: "center", gap: "8px" }}>
                       <span style={{ color: S.gold }}>→</span>{sig}
                     </div>
                   ))}
                 </div>
-                <button onClick={() => openModal(actor.ctaKey)} style={{ fontFamily: S.mono, fontSize: "8px", letterSpacing: "0.16em", textTransform: "uppercase", color: S.ink, display: "inline-flex", alignItems: "center", gap: "8px", paddingBottom: "4px", background: "none", border: "none", borderBottom: `1px solid ${S.rule}`, cursor: "pointer", transition: "all .2s" }}>
+                <button onClick={() => openModal(actor.ctaKey)} style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.16em", textTransform: "uppercase", color: S.ink, display: "inline-flex", alignItems: "center", gap: "8px", paddingBottom: "4px", background: "none", border: "none", borderBottom: `1px solid ${S.rule}`, cursor: "pointer", transition: "all .2s" }}>
                   {actor.cta} <span style={{ color: S.gold }}>→</span>
                 </button>
               </div>
