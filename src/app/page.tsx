@@ -151,38 +151,48 @@ const BRIDGE_ITEMS = [
   { title: "Then we redesign it so it holds", step: "04", bg: "linear-gradient(180deg, rgba(240,241,245,0.03) 0%, transparent 100%)" },
 ];
 
-function BridgeCard({ item, index }: { item: typeof BRIDGE_ITEMS[0]; index: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "start 60%"] });
-  const y = useTransform(scrollYProgress, [0, 1], [80, 0]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [0, 1]);
-
-  return (
-    <motion.div
-      ref={ref}
-      style={{ y, opacity, zIndex: index + 1 }}
-      className="relative group"
-    >
-      <div className="absolute left-[-41px] md:left-[-81px] top-1/2 -translate-y-1/2 flex flex-col items-center gap-3">
-        <div className="w-3 h-3 rounded-full bg-[var(--bg)] border-2 border-[var(--accent)] z-20 group-hover:scale-[1.8] transition-transform duration-500 shadow-[0_0_15px_var(--accent-soft)]" />
-        <span className="font-serif italic text-[28px] text-[var(--fg-5)] group-hover:text-[var(--accent)] transition-colors duration-500">{item.step}</span>
-      </div>
-      <div
-        className="p-6 md:p-8 rounded-[28px] border border-[var(--line)] backdrop-blur-2xl transition-all duration-700 group-hover:border-[var(--line-gold)] group-hover:shadow-[0_30px_70px_rgba(0,0,0,0.6)]"
-        style={{ background: item.bg }}
-      >
-        <h3 className="font-serif text-[clamp(16px,1.6vw,22px)] leading-[1.2] text-[var(--fg)]">{item.title}</h3>
-      </div>
-    </motion.div>
-  );
-}
-
 function BridgeCards() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end end"],
+  });
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    return scrollYProgress.on("change", (v) => {
+      const idx = Math.min(BRIDGE_ITEMS.length - 1, Math.floor(v * BRIDGE_ITEMS.length));
+      setActiveIndex(idx);
+    });
+  }, [scrollYProgress]);
+
   return (
-    <div className="relative border-l border-[var(--line)] pl-10 md:pl-20 flex flex-col gap-6 pt-20 lg:pt-20 pb-20">
-      {BRIDGE_ITEMS.map((item, i) => (
-        <BridgeCard key={i} item={item} index={i} />
-      ))}
+    <div ref={sectionRef} style={{ height: `${BRIDGE_ITEMS.length * 50}vh` }}>
+      <div className="sticky top-[20vh]">
+        <div className="relative border-l border-[var(--line)] pl-10 md:pl-20 flex flex-col gap-6 pt-20 pb-20">
+          {BRIDGE_ITEMS.map((item, i) => (
+            <div
+              key={i}
+              className="relative group transition-all duration-500"
+              style={{
+                opacity: i <= activeIndex ? 1 : 0,
+                transform: i <= activeIndex ? "translateY(0)" : "translateY(32px)",
+              }}
+            >
+              <div className="absolute left-[-41px] md:left-[-81px] top-1/2 -translate-y-1/2 flex flex-col items-center gap-3">
+                <div className="w-3 h-3 rounded-full bg-[var(--bg)] border-2 border-[var(--accent)] z-20 group-hover:scale-[1.8] transition-transform duration-500 shadow-[0_0_15px_var(--accent-soft)]" />
+                <span className="font-serif italic text-[28px] text-[var(--fg-5)] group-hover:text-[var(--accent)] transition-colors duration-500">{item.step}</span>
+              </div>
+              <div
+                className="p-6 md:p-8 rounded-[28px] border border-[var(--line)] backdrop-blur-2xl transition-all duration-700 group-hover:border-[var(--line-gold)] group-hover:shadow-[0_30px_70px_rgba(0,0,0,0.6)]"
+                style={{ background: item.bg }}
+              >
+                <h3 className="font-serif text-[clamp(16px,1.6vw,22px)] leading-[1.2] text-[var(--fg)]">{item.title}</h3>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
