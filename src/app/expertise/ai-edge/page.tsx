@@ -199,7 +199,7 @@ export default function AIEdgeLab() {
         .law-row:hover .law-body { max-height:200px; opacity:1; margin-top:18px; }
         .law-row:hover .law-arrow { opacity:1; transform:translateX(0); }
         .law-row:hover::before { width:3px; }
-        .jcard:hover { background:${S.ink}; }
+        .jcard:hover { background:${S.ink}; transform:translateY(-8px); box-shadow:0 16px 40px rgba(0,0,0,0.18); }
         .jcard:hover .jcard-who { color:${S.white}; }
         .jcard:hover .jcard-n { color:${S.gold2}; }
         .jcard:hover .jcard-inst { color:${S.dim}; }
@@ -333,15 +333,45 @@ export default function AIEdgeLab() {
               { key: "leader", n: "03 · Leader · CXO", who: "Leader", inst: "Brainpower Density Index©", inr: "₹4,999", usd: "$149", go: "Measure my leadership edge →" },
               { key: "org", n: "04 · Organisation", who: "Organisation", inst: "ORG AI DARS©", inr: "Invite", usd: "Invite", go: "Map our AI decision architecture →" },
             ].map((c) => (
-              <button key={c.key} onClick={() => openModal(c.key)} className="jcard" style={{ background: S.white, padding: "32px 26px", display: "flex", flexDirection: "column", cursor: "pointer", transition: "background .25s ease", border: "none", textAlign: "left" }}>
-                <div className="jcard-n" style={{ fontFamily: S.mono, fontSize: "8px", letterSpacing: "0.18em", textTransform: "uppercase", color: S.gold, marginBottom: "18px", transition: "color .25s" }}>{c.n}</div>
-                <div className="jcard-who" style={{ fontFamily: S.display, fontSize: "clamp(20px,2vw,26px)", letterSpacing: "0.02em", color: S.ink, lineHeight: 1.04, marginBottom: "10px", transition: "color .25s" }}>{c.who}</div>
-                <div className="jcard-inst" style={{ fontFamily: S.mono, fontSize: "8px", letterSpacing: "0.1em", textTransform: "uppercase", color: S.mid, marginBottom: "18px", lineHeight: 1.5, transition: "color .25s" }}>{c.inst}</div>
-                <div className="jcard-price" style={{ fontFamily: S.display, fontSize: "34px", color: S.ink, lineHeight: 1, marginTop: "auto", transition: "color .25s" }}>
-                  {c.inr !== "Invite" && <span className="jcard-from" style={{ fontFamily: S.mono, fontSize: "9px", color: S.mid, letterSpacing: "0.06em", display: "block", marginBottom: "4px", transition: "color .25s" }}>From</span>}
+              <button
+                key={c.key}
+                onClick={() => openModal(c.key)}
+                onMouseEnter={e => {
+                  const el = e.currentTarget;
+                  el.style.background = S.ink;
+                  el.style.transform = "translateY(-8px)";
+                  el.style.boxShadow = "0 16px 40px rgba(0,0,0,0.18)";
+                  (el.querySelector(".jcard-who") as HTMLElement).style.color = S.white;
+                  (el.querySelector(".jcard-n") as HTMLElement).style.color = S.gold2;
+                  (el.querySelector(".jcard-inst") as HTMLElement).style.color = S.dim;
+                  (el.querySelector(".jcard-price") as HTMLElement).style.color = S.white;
+                  (el.querySelector(".jcard-go") as HTMLElement).style.color = S.gold2;
+                  const from = el.querySelector(".jcard-from") as HTMLElement;
+                  if (from) from.style.color = S.dim;
+                }}
+                onMouseLeave={e => {
+                  const el = e.currentTarget;
+                  el.style.background = S.white;
+                  el.style.transform = "translateY(0)";
+                  el.style.boxShadow = "none";
+                  (el.querySelector(".jcard-who") as HTMLElement).style.color = S.ink;
+                  (el.querySelector(".jcard-n") as HTMLElement).style.color = S.gold;
+                  (el.querySelector(".jcard-inst") as HTMLElement).style.color = S.mid;
+                  (el.querySelector(".jcard-price") as HTMLElement).style.color = S.ink;
+                  (el.querySelector(".jcard-go") as HTMLElement).style.color = S.gold;
+                  const from = el.querySelector(".jcard-from") as HTMLElement;
+                  if (from) from.style.color = S.mid;
+                }}
+                style={{ background: S.white, padding: "32px 26px", display: "flex", flexDirection: "column", cursor: "pointer", transition: "background .25s ease, transform .25s ease, box-shadow .25s ease", border: "none", textAlign: "left" }}
+              >
+                <div className="jcard-n" style={{ fontFamily: S.mono, fontSize: "11px", letterSpacing: "0.18em", textTransform: "uppercase", color: S.gold, marginBottom: "18px", transition: "color .25s" }}>{c.n}</div>
+                <div className="jcard-who" style={{ fontFamily: S.display, fontSize: "clamp(24px,2.4vw,32px)", letterSpacing: "0.02em", color: S.ink, lineHeight: 1.04, marginBottom: "10px", transition: "color .25s" }}>{c.who}</div>
+                <div className="jcard-inst" style={{ fontFamily: S.mono, fontSize: "11px", letterSpacing: "0.1em", textTransform: "uppercase", color: S.mid, marginBottom: "18px", lineHeight: 1.5, transition: "color .25s" }}>{c.inst}</div>
+                <div className="jcard-price" style={{ fontFamily: S.display, fontSize: "42px", color: S.ink, lineHeight: 1, marginTop: "auto", transition: "color .25s" }}>
+                  {c.inr !== "Invite" && <span className="jcard-from" style={{ fontFamily: S.mono, fontSize: "12px", color: S.mid, letterSpacing: "0.06em", display: "block", marginBottom: "4px", transition: "color .25s" }}>From</span>}
                   {price(c.inr, c.usd)}
                 </div>
-                <div className="jcard-go" style={{ fontFamily: S.mono, fontSize: "8px", letterSpacing: "0.16em", textTransform: "uppercase", color: S.gold, marginTop: "16px", display: "flex", alignItems: "center", gap: "6px", transition: "gap .25s ease,color .25s" }}>{c.go}</div>
+                <div className="jcard-go" style={{ fontFamily: S.mono, fontSize: "11px", letterSpacing: "0.16em", textTransform: "uppercase", color: S.gold, marginTop: "16px", display: "flex", alignItems: "center", gap: "6px", transition: "gap .25s ease,color .25s" }}>{c.go}</div>
               </button>
             ))}
           </div>
