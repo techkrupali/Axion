@@ -593,8 +593,8 @@ export default function AIEdgeLab() {
         {/* ── DIAGNOSTIC ── */}
         <section id="diagnostic" style={{ borderBottom: `1px solid ${S.rule}` }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 52px", borderBottom: `1px solid ${S.rule}`, background: S.white2 }}>
-            <span style={{ fontFamily: S.mono, fontSize: "8px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.mid }}>Assessment Suite — ARI© · BDI© · ORG AI DARS©</span>
-            <span style={{ fontFamily: S.mono, fontSize: "9px", color: S.dim }}>05 / 06</span>
+            <span style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.mid }}>Assessment Suite — ARI© · BDI© · ORG AI DARS©</span>
+            <span style={{ fontFamily: S.mono, fontSize: "12px", color: S.dim }}>05 / 06</span>
           </div>
           <div style={{ padding: "52px" }} className="p-6 md:p-[52px]">
             <div className="grid grid-cols-1 md:grid-cols-2" style={{ marginBottom: "40px" }}>
@@ -602,24 +602,24 @@ export default function AIEdgeLab() {
                 <h2 style={{ fontFamily: S.display, fontSize: "clamp(44px,6vw,72px)", lineHeight: 0.95, color: S.ink }}>MEASURE<br />YOUR<br /><span style={{ color: S.gold }}>POSITION.</span></h2>
               </div>
               <div style={{ paddingLeft: "52px", display: "flex", alignItems: "center" }} className="pl-0 md:pl-[52px]">
-                <p style={{ fontSize: "13px", color: S.mid, lineHeight: 1.9, fontWeight: 300, maxWidth: "460px" }}>You cannot redesign what you cannot see. The AI Edge assessment suite makes structural position visible — for individuals, leaders, and organisations.</p>
+                <p style={{ fontSize: "16px", color: S.mid, lineHeight: 1.9, fontWeight: 300, maxWidth: "460px" }}>You cannot redesign what you cannot see. The AI Edge assessment suite makes structural position visible — for individuals, leaders, and organisations.</p>
               </div>
             </div>
             {/* Currency toggle */}
             <div style={{ display: "inline-flex", border: `1px solid ${S.rule2}`, marginBottom: "8px", overflow: "hidden" }}>
               {(["inr","usd"] as const).map((c) => (
-                <button key={c} onClick={() => setCur(c)} style={{ fontFamily: S.mono, fontSize: "9px", letterSpacing: "0.14em", textTransform: "uppercase", padding: "9px 18px", background: cur === c ? S.ink : S.white, color: cur === c ? S.white : S.mid, border: "none", cursor: "pointer", transition: "background .2s,color .2s" }}>
+                <button key={c} onClick={() => setCur(c)} style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", padding: "9px 18px", background: cur === c ? S.ink : S.white, color: cur === c ? S.white : S.mid, border: "none", cursor: "pointer", transition: "background .2s,color .2s" }}>
                   {c === "inr" ? "₹ India (INR)" : "$ Global (USD)"}
                 </button>
               ))}
             </div>
-            <div style={{ fontFamily: S.mono, fontSize: "8px", letterSpacing: "0.06em", color: S.dim, marginBottom: "24px" }}>
+            <div style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.06em", color: S.dim, marginBottom: "24px" }}>
               {cur === "inr" ? "Showing INR — India pricing. Tap to switch." : "Showing USD — global pricing. Tap to switch."}
             </div>
 
             {/* ARI */}
             <div style={{ marginBottom: "22px" }}>
-              <div style={{ fontFamily: S.mono, fontSize: "8px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.mid, marginBottom: "8px" }}>For Working Professionals</div>
+              <div style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.mid, marginBottom: "8px" }}>For Working Professionals</div>
               <div style={{ fontFamily: S.display, fontSize: "clamp(28px,3.4vw,44px)", letterSpacing: "0.02em", color: S.gold, lineHeight: 1.02 }}>AI Replaceability Index©<span style={{ color: S.ink, display: "block", fontSize: "0.62em", marginTop: "4px" }}>Where am I structurally positioned?</span></div>
             </div>
             <DiagCards cur={cur} tiers={[
@@ -629,7 +629,7 @@ export default function AIEdgeLab() {
 
             {/* AAI */}
             <div style={{ marginTop: "64px", marginBottom: "22px" }}>
-              <div style={{ fontFamily: S.mono, fontSize: "8px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.mid, marginBottom: "8px" }}>For Aspiring Professionals</div>
+              <div style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.mid, marginBottom: "8px" }}>For Aspiring Professionals</div>
               <div style={{ fontFamily: S.display, fontSize: "clamp(28px,3.4vw,44px)", letterSpacing: "0.02em", color: S.gold, lineHeight: 1.02 }}>AI Alignment Index©<span style={{ color: S.ink, display: "block", fontSize: "0.62em", marginTop: "4px" }}>Am I building the right foundations?</span></div>
             </div>
             <DiagCards cur={cur} tiers={[
@@ -639,7 +639,7 @@ export default function AIEdgeLab() {
 
             {/* BDI */}
             <div style={{ marginTop: "64px", marginBottom: "22px" }}>
-              <div style={{ fontFamily: S.mono, fontSize: "8px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.mid, marginBottom: "8px" }}>For Leaders · CXO</div>
+              <div style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.mid, marginBottom: "8px" }}>For Leaders · CXO</div>
               <div style={{ fontFamily: S.display, fontSize: "clamp(28px,3.4vw,44px)", letterSpacing: "0.02em", color: S.gold, lineHeight: 1.02 }}>Brainpower Density Index©<span style={{ color: S.ink, display: "block", fontSize: "0.62em", marginTop: "4px" }}>What is my new structural role?</span></div>
             </div>
             <DiagCards cur={cur} tiers={[
@@ -804,21 +804,21 @@ function DiagCards({ cur, tiers, S }: {
     <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: "1px", background: S.rule }}>
       {tiers.map((t, i) => (
         <div key={i} style={{ background: t.dark ? S.ink : S.white, padding: "30px 26px", display: "flex", flexDirection: "column" }}>
-          <div style={{ fontFamily: S.mono, fontSize: "8px", letterSpacing: "0.18em", textTransform: "uppercase", color: t.dark ? S.gold2 : S.mid, marginBottom: "14px" }}>{t.tier}</div>
-          <div style={{ fontFamily: S.display, fontSize: "26px", letterSpacing: "0.02em", color: t.dark ? S.white : S.ink, lineHeight: 1, marginBottom: "10px" }}>{t.name}</div>
-          <div style={{ fontFamily: S.display, fontSize: "34px", color: t.dark ? S.white : S.ink, lineHeight: 1, marginBottom: "5px" }}>{cur === "inr" ? t.inr : t.usd}</div>
-          <div style={{ fontSize: "11.5px", color: t.dark ? S.dim : S.mid, lineHeight: 1.6, marginBottom: "16px", minHeight: "34px" }}>{t.time}</div>
+          <div style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.18em", textTransform: "uppercase", color: t.dark ? S.gold2 : S.mid, marginBottom: "14px" }}>{t.tier}</div>
+          <div style={{ fontFamily: S.display, fontSize: "30px", letterSpacing: "0.02em", color: t.dark ? S.white : S.ink, lineHeight: 1, marginBottom: "10px" }}>{t.name}</div>
+          <div style={{ fontFamily: S.display, fontSize: "40px", color: t.dark ? S.white : S.ink, lineHeight: 1, marginBottom: "5px" }}>{cur === "inr" ? t.inr : t.usd}</div>
+          <div style={{ fontSize: "14px", color: t.dark ? S.dim : S.mid, lineHeight: 1.6, marginBottom: "16px", minHeight: "34px" }}>{t.time}</div>
           <div style={{ marginBottom: "26px", flex: 1 }}>
             {t.feats.map((f, j) => (
-              <div key={j} style={{ fontSize: "12.5px", color: t.dark ? S.white2 : S.ink2, padding: "7px 0", borderBottom: `1px solid ${t.dark ? "rgba(247,246,243,0.12)" : S.rule}`, lineHeight: 1.5, display: "flex", alignItems: "center", gap: "10px" }}>
+              <div key={j} style={{ fontSize: "14px", color: t.dark ? S.white2 : S.ink2, padding: "7px 0", borderBottom: `1px solid ${t.dark ? "rgba(247,246,243,0.12)" : S.rule}`, lineHeight: 1.5, display: "flex", alignItems: "center", gap: "10px" }}>
                 <span style={{ color: S.gold, flexShrink: 0 }}>—</span>{f}
               </div>
             ))}
           </div>
           {t.waitlist ? (
-            <button disabled style={{ fontFamily: S.mono, fontSize: "8px", letterSpacing: "0.18em", textTransform: "uppercase", padding: "12px 24px", background: "none", color: t.dark ? S.white : S.ink, border: `1px solid ${t.dark ? "rgba(247,246,243,0.2)" : S.rule2}`, cursor: "default", opacity: 0.5 }}>Waitlist</button>
+            <button disabled style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.18em", textTransform: "uppercase", padding: "12px 24px", background: "none", color: t.dark ? S.white : S.ink, border: `1px solid ${t.dark ? "rgba(247,246,243,0.2)" : S.rule2}`, cursor: "default", opacity: 0.5 }}>Waitlist</button>
           ) : (
-            <button onClick={t.onCta} style={{ fontFamily: S.mono, fontSize: "8px", letterSpacing: "0.18em", textTransform: "uppercase", padding: "12px 24px", background: t.dark ? S.white : "none", color: t.dark ? S.ink : S.ink, border: `1px solid ${t.dark ? "none" : S.rule2}`, cursor: "pointer", transition: "all .2s" }}>Begin my assessment →</button>
+            <button onClick={t.onCta} style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.18em", textTransform: "uppercase", padding: "12px 24px", background: t.dark ? S.white : "none", color: t.dark ? S.ink : S.ink, border: `1px solid ${t.dark ? "none" : S.rule2}`, cursor: "pointer", transition: "all .2s" }}>Begin my assessment →</button>
           )}
         </div>
       ))}
