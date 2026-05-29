@@ -982,7 +982,7 @@ export default function FounderPage() {
                   The Bridge
                 </span>
                 <span className="font-sans block" style={{ fontSize: "11px", fontWeight: 400, letterSpacing: ".18em", textTransform: "uppercase", color: "#5A5A62" }}>
-                  Two pauses that reset the lens
+                  TWO PAUSES THAT REDEFINED THE LENS
                 </span>
               </div>
 
@@ -1984,18 +1984,18 @@ export default function FounderPage() {
           {/* ── CLOSING FINALE ── */}
           <div className="text-center" style={{ maxWidth: 680, margin: "0 auto" }}>
 
-            {/* Bridge line */}
+            {/* Connector — thesis anchor, soft Axion open-door */}
             <Reveal>
-              <p className="font-serif italic mb-6" style={{ fontSize: "clamp(16px,1.6vw,19px)", color: "#8A8A96", lineHeight: 1.5 }}>
-                The loop closes where it began — in practice.
+              <p className="font-serif italic mb-10" style={{ fontSize: "clamp(17px,1.7vw,21px)", color: "#B8B8C0", lineHeight: 1.65, maxWidth: "52ch", margin: "0 auto 40px" }}>
+                Twenty-three years of evidence points to one thing: organisations don't break at the strategy layer. They break at the people layer — quietly, before anyone names it. That is what I have spent my career learning to read. And it is what Axion Index is built to address.
               </p>
             </Reveal>
 
-            {/* Closing quote */}
+            {/* Closing quote — emphatic, full weight */}
             <Reveal delay={0.1}>
               <blockquote
                 className="font-serif italic"
-                style={{ fontSize: "clamp(22px,2.8vw,32px)", lineHeight: 1.38, color: "#EDEBE3", letterSpacing: "-.01em", marginBottom: 36 }}
+                style={{ fontSize: "clamp(24px,3vw,36px)", lineHeight: 1.32, color: "#EDEBE3", letterSpacing: "-.015em", marginBottom: 48 }}
               >
                 "The founders who once watched me build are part of what comes next. The rest, I'm still building."
               </blockquote>
@@ -2003,10 +2003,10 @@ export default function FounderPage() {
 
             {/* Signature */}
             <Reveal delay={0.18}>
-              <div className="flex flex-col items-center gap-1 mb-14">
-                <span style={{ color: "rgba(201,162,74,.4)", fontSize: 16, lineHeight: 1 }}>◇</span>
-                <span className="font-serif" style={{ fontSize: 20, color: "#C9A24A", marginTop: 6 }}>Nitin Nahata</span>
-                <span className="font-sans" style={{ fontSize: "9.5px", fontWeight: 500, letterSpacing: ".22em", textTransform: "uppercase", color: "#4A4A52" }}>
+              <div className="flex flex-col items-center gap-1 mb-16">
+                <span style={{ color: "rgba(201,162,74,.5)", fontSize: 18, lineHeight: 1 }}>◇</span>
+                <span className="font-serif" style={{ fontSize: 22, color: "#C9A24A", marginTop: 8 }}>Nitin Nahata</span>
+                <span className="font-sans" style={{ fontSize: "9.5px", fontWeight: 500, letterSpacing: ".22em", textTransform: "uppercase", color: "#8A8A96" }}>
                   The Operating Architect
                 </span>
                 <a
@@ -2014,7 +2014,7 @@ export default function FounderPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="font-sans mt-2"
-                  style={{ fontSize: "10px", letterSpacing: ".08em", color: "#4A4A52", textDecoration: "none" }}
+                  style={{ fontSize: "10px", letterSpacing: ".08em", color: "#5A5A62", textDecoration: "none" }}
                 >
                   LinkedIn ↗
                 </a>
@@ -2025,22 +2025,22 @@ export default function FounderPage() {
             <Reveal delay={0.28}>
               <div
                 style={{
-                  border: "1px solid rgba(201,162,74,.22)",
-                  borderRadius: 14,
-                  padding: "44px 48px",
-                  background: "rgba(12,11,9,.7)",
-                  boxShadow: "0 0 60px -24px rgba(201,162,74,.22)",
+                  border: "1px solid rgba(201,162,74,.28)",
+                  borderRadius: 16,
+                  padding: "52px 56px",
+                  background: "rgba(12,11,9,.75)",
+                  boxShadow: "0 0 80px -24px rgba(201,162,74,.28), inset 0 1px 0 rgba(201,162,74,.08)",
                 }}
               >
-                {/* Corner accents */}
                 <div className="relative">
-                  <div className="absolute pointer-events-none" style={{ top: -44, left: -48, width: 40, height: 1, background: "#C9A24A", opacity: .35 }} />
-                  <div className="absolute pointer-events-none" style={{ top: -44, right: -48, width: 40, height: 1, background: "#C9A24A", opacity: .35 }} />
+                  {/* Corner accents */}
+                  <div className="absolute pointer-events-none" style={{ top: -52, left: -56, width: 48, height: 1, background: "#C9A24A", opacity: .4 }} />
+                  <div className="absolute pointer-events-none" style={{ top: -52, right: -56, width: 48, height: 1, background: "#C9A24A", opacity: .4 }} />
 
-                  <span className="font-sans block mb-3" style={{ fontSize: "9.5px", fontWeight: 600, letterSpacing: ".28em", textTransform: "uppercase", color: "#C9A24A", opacity: .65 }}>
+                  <span className="font-sans block mb-4" style={{ fontSize: "9.5px", fontWeight: 600, letterSpacing: ".28em", textTransform: "uppercase", color: "#C9A24A", opacity: .75 }}>
                     Axion Index
                   </span>
-                  <p className="font-serif mx-auto mb-8" style={{ fontSize: "clamp(17px,1.8vw,21px)", lineHeight: 1.44, color: "#CCCAC2", maxWidth: "34ch" }}>
+                  <p className="font-serif mx-auto mb-10" style={{ fontSize: "clamp(18px,1.9vw,23px)", lineHeight: 1.48, color: "#D4D2CA", maxWidth: "34ch" }}>
                     If the patterns in this page describe what your organisation is missing — the conversation starts here.
                   </p>
 
@@ -2050,16 +2050,18 @@ export default function FounderPage() {
                     rel="noopener noreferrer"
                     className="font-sans inline-flex items-center gap-3"
                     style={{
-                      fontSize: "11px", fontWeight: 600, letterSpacing: ".14em", textTransform: "uppercase",
-                      color: "#000", background: "#C9A24A",
-                      borderRadius: 4, padding: "14px 30px",
+                      fontSize: "11px", fontWeight: 600, letterSpacing: ".18em", textTransform: "uppercase",
+                      color: "#000",
+                      background: "linear-gradient(135deg, #C9A24A 0%, #E2C078 50%, #C9A24A 100%)",
+                      borderRadius: 40, padding: "16px 36px",
                       textDecoration: "none",
+                      boxShadow: "0 0 32px rgba(201,162,74,0.35)",
                     }}
                   >
                     Start the conversation ↗
                   </a>
 
-                  <p className="font-sans mt-4" style={{ fontSize: "11px", color: "#3A3A40", letterSpacing: ".04em" }}>
+                  <p className="font-sans mt-5" style={{ fontSize: "11px", color: "#4A4A52", letterSpacing: ".04em" }}>
                     via Axion Index
                   </p>
                 </div>
