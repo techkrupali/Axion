@@ -314,7 +314,7 @@ export default function Home() {
           <Reveal>
             {/* Fix 3 — classification eyebrow, corner strips merged in */}
             <div className="eyebrow eyebrow--center mb-10 text-[var(--fg-3)]">
-              OPERATING ARCHITECTURE PRACTICE
+              OPERATING ARCHITECTURE PRACTICE&nbsp;&nbsp;·&nbsp;&nbsp;BENGALURU
             </div>
           </Reveal>
 
@@ -421,9 +421,7 @@ export default function Home() {
       <section className="section-tint relative overflow-hidden py-24" id="method">
         <div className="shell">
           <div className="max-w-[860px] mx-auto text-center flex flex-col items-center">
-            <Reveal>
-              <span className="eyebrow eyebrow--center mb-8 text-[var(--accent)]">OUR OPERATING LOGIC</span>
-            </Reveal>
+
             <Reveal delay={0.1}>
               <h2 className="h-section mb-6">
                 Our Operating <em>Logic.</em>
@@ -517,7 +515,7 @@ export default function Home() {
                   {/* Label */}
                   <h3
                     className="font-serif mb-4"
-                    style={{ fontSize: "clamp(22px,2.2vw,30px)", color: i === 2 ? "#E8C97A" : "var(--fg)", fontWeight: 400, lineHeight: 1.1 }}
+                    style={{ fontSize: "clamp(22px,2.2vw,30px)", color: i === 2 ? "#E8C97A" : (i === 1 ? "var(--fg-3)" : "var(--fg)"), fontWeight: 400, lineHeight: 1.1 }}
                   >
                     <em>{item.label}</em>
                   </h3>
