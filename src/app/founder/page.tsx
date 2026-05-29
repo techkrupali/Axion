@@ -845,66 +845,67 @@ export default function FounderPage() {
                           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                           className="overflow-hidden"
                         >
-                          <div className="p-8 lg:p-10 pt-4">
-                            <p className="text-[var(--fg-3)] text-lg leading-relaxed mb-8">{t.body}</p>
+                          <div className="p-6 lg:p-8 pt-4">
+                            {/* Compact 2-col layout — fits in one viewport */}
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                              {/* Left — body + scar */}
+                              <div className="flex flex-col gap-4">
+                                <p className="text-[var(--fg-3)] text-sm leading-relaxed" style={{ display: '-webkit-box', WebkitLineClamp: 4, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{t.body}</p>
 
-                            {/* Two column layout for content */}
-                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-                              {/* Scar section */}
-                              <div className="relative">
-                                <div className="absolute -left-4 top-0 bottom-0 w-1 rounded-full"
-                                     style={{ background: "linear-gradient(180deg, #C9A24A 0%, rgba(201,162,74,0.2) 100%)" }} />
-                                <div className="pl-6">
-                                  <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-[var(--accent)] opacity-70 block mb-3">The Scar</span>
-                                  <blockquote className="font-serif italic text-xl lg:text-2xl text-[var(--accent)] leading-relaxed">
-                                    "{t.scar}"
-                                  </blockquote>
+                                {/* Scar */}
+                                <div className="relative">
+                                  <div className="absolute -left-4 top-0 bottom-0 w-1 rounded-full"
+                                       style={{ background: "linear-gradient(180deg, #C9A24A 0%, rgba(201,162,74,0.2) 100%)" }} />
+                                  <div className="pl-5">
+                                    <span className="font-mono text-[9px] tracking-[0.3em] uppercase text-[var(--accent)] opacity-70 block mb-2">The Scar</span>
+                                    <blockquote className="font-serif italic text-base lg:text-lg text-[var(--accent)] leading-snug">
+                                      "{t.scar}"
+                                    </blockquote>
+                                  </div>
+                                </div>
+
+                                {/* Installed tag */}
+                                <div className="mt-auto pt-3 border-t" style={{ borderColor: "rgba(237,235,227,0.06)" }}>
+                                  <span className="font-mono text-[9px] tracking-[0.3em] uppercase text-[var(--fg-5)] block mb-2">What this installed</span>
+                                  <p className="text-[var(--fg-3)] text-xs leading-relaxed">{t.installed}</p>
                                 </div>
                               </div>
 
-                              {/* Installations section */}
-                              <div>
-                                <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-[var(--fg-5)] block mb-4">The Installations</span>
-                                <div className="space-y-3">
+                              {/* Right — installations + tag */}
+                              <div className="flex flex-col gap-3">
+                                <span className="font-mono text-[9px] tracking-[0.3em] uppercase text-[var(--fg-5)] block">The Installations</span>
+                                <div className="flex flex-col gap-2">
                                   {t.installations.map((inst, j) => (
                                     <motion.div
                                       key={j}
                                       initial={{ opacity: 0, x: 20 }}
                                       animate={{ opacity: 1, x: 0 }}
-                                      transition={{ delay: j * 0.1 }}
-                                      className="flex gap-4 p-4 rounded-xl"
+                                      transition={{ delay: j * 0.08 }}
+                                      className="flex gap-3 p-3 rounded-xl"
                                       style={{ 
                                         background: "rgba(201,162,74,0.03)", 
                                         border: "1px solid rgba(201,162,74,0.1)" 
                                       }}
                                     >
-                                      <div className="shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-mono text-sm"
+                                      <div className="shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-mono text-[11px]"
                                            style={{ background: "#C9A24A", color: "#000" }}>
                                         {inst.n}
                                       </div>
                                       <div>
-                                        <strong className="block text-[var(--fg)]">{inst.title}</strong>
-                                        <p className="text-[var(--fg-4)] text-sm leading-relaxed">{inst.desc}</p>
+                                        <strong className="block text-[var(--fg)] text-sm">{inst.title}</strong>
+                                        <p className="text-[var(--fg-4)] text-xs leading-relaxed">{inst.desc}</p>
                                       </div>
                                     </motion.div>
                                   ))}
                                 </div>
-                              </div>
-                            </div>
 
-                            {/* Footer section */}
-                            <div className="mt-10 pt-8 border-t" style={{ borderColor: "rgba(237,235,227,0.06)" }}>
-                              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-                                <div>
-                                  <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-[var(--fg-5)] block mb-2">What this collision installed</span>
-                                  <p className="text-[var(--fg-3)]">{t.installed}</p>
-                                </div>
-                                <div className="flex items-center gap-3">
-                                  <span className="inline-flex items-center font-mono text-[11px] tracking-[0.15em] uppercase px-5 py-3 rounded-full"
+                                {/* Tag bottom-right */}
+                                <div className="mt-auto flex justify-end">
+                                  <span className="inline-flex items-center font-mono text-[10px] tracking-[0.15em] uppercase px-4 py-2 rounded-full"
                                         style={{ 
                                           background: "linear-gradient(135deg, #C9A24A 0%, #E2C078 100%)", 
                                           color: "#000",
-                                          boxShadow: "0 5px 20px rgba(201,162,74,0.3)"
+                                          boxShadow: "0 4px 16px rgba(201,162,74,0.25)"
                                         }}>
                                     {t.tag}
                                   </span>
