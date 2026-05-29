@@ -274,7 +274,7 @@ export default function FounderPage() {
         .fn-nav-inner { max-width: 1160px; margin: 0 auto; padding: 0 38px; display: flex; align-items: center; justify-content: space-between; width: 100%; }
         .fn-brand { font-family: var(--font-serif), 'Cormorant Garamond', Georgia, serif; font-size: 20px; font-weight: 400; color: #EDEBE3; letter-spacing: .01em; text-decoration: none; }
         .fn-nl { display: flex; align-items: center; gap: 30px; }
-        .fn-nl a { font-family: var(--font-geist-sans), system-ui, sans-serif; font-size: 11px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: #8A8A96; transition: color .2s; padding: 5px 0; position: relative; text-decoration: none; }
+        .fn-nl a { font-family: var(--font-geist-sans), system-ui, sans-serif; font-size: 11px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: #B8B8C0; transition: color .2s; padding: 5px 0; position: relative; text-decoration: none; }
         .fn-nl a:hover, .fn-nl a.on { color: #E2C078; }
         .fn-nl a.on::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; background: #C9A24A; }
         .fn-nl .fn-btn { color: #C9A24A; border: 1px solid rgba(201,162,74,.28); border-radius: 2px; padding: 8px 15px; }
