@@ -1594,6 +1594,12 @@ export default function FounderPage() {
             font-size: clamp(18px, 2.5vw, 22px); font-weight: 400; color: var(--paper);
             line-height: 1.3; letter-spacing: -0.01em; margin-bottom: 24px;
           }
+          .e-why {
+            font-family: var(--serif); font-style: italic; font-size: 16px;
+            color: var(--gold); opacity: 0.55; line-height: 1.6;
+            margin-bottom: 20px; transition: opacity 0.2s;
+          }
+          .essay-card:hover .e-why { opacity: 0.85; }
           .e-arrow {
             font-family: var(--mono); font-size: 12px; letter-spacing: 0.2em; color: var(--paper);
             transition: color 0.2s, letter-spacing 0.3s;
@@ -1715,8 +1721,8 @@ export default function FounderPage() {
           {/* TICKER */}
           <div className="ticker">
             <div className="ticker-track">
-              <div className="t-seg"><div className="t-pip"></div>HR in Start-Ups<div className="t-pip"></div>AI & Empathy<div className="t-pip"></div>Architecture over Activity<div className="t-pip"></div>Continuous Feedback<div className="t-pip"></div>HR Leadership<div className="t-pip"></div>Performance Systems<div className="t-pip"></div>Org Design<div className="t-pip"></div>People Tech</div>
-              <div className="t-seg"><div className="t-pip"></div>HR in Start-Ups<div className="t-pip"></div>AI & Empathy<div className="t-pip"></div>Architecture over Activity<div className="t-pip"></div>Continuous Feedback<div className="t-pip"></div>HR Leadership<div className="t-pip"></div>Performance Systems<div className="t-pip"></div>Org Design<div className="t-pip"></div>People Tech</div>
+              <div className="t-seg"><div className="t-pip"></div>AI & HR<div className="t-pip"></div>Startups<div className="t-pip"></div>HR Strategy<div className="t-pip"></div>HR Leadership<div className="t-pip"></div>HR Tech<div className="t-pip"></div>Performance</div>
+              <div className="t-seg"><div className="t-pip"></div>AI & HR<div className="t-pip"></div>Startups<div className="t-pip"></div>HR Strategy<div className="t-pip"></div>HR Leadership<div className="t-pip"></div>HR Tech<div className="t-pip"></div>Performance</div>
             </div>
           </div>
 
@@ -1748,7 +1754,7 @@ export default function FounderPage() {
                 <span className="pill">AI & HR</span>
               </div>
               <div className="feat-title">Should AI Replace <em>Empathy?</em><br/>The Limits of Technology in Hiring</div>
-              <div className="feat-dek">A field examination of where algorithmic hiring ends and human judgment must begin — and why the boundary matters more than the technology.</div>
+              <div className="feat-dek"><em>Hiring is not a process problem. It is a judgment architecture problem.</em></div>
             </div>
             <div className="feat-aside">
               <div>
@@ -1769,6 +1775,7 @@ export default function FounderPage() {
               <div key={i} className="essay-card" onClick={() => {}}>
                 <div className="essay-row"><span className="e-pill">{a.cat}</span><span className="e-num">0{i+1}</span></div>
                 <div className="e-title">{a.title}</div>
+                {a.whyItMatters && <div className="e-why">{a.whyItMatters}</div>}
                 <div className="e-arrow">READ →</div>
               </div>
             ))}
@@ -1780,6 +1787,7 @@ export default function FounderPage() {
               <div key={i} className="essay-card" onClick={() => {}}>
                 <div className="essay-row"><span className="e-pill">{a.cat}</span><span className="e-num">0{i+4}</span></div>
                 <div className="e-title">{a.title}</div>
+                {a.whyItMatters && <div className="e-why">{a.whyItMatters}</div>}
                 <div className="e-arrow">READ →</div>
               </div>
             ))}
