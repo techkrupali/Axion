@@ -1847,6 +1847,66 @@ export default function FounderPage() {
       </section>
 
 
+      {/* ── BRIDGE BLOCK — Axion connection ── */}
+      <section style={{
+        borderTop: '1px solid rgba(255,255,255,0.08)',
+        borderBottom: '1px solid rgba(255,255,255,0.08)',
+        padding: 'clamp(72px, 10vw, 120px) clamp(24px, 6vw, 80px)',
+        background: 'var(--ink)',
+        textAlign: 'center',
+      }}>
+        <p style={{
+          fontFamily: 'var(--mono, monospace)',
+          fontSize: '11px',
+          letterSpacing: '0.35em',
+          textTransform: 'uppercase',
+          color: '#b8953a',
+          opacity: 1,
+          marginBottom: '28px',
+        }}>
+          From thinking to architecture
+        </p>
+        <p style={{
+          fontFamily: 'var(--serif)',
+          fontSize: 'clamp(18px, 2.2vw, 26px)',
+          fontWeight: 400,
+          color: 'var(--paper)',
+          lineHeight: 1.7,
+          maxWidth: '640px',
+          margin: '0 auto 48px',
+          opacity: 0.85,
+        }}>
+          These essays are the public edge of work I&apos;m doing with organisations through{' '}
+          <em>Axion Index</em> — translating doctrine into operating rhythm for founders,
+          CHROs and boards navigating growth, AI and consequence.
+        </p>
+        <a
+          href="https://axionindex.org"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '10px',
+            fontFamily: 'var(--mono, monospace)',
+            fontSize: '12px',
+            letterSpacing: '0.25em',
+            textTransform: 'uppercase',
+            color: '#b8953a',
+            textDecoration: 'none',
+            borderBottom: '1px solid rgba(184,149,58,0.35)',
+            paddingBottom: '3px',
+            transition: 'opacity 0.2s, border-color 0.2s',
+            opacity: 1,
+          }}
+          onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.opacity = '1'; (e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(201,168,76,0.8)'; }}
+          onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.opacity = '0.8'; (e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(201,168,76,0.35)'; }}
+        >
+          Start a conversation →
+        </a>
+      </section>
+
+
       {/* ── VISION ── */}
       <section
         id="vision"
