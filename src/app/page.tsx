@@ -630,9 +630,9 @@ export default function Home() {
                   {/* Collapsed state */}
                   {!isActive && (
                     <div className="absolute inset-0 flex flex-col items-center justify-between py-8 px-3">
-                      <span className="font-mono text-[9px] tracking-[0.3em] text-[var(--fg-5)]">[{practice.num}]</span>
+                      <span className="font-mono text-[12px] tracking-[0.3em] text-[var(--fg-5)]">[{practice.num}]</span>
                       <span
-                        className="font-serif text-[14px] text-[var(--fg-4)] tracking-wide whitespace-nowrap"
+                        className="font-serif text-[18px] text-[var(--fg-4)] tracking-wide whitespace-nowrap"
                         style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}
                       >
                         {practice.name}
@@ -649,7 +649,7 @@ export default function Home() {
                       transition={{ duration: 0.3 }}
                       className="absolute inset-0 p-8 flex flex-col"
                     >
-                      <span className="font-mono text-[10px] tracking-[0.3em] text-[var(--accent)] mb-5">[{practice.num}]</span>
+                      <span className="font-mono text-[13px] tracking-[0.3em] text-[var(--accent)] mb-5">[{practice.num}]</span>
                       <h3 className="font-serif text-[clamp(26px,2.8vw,40px)] leading-[1.1] text-[var(--fg)] mb-5">
                         {first}<br /><em className="text-[var(--accent)]">{rest}</em>
                       </h3>
@@ -690,7 +690,7 @@ export default function Home() {
                 className="group block p-6 rounded-[20px] border border-[var(--line)] hover:border-[var(--line-gold)] bg-[var(--bg-1)] transition-all duration-300"
               >
                 <div className="flex items-center justify-between mb-3">
-                  <span className="font-mono text-[9px] tracking-[0.3em] text-[var(--accent)]">[{practice.num}]</span>
+                  <span className="font-mono text-[12px] tracking-[0.3em] text-[var(--accent)]">[{practice.num}]</span>
                   <ArrowRight size={13} className="text-[var(--accent)] opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
                 </div>
                 <h3 className="font-serif text-[22px] text-[var(--fg)] mb-3">{practice.name}</h3>
