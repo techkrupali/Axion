@@ -254,7 +254,7 @@ export default function FounderPage() {
     { href: "#story",    label: "Story" },
     { href: "#roots",    label: "Roots" },
     { href: "#patterns", label: "Patterns" },
-    { href: "#writing",  label: "Writing" },
+    { href: "#writing",  label: "Field Notes" },
     { href: "#vision",   label: "Vision" },
   ];
 
