@@ -423,7 +423,7 @@ export default function Home() {
           <div className="max-w-[860px] mx-auto text-center flex flex-col items-center">
 
             <Reveal delay={0.1}>
-              <h2 className="h-section mb-6">
+              <h2 className="h-section mb-6 -mt-8">
                 Our Operating <em>Logic.</em>
               </h2>
             </Reveal>
@@ -593,7 +593,7 @@ export default function Home() {
       ══════════════════════════════════════════ */}
       <section className="chapter section-deep overflow-hidden pb-10" id="practices">
         <div className="shell">
-          <div className="text-center mb-20">
+          <div className="text-center mb-20 -mt-4">
             <Reveal><span className="eyebrow eyebrow--center mb-4">Where the work happens</span></Reveal>
             <Reveal delay={0.1}>
               <h2 className="h-section mx-auto max-w-[20ch]">
@@ -604,7 +604,7 @@ export default function Home() {
           </div>
 
           {/* Desktop accordion */}
-          <div className="hidden lg:flex gap-3 h-[560px]">
+          <div className="hidden lg:flex gap-3 min-h-[560px]">
             {[
               { num: "01", name: "People Architecture", href: "/expertise/people", sub: "When the organisation depends on who is in the room — not on how it is built. We codify the judgment, decision rights, and succession logic your best people carry in their heads into structure the company keeps after they leave. The layer beneath the org chart, made durable." },
               { num: "02", name: "Labour Codes", href: "/expertise/labour", sub: "When cost, classification, and compliance stop aligning — and you can't see why. We turn your workforce from headcount into auditable control architecture: contracts, classification, and risk mapped to the structure that governs them. Built to hold when the rules change retroactively." },
@@ -632,7 +632,7 @@ export default function Home() {
                     <div className="absolute inset-0 flex flex-col items-center justify-between py-8 px-3">
                       <span className="font-mono text-[12px] tracking-[0.3em] text-[var(--fg-5)]">[{practice.num}]</span>
                       <span
-                        className="font-serif text-[18px] text-[var(--fg-4)] tracking-wide whitespace-nowrap"
+                        className="font-serif text-[18px] text-[var(--fg)] tracking-wide whitespace-nowrap"
                         style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}
                       >
                         {practice.name}
@@ -650,10 +650,10 @@ export default function Home() {
                       className="absolute inset-0 p-8 flex flex-col"
                     >
                       <span className="font-mono text-[13px] tracking-[0.3em] text-[var(--accent)] mb-5">[{practice.num}]</span>
-                      <h3 className="font-serif text-[clamp(26px,2.8vw,40px)] leading-[1.1] text-[var(--fg)] mb-5">
+                      <h3 className="font-serif text-[clamp(30px,3.2vw,48px)] leading-[1.1] text-[var(--fg)] mb-5">
                         {first}<br /><em className="text-[var(--accent)]">{rest}</em>
                       </h3>
-                      <p className="text-[14px] text-[var(--fg-2)] leading-relaxed flex-1" style={{ overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 6, WebkitBoxOrient: 'vertical' as const }}>
+                      <p className="text-[16px] text-[var(--fg-2)] leading-relaxed flex-1">
                         {practice.sub}
                       </p>
                       <div className="pt-5 border-t border-[var(--line)] mt-4">
@@ -693,8 +693,8 @@ export default function Home() {
                   <span className="font-mono text-[12px] tracking-[0.3em] text-[var(--accent)]">[{practice.num}]</span>
                   <ArrowRight size={13} className="text-[var(--accent)] opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
                 </div>
-                <h3 className="font-serif text-[22px] text-[var(--fg)] mb-3">{practice.name}</h3>
-                <p className="text-[13px] text-[var(--fg-2)] leading-relaxed">{practice.sub}</p>
+                <h3 className="font-serif text-[26px] text-[var(--fg)] mb-3">{practice.name}</h3>
+                <p className="text-[15px] text-[var(--fg-2)] leading-relaxed">{practice.sub}</p>
               </Link>
             ))}
           </div>
@@ -727,64 +727,86 @@ export default function Home() {
       ══════════════════════════════════════════ */}
       <section className="chapter section-dark" id="roles">
         <div className="shell">
-          <div className="grid grid-cols-1 md:grid-cols-[minmax(280px,1fr)_2.4fr] gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-[minmax(280px,1fr)_2.5fr] gap-20 items-start">
             {/* Left col */}
-            <div className="md:sticky md:top-[30vh] h-fit flex flex-col gap-10">
+            <div className="lg:sticky lg:top-[25vh] h-fit flex flex-col gap-10 -mt-4">
               <Reveal>
                 <h2 className="h-statement">
                   What changes — depending on <em>where you sit.</em>
                 </h2>
               </Reveal>
               <Reveal delay={0.15}>
-                <div className="gold-line mb-4" />
-                <p className="font-serif italic text-[clamp(15px,1.3vw,18px)] text-[var(--fg-3)] leading-relaxed">
+                <div className="w-20 h-[2px] bg-gradient-to-r from-[var(--accent)] to-transparent mb-6" />
+                <p className="font-serif italic text-[clamp(16px,1.4vw,19px)] text-[var(--fg-3)] leading-relaxed">
                   We don't advise from the outside. We install architecture into how the organisation actually runs — and stay until it holds without us.
                 </p>
               </Reveal>
               <Reveal delay={0.25}>
                 <Link
                   href="/connect"
-                  className="inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.28em] uppercase text-[var(--accent)] hover:text-[var(--fg)] transition-colors group w-fit"
+                  className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-[var(--accent)] via-[#E8C97A] to-[var(--accent)] text-[#080A0F] font-mono text-[11px] tracking-[0.28em] uppercase rounded-full font-semibold shadow-[0_0_30px_rgba(201,168,76,0.2)] hover:shadow-[0_0_40px_rgba(201,168,76,0.4)] transition-all duration-300 group"
                 >
-                  Reach Us <ArrowRight size={11} className="group-hover:translate-x-1 transition-transform" />
+                  Reach Us <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform" />
                 </Link>
               </Reveal>
             </div>
 
-            {/* Right col — 2x2 grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            {/* Right col — stacked interactive cards */}
+            <div className="flex flex-col gap-4">
               {[
                 {
                   role: "Founder / CEO",
                   pull: "You can feel the company outgrowing the way you run it — you just can't see where it cracks first.",
                   work: "Map the failure points before they fail, and build the architecture that removes you as the single point of dependency.",
+                  icon: "👨‍💼"
                 },
                 {
                   role: "CFO",
                   pull: "Cost is climbing, and headcount explains some of it — not the part that keeps you up.",
                   work: "Read workforce as cost, risk, and control architecture, then install the structure that makes the number governable — not just reported.",
+                  icon: "💰"
                 },
                 {
                   role: "CHRO",
                   pull: "You're running more programs than ever, and the organisation is no more durable for it.",
                   work: "Build the operating system underneath HR — so capability is designed into structure, not dependent on who's running the program.",
+                  icon: "👥"
                 },
                 {
                   role: "Investor / Board",
                   pull: "The thesis is sound. The question is whether the organisation can carry it.",
                   work: "Diligence the operating architecture — what survives the founder, and what is quietly held by individuals who can leave.",
+                  icon: "📊"
                 },
               ].map((item, i) => (
-                <Reveal key={i} delay={i * 0.08}>
-                  <div className="h-full p-7 rounded-[20px] border border-[var(--line)] hover:border-[var(--line-gold)] bg-[var(--bg-1)] group hover:shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-all duration-500">
-                    <span className="font-mono text-[10px] tracking-widest uppercase text-[var(--accent)] mb-4 block">{item.role}</span>
-                    <p className="font-serif text-[clamp(15px,1.4vw,19px)] leading-snug text-[var(--fg-2)] group-hover:text-[var(--fg)] transition-colors mb-3">
-                      {item.pull}
-                    </p>
-                    <p className="font-mono text-[11px] tracking-[0.12em] text-[var(--fg-4)] group-hover:text-[var(--fg-3)] transition-colors leading-relaxed">
-                      {item.work}
-                    </p>
-                  </div>
+                <Reveal key={i} delay={i * 0.12}>
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="relative h-full p-7 rounded-[24px] border-2 border-[var(--line)] hover:border-[var(--line-gold)] bg-gradient-to-br from-[rgba(12,14,20,0.95)] to-[rgba(8,10,15,0.98)] group hover:shadow-[0_30px_80px_rgba(0,0,0,0.7),0_0_0_1px_rgba(201,168,76,0.15)] transition-all duration-500 overflow-hidden"
+                  >
+                    {/* Accent corner */}
+                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--accent)] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    
+                    <div className="flex items-start gap-5">
+                      <div className="text-3xl flex-shrink-0 opacity-70 group-hover:opacity-100 transition-opacity duration-300">
+                        {item.icon}
+                      </div>
+                      <div className="flex-1">
+                        <span className="font-mono text-[11px] tracking-[0.35em] uppercase text-[var(--accent)] mb-3 block font-semibold">{item.role}</span>
+                        <p className="font-serif text-[clamp(16px,1.5vw,20px)] leading-snug text-[var(--fg-2)] group-hover:text-[var(--fg)] transition-colors mb-4 font-medium">
+                          {item.pull}
+                        </p>
+                        <div className="flex items-start gap-2">
+                          <div className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] mt-2 flex-shrink-0" />
+                          <p className="font-mono text-[12px] tracking-[0.15em] text-[var(--fg-4)] group-hover:text-[var(--fg-3)] transition-colors leading-relaxed">
+                            {item.work}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
                 </Reveal>
               ))}
             </div>
