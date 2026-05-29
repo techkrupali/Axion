@@ -220,6 +220,7 @@ const HONOURS = [
 
 export default function FounderPage() {
   const [activeTab, setActiveTab] = useState(0);
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [emailNews, setEmailNews] = useState("");
   const [submittedNews, setSubmittedNews] = useState(false);
   const [navScrolled, setNavScrolled] = useState(false);
@@ -273,7 +274,7 @@ export default function FounderPage() {
         .fn-nav-inner { max-width: 1160px; margin: 0 auto; padding: 0 38px; display: flex; align-items: center; justify-content: space-between; width: 100%; }
         .fn-brand { font-family: var(--font-serif), 'Cormorant Garamond', Georgia, serif; font-size: 20px; font-weight: 400; color: #EDEBE3; letter-spacing: .01em; text-decoration: none; }
         .fn-nl { display: flex; align-items: center; gap: 30px; }
-        .fn-nl a { font-family: var(--font-geist-sans), system-ui, sans-serif; font-size: 11px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: #6A6A70; transition: color .2s; padding: 5px 0; position: relative; text-decoration: none; }
+        .fn-nl a { font-family: var(--font-geist-sans), system-ui, sans-serif; font-size: 11px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: #8A8A96; transition: color .2s; padding: 5px 0; position: relative; text-decoration: none; }
         .fn-nl a:hover, .fn-nl a.on { color: #E2C078; }
         .fn-nl a.on::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; background: #C9A24A; }
         .fn-nl .fn-btn { color: #C9A24A; border: 1px solid rgba(201,162,74,.28); border-radius: 2px; padding: 8px 15px; }
@@ -496,7 +497,7 @@ export default function FounderPage() {
             <Reveal delay={0.18}>
               <p
                 className="font-sans"
-                style={{ fontWeight: 300, fontSize: "clamp(15px,1.45vw,18px)", color: "#97979C", maxWidth: "38ch", marginBottom: 32, lineHeight: 1.6, letterSpacing: ".01em" }}
+                style={{ fontWeight: 300, fontSize: "clamp(15px,1.45vw,18px)", color: "#AEAEB8", maxWidth: "38ch", marginBottom: 32, lineHeight: 1.6, letterSpacing: ".01em" }}
               >
                 A 23-year journey through collision, scars &amp; conviction.
               </p>
@@ -707,7 +708,7 @@ export default function FounderPage() {
               <h2 className="h-section mb-6 max-w-4xl mx-auto">
                 Preparing for the war when you are not at war
               </h2>
-              <p className="lead text-[var(--fg-4)] max-w-3xl mx-auto">
+              <p className="lead text-[var(--fg-3)] max-w-3xl mx-auto">
                 Six collisions across institution and startup. In the early years the architecture was already built — the work was to operate inside it, learn its mechanics, understand what holds and what breaks. In the later years there was no architecture to inherit: only belief, speed and chaos.
               </p>
             </div>
@@ -755,39 +756,52 @@ export default function FounderPage() {
                 {/* Main content card */}
                 <motion.div
                   whileHover={{ scale: 1.02 }}
+                  onHoverStart={() => setHoveredCard(i)}
+                  onHoverEnd={() => setHoveredCard(null)}
                   onClick={() => setActiveTab(activeTab === i ? -1 : i)}
                   className="flex-1 cursor-pointer"
                   style={{ position: "relative" }}
                 >
-                  {/* Card glow */}
-                  <div className="absolute -inset-2 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                       style={{ background: "radial-gradient(circle at center, rgba(201,162,74,0.1) 0%, transparent 70%)" }} />
+                  {/* Card glow — shows on hover OR active */}
+                  <div className="absolute -inset-2 rounded-3xl transition-opacity duration-500"
+                       style={{ 
+                         background: "radial-gradient(circle at center, rgba(201,162,74,0.15) 0%, transparent 70%)",
+                         opacity: hoveredCard === i || activeTab === i ? 1 : 0
+                       }} />
                   
                   {/* Main card */}
                   <div className="relative rounded-3xl overflow-hidden"
                        style={{
                          background: activeTab === i 
                            ? "linear-gradient(135deg, rgba(201,162,74,0.12) 0%, rgba(14,13,12,0.95) 50%, rgba(201,162,74,0.08) 100%)"
-                           : "linear-gradient(135deg, rgba(14,13,12,0.9) 0%, rgba(8,7,5,0.95) 100%)",
-                         border: `1px solid ${activeTab === i ? "rgba(201,162,74,0.4)" : "rgba(237,235,227,0.08)"}`,
-                         boxShadow: activeTab === i 
+                           : "linear-gradient(135deg, rgba(22,20,18,0.95) 0%, rgba(14,12,10,0.98) 100%)",
+                         border: `1px solid ${
+                           activeTab === i 
+                             ? "rgba(201,162,74,0.55)" 
+                             : hoveredCard === i 
+                               ? "rgba(201,162,74,0.45)" 
+                               : "rgba(237,235,227,0.14)"
+                         }`,
+                         boxShadow: activeTab === i
                            ? "0 25px 80px -20px rgba(201,162,74,0.25), 0 10px 40px -15px rgba(0,0,0,0.5), inset 0 1px 0 rgba(201,162,74,0.1)"
-                           : "0 10px 40px -10px rgba(0,0,0,0.3)",
-                         transition: "all 0.5s ease"
+                           : hoveredCard === i
+                             ? "0 0 0 1px rgba(201,162,74,0.2), 0 20px 60px -15px rgba(201,162,74,0.2), 0 10px 40px -10px rgba(0,0,0,0.5), inset 0 1px 0 rgba(201,162,74,0.08)"
+                             : "0 10px 40px -10px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.03)",
+                         transition: "all 0.4s ease"
                        }}>
                     
                     {/* Card corner decorations */}
                     <div className="absolute top-4 left-4 w-12 h-12 border-t border-l"
-                         style={{ borderColor: "rgba(201,162,74,0.2)" }} />
+                         style={{ borderColor: hoveredCard === i || activeTab === i ? "rgba(201,162,74,0.5)" : "rgba(201,162,74,0.2)", transition: "border-color 0.4s" }} />
                     <div className="absolute top-4 right-4 w-12 h-12 border-t border-r"
-                         style={{ borderColor: "rgba(201,162,74,0.2)" }} />
+                         style={{ borderColor: hoveredCard === i || activeTab === i ? "rgba(201,162,74,0.5)" : "rgba(201,162,74,0.2)", transition: "border-color 0.4s" }} />
                     <div className="absolute bottom-4 left-4 w-12 h-12 border-b border-l"
-                         style={{ borderColor: "rgba(201,162,74,0.2)" }} />
+                         style={{ borderColor: hoveredCard === i || activeTab === i ? "rgba(201,162,74,0.5)" : "rgba(201,162,74,0.2)", transition: "border-color 0.4s" }} />
                     <div className="absolute bottom-4 right-4 w-12 h-12 border-b border-r"
-                         style={{ borderColor: "rgba(201,162,74,0.2)" }} />
+                         style={{ borderColor: hoveredCard === i || activeTab === i ? "rgba(201,162,74,0.5)" : "rgba(201,162,74,0.2)", transition: "border-color 0.4s" }} />
 
                     {/* Card header */}
-                    <div className="p-8 lg:p-10 border-b" style={{ borderColor: "rgba(237,235,227,0.06)" }}>
+                    <div className="p-8 lg:p-10 border-b" style={{ borderColor: "rgba(237,235,227,0.12)" }}>
                       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-4">
                         <div>
                           <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-[var(--fg-5)] block mb-2">
@@ -865,7 +879,7 @@ export default function FounderPage() {
                                 </div>
 
                                 {/* Installed tag */}
-                                <div className="mt-auto pt-3 border-t" style={{ borderColor: "rgba(237,235,227,0.06)" }}>
+                                <div className="mt-auto pt-3 border-t" style={{ borderColor: "rgba(237,235,227,0.12)" }}>
                                   <span className="font-mono text-[9px] tracking-[0.3em] uppercase text-[var(--fg-5)] block mb-2">What this installed</span>
                                   <p className="text-[var(--fg-3)] text-xs leading-relaxed">{t.installed}</p>
                                 </div>
@@ -1303,7 +1317,7 @@ export default function FounderPage() {
               </p>
             </Reveal>
             <Reveal delay={0.14}>
-              <p style={{ marginTop: 14, fontSize: "15px", color: "#6A6A70", maxWidth: "62ch", lineHeight: 1.68 }}>
+              <p style={{ marginTop: 14, fontSize: "15px", color: "#8A8A96", maxWidth: "62ch", lineHeight: 1.68 }}>
                 The startup, the scaling company, the family business — the{" "}
                 <em style={{ color: "#C9A24A", fontStyle: "italic" }}>unfinished organisation</em>{" "}
                 — is still writing its operating system. These patterns are for them.
@@ -1411,7 +1425,7 @@ export default function FounderPage() {
                       <div className="font-serif italic mb-2" style={{ fontSize: 17, color: "rgba(201,162,74,.7)" }}>{p.num}</div>
                       <div className="font-serif mb-2" style={{ fontWeight: 400, fontSize: 21, color: "#EDEBE3", lineHeight: 1.14 }}>{p.name}</div>
                       <div className="font-serif italic mb-3" style={{ fontSize: "15px", lineHeight: 1.42, color: "rgba(201,162,74,.75)" }}>{p.signal}</div>
-                      <div style={{ fontSize: "14px", color: "#6A6A70", lineHeight: 1.54 }}>{p.desc}</div>
+                      <div style={{ fontSize: "14px", color: "#8A8A96", lineHeight: 1.54 }}>{p.desc}</div>
                     </motion.div>
                   ))}
                 </div>
@@ -1956,7 +1970,7 @@ export default function FounderPage() {
                   <h4 className="font-serif mb-3" style={{ fontSize: 20, color: i === 2 ? "#EDEBE3" : "#CCCAC2", fontWeight: 400, lineHeight: 1.18 }}>
                     {stage.title}
                   </h4>
-                  <p style={{ color: "#6A6A70", fontSize: "13.5px", lineHeight: 1.6 }}>{stage.body}</p>
+                  <p style={{ color: "#8A8A96", fontSize: "13.5px", lineHeight: 1.6 }}>{stage.body}</p>
                 </motion.div>
                 {i < 2 && (
                   <div key={`arr-${i}`} className="loop-arrow flex items-center justify-center" style={{ color: "rgba(201,162,74,.3)", fontSize: 18 }}>→</div>
@@ -1972,7 +1986,7 @@ export default function FounderPage() {
 
             {/* Bridge line */}
             <Reveal>
-              <p className="font-serif italic mb-6" style={{ fontSize: "clamp(16px,1.6vw,19px)", color: "#6A6A70", lineHeight: 1.5 }}>
+              <p className="font-serif italic mb-6" style={{ fontSize: "clamp(16px,1.6vw,19px)", color: "#8A8A96", lineHeight: 1.5 }}>
                 The loop closes where it began — in practice.
               </p>
             </Reveal>
