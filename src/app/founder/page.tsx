@@ -975,100 +975,163 @@ export default function FounderPage() {
           <Reveal delay={0.1}>
           <div
             className="relative"
-            style={{ maxWidth: 860, margin: "72px auto 0" }}
+            style={{ maxWidth: 1080, margin: "72px auto 0" }}
           >
             {/* Ambient glow */}
             <div
               className="absolute pointer-events-none"
               style={{
-                left: "50%", top: "10%", width: 480, height: 320,
+                left: "50%", top: "5%", width: 600, height: 400,
                 transform: "translateX(-50%)",
-                background: "radial-gradient(ellipse at center, rgba(201,162,74,.055), transparent 70%)",
+                background: "radial-gradient(ellipse at center, rgba(201,162,74,.08), transparent 70%)",
               }}
             />
 
-            {/* Gold-framed signature container */}
-            <div
-              className="relative text-center"
-              style={{
-                border: "1px solid rgba(201,162,74,.18)",
-                borderRadius: 16,
-                padding: "52px 60px 48px",
-                background: "rgba(12,11,9,.5)",
-              }}
-            >
-              {/* Corner accents — top */}
-              <div className="absolute pointer-events-none" style={{ top: -1, left: 28, width: 48, height: 1, background: "#C9A24A", opacity: .5 }} />
-              <div className="absolute pointer-events-none" style={{ top: -1, right: 28, width: 48, height: 1, background: "#C9A24A", opacity: .5 }} />
-
-              {/* Label */}
-              <span className="font-sans block mb-1" style={{ fontSize: "9.5px", fontWeight: 600, letterSpacing: ".32em", textTransform: "uppercase", color: "#C9A24A", opacity: .65 }}>
+            {/* Header section */}
+            <div className="text-center mb-12">
+              <span className="font-sans block mb-2" style={{ fontSize: "11px", fontWeight: 600, letterSpacing: ".32em", textTransform: "uppercase", color: "#C9A24A" }}>
                 The Bridge
               </span>
-              <span className="font-sans block mb-8" style={{ fontSize: "14px", fontWeight: 400, letterSpacing: ".22em", textTransform: "uppercase", color: "#4A4A52" }}>
+              <span className="font-sans block" style={{ fontSize: "13px", fontWeight: 400, letterSpacing: ".18em", textTransform: "uppercase", color: "#5A5A62" }}>
                 Two pauses that reset the lens
               </span>
+            </div>
 
-              {/* Central quote */}
-              <blockquote
-                className="font-serif italic mx-auto"
-                style={{ fontSize: "clamp(21px,2.4vw,28px)", lineHeight: 1.44, color: "#EDEBE3", maxWidth: "26ch", marginBottom: 28 }}
-              >
-                "Not every chapter in a career needs to be a collision. Some need to be a clearing."
-              </blockquote>
+            {/* Main content area */}
+            <div
+              className="relative"
+              style={{
+                background: "linear-gradient(135deg, rgba(201,162,74,.03) 0%, rgba(12,11,9,.6) 50%, rgba(201,162,74,.02) 100%)",
+                border: "1px solid rgba(201,162,74,.12)",
+                borderRadius: 20,
+                padding: "48px 48px 52px",
+                boxShadow: "0 0 80px -30px rgba(201,162,74,.15), inset 0 1px 0 rgba(201,162,74,.08)",
+              }}
+            >
+              {/* Decorative elements */}
+              <div className="absolute pointer-events-none" style={{ top: 20, left: 20, width: 60, height: 1, background: "linear-gradient(90deg, rgba(201,162,74,.4), transparent)" }} />
+              <div className="absolute pointer-events-none" style={{ top: 20, right: 20, width: 60, height: 1, background: "linear-gradient(270deg, rgba(201,162,74,.4), transparent)" }} />
+              <div className="absolute pointer-events-none" style={{ bottom: 20, left: 20, width: 60, height: 1, background: "linear-gradient(90deg, rgba(201,162,74,.4), transparent)" }} />
+              <div className="absolute pointer-events-none" style={{ bottom: 20, right: 20, width: 60, height: 1, background: "linear-gradient(270deg, rgba(201,162,74,.4), transparent)" }} />
 
-              {/* Recalibration line — quiet, centered, no box */}
+              {/* Central quote with decorative background */}
+              <div className="relative mb-10" style={{ maxWidth: 680, margin: "0 auto 40px" }}>
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    background: "radial-gradient(ellipse at center, rgba(201,162,74,.06), transparent 70%)",
+                    borderRadius: 12,
+                  }}
+                />
+                <blockquote
+                  className="font-serif italic relative"
+                  style={{
+                    fontSize: "clamp(24px,2.8vw,32px)",
+                    lineHeight: 1.5,
+                    color: "#EDEBE3",
+                    maxWidth: "28ch",
+                    margin: "0 auto",
+                    padding: "24px 0",
+                    textAlign: "center",
+                  }}
+                >
+                  <span style={{ color: "rgba(201,162,74,.3)", fontSize: "0.7em", lineHeight: 0, verticalAlign: "-0.4em", marginRight: 4 }}>"</span>
+                  Not every chapter in a career needs to be a collision. Some need to be a clearing.
+                  <span style={{ color: "rgba(201,162,74,.3)", fontSize: "0.7em", lineHeight: 0, verticalAlign: "-0.4em", marginLeft: 4 }}>"</span>
+                </blockquote>
+              </div>
+
+              {/* Recalibration line */}
               <p
-                className="font-serif italic mx-auto"
-                style={{ fontSize: "15.5px", lineHeight: 1.62, color: "#6A6A70", maxWidth: "52ch", marginBottom: 32 }}
+                className="font-serif italic text-center mx-auto"
+                style={{ fontSize: "16px", lineHeight: 1.7, color: "#7A7A82", maxWidth: "56ch", marginBottom: 48 }}
               >
                 Recognising when the professional timeline and the personal timeline need realignment is not weakness — it is the same first-principles thinking, applied to your own life.
               </p>
 
-              {/* Divider */}
-              <div style={{ width: 1, height: 32, background: "rgba(201,162,74,.22)", margin: "0 auto 32px" }} />
+              {/* Decorative divider */}
+              <div className="flex items-center justify-center gap-3 mb-12">
+                <div style={{ width: 40, height: 1, background: "linear-gradient(90deg, transparent, rgba(201,162,74,.3))" }} />
+                <div style={{ width: 6, height: 6, borderRadius: "50%", background: "rgba(201,162,74,.4)" }} />
+                <div style={{ width: 40, height: 1, background: "linear-gradient(270deg, transparent, rgba(201,162,74,.3))" }} />
+              </div>
 
-              {/* Two connector cards */}
-              <div className="bridge-grid grid grid-cols-1 md:grid-cols-2 gap-5 text-left">
+              {/* Two connector cards - Enhanced design */}
+              <div className="bridge-grid grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
                 {[
                   {
                     label: "The Discipline Bridge — Marico",
                     heading: "Where intensity paused and refocus began",
                     body: "Between the decade at Tata and the velocity of Udaan, a deliberate clearing — a mature, consumer-first organisation where the challenge was not building systems but sustaining and refining them.",
                     chips: ["Focus as Architecture", "Self-Architecture"],
+                    accent: "rgba(201,162,74,.08)",
                   },
                   {
                     label: "The Reality Bridge — Lodha",
                     heading: "When the plan and the situation diverge",
                     body: "A different sector, a different velocity. Conditions shifted from what had been anticipated — and navigating that shift compressed significant adaptability learning into a short, intense window.",
                     chips: ["Adaptability as Design", "Context Reading"],
+                    accent: "rgba(201,162,74,.05)",
                   },
                 ].map((c, i) => (
                   <motion.div
                     key={i}
-                    initial={{ opacity: 0, y: 12 }}
+                    initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-8%" }}
-                    transition={{ duration: 0.6, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] }}
+                    transition={{ duration: 0.7, delay: i * 0.15, ease: [0.22, 1, 0.36, 1] }}
+                    whileHover={{ y: -4, boxShadow: "0 12px 40px -12px rgba(201,162,74,.25)" }}
                     style={{
-                      border: "1px solid rgba(201,162,74,.14)",
-                      borderRadius: 10,
-                      padding: "24px 26px",
-                      background: "rgba(10,10,11,.6)",
+                      border: "1px solid rgba(201,162,74,.16)",
+                      borderRadius: 14,
+                      padding: "28px 30px",
+                      background: `linear-gradient(180deg, ${c.accent}, rgba(10,10,11,.7))`,
+                      position: "relative",
+                      overflow: "hidden",
                     }}
                   >
-                    <span className="font-sans block mb-2" style={{ fontSize: "12px", fontWeight: 500, letterSpacing: ".18em", textTransform: "uppercase", color: "#C9A24A", opacity: .75 }}>
-                      {c.label}
-                    </span>
-                    <h4 className="font-serif mb-3" style={{ fontWeight: 400, fontSize: 22, color: "#CCCAC2", lineHeight: 1.22 }}>
+                    {/* Card accent line */}
+                    <div
+                      className="absolute top-0 left-0"
+                      style={{ width: "100%", height: 2, background: "linear-gradient(90deg, transparent, rgba(201,162,74,.5), transparent)" }}
+                    />
+                    
+                    {/* Label */}
+                    <div className="flex items-start justify-between mb-3">
+                      <span className="font-sans" style={{ fontSize: "11px", fontWeight: 600, letterSpacing: ".16em", textTransform: "uppercase", color: "#C9A24A" }}>
+                        {c.label}
+                      </span>
+                      <span style={{ color: "rgba(201,162,74,.2)", fontSize: 20 }}>◆</span>
+                    </div>
+                    
+                    {/* Heading */}
+                    <h4 className="font-serif mb-4" style={{ fontWeight: 400, fontSize: "clamp(20px,2vw,24px)", color: "#E8E6DE", lineHeight: 1.3 }}>
                       {c.heading}
                     </h4>
-                    <p style={{ color: "#6A6A70", fontSize: "16px", fontWeight: 300, marginBottom: 14, lineHeight: 1.62 }}>
+                    
+                    {/* Body */}
+                    <p style={{ color: "#7A7A82", fontSize: "15px", fontWeight: 300, marginBottom: 18, lineHeight: 1.68 }}>
                       {c.body}
                     </p>
+                    
+                    {/* Chips */}
                     <div className="flex flex-wrap gap-2">
                       {c.chips.map((ch) => (
-                        <span key={ch} className="font-sans inline-block" style={{ fontSize: "11px", fontWeight: 400, letterSpacing: ".1em", textTransform: "uppercase", color: "#4A4A52", border: "1px solid rgba(237,235,227,.07)", borderRadius: 20, padding: "4px 11px" }}>
+                        <span
+                          key={ch}
+                          className="font-sans inline-block"
+                          style={{
+                            fontSize: "10px",
+                            fontWeight: 500,
+                            letterSpacing: ".08em",
+                            textTransform: "uppercase",
+                            color: "rgba(201,162,74,.85)",
+                            background: "rgba(201,162,74,.08)",
+                            border: "1px solid rgba(201,162,74,.15)",
+                            borderRadius: 16,
+                            padding: "5px 12px",
+                          }}
+                        >
                           {ch}
                         </span>
                       ))}
@@ -1076,10 +1139,6 @@ export default function FounderPage() {
                   </motion.div>
                 ))}
               </div>
-
-              {/* Corner accents — bottom */}
-              <div className="absolute pointer-events-none" style={{ bottom: -1, left: 28, width: 48, height: 1, background: "#C9A24A", opacity: .5 }} />
-              <div className="absolute pointer-events-none" style={{ bottom: -1, right: 28, width: 48, height: 1, background: "#C9A24A", opacity: .5 }} />
             </div>
           </div>
           </Reveal>
