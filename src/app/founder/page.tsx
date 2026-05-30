@@ -221,6 +221,7 @@ const HONOURS = [
 export default function FounderPage() {
   const [activeTab, setActiveTab] = useState(0);
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  const [hoveredSynth, setHoveredSynth] = useState<number | null>(null);
   const [emailNews, setEmailNews] = useState("");
   const [submittedNews, setSubmittedNews] = useState(false);
   const [navScrolled, setNavScrolled] = useState(false);
@@ -1105,126 +1106,111 @@ export default function FounderPage() {
       {/* ── SYNTHESIS ── */}
       <section
         id="synthesis"
-        className="relative"
-        style={{ padding: "clamp(80px,12vh,140px) 0", borderTop: "1px solid var(--line)" }}
+        className="relative overflow-hidden"
+        style={{ padding: "clamp(80px,10vh,120px) 0", borderTop: "1px solid var(--line)" }}
       >
+        <div className="absolute pointer-events-none" style={{ left: "50%", top: "30%", width: 800, height: 600, transform: "translateX(-50%)", background: "radial-gradient(ellipse at center, rgba(201,162,74,0.04) 0%, transparent 70%)" }} />
+
         <div className="shell">
+
+          {/* Header — compact */}
           <Reveal>
-            <div className="text-center mb-16">
-              <span className="eyebrow eyebrow--center mb-4 block">The Synthesis</span>
-              <h2 className="h-section mx-auto" style={{ maxWidth: "20ch" }}>
-                How the chapters became a way of working
+            <div className="text-center mb-10">
+              <span className="font-mono block mb-3" style={{ fontSize: "13px", letterSpacing: "0.4em", textTransform: "uppercase", color: "#C9A24A", opacity: 0.7 }}>The Synthesis</span>
+              <h2 className="font-serif" style={{ fontSize: "clamp(32px,4.5vw,52px)", fontWeight: 400, lineHeight: 1.08, color: "#f2efe8", letterSpacing: "-0.02em", margin: 0 }}>
+                How the chapters became <em style={{ color: "#C9A24A" }}>a way of working</em>
               </h2>
             </div>
           </Reveal>
 
-          {/* ── CRESCENDO TIMELINE ── */}
-          <div className="synthesis-timeline relative" style={{ maxWidth: 800, margin: "0 auto 72px" }}>
+          {/* Alternating timeline — all 7 fit in one screen */}
+          <div style={{ position: "relative", maxWidth: 820, margin: "0 auto 24px" }}>
 
-            {/* Spine — draws top→bottom, gradient intensifies toward bedrock */}
+            {/* Center spine */}
             <motion.div
-              className="synthesis-center-line absolute pointer-events-none"
               initial={{ scaleY: 0 }}
               whileInView={{ scaleY: 1 }}
-              viewport={{ once: true, margin: "-5%" }}
+              viewport={{ once: true }}
               transition={{ duration: 1.8, ease: [0.22, 1, 0.36, 1] }}
               style={{
-                left: "50%", top: 8, bottom: 8, width: 1,
-                background: "linear-gradient(180deg, rgba(201,162,74,.08) 0%, rgba(201,162,74,.22) 40%, rgba(201,162,74,.55) 75%, #C9A24A 100%)",
-                transform: "translateX(-50%)",
-                transformOrigin: "top",
+                position: "absolute", left: "50%", top: 0, bottom: 0, width: 1,
+                background: "linear-gradient(180deg, transparent 0%, rgba(201,162,74,0.35) 8%, rgba(201,162,74,0.35) 92%, transparent 100%)",
+                transform: "translateX(-0.5px)", transformOrigin: "top",
               }}
             />
 
             {TIMELINE_ITEMS.map((item, i) => {
-              const isOdd = i % 2 === 0;
-              const isLast = i === TIMELINE_ITEMS.length - 1;
-
-              /* Crescendo: opacity + size ramp cleanly, no accidental gold on text */
-              const labelOpacity  = 0.28 + i * 0.10;   // 0.28 → 0.88
-              const quoteOpacity  = 0.38 + i * 0.09;   // 0.38 → 0.92
-              const quoteFontSize = 15 + i * 0.6;       // 15 → 18.6px
-              const quoteWeight   = i >= 5 ? 400 : 300;
-
+              const isLeft = i % 2 === 0;
               return (
                 <motion.div
                   key={i}
-                  initial={{ opacity: 0, x: isOdd ? -18 : 18 }}
+                  initial={{ opacity: 0, x: isLeft ? -16 : 16 }}
                   whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: "-8%" }}
-                  transition={{ duration: 0.65, delay: i * 0.07, ease: [0.22, 1, 0.36, 1] }}
-                  className="relative"
-                  style={{
-                    width: "50%",
-                    padding: isLast ? "20px 40px" : "14px 40px",
-                    left: isOdd ? 0 : "50%",
-                    textAlign: isOdd ? "right" : "left",
-                  }}
+                  viewport={{ once: true, margin: "-4%" }}
+                  transition={{ duration: 0.5, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
+                  style={{ display: "grid", gridTemplateColumns: "1fr 32px 1fr", alignItems: "start", marginBottom: 20 }}
                 >
-                  {/* Spine node — lights up on enter */}
-                  <motion.div
-                    className="tl-dot absolute rounded-full"
-                    initial={{ scale: 0.4, opacity: 0 }}
-                    whileInView={{ scale: 1, opacity: 1 }}
-                    viewport={{ once: true, margin: "-10%" }}
-                    transition={{ duration: 0.4, delay: i * 0.07 + 0.15, ease: [0.22, 1, 0.36, 1] }}
-                    style={{
-                      top: isLast ? 22 : 20,
-                      width: isLast ? 13 : i === 0 ? 6 : 8,
-                      height: isLast ? 13 : i === 0 ? 6 : 8,
-                      background: i === 0 ? "rgba(201,162,74,.3)" : "#C9A24A",
-                      right: isOdd ? (isLast ? -6.5 : i === 0 ? -3 : -4) : "auto",
-                      left: !isOdd ? (isLast ? -6.5 : i === 0 ? -3 : -4) : "auto",
-                      boxShadow: isLast ? "0 0 20px 3px rgba(201,162,74,.55)" : "none",
-                      zIndex: 2,
-                    }}
-                  />
+                  {/* Left card */}
+                  <div style={{ paddingRight: 20, paddingTop: 2, display: "flex", justifyContent: "flex-end" }}>
+                    {isLeft && (
+                      <div style={{
+                        background: "rgba(20,19,16,0.9)",
+                        border: "1px solid rgba(201,162,74,0.55)",
+                        borderRadius: 8, padding: "16px 20px", maxWidth: 300, width: "100%",
+                        textAlign: "right",
+                        boxShadow: "0 0 0 1px rgba(201,162,74,0.1), 0 8px 32px rgba(201,162,74,0.12), 0 4px 16px rgba(0,0,0,0.4)",
+                      }}>
+                        <p style={{ fontSize: "10px", fontWeight: 600, letterSpacing: "0.18em", color: "#C9A24A", textTransform: "uppercase", margin: "0 0 6px", opacity: 0.85 }}>{item.source}</p>
+                        <p style={{ fontSize: "14px", lineHeight: 1.5, color: "#C8C5BC", margin: 0, fontStyle: "italic", fontFamily: "Georgia, serif" }}>{item.quote}</p>
+                      </div>
+                    )}
+                  </div>
 
-                  {/* Connector tick — faint horizontal line from spine to text */}
-                  <div
-                    className="absolute pointer-events-none"
-                    style={{
-                      top: isLast ? 28 : 24,
-                      width: 16,
-                      height: 1,
-                      background: `rgba(201,162,74,${0.08 + i * 0.03})`,
-                      right: isOdd ? 24 : "auto",
-                      left: !isOdd ? 24 : "auto",
-                    }}
-                  />
+                  {/* Center dot */}
+                  <div style={{ display: "flex", flexDirection: "column", alignItems: "center", paddingTop: 12 }}>
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      whileInView={{ scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.3, delay: i * 0.06 + 0.15 }}
+                      style={{
+                        width: 9, height: 9, borderRadius: "50%", background: "#C9A24A",
+                        border: "2px solid #0e0e0c", boxShadow: "0 0 0 2px rgba(201,162,74,0.25)",
+                        flexShrink: 0, zIndex: 2, position: "relative",
+                      }}
+                    />
+                  </div>
 
-                  {/* Source label — fixed dim color, never gold, never wraps onto quote */}
-                  <span
-                    className="font-sans block mb-1"
-                    style={{
-                      fontSize: "9.5px",
-                      fontWeight: 600,
-                      letterSpacing: ".2em",
-                      textTransform: "uppercase",
-                      color: "#C9A24A",
-                      textShadow: "0 0 12px rgba(201,162,74,0.7)",
-                      lineHeight: 1,
-                    }}
-                  >
-                    {item.source}
-                  </span>
-
-                  {/* Conviction — always its own element, no colour bleed */}
-                  <p
-                    className="font-serif italic"
-                    style={{
-                      fontSize: quoteFontSize,
-                      fontWeight: quoteWeight,
-                      lineHeight: 1.44,
-                      color: `rgba(237,235,227,${quoteOpacity})`,
-                      margin: 0,
-                    }}
-                  >
-                    {item.quote}
-                  </p>
+                  {/* Right card */}
+                  <div style={{ paddingLeft: 20, paddingTop: 2 }}>
+                    {!isLeft && (
+                      <div style={{
+                        background: "rgba(20,19,16,0.9)",
+                        border: "1px solid rgba(201,162,74,0.55)",
+                        borderRadius: 8, padding: "16px 20px", maxWidth: 300, width: "100%",
+                        boxShadow: "0 0 0 1px rgba(201,162,74,0.1), 0 8px 32px rgba(201,162,74,0.12), 0 4px 16px rgba(0,0,0,0.4)",
+                      }}>
+                        <p style={{ fontSize: "10px", fontWeight: 600, letterSpacing: "0.18em", color: "#C9A24A", textTransform: "uppercase", margin: "0 0 6px", opacity: 0.85 }}>{item.source}</p>
+                        <p style={{ fontSize: "14px", lineHeight: 1.5, color: "#C8C5BC", margin: 0, fontStyle: "italic", fontFamily: "Georgia, serif" }}>{item.quote}</p>
+                      </div>
+                    )}
+                  </div>
                 </motion.div>
               );
             })}
+
+            {/* Coda */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12, marginTop: 14 }}
+            >
+              <div style={{ width: 24, height: 1, background: "rgba(201,162,74,0.4)" }} />
+              <span className="font-mono" style={{ fontSize: "11px", color: "#8A8A96", letterSpacing: "0.12em" }}>Seven engagements &nbsp;·&nbsp; One practice</span>
+              <div style={{ width: 24, height: 1, background: "rgba(201,162,74,0.4)" }} />
+            </motion.div>
           </div>
 
           {/* ── BEDROCK ── */}
