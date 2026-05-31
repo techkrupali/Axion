@@ -1321,7 +1321,7 @@ export default function FounderPage() {
               style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12, marginTop: 14 }}
             >
               <div style={{ width: 24, height: 1, background: "rgba(201,162,74,0.4)" }} />
-              <span className="font-mono" style={{ fontSize: "11px", color: "#8A8A96", letterSpacing: "0.12em" }}>Seven engagements &nbsp;·&nbsp; One practice</span>
+              <span className="font-mono" style={{ fontSize: "15px", color: "#8A8A96", letterSpacing: "0.12em" }}>Seven engagements &nbsp;·&nbsp; One practice</span>
               <div style={{ width: 24, height: 1, background: "rgba(201,162,74,0.4)" }} />
             </motion.div>
           </div>
@@ -1332,7 +1332,7 @@ export default function FounderPage() {
             <Reveal>
               <div className="flex items-center gap-4 mb-12">
                 <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, transparent, rgba(201,162,74,0.25))" }} />
-                <span className="font-mono" style={{ fontSize: "9px", letterSpacing: ".32em", textTransform: "uppercase", color: "#C9A24A", opacity: .7 }}>The Bedrock</span>
+                <span className="font-mono" style={{ fontSize: "14px", letterSpacing: ".32em", textTransform: "uppercase", color: "#C9A24A", opacity: .7 }}>The Bedrock</span>
                 <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, rgba(201,162,74,0.25), transparent)" }} />
               </div>
             </Reveal>
