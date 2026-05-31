@@ -545,35 +545,6 @@ export default function Home() {
               ))}
             </div>
 
-            {/* Connector rail */}
-            <div className="w-full relative flex items-center mb-16" style={{ height: 8 }}>
-              {/* Full line behind dots */}
-              <motion.div
-                className="absolute left-[calc(100%/6)] right-[calc(100%/6)] h-[1px]"
-                initial={{ scaleX: 0, originX: 0 }}
-                whileInView={{ scaleX: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 1.2, delay: 0.2, ease: "easeOut" }}
-                style={{ background: "linear-gradient(90deg, rgba(201,168,76,0.3), rgba(201,168,76,0.6), #C9A84C)" }}
-              />
-              {/* Dots at 1/6, 3/6, 5/6 = center of each third */}
-              {[0, 1, 2].map((i) => (
-                <motion.div
-                  key={i}
-                  initial={{ scale: 0 }}
-                  whileInView={{ scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: i * 0.25, ease: [0.22, 1, 0.36, 1] }}
-                  className="absolute w-2 h-2 rounded-full -translate-x-1/2"
-                  style={{
-                    left: `${(i * 2 + 1) * (100 / 6)}%`,
-                    background: i === 2 ? "#C9A84C" : `rgba(201,168,76,${0.35 + i * 0.2})`,
-                    boxShadow: i === 2 ? "0 0 8px rgba(201,168,76,0.6)" : "none",
-                  }}
-                />
-              ))}
-            </div>
-
             {/* Closing line */}
             <Reveal delay={0.6}>
               <p className="font-serif italic text-[clamp(16px,1.5vw,20px)] text-[var(--fg-3)] max-w-[54ch] leading-relaxed border-t border-[var(--line)] pt-10">
@@ -593,7 +564,7 @@ export default function Home() {
       ══════════════════════════════════════════ */}
       <section className="chapter section-deep overflow-hidden pb-10" id="practices">
         <div className="shell">
-          <div className="text-center mb-20 -mt-4">
+          <div className="text-center mb-6 -mt-4">
             <Reveal><span className="eyebrow eyebrow--center mb-4">Where the work happens</span></Reveal>
             <Reveal delay={0.1}>
               <h2 className="h-section mx-auto max-w-[20ch]">
