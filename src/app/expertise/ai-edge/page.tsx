@@ -1223,8 +1223,8 @@ export default function AIEdgeLab() {
             ].map((col, i) => (
               <div key={i}>
                 <div style={{ fontFamily: S.mono, fontSize: "9px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.gold, marginBottom: "18px" }}>{col.h}</div>
-                {col.links.map(([href, label]) => (
-                  <a key={href} href={href} className="ft-link" style={{ display: "block", fontFamily: S.mono, fontSize: "11px", letterSpacing: "0.1em", color: S.dim, textDecoration: "none", padding: "5px 0", transition: "color .2s", lineHeight: 1.6 }}>{label}</a>
+                {col.links.map(([href, label], j) => (
+                  <a key={`${i}-${j}`} href={href} className="ft-link" style={{ display: "block", fontFamily: S.mono, fontSize: "11px", letterSpacing: "0.1em", color: S.dim, textDecoration: "none", padding: "5px 0", transition: "color .2s", lineHeight: 1.6 }}>{label}</a>
                 ))}
               </div>
             ))}
