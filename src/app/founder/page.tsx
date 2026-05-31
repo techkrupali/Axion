@@ -216,6 +216,119 @@ const HONOURS = [
   "Kincentric Top-Quartile Engagement",
 ];
 
+/* ─── BEDROCK ROWS ──────────────────────────────────────────────────────────── */
+function BedrockRows() {
+  const [hovered, setHovered] = useState<number | null>(null);
+
+  const cards = [
+    {
+      num: "01",
+      k: "The Thesis",
+      v: "People Systems Fail Before Strategy Does",
+      sub: "Every strategic failure has a people-system failure upstream of it. The org chart breaks before the plan does.",
+      icon: "◈",
+      isGold: false,
+    },
+    {
+      num: "02",
+      k: "The Framework",
+      v: "Belief → Conviction → Rhythm",
+      sub: "From what one person holds, to what the whole organisation runs on. Three stages. One arc.",
+      icon: "◎",
+      isGold: true,
+    },
+    {
+      num: "03",
+      k: "The Credo",
+      v: "Humanity Over Hierarchy",
+      sub: "Structure serves people. When it stops doing that, the structure is wrong — not the people.",
+      icon: "◉",
+      isGold: false,
+    },
+  ];
+
+  return (
+    <div className="flex flex-col" style={{ gap: 1, background: "rgba(201,162,74,0.08)", border: "1px solid rgba(201,162,74,0.1)", borderRadius: 16, overflow: "hidden" }}>
+      {cards.map((card, i) => {
+        const isHovered = hovered === i;
+        const bgColor = isHovered
+          ? "rgba(201,162,74,0.13)"
+          : "rgba(10,9,8,0.85)";
+
+        return (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-5%" }}
+            transition={{ duration: 0.65, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+            className="relative flex items-center gap-8 cursor-default"
+            style={{
+              background: bgColor,
+              padding: "48px 52px",
+              transition: "background 0.35s ease",
+            }}
+            onMouseEnter={() => setHovered(i)}
+            onMouseLeave={() => setHovered(null)}
+          >
+            {/* Left: number */}
+            <div className="hidden md:block flex-shrink-0" style={{ width: 56 }}>
+              <span className="font-mono" style={{ fontSize: "15px", letterSpacing: ".22em", color: "rgba(201,162,74,0.35)" }}>{card.num}</span>
+            </div>
+
+            {/* Icon */}
+            <div className="hidden md:flex flex-shrink-0 items-center justify-center" style={{
+              width: 64, height: 64,
+              border: `1px solid ${isHovered ? "rgba(201,162,74,0.6)" : "rgba(201,162,74,0.2)"}`,
+              borderRadius: "50%",
+              color: "#C9A24A",
+              fontSize: 26,
+              transition: "border-color 0.3s, box-shadow 0.3s",
+              boxShadow: isHovered ? "0 0 16px rgba(201,162,74,0.25)" : "none",
+            }}>
+              {card.icon}
+            </div>
+
+            {/* Label */}
+            <div className="flex-shrink-0" style={{ width: 160 }}>
+              <span className="font-mono block" style={{ fontSize: "12px", letterSpacing: ".28em", textTransform: "uppercase", color: "#C9A24A", opacity: .7 }}>{card.k}</span>
+            </div>
+
+            {/* Divider */}
+            <div className="hidden md:block flex-shrink-0" style={{ width: 1, height: 56, background: "rgba(201,162,74,0.12)" }} />
+
+            {/* Main text */}
+            <div className="flex-1 min-w-0">
+              <p className="font-serif" style={{
+                fontSize: "clamp(22px,2.4vw,34px)",
+                lineHeight: 1.15,
+                color: card.isGold ? "#C9A24A" : "#EDEBE3",
+                marginBottom: 8,
+                transition: "color 0.3s",
+              }}>
+                {card.v}
+              </p>
+              <p className="font-sans" style={{ fontSize: "15px", color: "#5A5A64", lineHeight: 1.6, maxWidth: "52ch" }}>
+                {card.sub}
+              </p>
+            </div>
+
+            {/* Right accent line */}
+            <motion.div
+              className="hidden md:block flex-shrink-0"
+              initial={{ height: 0 }}
+              whileInView={{ height: 40 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: i * 0.1 + 0.3 }}
+              style={{ width: 2, background: `linear-gradient(180deg, transparent, #C9A24A, transparent)`, borderRadius: 2 }}
+            />
+          </motion.div>
+        );
+      })}
+    </div>
+  );
+}
+
 /* ─── MAIN PAGE ─────────────────────────────────────────────────────────────── */
 
 export default function FounderPage() {
@@ -1214,71 +1327,27 @@ export default function FounderPage() {
           </div>
 
           {/* ── BEDROCK ── */}
-          <Reveal>
-            <div className="text-center" style={{ marginBottom: 40 }}>
-              <span className="font-sans block mb-4" style={{ fontSize: "9.5px", fontWeight: 600, letterSpacing: ".32em", textTransform: "uppercase", color: "#C9A24A", opacity: .65 }}>
-                The Bedrock
-              </span>
-              <p
-                className="font-serif italic mx-auto"
-                style={{
-                  fontSize: "clamp(20px,2.2vw,26px)",
-                  lineHeight: 1.44,
-                  color: "#EDEBE3",
-                  maxWidth: "34ch",
-                  marginBottom: 0,
-                }}
-              >
-                Three sentences underwrite everything above.
-              </p>
-            </div>
-          </Reveal>
+          <div style={{ maxWidth: 1080, margin: "0 auto" }}>
+            {/* Header row */}
+            <Reveal>
+              <div className="flex items-center gap-4 mb-12">
+                <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, transparent, rgba(201,162,74,0.25))" }} />
+                <span className="font-mono" style={{ fontSize: "9px", letterSpacing: ".32em", textTransform: "uppercase", color: "#C9A24A", opacity: .7 }}>The Bedrock</span>
+                <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, rgba(201,162,74,0.25), transparent)" }} />
+              </div>
+            </Reveal>
 
-          <div
-            className="bedrock-grid grid grid-cols-1 md:grid-cols-3 gap-5"
-            style={{ maxWidth: 1080, margin: "0 auto" }}
-          >
-            {[
-              { k: "The Thesis",    v: "People Systems Fail Before Strategy Does" },
-              { k: "The Framework", v: "Belief → Conviction → Rhythm" },
-              { k: "The Credo",     v: "Humanity Over Hierarchy" },
-            ].map((card, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-5%" }}
-                transition={{ duration: 0.7, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] }}
-                className="relative"
-                style={{
-                  background: "rgba(14,13,11,.8)",
-                  border: "1px solid rgba(201,162,74,.16)",
-                  borderTop: `2px solid ${i === 2 ? "#E2C078" : "#C9A24A"}`,
-                  borderRadius: 14,
-                  padding: "44px 36px 40px",
-                  boxShadow: `0 0 ${50 + i * 14}px -${22 - i * 3}px rgba(201,162,74,${0.22 + i * 0.12})`,
-                }}
-              >
-                <span className="font-sans block mb-5" style={{ fontSize: "9.5px", fontWeight: 600, letterSpacing: ".22em", textTransform: "uppercase", color: "#C9A24A", opacity: .65 }}>
-                  {card.k}
+            {/* Three stacked rows — full width, horizontal layout */}
+            <BedrockRows />
+
+            {/* Footer tag */}
+            <Reveal delay={0.4}>
+              <div className="flex justify-end mt-5">
+                <span className="font-mono" style={{ fontSize: "9px", letterSpacing: ".22em", textTransform: "uppercase", color: "rgba(201,162,74,0.35)" }}>
+                  Three sentences. Everything else follows.
                 </span>
-                <p className="font-serif" style={{ fontWeight: 400, fontSize: "clamp(22px,2.2vw,28px)", lineHeight: 1.14, color: "#EDEBE3" }}>
-                  {card.v}
-                </p>
-                {i < 2 && (
-                  <motion.span
-                    className="bedrock-arrow absolute font-serif"
-                    initial={{ opacity: 0, x: -4 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: i * 0.12 + 0.4, ease: [0.22, 1, 0.36, 1] }}
-                    style={{ right: -16, top: "50%", transform: "translateY(-50%)", color: "#C9A24A", fontSize: 18, zIndex: 2, opacity: .55 }}
-                  >
-                    →
-                  </motion.span>
-                )}
-              </motion.div>
-            ))}
+              </div>
+            </Reveal>
           </div>
         </div>
       </section>
