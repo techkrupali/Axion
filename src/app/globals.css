@@ -153,15 +153,17 @@ body::before {
   .nav {
     @apply fixed top-0 left-0 right-0 z-[80] px-8 py-5 flex items-center justify-between;
     transition: all 0.5s var(--ease);
-    background: transparent;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+    background: rgba(8, 10, 15, 0.97);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
   }
   .nav.is-scrolled {
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(8, 10, 15, 0.99);
     backdrop-filter: blur(32px) saturate(160%);
     -webkit-backdrop-filter: blur(32px) saturate(160%);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
-    box-shadow: 0 1px 0 rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.04);
     padding-top: 14px;
     padding-bottom: 14px;
   }
