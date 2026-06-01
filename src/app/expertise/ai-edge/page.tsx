@@ -764,7 +764,7 @@ export default function AIEdgeLab() {
           <div style={{ fontFamily: S.display, fontSize: "clamp(28px,4vw,56px)", lineHeight: 1.05, letterSpacing: "0.02em", color: S.white, maxWidth: "1200px" }}>
             AI DOES NOT ELIMINATE WORK FIRST.<br /><span style={{ whiteSpace: "nowrap" }}>IT ELIMINATES THE <span style={{ color: S.gold2 }}>STRUCTURAL PREMIUM</span> ON INTELLIGENCE INSIDE WORK.</span>
           </div>
-          <div style={{ fontFamily: S.mono, fontSize: "12px", color: S.gold, marginTop: "24px", letterSpacing: "0.12em", textTransform: "uppercase" }}>Nitin Nahata · CHRO, Gameskraft · Founder, Axionindex</div>
+          <div style={{ fontFamily: S.mono, fontSize: "15px", color: S.gold, marginTop: "24px", letterSpacing: "0.12em", textTransform: "uppercase" }}>Nitin Nahata · CHRO, Gameskraft · Founder, Axionindex</div>
         </div>
 
         {/* ── WHAT YOU GET ── */}
@@ -1090,9 +1090,9 @@ export default function AIEdgeLab() {
               <div style={{ borderRight: `1px solid ${S.rule}`, paddingRight: "52px" }}>
                 <div style={{ width: "100%", aspectRatio: "3/4", marginBottom: "24px", position: "relative", overflow: "hidden" }}>
                   <img src="/nitishcolorfull.png" alt="Nitin Nahata" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top", display: "block" }} />
-                  <span style={{ position: "absolute", bottom: "20px", left: "20px", fontFamily: S.mono, fontSize: "11px", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(247,246,243,0.35)" }}>Nitin Nahata · CHRO · Founder</span>
+                  <span style={{ position: "absolute", bottom: "20px", left: "20px", fontFamily: S.mono, fontSize: "14px", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(247,246,243,0.35)" }}>Nitin Nahata · CHRO · Founder</span>
                 </div>
-                <div style={{ fontFamily: S.display, fontSize: "32px", letterSpacing: "0.02em", color: S.ink, marginBottom: "4px" }}>NITIN NAHATA</div>
+                <div style={{ fontFamily: S.display, fontSize: "42px", letterSpacing: "0.02em", color: S.ink, marginBottom: "4px" }}>NITIN NAHATA</div>
                 <div style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.18em", color: S.gold, textTransform: "uppercase", marginBottom: "20px" }}>CHRO · Organisational Architect · Founder</div>
                 {[["CHRO","Gameskraft"],["Founder","Axionindex"],["Creator","AI Edge Diagnostic©"],["Founder","HROS"]].map(([role, org], i) => (
                   <div key={i} style={{ display: "flex", justifyContent: "space-between", fontFamily: S.mono, fontSize: "12px", color: S.mid, padding: "8px 0", borderBottom: `1px solid ${S.rule}`, letterSpacing: "0.04em" }}>

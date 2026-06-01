@@ -586,7 +586,7 @@ export default function FounderPage() {
             <Reveal>
               <span
                 className="font-sans"
-                style={{ display: "block", marginBottom: 24, fontSize: "10.5px", fontWeight: 500, letterSpacing: ".32em", textTransform: "uppercase", color: "#C9A24A" }}
+                style={{ display: "block", marginBottom: 24, fontSize: "16px", fontWeight: 500, letterSpacing: ".32em", textTransform: "uppercase", color: "#C9A24A" }}
               >
                 Nitin Nahata
               </span>
@@ -2060,7 +2060,7 @@ export default function FounderPage() {
             <Reveal delay={0.18}>
               <div className="flex flex-col items-center gap-1 mb-16">
                 <span style={{ color: "rgba(201,162,74,.5)", fontSize: 18, lineHeight: 1 }}>◇</span>
-                <span className="font-serif" style={{ fontSize: 22, color: "#C9A24A", marginTop: 8 }}>Nitin Nahata</span>
+                <span className="font-serif" style={{ fontSize: 32, color: "#C9A24A", marginTop: 8 }}>Nitin Nahata</span>
                 <span className="font-sans" style={{ fontSize: "9.5px", fontWeight: 500, letterSpacing: ".22em", textTransform: "uppercase", color: "#8A8A96" }}>
                   The Operating Architect
                 </span>

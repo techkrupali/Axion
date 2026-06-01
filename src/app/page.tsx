@@ -314,7 +314,7 @@ export default function Home() {
           <Reveal>
             {/* Fix 3 — classification eyebrow, corner strips merged in */}
             <div className="eyebrow eyebrow--center mb-10 text-[var(--fg-3)]">
-              OPERATING ARCHITECTURE PRACTICE&nbsp;&nbsp;·&nbsp;&nbsp;BENGALURU
+              OPERATING ARCHITECTURE PRACTICE
             </div>
           </Reveal>
 
