@@ -515,7 +515,7 @@ export default function Home() {
                   {/* Label */}
                   <h3
                     className="font-serif mb-4"
-                    style={{ fontSize: "clamp(22px,2.2vw,30px)", color: i === 2 ? "#E8C97A" : (i === 1 ? "var(--fg-3)" : "var(--fg)"), fontWeight: 400, lineHeight: 1.1 }}
+                    style={{ fontSize: "clamp(22px,2.2vw,30px)", color: "#C9A84C", fontWeight: 400, lineHeight: 1.1 }}
                   >
                     <em>{item.label}</em>
                   </h3>
