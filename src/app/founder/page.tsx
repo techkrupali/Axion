@@ -253,7 +253,7 @@ function BedrockRows() {
         const isHovered = hovered === i;
         const bgColor = isHovered
           ? "rgba(201,162,74,0.13)"
-          : "rgba(10,9,8,0.85)";
+          : "rgba(8,10,15,0.9)";
 
         return (
           <motion.div
@@ -374,17 +374,17 @@ export default function FounderPage() {
   ];
 
   return (
-    <div className="min-h-screen" style={{ background: "#0A0A0B" }}>
+    <div className="min-h-screen" style={{ background: "var(--bg)" }}>
       <style>{`
         /* ── Founder page scoped styles ── */
         .fn-nav {
           position: fixed; top: 0; left: 0; right: 0; height: 64px; z-index: 900;
           display: flex; align-items: center;
-          background: rgba(10,10,11,.6); backdrop-filter: blur(18px);
+          background: rgba(8,10,15,.6); backdrop-filter: blur(18px);
           border-bottom: 1px solid rgba(237,235,227,.08);
           transition: background .3s;
         }
-        .fn-nav.s { background: rgba(10,10,11,.95); }
+        .fn-nav.s { background: rgba(8,10,15,.95); }
         .fn-nav-inner { max-width: 1160px; margin: 0 auto; padding: 0 38px; display: flex; align-items: center; justify-content: space-between; width: 100%; }
         .fn-brand { font-family: var(--font-serif), 'Cormorant Garamond', Georgia, serif; font-size: 20px; font-weight: 400; color: #EDEBE3; letter-spacing: .01em; text-decoration: none; }
         .fn-nl { display: flex; align-items: center; gap: 30px; }
@@ -419,16 +419,15 @@ export default function FounderPage() {
         }
 
         @media (max-width: 960px) {
-          .fn-nl { position: fixed; inset: 64px 0 auto 0; flex-direction: column; gap: 0; background: #0D0D0F; border-bottom: 1px solid rgba(201,162,74,.28); max-height: 0; overflow: hidden; transition: max-height .35s; padding: 0 38px; }
-          .fn-nl.open { max-height: 580px; padding: 12px 38px 26px; }
-          .fn-nl a { padding: 14px 0; width: 100%; border-bottom: 1px solid rgba(237,235,227,.08); font-size: 13px; }
+          .fn-nl { position: fixed; inset: 64px 0 auto 0; flex-direction: column; gap: 0; background: #0C0E14; border-bottom: 1px solid rgba(201,162,74,.28); max-height: 0; overflow: hidden; transition: max-height .35s; padding: 0 38px; }
+          .fn-nl.open { max-height: 580px; padding: 12px 38px 26px; background: #0C0E14; }          .fn-nl a { padding: 14px 0; width: 100%; border-bottom: 1px solid rgba(237,235,227,.08); font-size: 13px; }
           .fn-nl .fn-btn { margin-top: 12px; text-align: center; }
           .fn-hamb { display: inline-flex; }
         }
         @media (max-width: 768px) {
           .founder-hero { grid-template-columns: 1fr !important; }
           .founder-hero-img { height: 42vh; min-height: 300px; }
-          .founder-hero-img::after { top: auto !important; left: 0; right: 0; bottom: 0; width: 100% !important; height: 42%; background: linear-gradient(0deg, #0A0A0B, transparent) !important; }
+          .founder-hero-img::after { top: auto !important; left: 0; right: 0; bottom: 0; width: 100% !important; height: 42%; background: linear-gradient(0deg, #080A0F, transparent) !important; }
           .founder-hero-txt { padding: 40px 28px 52px !important; }
           .founder-loop { grid-template-columns: 1fr !important; }
           .founder-loop .loop-arrow { transform: rotate(90deg); padding: 4px 0; }
@@ -498,7 +497,7 @@ export default function FounderPage() {
           className="founder-hero-img"
           style={{
             position: "relative",
-            background: "radial-gradient(120% 90% at 30% 30%, #201f24, #0c0c0e 70%)",
+            background: "radial-gradient(120% 90% at 30% 30%, #1a1c24, #080A0F 70%)",
             overflow: "hidden",
             display: "flex",
             alignItems: "center",
@@ -513,7 +512,7 @@ export default function FounderPage() {
           {/* ::after equivalent — right fade into bg */}
           <div
             className="absolute pointer-events-none"
-            style={{ top: 0, right: 0, bottom: 0, width: "42%", background: "linear-gradient(90deg, transparent, #0A0A0B)" }}
+            style={{ top: 0, right: 0, bottom: 0, width: "42%", background: "linear-gradient(90deg, transparent, var(--bg))" }}
           />
           {/* Monogram */}
           <div className="relative z-10 text-center">
@@ -697,7 +696,7 @@ export default function FounderPage() {
           style={{
             position: "absolute", bottom: 0, left: 0, width: "100%",
             height: "20vh",
-            background: "linear-gradient(to top, #0A0A0B, transparent)",
+            background: "linear-gradient(to top, var(--bg), transparent)",
             pointerEvents: "none",
             gridColumn: "1 / -1",
           }}
@@ -858,7 +857,7 @@ export default function FounderPage() {
                          style={{ background: "radial-gradient(circle, rgba(201,162,74,0.3) 0%, transparent 70%)" }} />
                     <div className="relative w-16 h-16 rounded-full flex items-center justify-center"
                          style={{ 
-                           background: activeTab === i ? "linear-gradient(135deg, #C9A24A 0%, #E2C078 100%)" : "#0A0A0B",
+                           background: activeTab === i ? "linear-gradient(135deg, #C9A24A 0%, #E2C078 100%)" : "var(--bg)",
                            border: `2px solid ${activeTab === i ? "#C9A24A" : "rgba(201,162,74,0.3)"}`,
                            boxShadow: activeTab === i ? "0 0 40px rgba(201,162,74,0.4)" : "none",
                            transition: "all 0.4s ease"
@@ -889,8 +888,8 @@ export default function FounderPage() {
                   <div className="relative rounded-3xl overflow-hidden"
                        style={{
                          background: activeTab === i 
-                           ? "linear-gradient(135deg, rgba(201,162,74,0.12) 0%, rgba(14,13,12,0.95) 50%, rgba(201,162,74,0.08) 100%)"
-                           : "linear-gradient(135deg, rgba(22,20,18,0.95) 0%, rgba(14,12,10,0.98) 100%)",
+                           ? "linear-gradient(135deg, rgba(201,162,74,0.12) 0%, rgba(8,10,15,0.95) 50%, rgba(201,162,74,0.08) 100%)"
+                           : "linear-gradient(135deg, rgba(12,14,20,0.95) 0%, rgba(8,10,15,0.98) 100%)",
                          border: `1px solid ${
                            activeTab === i 
                              ? "rgba(201,162,74,0.55)" 
@@ -1079,7 +1078,7 @@ export default function FounderPage() {
             <div
               className="relative"
               style={{
-                background: "linear-gradient(135deg, rgba(201,162,74,.04) 0%, rgba(12,11,9,.65) 50%, rgba(201,162,74,.03) 100%)",
+                background: "linear-gradient(135deg, rgba(201,162,74,.04) 0%, rgba(8,10,15,.65) 50%, rgba(201,162,74,.03) 100%)",
                 border: "1px solid rgba(201,162,74,.15)",
                 borderRadius: 16,
                 padding: "36px 40px 40px",
@@ -1158,7 +1157,7 @@ export default function FounderPage() {
                       border: "1px solid rgba(201,162,74,.18)",
                       borderRadius: 12,
                       padding: "22px 24px",
-                      background: "rgba(10,10,11,.75)",
+                      background: "rgba(8,10,15,.85)",
                       position: "relative",
                       overflow: "hidden",
                     }}
@@ -1269,7 +1268,7 @@ export default function FounderPage() {
                   <div style={{ paddingRight: 20, paddingTop: 2, display: "flex", justifyContent: "flex-end" }}>
                     {isLeft && (
                       <div style={{
-                        background: "rgba(20,19,16,0.9)",
+                        background: "rgba(12,14,20,0.9)",
                         border: "1px solid rgba(201,162,74,0.55)",
                         borderRadius: 8, padding: "16px 20px", maxWidth: 300, width: "100%",
                         textAlign: "right",
@@ -1290,7 +1289,7 @@ export default function FounderPage() {
                       transition={{ duration: 0.3, delay: i * 0.06 + 0.15 }}
                       style={{
                         width: 9, height: 9, borderRadius: "50%", background: "#C9A24A",
-                        border: "2px solid #0e0e0c", boxShadow: "0 0 0 2px rgba(201,162,74,0.25)",
+                        border: "2px solid #080A0F", boxShadow: "0 0 0 2px rgba(201,162,74,0.25)",
                         flexShrink: 0, zIndex: 2, position: "relative",
                       }}
                     />
@@ -1300,7 +1299,7 @@ export default function FounderPage() {
                   <div style={{ paddingLeft: 20, paddingTop: 2 }}>
                     {!isLeft && (
                       <div style={{
-                        background: "rgba(20,19,16,0.9)",
+                        background: "rgba(12,14,20,0.9)",
                         border: "1px solid rgba(201,162,74,0.55)",
                         borderRadius: 8, padding: "16px 20px", maxWidth: 300, width: "100%",
                         boxShadow: "0 0 0 1px rgba(201,162,74,0.1), 0 8px 32px rgba(201,162,74,0.12), 0 4px 16px rgba(0,0,0,0.4)",
@@ -1392,7 +1391,7 @@ export default function FounderPage() {
                   border: "1px solid rgba(237,235,227,.08)",
                   borderRadius: 16,
                   padding: "36px 36px 32px",
-                  background: "rgba(10,10,11,.5)",
+                  background: "rgba(8,10,15,.6)",
                 }}
               >
                 {/* Tier header */}
@@ -1444,7 +1443,7 @@ export default function FounderPage() {
                   border: "1px solid rgba(201,162,74,.14)",
                   borderRadius: 16,
                   padding: "36px 36px 32px",
-                  background: "rgba(12,11,9,.6)",
+                  background: "rgba(8,10,15,.6)",
                   boxShadow: "0 0 60px -30px rgba(201,162,74,.12)",
                 }}
               >
@@ -1516,7 +1515,7 @@ export default function FounderPage() {
         id="writing"
         className="relative"
         style={{ 
-          '--ink': '#0b0a08', '--paper': '#f5f0e8', '--gold': '#b8953a', '--gold-pale': '#e8d99a', '--dim': '#2a2720', '--mid': '#6b6450', '--rule': '#1e1c18', '--card': '#111009', '--serif': 'Georgia, "Times New Roman", serif', '--mono': '"Courier New", Courier, monospace',
+          '--ink': '#080A0F', '--paper': '#f5f0e8', '--gold': '#b8953a', '--gold-pale': '#e8d99a', '--dim': '#2a2720', '--mid': '#6b6450', '--rule': '#1e1c18', '--card': '#0C0E14', '--serif': 'Georgia, "Times New Roman", serif', '--mono': '"Courier New", Courier, monospace',
           padding: 0, borderTop: '1px solid var(--rule)', background: 'var(--ink)', width: '100%', margin: 0 } as React.CSSProperties}
       >
         <style>{`
@@ -1539,8 +1538,8 @@ export default function FounderPage() {
           }
           .mast-r-bg {
             position: absolute; inset: 0;
-            background: repeating-linear-gradient(0deg, transparent, transparent 39px, #1a1814 39px, #1a1814 40px),
-                       repeating-linear-gradient(90deg, transparent, transparent 39px, #1a1814 39px, #1a1814 40px);
+            background: repeating-linear-gradient(0deg, transparent, transparent 39px, #111420 39px, #111420 40px),
+                       repeating-linear-gradient(90deg, transparent, transparent 39px, #111420 39px, #111420 40px);
             opacity: 0.5;
           }
           .wr-eyebrow {
@@ -1732,7 +1731,7 @@ export default function FounderPage() {
           .nl-sub { font-size: 16px; color: var(--paper); line-height: 1.6; }
           .nl-form { display: flex; gap: 0; }
           .nl-input {
-            flex: 1; background: #111009; border: 1px solid #2a2720; border-right: none;
+            flex: 1; background: #0C0E14; border: 1px solid #1e2030; border-right: none;
             color: var(--paper); font-family: var(--mono); font-size: 16px;
             padding: 20px 24px; letter-spacing: 0.05em; outline: none;
             transition: border-color 0.2s;
@@ -1800,7 +1799,7 @@ export default function FounderPage() {
           <div style={{ 
             padding: '32px 56px', 
             borderBottom: '1px solid var(--rule)',
-            background: 'var(--ink)'
+            background: 'var(--bg-1)'
           }}>
             <p style={{ 
               fontFamily: 'var(--serif)', 
@@ -1922,7 +1921,7 @@ export default function FounderPage() {
         borderTop: '1px solid rgba(255,255,255,0.08)',
         borderBottom: '1px solid rgba(255,255,255,0.08)',
         padding: 'clamp(72px, 10vw, 120px) clamp(24px, 6vw, 80px)',
-        background: 'var(--ink)',
+        background: 'var(--bg)',
         textAlign: 'center',
       }}>
         <p style={{
@@ -2013,7 +2012,7 @@ export default function FounderPage() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.55, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] }}
                   style={{
-                    background: "rgba(12,11,9,.6)",
+                    background: "rgba(8,10,15,.6)",
                     border: `1px solid ${i === 2 ? "rgba(201,162,74,.16)" : "rgba(237,235,227,.07)"}`,
                     borderRadius: 12, padding: "30px 26px",
                     boxShadow: i === 2 ? "0 0 40px -20px rgba(201,162,74,.18)" : "none",
@@ -2083,7 +2082,7 @@ export default function FounderPage() {
                   border: "1px solid rgba(201,162,74,.28)",
                   borderRadius: 16,
                   padding: "52px 56px",
-                  background: "rgba(12,11,9,.75)",
+                  background: "rgba(8,10,15,.85)",
                   boxShadow: "0 0 80px -24px rgba(201,162,74,.28), inset 0 1px 0 rgba(201,162,74,.08)",
                 }}
               >
