@@ -621,13 +621,15 @@ export default function FounderPage() {
                 className="font-serif"
                 style={{
                   fontStyle: "italic",
-                  fontSize: "15.5px",
+                  fontSize: "clamp(13px,1.4vw,15.5px)",
                   lineHeight: 1.68,
                   color: "#8A7338",
-                  maxWidth: "44ch",
+                  maxWidth: "min(44ch, 100%)",
                   borderLeft: "1.5px solid rgba(138,115,56,.4)",
                   paddingLeft: 20,
                   marginBottom: 0,
+                  wordBreak: "break-word",
+                  overflowWrap: "break-word",
                 }}
               >
                 A bamboo plant spends years building roots underground. No visible shoot. No measurable progress. Then, in what looks like weeks, it rises — the speed is not sudden. It was always happening, invisibly, structurally, below the surface.
@@ -708,7 +710,7 @@ export default function FounderPage() {
         <div className="shell pt-12 pb-2">
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
             <Reveal>
-              <span className="eyebrow text-[var(--accent)]">The Soil · Before 2003</span>
+              <span className="eyebrow text-[var(--accent)]">The Soil  Before 2003</span>
             </Reveal>
             <Reveal delay={0.1}>
               <h2 className="h-section lg:text-right">
@@ -818,7 +820,7 @@ export default function FounderPage() {
         <div className="shell pt-8 pb-16">
           <Reveal>
             <div className="text-center">
-              <span className="eyebrow text-[var(--accent)] block mb-6">The Roots · 2003 — Present</span>
+              <span className="eyebrow text-[var(--accent)] block mb-6">The Roots  2003 — Present</span>
               <h2 className="h-section mb-6 max-w-4xl mx-auto">
                 Preparing for the war when you are not at war
               </h2>
@@ -1782,9 +1784,7 @@ export default function FounderPage() {
                 <strong>Thought in progress.</strong><br/><br/>
                 Essays written from inside organisations that are still figuring it out — where belief becomes operating rhythm, authority becomes clarity, and systems are tested under live conditions.
               </div>
-              <button className="mast-stamp" onClick={() => {}}>
-                READ THE INDEX ↗
-              </button>
+
             </div>
           </div>
 
@@ -2210,7 +2210,7 @@ export default function FounderPage() {
                 {[
                   { href: "/", label: "Home" },
                   { href: "#story", label: "Story" },
-                  { href: "/patterns", label: "Operating Patterns" },
+                  { href: "#patterns", label: "Operating Patterns" },
                   { href: "/connect", label: "Connect" },
                 ].map((l) => (
                   <li key={l.label}>
@@ -2291,7 +2291,7 @@ export default function FounderPage() {
               {[
                 { href: "https://www.linkedin.com/in/nitinnahata", label: "LinkedIn", external: true },
                 { href: "/", label: "Axion Index", external: false },
-                { href: "/patterns", label: "Operating Patterns", external: false },
+                { href: "#patterns", label: "Operating Patterns", external: false },
                 { href: "#story", label: "Story", external: false },
               ].map((l) =>
                 l.external ? (
