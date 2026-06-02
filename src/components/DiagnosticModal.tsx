@@ -2,7 +2,7 @@
 
 import { useState, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ArrowRight, GripVertical, ChevronDown } from "lucide-react";
+import { X, ArrowRight, GripVertical, ChevronDown, ChevronUp } from "lucide-react";
 
 // ── Signal list with backend routing metadata (never shown to visitor) ──
 const ALL_SIGNALS: { text: string; practice: string }[] = [
@@ -176,11 +176,18 @@ function RankList({
     dragOverIndex.current = null;
   };
 
+  // Move item up/down for mobile
+  const moveItem = (index: number, direction: -1 | 1) => {
+    const newIndex = index + direction;
+    if (newIndex < 0 || newIndex >= ranked.length) return;
+    const updated = [...ranked];
+    const [moved] = updated.splice(index, 1);
+    updated.splice(newIndex, 0, moved);
+    onReorder(updated);
+  };
+
   return (
-    <div className="mt-6 space-y-2">
-      <p className="font-mono text-[9px] tracking-[0.35em] uppercase text-[var(--accent)] mb-3">
-        Drag to rank your top 3 <span className="opacity-50 normal-case">(optional)</span>
-      </p>
+    <div className="mt-6 space-y-3">
       {ranked.map((sig, i) => (
         <div
           key={sig}
@@ -195,9 +202,43 @@ function RankList({
             border: "1px solid rgba(201,168,76,0.2)",
           }}
         >
-          <span className="font-mono text-[11px] text-[var(--accent)] opacity-60 w-4 shrink-0">{i + 1}</span>
-          <GripVertical size={12} className="text-[var(--fg-5)] shrink-0" />
-          <span className="text-[13px] text-[var(--fg-3)] leading-snug">{sig}</span>
+          <span className="font-mono text-[12px] text-[var(--accent)] opacity-70 w-6 shrink-0 text-center">{i + 1}</span>
+          
+          {/* Mobile-only up/down arrows */}
+          <div className="flex flex-col gap-1 md:hidden">
+            <button
+              type="button"
+              disabled={i === 0}
+              onClick={() => moveItem(i, -1)}
+              className="text-[var(--fg-4)] hover:text-[var(--accent)] disabled:opacity-30 transition-colors"
+            >
+              <ChevronUp size={14} />
+            </button>
+            <button
+              type="button"
+              disabled={i === ranked.length - 1}
+              onClick={() => moveItem(i, 1)}
+              className="text-[var(--fg-4)] hover:text-[var(--accent)] disabled:opacity-30 transition-colors"
+            >
+              <ChevronDown size={14} />
+            </button>
+          </div>
+
+          {/* Desktop-only grip icon */}
+          <GripVertical size={12} className="text-[var(--fg-5)] shrink-0 hidden md:block" />
+          
+          <span className="text-[13px] text-[var(--fg-3)] leading-snug flex-1">{sig}</span>
+          
+          <button
+            type="button"
+            onClick={() => {
+              const updated = ranked.filter(s => s !== sig);
+              onReorder(updated);
+            }}
+            className="ml-auto text-[var(--fg-4)] hover:text-[var(--accent)] transition-colors"
+          >
+            <X size={14} />
+          </button>
         </div>
       ))}
     </div>
@@ -455,15 +496,15 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
                       )}
                     </AnimatePresence>
 
-                    {/* Optional drag-to-rank top 3 (only shown when ≥2 selected) */}
+                    {/* Optional rank top 3 (only shown when ≥2 selected) */}
                     {form.signals.length >= 2 && (
                       <div className="mt-6">
                         <p className="font-mono text-[9px] tracking-[0.35em] uppercase text-[var(--accent)] mb-3">
-                          Drag to rank your top 3{" "}
+                          Rank your top 3{" "}
                           <span className="opacity-50 normal-case">(optional)</span>
                         </p>
                         <p className="text-[12px] text-[var(--fg-5)] mb-3 leading-relaxed">
-                          Click to add to your ranking, then drag to reorder.
+                          Click to add signals to your ranking. On desktop drag to reorder, on mobile use arrows.
                         </p>
 
                         {/* Rank slots */}
