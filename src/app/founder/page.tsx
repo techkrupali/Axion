@@ -388,9 +388,9 @@ export default function FounderPage() {
         }
         .fn-nav.s { background: rgba(8,10,15,.95); }
         .fn-nav-inner { max-width: 1160px; margin: 0 auto; padding: 0 38px; display: flex; align-items: center; justify-content: space-between; width: 100%; }
-        .fn-brand { font-family: var(--font-serif), 'Cormorant Garamond', Georgia, serif; font-size: 20px; font-weight: 400; color: #EDEBE3; letter-spacing: .01em; text-decoration: none; }
+        .fn-brand { font-family: var(--font-serif); font-size: 20px; font-weight: 400; color: #EDEBE3; letter-spacing: .01em; text-decoration: none; }
         .fn-nl { display: flex; align-items: center; gap: 30px; }
-        .fn-nl a { font-family: var(--font-geist-sans), system-ui, sans-serif; font-size: 11px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: #B8B8C0; transition: color .2s; padding: 5px 0; position: relative; text-decoration: none; }
+        .fn-nl a { font-family: var(--font-sans); font-size: 11px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: #B8B8C0; transition: color .2s; padding: 5px 0; position: relative; text-decoration: none; }
         .fn-nl a:hover, .fn-nl a.on { color: #E2C078; }
         .fn-nl a.on::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; background: #C9A24A; }
         .fn-nl .fn-btn { color: #C9A24A; border: 1px solid rgba(201,162,74,.28); border-radius: 2px; padding: 8px 15px; }
@@ -449,7 +449,7 @@ export default function FounderPage() {
       {/* ── FIXED NAV ── */}
       <nav className={`fn-nav${navScrolled ? " s" : ""}`} aria-label="Primary">
         <div className="fn-nav-inner">
-          <a className="fn-brand" href="#story">Nitin Nahata</a>
+          <a className="fn-brand" href="#story">Nitin <span style={{ color: "#C9A24A" }}>Nahata</span></a>
           <button
             className="fn-hamb"
             aria-label="Menu"
@@ -682,11 +682,11 @@ export default function FounderPage() {
                     fontWeight: 400,
                     letterSpacing: ".12em",
                     textTransform: "uppercase",
-                    color: "#4A4A52",
+                    color: "#FFFFFF",
                     lineHeight: 1.9,
                   }}
                 >
-                  Asia&nbsp;<span style={{ color: "#2E2E34" }}>|</span>&nbsp;Americas&nbsp;<span style={{ color: "#2E2E34" }}>|</span>&nbsp;Australia&nbsp;<span style={{ color: "#2E2E34" }}>|</span>&nbsp;Europe&nbsp;<span style={{ color: "#2E2E34" }}>|</span>&nbsp;Middle East
+                  Asia&nbsp;<span style={{ color: "#FFFFFF" }}>|</span>&nbsp;Americas&nbsp;<span style={{ color: "#FFFFFF" }}>|</span>&nbsp;Australia&nbsp;<span style={{ color: "#FFFFFF" }}>|</span>&nbsp;Europe&nbsp;<span style={{ color: "#FFFFFF" }}>|</span>&nbsp;Middle East
                 </div>
               </div>
             </Reveal>
@@ -802,7 +802,7 @@ export default function FounderPage() {
         {/* Closing line */}
         <div className="shell py-6">
           <Reveal>
-            <p className="font-serif italic text-center text-[var(--fg-4)]" style={{ fontSize: 16, lineHeight: 1.5 }}>
+            <p className="font-serif italic text-center text-[var(--fg-4)]" style={{ fontSize: 20, lineHeight: 1.5 }}>
               This was the soil. Everything that came after was built on it.
             </p>
           </Reveal>
@@ -1277,7 +1277,7 @@ export default function FounderPage() {
                         boxShadow: "0 0 0 1px rgba(201,162,74,0.1), 0 8px 32px rgba(201,162,74,0.12), 0 4px 16px rgba(0,0,0,0.4)",
                       }}>
                         <p style={{ fontSize: "10px", fontWeight: 600, letterSpacing: "0.18em", color: "#C9A24A", textTransform: "uppercase", margin: "0 0 6px", opacity: 0.85 }}>{item.source}</p>
-                        <p style={{ fontSize: "14px", lineHeight: 1.5, color: "#C8C5BC", margin: 0, fontStyle: "italic", fontFamily: "Georgia, serif" }}>{item.quote}</p>
+                        <p className="font-serif" style={{ fontSize: "14px", lineHeight: 1.5, color: "#C8C5BC", margin: 0, fontStyle: "italic" }}>{item.quote}</p>
                       </div>
                     )}
                   </div>
@@ -1307,7 +1307,7 @@ export default function FounderPage() {
                         boxShadow: "0 0 0 1px rgba(201,162,74,0.1), 0 8px 32px rgba(201,162,74,0.12), 0 4px 16px rgba(0,0,0,0.4)",
                       }}>
                         <p style={{ fontSize: "10px", fontWeight: 600, letterSpacing: "0.18em", color: "#C9A24A", textTransform: "uppercase", margin: "0 0 6px", opacity: 0.85 }}>{item.source}</p>
-                        <p style={{ fontSize: "14px", lineHeight: 1.5, color: "#C8C5BC", margin: 0, fontStyle: "italic", fontFamily: "Georgia, serif" }}>{item.quote}</p>
+                        <p className="font-serif" style={{ fontSize: "14px", lineHeight: 1.5, color: "#C8C5BC", margin: 0, fontStyle: "italic" }}>{item.quote}</p>
                       </div>
                     )}
                   </div>
@@ -1346,7 +1346,7 @@ export default function FounderPage() {
             {/* Footer tag */}
             <Reveal delay={0.4}>
               <div className="flex justify-end mt-5">
-                <span className="font-mono" style={{ fontSize: "9px", letterSpacing: ".22em", textTransform: "uppercase", color: "rgba(201,162,74,0.35)" }}>
+                <span className="font-mono" style={{ fontSize: "12px", letterSpacing: ".22em", textTransform: "uppercase", color: "rgba(201,162,74,0.35)" }}>
                   Three sentences. Everything else follows.
                 </span>
               </div>
@@ -1517,7 +1517,7 @@ export default function FounderPage() {
         id="writing"
         className="relative"
         style={{ 
-          '--ink': '#080A0F', '--paper': '#f5f0e8', '--gold': '#b8953a', '--gold-pale': '#e8d99a', '--dim': '#2a2720', '--mid': '#6b6450', '--rule': '#1e1c18', '--card': '#0C0E14', '--serif': 'Georgia, "Times New Roman", serif', '--mono': '"Courier New", Courier, monospace',
+          '--ink': '#080A0F', '--paper': 'var(--fg)', '--gold': '#b8953a', '--gold-pale': '#e8d99a', '--dim': '#2a2720', '--mid': '#6b6450', '--rule': 'var(--line)', '--card': '#0C0E14',
           padding: 0, borderTop: '1px solid var(--rule)', background: 'var(--ink)', width: '100%', margin: 0 } as React.CSSProperties}
       >
         <style>{`
@@ -1545,23 +1545,25 @@ export default function FounderPage() {
             opacity: 0.5;
           }
           .wr-eyebrow {
-            font-family: var(--mono); font-size: 14px; letter-spacing: 0.28em;
+            font-family: var(--font-mono); font-size: 14px; letter-spacing: 0.28em;
             color: var(--gold); text-transform: uppercase;
             display: flex; align-items: center; gap: 10px; margin-bottom: 32px;
           }
           .wr-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--gold); }
           .mast-title {
+            font-family: var(--font-serif);
             font-size: clamp(50px, 7vw, 100px); font-weight: 400; line-height: 0.95;
             letter-spacing: -0.04em; color: var(--paper);
           }
           .mast-title .gold { color: var(--gold); font-style: italic; }
           .mast-title .ghost { color: #1e1c18; }
           .mast-meta {
-            font-family: var(--mono); font-size: 14px; letter-spacing: 0.15em;
+            font-family: var(--font-mono); font-size: 14px; letter-spacing: 0.15em;
             color: var(--paper); line-height: 2; margin-top: auto; padding-top: 32px;
           }
           .mast-desc {
             position: relative; z-index: 1;
+            font-family: var(--font-serif);
             font-size: clamp(18px, 2.5vw, 24px); color: var(--paper);
             font-style: italic; line-height: 1.6;
           }
@@ -1570,7 +1572,7 @@ export default function FounderPage() {
             position: relative; z-index: 1;
             margin-top: 24px;
             display: inline-flex; align-items: center; gap: 12px;
-            font-family: var(--mono); font-size: 12px; letter-spacing: 0.2em; color: var(--gold);
+            font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.2em; color: var(--gold);
             border: 1px solid var(--gold); padding: 12px 22px; cursor: pointer;
             transition: background 0.2s, color 0.2s;
           }
@@ -1585,7 +1587,7 @@ export default function FounderPage() {
           }
           .t-seg {
             display: inline-flex; align-items: center; gap: 20px; padding: 0 28px;
-            font-family: var(--mono); font-size: 12px; letter-spacing: 0.22em; color: var(--paper); text-transform: uppercase;
+            font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.22em; color: var(--paper); text-transform: uppercase;
           }
           .t-pip { width: 4px; height: 4px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
           .feat-wrap {
@@ -1597,7 +1599,7 @@ export default function FounderPage() {
             border-right: 1px solid var(--rule);
             display: flex; align-items: flex-start; justify-content: center;
             padding: 40px 0 0;
-            font-family: var(--mono); font-size: 14px; color: var(--paper); letter-spacing: 0.1em;
+            font-family: var(--font-mono); font-size: 14px; color: var(--paper); letter-spacing: 0.1em;
           }
           .feat-body {
             padding: 48px 56px; border-right: 1px solid var(--rule);
@@ -1606,11 +1608,12 @@ export default function FounderPage() {
             display: inline-flex; gap: 10px; margin-bottom: 24px;
           }
           .pill {
-            font-family: var(--mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;
+            font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;
             border: 1px solid var(--gold); color: var(--gold); padding: 8px 16px;
           }
           .pill.filled { background: var(--gold); color: var(--ink); }
           .feat-title {
+            font-family: var(--font-serif);
             font-size: clamp(28px, 4.5vw, 56px); font-weight: 400; line-height: 1.1;
             letter-spacing: -0.02em; color: var(--paper); margin-bottom: 20px;
           }
@@ -1621,10 +1624,11 @@ export default function FounderPage() {
             display: flex; flex-direction: column; justify-content: space-between;
           }
           .feat-label {
-            font-family: var(--mono); font-size: 12px; letter-spacing: 0.2em; color: var(--paper); text-transform: uppercase;
+            font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.2em; color: var(--paper); text-transform: uppercase;
             margin-bottom: 16px;
           }
           .feat-soon {
+            font-family: var(--font-serif);
             font-size: clamp(36px, 5vw, 64px); font-weight: 300; color: #1e1c18;
             letter-spacing: -0.03em; line-height: 1;
           }
@@ -1636,9 +1640,9 @@ export default function FounderPage() {
             width: 100%;
           }
           .sec-title {
-            font-family: var(--mono); font-size: 14px; letter-spacing: 0.28em; color: var(--paper); text-transform: uppercase;
+            font-family: var(--font-mono); font-size: 14px; letter-spacing: 0.28em; color: var(--paper); text-transform: uppercase;
           }
-          .sec-meta { font-family: var(--mono); font-size: 12px; letter-spacing: 0.15em; color: var(--paper); }
+          .sec-meta { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.15em; color: var(--paper); }
           .essays-grid {
             display: grid; grid-template-columns: repeat(3, 1fr);
             border-bottom: 1px solid var(--rule);
@@ -1659,22 +1663,23 @@ export default function FounderPage() {
           .essay-card:hover::after { height: 100%; }
           .essay-row { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 18px; }
           .e-pill {
-            font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+            font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
             border: 1px solid #2e2b22; color: var(--gold); padding: 6px 14px;
           }
-          .e-num { font-family: var(--mono); font-size: 14px; color: var(--paper); }
+          .e-num { font-family: var(--font-mono); font-size: 14px; color: var(--paper); }
           .e-title {
+            font-family: var(--font-serif);
             font-size: clamp(18px, 2.5vw, 22px); font-weight: 400; color: var(--paper);
             line-height: 1.3; letter-spacing: -0.01em; margin-bottom: 24px;
           }
           .e-why {
-            font-family: var(--serif); font-style: italic; font-size: 16px;
+            font-family: var(--font-serif); font-style: italic; font-size: 16px;
             color: var(--gold); opacity: 0.55; line-height: 1.6;
             margin-bottom: 20px; transition: opacity 0.2s;
           }
           .essay-card:hover .e-why { opacity: 0.85; }
           .e-arrow {
-            font-family: var(--mono); font-size: 12px; letter-spacing: 0.2em; color: var(--paper);
+            font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.2em; color: var(--paper);
             transition: color 0.2s, letter-spacing 0.3s;
           }
           .essay-card:hover .e-arrow { color: var(--gold); letter-spacing: 0.35em; }
@@ -1695,24 +1700,25 @@ export default function FounderPage() {
           .ch-card:last-child { border-right: none; }
           .ch-card:hover { background: var(--card); }
           .ch-type {
-            font-family: var(--mono); font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase;
+            font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase;
             color: var(--gold); margin-bottom: 24px; display: flex; align-items: center; gap: 10px;
           }
           .ch-type::before { content: ''; width: 16px; height: 1px; background: var(--gold); }
           .ch-name {
+            font-family: var(--font-serif);
             font-size: clamp(24px, 4vw, 44px); font-weight: 400; line-height: 1.15;
             letter-spacing: -0.02em; color: var(--paper); margin-bottom: 20px;
           }
           .ch-name em { color: var(--gold); font-style: italic; }
-          .ch-sub { font-family: var(--mono); font-size: 14px; letter-spacing: 0.12em; color: var(--paper); text-transform: uppercase; }
+          .ch-sub { font-family: var(--font-mono); font-size: 14px; letter-spacing: 0.12em; color: var(--paper); text-transform: uppercase; }
           .ch-cta {
             margin-top: 40px; display: inline-flex; align-items: center; gap: 10px;
-            font-family: var(--mono); font-size: 12px; letter-spacing: 0.2em; color: var(--gold);
+            font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.2em; color: var(--gold);
             border-bottom: 1px solid transparent; transition: border-color 0.2s;
           }
           .ch-card:hover .ch-cta { border-color: var(--gold); }
           .ch-soon {
-            margin-top: 16px; font-family: var(--mono); font-size: 12px;
+            margin-top: 16px; font-family: var(--font-mono); font-size: 12px;
             letter-spacing: 0.15em; color: var(--paper); text-transform: uppercase;
           }
           .nl {
@@ -1721,20 +1727,21 @@ export default function FounderPage() {
             width: 100%;
           }
           .nl-l .nl-eyebrow {
-            font-family: var(--mono); font-size: 12px; letter-spacing: 0.28em; color: var(--gold);
+            font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.28em; color: var(--gold);
             text-transform: uppercase; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;
           }
           .nl-l .nl-eyebrow::before { content: ''; width: 16px; height: 1px; background: var(--gold); }
           .nl-title {
+            font-family: var(--font-serif);
             font-size: clamp(28px, 4.5vw, 52px); font-weight: 400; line-height: 1.1;
             letter-spacing: -0.02em; color: var(--paper); margin-bottom: 14px;
           }
           .nl-title em { color: var(--gold); }
-          .nl-sub { font-size: 16px; color: var(--paper); line-height: 1.6; }
+          .nl-sub { font-family: var(--font-serif); font-size: 16px; color: var(--paper); line-height: 1.6; }
           .nl-form { display: flex; gap: 0; }
           .nl-input {
             flex: 1; background: #0C0E14; border: 1px solid #1e2030; border-right: none;
-            color: var(--paper); font-family: var(--mono); font-size: 16px;
+            color: var(--paper); font-family: var(--font-mono); font-size: 16px;
             padding: 20px 24px; letter-spacing: 0.05em; outline: none;
             transition: border-color 0.2s;
           }
@@ -1742,12 +1749,12 @@ export default function FounderPage() {
           .nl-input:focus { border-color: var(--gold); }
           .nl-btn {
             background: var(--gold); color: var(--ink); border: none;
-            font-family: var(--mono); font-size: 14px; letter-spacing: 0.22em;
+            font-family: var(--font-mono); font-size: 14px; letter-spacing: 0.22em;
             text-transform: uppercase; padding: 20px 28px; cursor: pointer;
             transition: background 0.2s; white-space: nowrap;
           }
           .nl-btn:hover { background: var(--gold-pale); }
-          .nl-note { font-family: var(--mono); font-size: 12px; color: var(--paper); letter-spacing: 0.1em; margin-top: 16px; }
+          .nl-note { font-family: var(--font-mono); font-size: 12px; color: var(--paper); letter-spacing: 0.1em; margin-top: 16px; }
           @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
           @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
           
@@ -1800,14 +1807,13 @@ export default function FounderPage() {
           {/* FEATURED CONTEXT */}
           <div style={{ 
             padding: '32px 56px', 
-            borderBottom: '1px solid var(--rule)',
+            borderBottom: '1px solid var(--line)',
             background: 'var(--bg-1)'
           }}>
-            <p style={{ 
-              fontFamily: 'var(--serif)', 
+            <p className="font-serif" style={{ 
               fontStyle: 'italic', 
               fontSize: '18px', 
-              color: 'var(--paper)',
+              color: 'var(--fg-3)',
               opacity: 0.7,
               maxWidth: '600px',
               margin: 0
@@ -1926,8 +1932,7 @@ export default function FounderPage() {
         background: 'var(--bg)',
         textAlign: 'center',
       }}>
-        <p style={{
-          fontFamily: 'var(--mono, monospace)',
+        <p className="font-mono" style={{
           fontSize: '11px',
           letterSpacing: '0.35em',
           textTransform: 'uppercase',
@@ -1937,11 +1942,10 @@ export default function FounderPage() {
         }}>
           From thinking to architecture
         </p>
-        <p style={{
-          fontFamily: 'var(--serif)',
+        <p className="font-serif" style={{
           fontSize: 'clamp(18px, 2.2vw, 26px)',
           fontWeight: 400,
-          color: 'var(--paper)',
+          color: 'var(--fg-2)',
           lineHeight: 1.7,
           maxWidth: '640px',
           margin: '0 auto 24px',
@@ -1955,11 +1959,11 @@ export default function FounderPage() {
           href="https://axionindex.org"
           target="_blank"
           rel="noopener noreferrer"
+          className="font-mono"
           style={{
             display: 'inline-flex',
             alignItems: 'center',
             gap: '10px',
-            fontFamily: 'var(--mono, monospace)',
             fontSize: '12px',
             letterSpacing: '0.25em',
             textTransform: 'uppercase',
@@ -2158,17 +2162,17 @@ export default function FounderPage() {
                 <Link className="brand text-[clamp(20px,2.4vw,30px)] block mb-4 leading-none" href="/">
                   Ax<em>ion</em><span className="domain">INDEX</span>
                 </Link>
-                <p className="font-serif italic leading-relaxed" style={{ fontSize: "clamp(14px,1.2vw,16px)", color: "var(--fg-3)", maxWidth: "32ch" }}>
+                <p className="font-serif italic leading-relaxed" style={{ fontSize: "clamp(16px,1.4vw,18px)", color: "var(--fg-3)", maxWidth: "32ch" }}>
                   Codifying the operating patterns of the unfinished organisation.
                 </p>
-                <p className="font-sans mt-3" style={{ fontSize: 13, color: "var(--fg-5)", lineHeight: 1.6, maxWidth: "36ch" }}>
+                <p className="font-sans mt-3" style={{ fontSize: 15, color: "var(--fg-5)", lineHeight: 1.6, maxWidth: "36ch" }}>
                   Essays, frameworks and the build — followed by founders and operators.
                 </p>
               </div>
 
               {/* Email follow capture */}
               <div>
-                <p className="font-mono mb-4" style={{ fontSize: "9px", letterSpacing: ".45em", textTransform: "uppercase", color: "#EDEBE3" }}>
+                <p className="font-mono mb-4" style={{ fontSize: "11px", letterSpacing: ".45em", textTransform: "uppercase", color: "#EDEBE3" }}>
                   Follow the work
                 </p>
                 <div className="flex gap-2 max-w-[340px]">
@@ -2178,7 +2182,7 @@ export default function FounderPage() {
                     aria-label="Email address"
                     className="flex-1 font-sans"
                     style={{
-                      fontSize: 13, padding: "11px 14px",
+                      fontSize: 15, padding: "11px 14px",
                       border: "1px solid rgba(201,162,74,0.2)",
                       borderRadius: 6,
                       background: "rgba(12,14,20,0.8)",
@@ -2190,7 +2194,7 @@ export default function FounderPage() {
                     type="button"
                     className="font-mono shrink-0"
                     style={{
-                      fontSize: "10px", fontWeight: 600, letterSpacing: ".12em", textTransform: "uppercase",
+                      fontSize: "12px", fontWeight: 600, letterSpacing: ".12em", textTransform: "uppercase",
                       background: "linear-gradient(135deg, #C9A84C 0%, #E8C97A 50%, #C9A84C 100%)",
                       color: "#080A0F", border: "none", borderRadius: 6,
                       padding: "0 20px", cursor: "pointer",
@@ -2204,7 +2208,7 @@ export default function FounderPage() {
 
             {/* Index */}
             <div>
-              <p className="font-mono mb-7" style={{ fontSize: "9px", letterSpacing: ".5em", textTransform: "uppercase", color: "var(--accent)", opacity: 0.5 }}>
+              <p className="font-mono mb-7" style={{ fontSize: "11px", letterSpacing: ".5em", textTransform: "uppercase", color: "var(--accent)", opacity: 0.5 }}>
                 Index
               </p>
               <ul className="flex flex-col gap-4">
@@ -2218,7 +2222,7 @@ export default function FounderPage() {
                     <Link
                       href={l.href}
                       className="font-mono"
-                      style={{ fontSize: "10px", letterSpacing: ".18em", textTransform: "uppercase", color: "#EDEBE3", textDecoration: "none", transition: "color 0.3s" }}
+                      style={{ fontSize: "12px", letterSpacing: ".18em", textTransform: "uppercase", color: "#EDEBE3", textDecoration: "none", transition: "color 0.3s" }}
                       onMouseEnter={e => (e.currentTarget.style.color = "var(--accent)")}
                       onMouseLeave={e => (e.currentTarget.style.color = "#EDEBE3")}
                     >
@@ -2231,7 +2235,7 @@ export default function FounderPage() {
 
             {/* Connect */}
             <div>
-              <p className="font-mono mb-7" style={{ fontSize: "9px", letterSpacing: ".5em", textTransform: "uppercase", color: "var(--accent)", opacity: 0.5 }}>
+              <p className="font-mono mb-7" style={{ fontSize: "11px", letterSpacing: ".5em", textTransform: "uppercase", color: "var(--accent)", opacity: 0.5 }}>
                 Connect
               </p>
               <div className="flex flex-col gap-4">
@@ -2240,7 +2244,7 @@ export default function FounderPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group inline-flex items-center gap-3 font-mono"
-                  style={{ fontSize: "10px", letterSpacing: ".18em", textTransform: "uppercase", color: "#EDEBE3", textDecoration: "none", transition: "color 0.3s" }}
+                  style={{ fontSize: "12px", letterSpacing: ".18em", textTransform: "uppercase", color: "#EDEBE3", textDecoration: "none", transition: "color 0.3s" }}
                   onMouseEnter={e => (e.currentTarget.style.color = "var(--accent)")}
                   onMouseLeave={e => (e.currentTarget.style.color = "#EDEBE3")}
                 >
@@ -2263,7 +2267,7 @@ export default function FounderPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="font-mono"
-                  style={{ fontSize: "10px", letterSpacing: ".18em", textTransform: "uppercase", color: "#EDEBE3", textDecoration: "none", transition: "color 0.3s" }}
+                  style={{ fontSize: "12px", letterSpacing: ".18em", textTransform: "uppercase", color: "#EDEBE3", textDecoration: "none", transition: "color 0.3s" }}
                   onMouseEnter={e => (e.currentTarget.style.color = "var(--accent)")}
                   onMouseLeave={e => (e.currentTarget.style.color = "#EDEBE3")}
                 >
@@ -2272,7 +2276,7 @@ export default function FounderPage() {
                 <a
                   href="mailto:office@axionindex.com"
                   className="font-mono"
-                  style={{ fontSize: "10px", letterSpacing: ".1em", color: "#EDEBE3", textDecoration: "none", textTransform: "none", transition: "color 0.3s" }}
+                  style={{ fontSize: "12px", letterSpacing: ".1em", color: "#EDEBE3", textDecoration: "none", textTransform: "none", transition: "color 0.3s" }}
                   onMouseEnter={e => (e.currentTarget.style.color = "var(--accent)")}
                   onMouseLeave={e => (e.currentTarget.style.color = "#EDEBE3")}
                 >
@@ -2285,7 +2289,7 @@ export default function FounderPage() {
 
           {/* ── Bottom bar ── */}
           <div className="py-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-            <span className="font-mono" style={{ fontSize: "9px", letterSpacing: ".4em", textTransform: "uppercase", color: "#EDEBE3" }}>
+            <span className="font-mono" style={{ fontSize: "11px", letterSpacing: ".4em", textTransform: "uppercase", color: "#EDEBE3" }}>
               © 2026 Nitin Nahata · Axion Index. All rights reserved.
             </span>
             <div className="flex items-center gap-6">
@@ -2302,7 +2306,7 @@ export default function FounderPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="font-mono"
-                    style={{ fontSize: "9px", letterSpacing: ".3em", textTransform: "uppercase", color: "#EDEBE3", textDecoration: "none", transition: "color 0.3s" }}
+                    style={{ fontSize: "11px", letterSpacing: ".3em", textTransform: "uppercase", color: "#EDEBE3", textDecoration: "none", transition: "color 0.3s" }}
                     onMouseEnter={e => (e.currentTarget.style.color = "var(--accent)")}
                     onMouseLeave={e => (e.currentTarget.style.color = "#EDEBE3")}
                   >
@@ -2313,7 +2317,7 @@ export default function FounderPage() {
                     key={l.label}
                     href={l.href}
                     className="font-mono"
-                    style={{ fontSize: "9px", letterSpacing: ".3em", textTransform: "uppercase", color: "#EDEBE3", textDecoration: "none", transition: "color 0.3s" }}
+                    style={{ fontSize: "11px", letterSpacing: ".3em", textTransform: "uppercase", color: "#EDEBE3", textDecoration: "none", transition: "color 0.3s" }}
                     onMouseEnter={e => (e.currentTarget.style.color = "var(--accent)")}
                     onMouseLeave={e => (e.currentTarget.style.color = "#EDEBE3")}
                   >

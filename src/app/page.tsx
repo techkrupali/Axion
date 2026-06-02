@@ -974,19 +974,19 @@ function Footer() {
               <Link className="brand text-[clamp(22px,2.8vw,34px)] block mb-3 leading-none" href="/">
                 Ax<em>ion</em><span className="domain">INDEX</span>
               </Link>
-              <p className="font-serif italic text-[clamp(13px,1.1vw,15px)] text-[var(--fg-3)] leading-relaxed max-w-[30ch]">
+              <p className="font-serif italic text-[clamp(15px,1.3vw,17px)] text-[var(--fg-3)] leading-relaxed max-w-[30ch]">
                 Codifying the operating patterns of the unfinished organisation.
               </p>
             </div>
 
             {/* Follow capture */}
             <div>
-              <p className="font-mono text-[9px] tracking-[0.45em] uppercase mb-4" style={{ color: "#EDEBE3" }}>Follow the work</p>
+              <p className="font-mono text-[11px] tracking-[0.45em] uppercase mb-4" style={{ color: "#EDEBE3" }}>Follow the work</p>
               <a
                 href="https://linkedin.com/company/axionindex"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center gap-3 font-mono text-[10px] tracking-[0.22em] uppercase hover:text-[var(--accent)] transition-colors duration-300"
+                className="group inline-flex items-center gap-3 font-mono text-[12px] tracking-[0.22em] uppercase hover:text-[var(--accent)] transition-colors duration-300"
                 style={{ color: "#EDEBE3" }}
               >
                 <span
@@ -1004,65 +1004,65 @@ function Footer() {
 
           {/* Practices */}
           <div>
-            <p className="font-mono text-[9px] tracking-[0.5em] uppercase text-[var(--accent)] opacity-50 mb-7">Practices</p>
-            <ul className="flex flex-col gap-4">
-              {[
-                { href: "/expertise/people", label: "People Architecture" },
-                { href: "/expertise/labour", label: "Labour Codes" },
-                { href: "/expertise/ai-edge", label: "AI Edge Lab" },
-                { href: "/expertise/family", label: "Family Business" },
-              ].map((l) => (
-                <li key={l.href}>
-                  <Link
-                    href={l.href}
-                    className="font-mono text-[10px] tracking-[0.18em] uppercase hover:text-[var(--accent)] transition-colors duration-300"
-                    style={{ color: "#EDEBE3" }}
-                  >
-                    {l.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+            <p className="font-mono text-[11px] tracking-[0.5em] uppercase text-[var(--accent)] opacity-50 mb-7">Practices</p>
+              <ul className="flex flex-col gap-4">
+                {[
+                  { href: "/expertise/people", label: "People Architecture" },
+                  { href: "/expertise/labour", label: "Labour Codes" },
+                  { href: "/expertise/ai-edge", label: "AI Edge Lab" },
+                  { href: "/expertise/family", label: "Family Business" },
+                ].map((l) => (
+                  <li key={l.href}>
+                    <Link
+                      href={l.href}
+                      className="font-mono text-[12px] tracking-[0.18em] uppercase hover:text-[var(--accent)] transition-colors duration-300"
+                      style={{ color: "#EDEBE3" }}
+                    >
+                      {l.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-          {/* Index */}
-          <div>
-            <p className="font-mono text-[9px] tracking-[0.5em] uppercase text-[var(--accent)] opacity-50 mb-7">Index</p>
-            <ul className="flex flex-col gap-4">
-              {[
-                { href: "/", label: "Axion Index" },
-                { href: "/patterns", label: "Operating Patterns" },
-                { href: "/founder", label: "Story" },
-                { href: "/about", label: "About" },
-              ].map((l) => (
-                <li key={l.href}>
-                  <Link
-                    href={l.href}
-                    className="font-mono text-[10px] tracking-[0.18em] uppercase hover:text-[var(--accent)] transition-colors duration-300"
-                    style={{ color: "#EDEBE3" }}
-                  >
-                    {l.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+            {/* Index */}
+            <div>
+              <p className="font-mono text-[11px] tracking-[0.5em] uppercase text-[var(--accent)] opacity-50 mb-7">Index</p>
+              <ul className="flex flex-col gap-4">
+                {[
+                  { href: "/", label: "Axion Index" },
+                  { href: "/patterns", label: "Operating Patterns" },
+                  { href: "/founder", label: "Story" },
+                  { href: "/about", label: "About" },
+                ].map((l) => (
+                  <li key={l.href}>
+                    <Link
+                      href={l.href}
+                      className="font-mono text-[12px] tracking-[0.18em] uppercase hover:text-[var(--accent)] transition-colors duration-300"
+                      style={{ color: "#EDEBE3" }}
+                    >
+                      {l.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-          {/* Contact */}
-          <div>
-            <p className="font-mono text-[9px] tracking-[0.5em] uppercase text-[var(--accent)] opacity-50 mb-7">Contact</p>
-            <div className="flex flex-col gap-4">
-              <span className="font-mono text-[10px] tracking-[0.18em] uppercase" style={{ color: "#EDEBE3" }}>Bengaluru, India</span>
-              <a
-                href="mailto:office@axionindex.com"
-                className="font-mono text-[10px] tracking-[0.1em] hover:text-[var(--accent)] transition-colors duration-300 normal-case"
-                style={{ color: "#EDEBE3" }}
-              >
-                office@axionindex.com
-              </a>
+            {/* Contact */}
+            <div>
+              <p className="font-mono text-[11px] tracking-[0.5em] uppercase text-[var(--accent)] opacity-50 mb-7">Contact</p>
+              <div className="flex flex-col gap-4">
+                <span className="font-mono text-[12px] tracking-[0.18em] uppercase" style={{ color: "#EDEBE3" }}>Bengaluru, India</span>
+                <a
+                  href="mailto:office@axionindex.com"
+                  className="font-mono text-[12px] tracking-[0.1em] hover:text-[var(--accent)] transition-colors duration-300 normal-case"
+                  style={{ color: "#EDEBE3" }}
+                >
+                  office@axionindex.com
+                </a>
               <Link
                 href="/connect"
-                className="group inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.18em] uppercase font-semibold transition-all duration-300 mt-2"
+                className="group inline-flex items-center gap-2 font-mono text-[13px] tracking-[0.18em] uppercase font-semibold transition-all duration-300 mt-2"
                 style={{
                   color: "#080A0F",
                   background: "linear-gradient(135deg, #C9A84C 0%, #E8C97A 50%, #C9A84C 100%)",
@@ -1080,7 +1080,7 @@ function Footer() {
 
         {/* ── Bottom bar ── */}
         <div className="py-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-          <span className="font-mono text-[9px] tracking-[0.4em] uppercase" style={{ color: "#EDEBE3" }}>
+          <span className="font-mono text-[11px] tracking-[0.4em] uppercase" style={{ color: "#EDEBE3" }}>
             &copy; 2026 Axion Index. All rights reserved.
           </span>
           <div className="flex items-center gap-6">
@@ -1095,7 +1095,7 @@ function Footer() {
                 href={l.href}
                 target={l.external ? "_blank" : undefined}
                 rel={l.external ? "noopener noreferrer" : undefined}
-                className="font-mono text-[9px] tracking-[0.3em] uppercase hover:text-[var(--accent)] transition-colors duration-300"
+                className="font-mono text-[11px] tracking-[0.3em] uppercase hover:text-[var(--accent)] transition-colors duration-300"
                 style={{ color: "#EDEBE3" }}
               >
                 {l.label}
