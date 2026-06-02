@@ -253,34 +253,50 @@ function MicroDiagnostic({ S, onOpenModal }: { S: Record<string, string>; onOpen
   ];
 
   return (
-    <section id="micro-diagnostic" style={{ padding: "80px 52px", background: "#EFEEEA", borderTop: `1px solid ${S.rule}`, borderBottom: `1px solid ${S.rule}` }}>
-      <div style={{ maxWidth: "1080px", margin: "0 auto 48px" }}>
-        <div style={{ fontFamily: S.mono, fontSize: "10px", letterSpacing: "0.24em", textTransform: "uppercase", color: S.gold, marginBottom: "18px" }}>30-Second Structural Read · Free</div>
-        <h2 style={{ fontFamily: S.display, fontSize: "clamp(36px,5vw,60px)", lineHeight: 0.96, letterSpacing: "0.005em", color: S.ink, textTransform: "uppercase", marginBottom: "22px" }}>Take a <span style={{ color: S.gold }}>5-question</span> read on where your edge sits.</h2>
-        <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "17px", fontStyle: "italic", lineHeight: 1.6, color: "#2E2E2C", maxWidth: "780px", paddingLeft: "18px", borderLeft: `3px solid ${S.gold}` }}>Five questions. Each maps to a canonical doctrine concept. Score lands you in one of three structural bands — Edge Accelerating, Edge Holding, or Edge Thinning.</p>
+    <section id="micro-diagnostic" style={{ padding: "80px 24px", background: "#EFEEEA", borderTop: `1px solid ${S.rule}`, borderBottom: `1px solid ${S.rule}` }}>
+      <div style={{ width: "100%", maxWidth: "none", margin: "0 0 48px 0" }}>
+        <div style={{ fontFamily: S.mono, fontSize: "13px", letterSpacing: "0.24em", textTransform: "uppercase", color: S.gold, marginBottom: "18px" }}>30-Second Structural Read · Free</div>
+        <h2 style={{ fontFamily: S.display, fontSize: "clamp(40px,6vw,72px)", lineHeight: 0.96, letterSpacing: "0.005em", color: S.ink, textTransform: "uppercase", marginBottom: "22px", textAlign: "left" }}>Take a <span style={{ color: S.gold }}>5-question</span> read on where your edge sits.</h2>
+        <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "21px", fontStyle: "italic", lineHeight: 1.7, color: "#2E2E2C", maxWidth: "100%", paddingLeft: "18px", borderLeft: `3px solid ${S.gold}` }}>Five questions. Each maps to a canonical doctrine concept. Score lands you in one of three structural bands — Edge Accelerating, Edge Holding, or Edge Thinning.</p>
         <div style={{ display: "flex", flexWrap: "wrap", gap: "18px", marginTop: "24px", paddingTop: "20px", borderTop: `1px solid ${S.rule}` }}>
           {["Q1 · Role Composition Map","Q2 · Judgment Ownership","Q3 · Thinking Ownership","Q4 · Personal Dividend","Q5 · Work Redesign"].map(p => (
-            <span key={p} style={{ fontFamily: S.mono, fontSize: "9px", letterSpacing: "0.16em", textTransform: "uppercase", color: "#2E2E2C", padding: "5px 11px", background: "rgba(160,120,48,0.08)", border: "1px solid rgba(160,120,48,0.18)" }}>{p}</span>
+            <span key={p} style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.16em", textTransform: "uppercase", color: "#2E2E2C", padding: "7px 14px", background: "rgba(160,120,48,0.08)", border: "1px solid rgba(160,120,48,0.18)" }}>{p}</span>
           ))}
         </div>
       </div>
 
-      <div style={{ maxWidth: "1080px", margin: "0 auto" }}>
+      <div style={{ width: "100%", maxWidth: "none", margin: "0 auto" }}>
         {/* PICKER */}
         {stage === "picker" && (
           <>
-            <div style={{ fontFamily: S.mono, fontSize: "11px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.mid, marginBottom: "20px", textAlign: "center" }}>Begin · Which describes you?</div>
+            <div style={{ fontFamily: S.mono, fontSize: "14px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.mid, marginBottom: "20px", textAlign: "left" }}>Begin · Which describes you?</div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4" style={{ gap: "1px", background: S.rule, border: `1px solid ${S.rule}` }}>
               {archCards.map(c => (
                 <button key={c.key} onClick={() => startQuiz(c.key)}
-                  style={{ background: S.white, border: "none", padding: "34px 26px", textAlign: "left", cursor: "pointer", display: "flex", flexDirection: "column", gap: "12px", transition: "background .25s ease", borderTop: `3px solid ${S.gold}`, fontFamily: "inherit" }}
-                  onMouseEnter={e => (e.currentTarget.style.background = S.ink)}
-                  onMouseLeave={e => (e.currentTarget.style.background = S.white)}>
-                  <div style={{ fontFamily: S.mono, fontSize: "10px", letterSpacing: "0.22em", color: S.gold }}>{c.num}</div>
-                  <div style={{ fontFamily: S.display, fontSize: "28px", lineHeight: 1, color: S.ink, textTransform: "uppercase", letterSpacing: "0.005em" }}>{c.name}</div>
-                  <div style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "14px", fontStyle: "italic", color: "#2E2E2C", lineHeight: 1.5, minHeight: "64px" }}>{c.desc}</div>
-                  <div style={{ fontFamily: S.mono, fontSize: "9px", letterSpacing: "0.12em", textTransform: "uppercase", color: S.mid, paddingTop: "14px", borderTop: `1px solid ${S.rule}` }}>{c.inst}</div>
-                  <div style={{ fontFamily: S.mono, fontSize: "10px", letterSpacing: "0.18em", textTransform: "uppercase", color: S.gold }}>Begin →</div>
+                  style={{ background: S.white, border: "none", padding: "48px 36px", textAlign: "left", cursor: "pointer", display: "flex", flexDirection: "column", gap: "16px", transition: "background .25s ease, color .25s ease", borderTop: `3px solid ${S.gold}`, fontFamily: "inherit" }}
+                  onMouseEnter={e => {
+                    e.currentTarget.style.background = S.ink;
+                    const children = e.currentTarget.children as HTMLCollectionOf<HTMLElement>;
+                    if (children[0]) children[0].style.color = S.gold2; // num
+                    if (children[1]) children[1].style.color = S.white; // name
+                    if (children[2]) children[2].style.color = S.white2; // desc
+                    if (children[3]) children[3].style.color = S.dim; // inst
+                    if (children[4]) children[4].style.color = S.gold2; // begin
+                  }}
+                  onMouseLeave={e => {
+                    e.currentTarget.style.background = S.white;
+                    const children = e.currentTarget.children as HTMLCollectionOf<HTMLElement>;
+                    if (children[0]) children[0].style.color = S.gold; // num
+                    if (children[1]) children[1].style.color = S.ink; // name
+                    if (children[2]) children[2].style.color = "#2E2E2C"; // desc
+                    if (children[3]) children[3].style.color = S.mid; // inst
+                    if (children[4]) children[4].style.color = S.gold; // begin
+                  }}>
+                  <div style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.22em", color: S.gold, transition: "color .25s ease" }}>{c.num}</div>
+                  <div style={{ fontFamily: S.display, fontSize: "36px", lineHeight: 1, color: S.ink, textTransform: "uppercase", letterSpacing: "0.005em", transition: "color .25s ease" }}>{c.name}</div>
+                  <div style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "16px", fontStyle: "italic", color: "#2E2E2C", lineHeight: 1.5, minHeight: "64px", transition: "color .25s ease" }}>{c.desc}</div>
+                  <div style={{ fontFamily: S.mono, fontSize: "11px", letterSpacing: "0.12em", textTransform: "uppercase", color: S.mid, paddingTop: "18px", borderTop: `1px solid ${S.rule}`, transition: "color .25s ease" }}>{c.inst}</div>
+                  <div style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.18em", textTransform: "uppercase", color: S.gold, transition: "color .25s ease" }}>Begin →</div>
                 </button>
               ))}
             </div>
@@ -289,7 +305,7 @@ function MicroDiagnostic({ S, onOpenModal }: { S: Record<string, string>; onOpen
 
         {/* QUIZ */}
         {stage === "quiz" && arch && (
-          <div style={{ background: S.white, border: `1px solid ${S.rule}`, padding: "44px 48px" }}>
+          <div style={{ background: S.white, border: `1px solid ${S.rule}`, padding: "44px 36px" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "36px", paddingBottom: "22px", borderBottom: `1px solid ${S.rule}`, flexWrap: "wrap", gap: "24px" }}>
               <button onClick={reset} style={{ background: "none", border: "none", fontFamily: S.mono, fontSize: "10px", letterSpacing: "0.18em", textTransform: "uppercase", color: S.mid, cursor: "pointer" }}>← Change archetype</button>
               <div style={{ fontFamily: S.mono, fontSize: "10px", letterSpacing: "0.16em", color: S.ink, textTransform: "uppercase", display: "flex", alignItems: "center", gap: "14px" }}>
@@ -304,9 +320,9 @@ function MicroDiagnostic({ S, onOpenModal }: { S: Record<string, string>; onOpen
             <div style={{ display: "flex", flexDirection: "column", gap: "1px", background: S.rule, border: `1px solid ${S.rule}` }}>
               {ARCH_QUIZ[arch].questions[qIdx].opts.map((o, i) => (
                 <button key={i} onClick={() => answer(o.s)}
-                  style={{ background: S.white, border: "none", padding: "18px 22px", textAlign: "left", cursor: "pointer", fontFamily: "'DM Sans',system-ui,sans-serif", fontSize: "14px", color: "#1A1A18", lineHeight: 1.55, transition: "background .2s ease,padding-left .2s ease", borderLeft: "3px solid transparent", display: "flex", alignItems: "flex-start", gap: "18px" }}
-                  onMouseEnter={e => { e.currentTarget.style.background = S.ink; e.currentTarget.style.color = S.white; e.currentTarget.style.paddingLeft = "30px"; e.currentTarget.style.borderLeftColor = S.gold; }}
-                  onMouseLeave={e => { e.currentTarget.style.background = S.white; e.currentTarget.style.color = "#1A1A18"; e.currentTarget.style.paddingLeft = "22px"; e.currentTarget.style.borderLeftColor = "transparent"; }}>
+                  style={{ background: S.white, border: "none", padding: "22px 28px", textAlign: "left", cursor: "pointer", fontFamily: "'DM Sans',system-ui,sans-serif", fontSize: "14px", color: "#1A1A18", lineHeight: 1.55, transition: "background .2s ease,padding-left .2s ease", borderLeft: "3px solid transparent", display: "flex", alignItems: "flex-start", gap: "18px" }}
+                  onMouseEnter={e => { e.currentTarget.style.background = S.ink; e.currentTarget.style.color = S.white; e.currentTarget.style.paddingLeft = "36px"; e.currentTarget.style.borderLeftColor = S.gold; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = S.white; e.currentTarget.style.color = "#1A1A18"; e.currentTarget.style.paddingLeft = "28px"; e.currentTarget.style.borderLeftColor = "transparent"; }}>
                   <span style={{ fontFamily: S.mono, fontSize: "10px", letterSpacing: "0.18em", color: S.gold, textTransform: "uppercase", flexShrink: 0, width: "16px", paddingTop: "2px" }}>{["A","B","C","D"][i]}</span>
                   <span>{o.t}</span>
                 </button>
@@ -317,7 +333,7 @@ function MicroDiagnostic({ S, onOpenModal }: { S: Record<string, string>; onOpen
 
         {/* RESULT */}
         {stage === "result" && arch && (
-          <div style={{ background: S.ink, color: S.white, padding: "56px 52px" }}>
+          <div style={{ background: S.ink, color: S.white, padding: "56px 36px" }}>
             <div style={{ fontFamily: S.mono, fontSize: "11px", letterSpacing: "0.24em", textTransform: "uppercase", color: S.gold, marginBottom: "24px" }}>Your Indicative Band</div>
             <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: "24px", flexWrap: "wrap", marginBottom: "18px" }}>
               <div style={{ fontFamily: S.display, fontSize: "clamp(48px,8vw,92px)", lineHeight: 0.9, letterSpacing: "0.005em", color: bandColor, textTransform: "uppercase" }}>{bandLabel}</div>
@@ -326,7 +342,7 @@ function MicroDiagnostic({ S, onOpenModal }: { S: Record<string, string>; onOpen
               </div>
             </div>
             <div style={{ height: "1px", background: "rgba(160,120,48,0.4)", margin: "28px 0" }} />
-            <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "17px", lineHeight: 1.65, color: "rgba(247,246,243,0.85)", marginBottom: "34px", maxWidth: "820px" }}>{bandNarrative(arch)}</p>
+            <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "17px", lineHeight: 1.65, color: "rgba(247,246,243,0.85)", marginBottom: "34px", maxWidth: "100%" }}>{bandNarrative(arch)}</p>
             <div style={{ display: "flex", alignItems: "center", gap: "24px", flexWrap: "wrap", marginBottom: "28px" }}>
               <button onClick={() => onOpenModal(arch)} style={{ display: "inline-block", padding: "16px 30px", background: S.gold, color: S.ink, fontFamily: S.mono, fontSize: "11px", letterSpacing: "0.2em", textTransform: "uppercase", fontWeight: 500, cursor: "pointer", border: "none" }}>
                 {ARCH_QUIZ[arch].price === "Enquire" ? "Enquire about " : "Take the full "}{ARCH_QUIZ[arch].instrument} →
@@ -335,8 +351,8 @@ function MicroDiagnostic({ S, onOpenModal }: { S: Record<string, string>; onOpen
             </div>
             <div style={{ paddingTop: "32px", marginTop: "32px", borderTop: "1px solid rgba(160,120,48,0.18)" }}>
               <div style={{ fontFamily: S.mono, fontSize: "10px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.gold, marginBottom: "10px" }}>Or get a structural read in your inbox monthly</div>
-              <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "14px", lineHeight: 1.6, color: "rgba(247,246,243,0.65)", marginBottom: "18px", maxWidth: "680px", fontStyle: "italic" }}>Subscribe to One Structural Read A Month — published when there is something to say.</p>
-              <form onSubmit={handleSubscribe} style={{ display: "flex", gap: "1px", background: "rgba(255,255,255,0.08)", maxWidth: "580px", border: "1px solid rgba(160,120,48,0.3)" }}>
+              <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "14px", lineHeight: 1.6, color: "rgba(247,246,243,0.65)", marginBottom: "18px", maxWidth: "100%", fontStyle: "italic" }}>Subscribe to One Structural Read A Month — published when there is something to say.</p>
+              <form onSubmit={handleSubscribe} style={{ display: "flex", gap: "1px", background: "rgba(255,255,255,0.08)", maxWidth: "100%", border: "1px solid rgba(160,120,48,0.3)" }}>
                 <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="your email" required style={{ flex: 1, background: "transparent", border: "none", padding: "14px 18px", fontFamily: S.mono, fontSize: "13px", color: S.white, outline: "none", letterSpacing: "0.04em" }} />
                 <button type="submit" style={{ background: S.gold, color: S.ink, border: "none", padding: "14px 22px", fontFamily: S.mono, fontSize: "10px", letterSpacing: "0.16em", textTransform: "uppercase", cursor: "pointer", fontWeight: 500 }}>Subscribe →</button>
               </form>
@@ -517,7 +533,7 @@ export default function AIEdgeLab() {
             <div style={{ position: "absolute", inset: 0, background: "repeating-linear-gradient(90deg,transparent 0px,transparent 2px,rgba(255,255,255,0.008) 2px,rgba(255,255,255,0.008) 4px)" }} />
             <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "55%", background: "linear-gradient(to top,#0A0B0E 0%,#0E1014 20%,transparent 100%)" }} />
             <div className="hidden md:block" style={{ position: "absolute", right: "44px", top: "50%", transform: "translateY(-50%) rotate(90deg)", transformOrigin: "center center", fontFamily: S.display, fontSize: "48px", letterSpacing: "0.12em", color: "#FFFFFF", whiteSpace: "nowrap" }}>AI EDGE LAB</div>
-            <div style={{ position: "absolute", bottom: "32px", left: "52px", fontFamily: S.mono, fontSize: "8px", letterSpacing: "0.22em", textTransform: "uppercase", color: "#FFFFFF" }}>The Architecture of Work in the Post-AI Era · 2026</div>
+            <div style={{ position: "absolute", bottom: "32px", left: "52px", fontFamily: S.mono, fontSize: "10px", letterSpacing: "0.22em", textTransform: "uppercase", color: "#FFFFFF" }}>The Architecture of Work in the Post-AI Era · 2026</div>
           </div>
           {/* Hero two-col */}
           <div className="grid grid-cols-1 md:grid-cols-2" style={{ borderBottom: `1px solid ${S.rule}` }}>
@@ -533,7 +549,7 @@ export default function AIEdgeLab() {
               <div style={{ fontFamily: S.mono, fontSize: "11px", letterSpacing: "0.14em", textTransform: "uppercase", color: S.mid, marginTop: "16px" }}>Private · Confidential · Not shared with your employer</div>
             </div>
             <div style={{ padding: "52px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-              <p style={{ fontSize: "16px", color: S.mid, lineHeight: 1.9, fontWeight: 300, marginBottom: "32px", maxWidth: "400px" }}>The workplace now has four actors: the Employee, the CXO, the Organisation — and AI. Each is being reshaped by a different kind of pressure. AI Edge Lab maps that pressure, measures your exposure, and shows where judgment still creates advantage.</p>
+              <p style={{ fontSize: "18px", color: S.mid, lineHeight: 1.9, fontWeight: 300, marginBottom: "32px", maxWidth: "400px" }}>The workplace now has four actors: the Employee, the CXO, the Organisation — and AI. Each is being reshaped by a different kind of pressure. AI Edge Lab maps that pressure, measures your exposure, and shows where judgment still creates advantage.</p>
               <div style={{ display: "flex", gap: "32px", marginBottom: "32px", flexWrap: "wrap" }}>
                 {[{ n: "39%", l: "Skills change by 2030 · WEF", href: "https://www.weforum.org/publications/the-future-of-jobs-report-2025/" },{ n: "23%", l: "Scaled AI · McKinsey", href: "https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai" },{ n: "95%", l: "No P&L impact · MIT NANDA", href: "https://mlq.ai/media/quarterly_decks/v0.1_State_of_AI_in_Business_2025_Report.pdf" }].map((s, i) => (
                   <a key={i} href={s.href} target="_blank" rel="noopener" style={{ borderLeft: `1px solid ${S.rule2}`, paddingLeft: "16px", textDecoration: "none" }}>
@@ -558,33 +574,33 @@ export default function AIEdgeLab() {
               <a key={i} href={c.href} style={{ padding: "36px 32px 28px", display: "flex", flexDirection: "column", gap: "14px", transition: "transform .25s ease,box-shadow .25s ease", borderRight: i < 3 ? `1px solid ${S.rule}` : "none", textDecoration: "none", background: c.bg }}
                 onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; }}
                 onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; }}>
-                <div style={{ fontFamily: S.mono, fontSize: "10px", letterSpacing: "0.18em", textTransform: "uppercase", color: c.color, opacity: 0.65 }}>{c.num}</div>
-                <div style={{ fontFamily: S.display, fontSize: "22px", lineHeight: 1, letterSpacing: "0.01em", textTransform: "uppercase", color: c.color, whiteSpace: "pre-line" }}>{c.who}</div>
-                <div style={{ fontFamily: S.mono, fontSize: "10px", letterSpacing: "0.14em", textTransform: "uppercase", color: c.color, opacity: 0.55, marginTop: "auto" }}>{c.inst}</div>
-                <div style={{ fontFamily: S.mono, fontSize: "10px", letterSpacing: "0.16em", textTransform: "uppercase", color: c.goldColor, display: "inline-flex", alignItems: "center", gap: "6px" }}>Read →</div>
+                <div style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.18em", textTransform: "uppercase", color: c.color, opacity: 0.65 }}>{c.num}</div>
+                <div style={{ fontFamily: S.display, fontSize: "26px", lineHeight: 1, letterSpacing: "0.01em", textTransform: "uppercase", color: c.color, whiteSpace: "pre-line" }}>{c.who}</div>
+                <div style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: c.color, opacity: 0.55, marginTop: "auto" }}>{c.inst}</div>
+                <div style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.16em", textTransform: "uppercase", color: c.goldColor, display: "inline-flex", alignItems: "center", gap: "6px" }}>Read →</div>
               </a>
             ))}
           </div>
         </section>
 
         {/* ── EVIDENCE WALL TEASER ── */}
-        <section style={{ padding: "80px 52px", background: S.ink, color: S.white, borderTop: "1px solid rgba(160,120,48,0.22)", borderBottom: "1px solid rgba(160,120,48,0.22)" }}>
-          <div style={{ maxWidth: "1240px", margin: "0 auto" }}>
-            <div style={{ display: "flex", alignItems: "baseline", gap: "18px", paddingBottom: "18px", marginBottom: "32px", borderBottom: "1px solid rgba(213,210,201,0.18)" }}>
-              <div style={{ fontFamily: S.mono, fontSize: "11px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.gold, flex: 1 }}>The Evidence Wall · Why This Doctrine Was Built</div>
-              <div style={{ fontFamily: S.mono, fontSize: "11px", letterSpacing: "0.14em", color: "#9C978C" }}>01.5 / 06</div>
+        <section style={{ padding: "80px 24px", background: S.ink, color: S.white, borderTop: "1px solid rgba(160,120,48,0.22)", borderBottom: "1px solid rgba(160,120,48,0.22)" }}>
+          <div style={{ width: "100%", maxWidth: "none", margin: "0 auto", textAlign: "center" }}>
+            <div style={{ display: "flex", alignItems: "baseline", justifyContent: "center", gap: "18px", paddingBottom: "18px", marginBottom: "32px", borderBottom: "1px solid rgba(213,210,201,0.18)" }}>
+              <div style={{ fontFamily: S.mono, fontSize: "13px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.gold }}>The Evidence Wall · Why This Doctrine Was Built</div>
+              <div style={{ fontFamily: S.mono, fontSize: "13px", letterSpacing: "0.14em", color: "#9C978C" }}>01.5 / 06</div>
             </div>
-            <h2 style={{ fontFamily: S.display, fontSize: "clamp(40px,5.4vw,72px)", lineHeight: 0.96, textTransform: "uppercase", color: S.white, letterSpacing: "0.005em", marginBottom: "18px", maxWidth: "980px" }}>Twelve Reports. Seven Institutions.<br />One <span style={{ color: S.gold }}>Structural Diagnosis</span>.</h2>
-            <p style={{ fontFamily: S.serif, fontStyle: "italic", fontSize: "18px", lineHeight: 1.6, color: "#9C978C", maxWidth: "780px", marginBottom: "36px" }}>Six months of synthesis across every major AI transformation report — MIT NANDA, McKinsey, Gartner, RAND, BCG, IBM, S&P Global, WEF, and others. The findings converge with unusual clarity.</p>
-            <div className="grid grid-cols-2 md:grid-cols-5" style={{ gap: "1px", background: "rgba(213,210,201,0.18)", marginBottom: "36px" }}>
+            <h2 style={{ fontFamily: S.display, fontSize: "clamp(40px,5.4vw,72px)", lineHeight: 0.96, textTransform: "uppercase", color: S.white, letterSpacing: "0.005em", marginBottom: "18px", marginLeft: "auto", marginRight: "auto" }}>Twelve Reports. Seven Institutions.<br />One <span style={{ color: S.gold }}>Structural Diagnosis</span>.</h2>
+            <p style={{ fontFamily: S.serif, fontStyle: "italic", fontSize: "18px", lineHeight: 1.6, color: "#9C978C", maxWidth: "780px", marginBottom: "36px", marginLeft: "auto", marginRight: "auto" }}>Six months of synthesis across every major AI transformation report — MIT NANDA, McKinsey, Gartner, RAND, BCG, IBM, S&P Global, WEF, and others. The findings converge with unusual clarity.</p>
+            <div className="grid grid-cols-2 md:grid-cols-5" style={{ gap: "12px", marginBottom: "36px" }}>
               {[["12","Reports analysed"],["7","Institutions"],["15K+","Executives surveyed"],["$665B","Invested in AI"],["95%","Zero P&L impact"]].map(([v, l]) => (
-                <div key={l} style={{ background: S.ink, padding: "24px 22px" }}>
+                <div key={l} style={{ background: S.ink, padding: "24px 22px", textAlign: "center", border: "1px solid rgba(201,168,76,0.35)", borderRadius: "8px", boxShadow: "0 0 20px rgba(201,168,76,0.15), inset 0 0 20px rgba(201,168,76,0.05)" }}>
                   <div style={{ fontFamily: S.display, fontSize: "44px", lineHeight: 1, color: S.gold, letterSpacing: "0.005em", marginBottom: "6px" }}>{v}</div>
                   <div style={{ fontFamily: S.mono, fontSize: "10px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#9C978C" }}>{l}</div>
                 </div>
               ))}
             </div>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "18px" }}>
+            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexWrap: "wrap", gap: "18px" }}>
               <p style={{ fontFamily: S.serif, fontStyle: "italic", fontSize: "17px", color: "#E8E6E0", maxWidth: "640px", lineHeight: 1.55 }}><strong style={{ color: S.white, fontStyle: "normal", fontWeight: 500 }}>The technology works. The architecture does not.</strong> Naming the new problem is the precondition for solving it.</p>
               <a href="#research" style={{ fontFamily: S.mono, fontSize: "11px", letterSpacing: "0.2em", textTransform: "uppercase", color: S.gold, border: `1px solid ${S.gold}`, padding: "14px 22px", textDecoration: "none", transition: "all .2s ease", whiteSpace: "nowrap" }}
                 onMouseEnter={e => { e.currentTarget.style.background = S.gold; e.currentTarget.style.color = S.white; }}
@@ -601,16 +617,16 @@ export default function AIEdgeLab() {
         {/* ── FOUR ACTORS ── */}
         <section id="actors" style={{ borderBottom: `1px solid ${S.rule}` }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 52px", borderBottom: `1px solid ${S.rule}`, background: S.white2 }}>
-            <span style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.mid }}>The Four Actors of the AI Workplace</span>
-            <span style={{ fontFamily: S.mono, fontSize: "12px", color: S.dim }}>02 / 06</span>
+            <span style={{ fontFamily: S.mono, fontSize: "15px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.mid }}>The Four Actors of the AI Workplace</span>
+            <span style={{ fontFamily: S.mono, fontSize: "15px", color: S.dim }}>02 / 06</span>
           </div>
           <div style={{ padding: "28px 52px" }}>
             <div className="grid grid-cols-1 md:grid-cols-2" style={{ marginBottom: "28px" }}>
               <div style={{ borderRight: `1px solid ${S.rule}`, paddingRight: "52px" }}>
-                <h2 style={{ fontFamily: S.display, fontSize: "clamp(52px,7vw,88px)", lineHeight: 0.95, letterSpacing: "0.01em", color: S.ink, marginBottom: "28px" }}>THE<br />FOUR<br /><span style={{ color: S.gold }}>ACTORS.</span></h2>
+                <h2 style={{ fontFamily: S.display, fontSize: "clamp(60px,8vw,104px)", lineHeight: 0.95, letterSpacing: "0.01em", color: S.ink, marginBottom: "28px" }}>THE<br />FOUR<br /><span style={{ color: S.gold }}>ACTORS.</span></h2>
               </div>
               <div style={{ paddingLeft: "52px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
-                <p style={{ fontSize: "16px", color: S.mid, lineHeight: 1.9, fontWeight: 300, maxWidth: "460px" }}>For decades, three actors shaped work: the employee, the leader, and the organisation. AI has entered as a fourth — not as a tool in the org chart, but as an actor that absorbs work, reprices what humans do, and forces every other actor to reckon with their structural position.</p>
+                <p style={{ fontSize: "21px", color: S.mid, lineHeight: 1.9, fontWeight: 300, maxWidth: "100%" }}>For decades, three actors shaped work: the employee, the leader, and the organisation. AI has entered as a fourth — not as a tool in the org chart, but as an actor that absorbs work, reprices what humans do, and forces every other actor to reckon with their structural position.</p>
               </div>
             </div>
           </div>
@@ -637,10 +653,10 @@ export default function AIEdgeLab() {
         {/* ── AUDIENCE JOURNEY ── */}
         <section id="start" style={{ borderTop: `1px solid ${S.rule}`, borderBottom: `1px solid ${S.rule}`, background: S.white2 }}>
           <div style={{ padding: "56px 52px 0" }}>
-            <div style={{ fontFamily: S.mono, fontSize: "10px", letterSpacing: "0.24em", textTransform: "uppercase", color: S.gold, marginBottom: "16px" }}>START HERE · WHERE DO YOU STAND?</div>
-            <h2 style={{ fontFamily: S.display, fontSize: "clamp(48px,7vw,96px)", letterSpacing: "0.01em", color: S.ink, lineHeight: 0.95, marginBottom: "14px", textTransform: "uppercase" }}>FIND YOUR <span style={{ color: S.gold }}>EDGE.</span></h2>
-            <p style={{ fontSize: "14px", color: S.mid, lineHeight: 1.65, maxWidth: "620px" }}>Four actors, four instruments. Choose where you stand — your assessment is built for it, and your report lands within 48 hours.</p>
-            <p style={{ fontFamily: S.mono, fontSize: "11px", letterSpacing: "0.16em", textTransform: "uppercase", color: S.mid, maxWidth: "920px", marginTop: "14px" }}>Calibrated against the four E.D.G.E. dimensions <span style={{ color: S.gold }}>·</span> Exposure <span style={{ color: S.gold }}>·</span> Decision Density <span style={{ color: S.gold }}>·</span> Growth of Boundary <span style={{ color: S.gold }}>·</span> Economic Anchoring</p>
+            <div style={{ fontFamily: S.mono, fontSize: "14px", letterSpacing: "0.24em", textTransform: "uppercase", color: S.gold, marginBottom: "16px" }}>START HERE · WHERE DO YOU STAND?</div>
+            <h2 style={{ fontFamily: S.display, fontSize: "clamp(56px,8vw,108px)", letterSpacing: "0.01em", color: S.ink, lineHeight: 0.95, marginBottom: "14px", textTransform: "uppercase" }}>FIND YOUR <span style={{ color: S.gold }}>EDGE.</span></h2>
+            <p style={{ fontSize: "21px", color: S.mid, lineHeight: 1.65, maxWidth: "100%" }}>Four actors, four instruments. Choose where you stand — your assessment is built for it, and your report lands within 48 hours.</p>
+            <p style={{ fontFamily: S.mono, fontSize: "15px", letterSpacing: "0.16em", textTransform: "uppercase", color: S.mid, maxWidth: "100%", marginTop: "14px" }}>Calibrated against the four E.D.G.E. dimensions <span style={{ color: S.gold }}>·</span> Exposure <span style={{ color: S.gold }}>·</span> Decision Density <span style={{ color: S.gold }}>·</span> Growth of Boundary <span style={{ color: S.gold }}>·</span> Economic Anchoring</p>
           </div>
           <div style={{ margin: "56px 52px 0" }}>
             <div style={{ fontFamily: S.display, fontSize: "clamp(28px,3.6vw,52px)", lineHeight: 1, letterSpacing: "0.015em", color: S.ink, marginBottom: "18px" }}>MEASURE YOUR HUMAN ADVANTAGE IN THE <span style={{ color: S.gold }}>AI ERA.</span></div>
