@@ -8,6 +8,10 @@ type Signal = {
   breaking: string;
   whyNow: string;
   signal: string;
+  signals?: string[];
+  rankedSignals?: string[];
+  catchAllDetail?: string;
+  practices?: string[];
   role: string;
   company: string;
   size: string;
@@ -134,9 +138,47 @@ export default function SignalsPage() {
                 {expanded === sig._id && (
                   <div className="px-6 pb-6 grid grid-cols-1 md:grid-cols-2 gap-6 border-t border-[#1a1a1a]">
                     <div className="space-y-4 pt-4">
-                      <Field label="What's breaking" value={sig.breaking} large />
-                      <Field label="Why now" value={sig.whyNow} />
-                      <Field label="Loudest signal" value={sig.signal} />
+                      {/* New multi-signal fields */}
+                      {sig.signals && sig.signals.length > 0 ? (
+                        <>
+                          <div>
+                            <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#525252] mb-2">Signals selected</p>
+                            <ul className="space-y-1">
+                              {sig.signals.map((s, i) => (
+                                <li key={i} className="text-xs text-[#a3a3a3] flex gap-2">
+                                  <span className="text-[#525252] shrink-0">·</span>
+                                  {s}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                          {sig.rankedSignals && sig.rankedSignals.length > 0 && (
+                            <div>
+                              <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#525252] mb-2">Ranked top {sig.rankedSignals.length}</p>
+                              <ol className="space-y-1 list-none">
+                                {sig.rankedSignals.map((s, i) => (
+                                  <li key={i} className="text-xs text-[#a3a3a3] flex gap-2">
+                                    <span className="text-[#d4af37] shrink-0 font-bold">{i + 1}.</span>
+                                    {s}
+                                  </li>
+                                ))}
+                              </ol>
+                            </div>
+                          )}
+                          {sig.practices && sig.practices.length > 0 && (
+                            <Field label="Routed to" value={sig.practices.join(", ")} />
+                          )}
+                          {sig.catchAllDetail && (
+                            <Field label="Free-text signal" value={sig.catchAllDetail} large />
+                          )}
+                        </>
+                      ) : (
+                        <>
+                          <Field label="What's breaking" value={sig.breaking} large />
+                          <Field label="Why now" value={sig.whyNow} />
+                          <Field label="Loudest signal" value={sig.signal} />
+                        </>
+                      )}
                     </div>
                     <div className="space-y-4 pt-4">
                       <Field label="Role" value={sig.role} />
