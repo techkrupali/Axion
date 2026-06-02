@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Reveal } from "@/components/Reveal";
+import DiagnosticModal from "@/components/DiagnosticModal";
 
 /* ─── DATA ─────────────────────────────────────────────────────────────────── */
 
@@ -340,6 +341,7 @@ export default function FounderPage() {
   const [navScrolled, setNavScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("story");
+  const [diagOpen, setDiagOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setNavScrolled(window.scrollY > 40);
@@ -2324,6 +2326,12 @@ export default function FounderPage() {
 
         </div>
       </footer>
+
+      <AnimatePresence>
+        {diagOpen && (
+          <DiagnosticModal onClose={() => setDiagOpen(false)} />
+        )}
+      </AnimatePresence>
 
     </div>
   );

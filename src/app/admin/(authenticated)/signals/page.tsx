@@ -33,7 +33,7 @@ export default function AdminSignalsPage() {
       .finally(() => setLoading(false));
   }, []);
 
-  const updateStatus = async (id: string, status: string) => {
+  const updateStatus = async (id: string, status: "new" | "read" | "contacted") => {
     await fetch("/api/diagnostic", {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },

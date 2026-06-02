@@ -35,7 +35,8 @@ export async function POST(req: NextRequest) {
     const practices = [...new Set(
       (data.signals || []).map((s: string) => 
         ALL_SIGNALS.find((a) => a.text === s)?.practice
-    ).filter(Boolean)];
+      ).filter(Boolean)
+    )];
     
     const docData = {
       ...data,
@@ -68,9 +69,9 @@ export async function POST(req: NextRequest) {
         <p><strong>Company:</strong> ${doc.company}</p>
         <p><strong>Size:</strong> ${doc.size}</p>
         <h2>Signals</h2>
-        <ul>${(doc.signals || []).map(s => `<li>${s}</li>`).join("")}</ul>
+        <ul>${(doc.signals || []).map((s: string) => `<li>${s}</li>`).join("")}</ul>
         <p><strong>Practices:</strong> ${(doc.practices || []).join(", ")}</p>
-        ${doc.rankedSignals && doc.rankedSignals.length > 0 ? `<h3>Ranked Signals</h3><ol>${doc.rankedSignals.map(s => `<li>${s}</li>`).join("")}</ol>` : ""}
+        ${doc.rankedSignals && doc.rankedSignals.length > 0 ? `<h3>Ranked Signals</h3><ol>${doc.rankedSignals.map((s: string) => `<li>${s}</li>`).join("")}</ol>` : ""}
         ${doc.whyNow ? `<h2>Why Now</h2><p>${doc.whyNow}</p>` : ""}
         ${doc.catchAllDetail ? `<h2>Catch-All Detail</h2><p>${doc.catchAllDetail}</p>` : ""}
       `;
