@@ -32,11 +32,12 @@ export async function POST(req: NextRequest) {
     const data = await req.json();
     
     // Map signals to practices (backend only)
-    const practices = [...new Set(
-      (data.signals || []).map((s: string) => 
-        ALL_SIGNALS.find((a) => a.text === s)?.practice
-      ).filter((p: string | undefined): p is string => Boolean(p))
-    )];
+    const mapped: string[] = [];
+    for (const s of (data.signals || []) as string[]) {
+      const match = ALL_SIGNALS.find((a) => a.text === s)?.practice;
+      if (match) mapped.push(match);
+    }
+    const practices = [...new Set(mapped)];
     
     const docData = {
       ...data,
