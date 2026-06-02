@@ -318,33 +318,38 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
           </button>
 
           {/* Scrollable content area */}
-          <div className="overflow-y-auto p-8 md:p-10 pb-4 scrollable-content" style={{ 
-            maxHeight: "65vh", 
+          <div className="overflow-y-scroll p-8 md:p-10 pb-4 scrollable-content" style={{ 
+            maxHeight: "70vh", 
             scrollbarWidth: "thin", 
-            scrollbarColor: "rgba(201,168,76,0.5) transparent",
+            scrollbarColor: "rgba(201,168,76,0.7) rgba(201,168,76,0.15)",
             WebkitOverflowScrolling: "touch"
           }}>
             <style>{`
+              /* Always show scrollbar */
               .scrollable-content::-webkit-scrollbar {
-                width: 8px;
-                display: block;
+                width: 10px;
+                display: block !important;
+                opacity: 1 !important;
               }
               .scrollable-content::-webkit-scrollbar-track {
-                background: rgba(201,168,76,0.1);
-                border-radius: 4px;
+                background: rgba(201,168,76,0.15);
+                border-radius: 5px;
               }
               .scrollable-content::-webkit-scrollbar-thumb {
-                background: rgba(201,168,76,0.6);
-                border-radius: 4px;
-                display: block;
+                background: rgba(201,168,76,0.7);
+                border-radius: 5px;
+                display: block !important;
+                opacity: 1 !important;
+                visibility: visible !important;
               }
               .scrollable-content::-webkit-scrollbar-thumb:hover {
-                background: rgba(201,168,76,0.8);
+                background: rgba(201,168,76,0.9);
               }
               /* For Firefox */
               .scrollable-content {
                 scrollbar-width: thin;
-                scrollbar-color: rgba(201,168,76,0.6) rgba(201,168,76,0.1);
+                scrollbar-color: rgba(201,168,76,0.7) rgba(201,168,76,0.15);
+                overflow-y: scroll !important;
               }
             `}</style>
             {!submitted ? (
