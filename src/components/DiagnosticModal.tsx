@@ -34,6 +34,7 @@ type FormData = {
   signals: string[];
   rankedSignals: string[];
   catchAllDetail: string;
+  whyNow: string;
   role: string;
   company: string;
   size: string;
@@ -46,14 +47,15 @@ type FormData = {
 const empty: FormData = {
   signals: [],
   rankedSignals: [],
-  catchAllDetail: "",
-  role: "",
-  company: "",
-  size: "",
-  name: "",
-  email: "",
-  phone: "",
-  callback: "",
+  catchAllDetail: '',
+  whyNow: '',
+  role: '',
+  company: '',
+  size: '',
+  name: '',
+  email: '',
+  phone: '',
+  callback: '',
 };
 
 // ── Custom dropdown (kept for role / size) ──
@@ -257,6 +259,7 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
         signals: form.signals,
         rankedSignals: form.rankedSignals,
         catchAllDetail: form.catchAllDetail,
+        whyNow: form.whyNow,
         practices,
         role: form.role,
         company: form.company,
@@ -492,6 +495,24 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
                         )}
                       </div>
                     )}
+
+                    {/* Why Now field */}
+                    <div className="mt-8">
+                      <label className="block mb-2 font-mono text-[10px] tracking-[0.2em] uppercase text-[var(--fg-4)]">
+                        What’s loudest — and why now?
+                      </label>
+                      <textarea
+                        rows={2}
+                        value={form.whyNow}
+                        onChange={e => set("whyNow", e.target.value)}
+                        placeholder="One line on what’s breaking. One line on why it surfaced now."
+                        className="w-full rounded-[12px] px-4 py-3 text-[14px] text-[var(--fg)] placeholder:text-[var(--fg-5)] resize-none outline-none"
+                        style={{
+                          background: "rgba(201,168,76,0.04)",
+                          border: "1px solid rgba(201,168,76,0.25)",
+                        }}
+                      />
+                    </div>
                   </motion.div>
                 )}
 
