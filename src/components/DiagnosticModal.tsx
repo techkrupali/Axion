@@ -302,7 +302,8 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
             background: "rgba(10,12,18,0.98)",
             border: "1px solid rgba(201,168,76,0.35)",
             boxShadow: "0 40px 100px rgba(0,0,0,0.8), 0 0 0 1px rgba(201,168,76,0.08)",
-            maxHeight: "90vh",
+            maxHeight: "85vh",
+            height: "auto",
           }}
         >
           {/* Close */}
@@ -313,8 +314,36 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
             <X size={18} />
           </button>
 
-          {/* Scrollable inner */}
-          <div className="overflow-y-auto p-8 md:p-10 flex-1" style={{ scrollbarWidth: "none" }}>
+          {/* Scrollable content area */}
+          <div className="overflow-y-auto p-8 md:p-10 pb-4 scrollable-content" style={{ 
+            maxHeight: "65vh", 
+            scrollbarWidth: "thin", 
+            scrollbarColor: "rgba(201,168,76,0.5) transparent",
+            WebkitOverflowScrolling: "touch"
+          }}>
+            <style>{`
+              .scrollable-content::-webkit-scrollbar {
+                width: 8px;
+                display: block;
+              }
+              .scrollable-content::-webkit-scrollbar-track {
+                background: rgba(201,168,76,0.1);
+                border-radius: 4px;
+              }
+              .scrollable-content::-webkit-scrollbar-thumb {
+                background: rgba(201,168,76,0.6);
+                border-radius: 4px;
+                display: block;
+              }
+              .scrollable-content::-webkit-scrollbar-thumb:hover {
+                background: rgba(201,168,76,0.8);
+              }
+              /* For Firefox */
+              .scrollable-content {
+                scrollbar-width: thin;
+                scrollbar-color: rgba(201,168,76,0.6) rgba(201,168,76,0.1);
+              }
+            `}</style>
             {!submitted ? (
               <>
                 {/* Progress bar */}
@@ -463,15 +492,6 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
                         )}
                       </div>
                     )}
-
-                    <button
-                      onClick={() => setStep(2)}
-                      disabled={!canNext1}
-                      className="w-full py-4 rounded-full font-mono text-[11px] tracking-[0.28em] uppercase font-semibold flex items-center justify-center gap-2 transition-opacity disabled:opacity-30 mt-8"
-                      style={{ background: "linear-gradient(135deg, #C9A84C 0%, #E8C97A 50%, #C9A84C 100%)", color: "#080A0F" }}
-                    >
-                      Continue <ArrowRight size={12} />
-                    </button>
                   </motion.div>
                 )}
 
@@ -506,22 +526,6 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
                       options={SIZES}
                       placeholder="Select size…"
                     />
-
-                    <div className="flex gap-3 mt-3">
-                      <button
-                        onClick={() => setStep(1)}
-                        className="flex-1 py-4 rounded-full font-mono text-[11px] tracking-[0.28em] uppercase transition-colors"
-                        style={{ border: "1px solid rgba(201,168,76,0.25)", color: "var(--fg-4)" }}
-                      >Back</button>
-                      <button
-                        onClick={() => setStep(3)}
-                        disabled={!canNext2}
-                        className="flex-[2] py-4 rounded-full font-mono text-[11px] tracking-[0.28em] uppercase font-semibold flex items-center justify-center gap-2 transition-opacity disabled:opacity-30"
-                        style={{ background: "linear-gradient(135deg, #C9A84C 0%, #E8C97A 50%, #C9A84C 100%)", color: "#080A0F" }}
-                      >
-                        Continue <ArrowRight size={12} />
-                      </button>
-                    </div>
                   </motion.div>
                 )}
 
@@ -575,25 +579,9 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
                       value={form.callback}
                       onChange={e => set("callback", e.target.value)}
                       placeholder="e.g. Weekday mornings, after 6pm…"
-                      className="w-full rounded-[12px] px-4 py-3 text-[14px] text-[var(--fg)] placeholder:text-[var(--fg-5)] mb-8 outline-none"
+                      className="w-full rounded-[12px] px-4 py-3 text-[14px] text-[var(--fg)] placeholder:text-[var(--fg-5)] outline-none"
                       style={inputStyle}
                     />
-
-                    <div className="flex gap-3">
-                      <button
-                        onClick={() => setStep(2)}
-                        className="flex-1 py-4 rounded-full font-mono text-[11px] tracking-[0.28em] uppercase transition-colors"
-                        style={{ border: "1px solid rgba(201,168,76,0.25)", color: "var(--fg-4)" }}
-                      >Back</button>
-                      <button
-                        onClick={submit}
-                        disabled={!canSubmit || loading}
-                        className="flex-[2] py-4 rounded-full font-mono text-[11px] tracking-[0.28em] uppercase font-semibold flex items-center justify-center gap-2 transition-opacity disabled:opacity-30"
-                        style={{ background: "linear-gradient(135deg, #C9A84C 0%, #E8C97A 50%, #C9A84C 100%)", color: "#080A0F" }}
-                      >
-                        {loading ? "Sending…" : <><span>Send Signal</span> <ArrowRight size={12} /></>}
-                      </button>
-                    </div>
                   </motion.div>
                 )}
               </>
@@ -617,6 +605,56 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
               </motion.div>
             )}
           </div>
+
+          {/* Fixed footer for buttons */}
+          {!submitted && (
+            <div className="p-8 md:px-10 md:pb-10 pt-4 border-t border-transparent" style={{ borderTop: "1px solid rgba(201,168,76,0.1)" }}>
+              {step === 1 && (
+                <button
+                  onClick={() => setStep(2)}
+                  disabled={!canNext1}
+                  className="w-full py-4 rounded-full font-mono text-[11px] tracking-[0.28em] uppercase font-semibold flex items-center justify-center gap-2 transition-opacity disabled:opacity-30"
+                  style={{ background: "linear-gradient(135deg, #C9A84C 0%, #E8C97A 50%, #C9A84C 100%)", color: "#080A0F" }}
+                >
+                  Continue <ArrowRight size={12} />
+                </button>
+              )}
+              {step === 2 && (
+                <div className="flex gap-3">
+                  <button
+                    onClick={() => setStep(1)}
+                    className="flex-1 py-4 rounded-full font-mono text-[11px] tracking-[0.28em] uppercase transition-colors"
+                    style={{ border: "1px solid rgba(201,168,76,0.25)", color: "var(--fg-4)" }}
+                  >Back</button>
+                  <button
+                    onClick={() => setStep(3)}
+                    disabled={!canNext2}
+                    className="flex-[2] py-4 rounded-full font-mono text-[11px] tracking-[0.28em] uppercase font-semibold flex items-center justify-center gap-2 transition-opacity disabled:opacity-30"
+                    style={{ background: "linear-gradient(135deg, #C9A84C 0%, #E8C97A 50%, #C9A84C 100%)", color: "#080A0F" }}
+                  >
+                    Continue <ArrowRight size={12} />
+                  </button>
+                </div>
+              )}
+              {step === 3 && (
+                <div className="flex gap-3">
+                  <button
+                    onClick={() => setStep(2)}
+                    className="flex-1 py-4 rounded-full font-mono text-[11px] tracking-[0.28em] uppercase transition-colors"
+                    style={{ border: "1px solid rgba(201,168,76,0.25)", color: "var(--fg-4)" }}
+                  >Back</button>
+                  <button
+                    onClick={submit}
+                    disabled={!canSubmit || loading}
+                    className="flex-[2] py-4 rounded-full font-mono text-[11px] tracking-[0.28em] uppercase font-semibold flex items-center justify-center gap-2 transition-opacity disabled:opacity-30"
+                    style={{ background: "linear-gradient(135deg, #C9A84C 0%, #E8C97A 50%, #C9A84C 100%)", color: "#080A0F" }}
+                  >
+                    {loading ? "Sending…" : <><span>Send Signal</span> <ArrowRight size={12} /></>}
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
         </motion.div>
       </motion.div>
     </AnimatePresence>
