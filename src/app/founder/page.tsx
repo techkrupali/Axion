@@ -1922,7 +1922,7 @@ export default function FounderPage() {
       <section style={{
         borderTop: '1px solid rgba(255,255,255,0.08)',
         borderBottom: '1px solid rgba(255,255,255,0.08)',
-        padding: 'clamp(72px, 10vw, 120px) clamp(24px, 6vw, 80px)',
+        padding: 'clamp(32px, 6vw, 60px) clamp(24px, 6vw, 80px)',
         background: 'var(--bg)',
         textAlign: 'center',
       }}>
@@ -1933,7 +1933,7 @@ export default function FounderPage() {
           textTransform: 'uppercase',
           color: '#b8953a',
           opacity: 1,
-          marginBottom: '28px',
+          marginBottom: '16px',
         }}>
           From thinking to architecture
         </p>
@@ -1944,7 +1944,7 @@ export default function FounderPage() {
           color: 'var(--paper)',
           lineHeight: 1.7,
           maxWidth: '640px',
-          margin: '0 auto 48px',
+          margin: '0 auto 24px',
           opacity: 0.85,
         }}>
           These essays are the public edge of work I&apos;m doing with organisations through{' '}
@@ -1993,7 +1993,7 @@ export default function FounderPage() {
           <Reveal>
             <div className="mb-12" style={{ textAlign: "center" }}>
               <span className="eyebrow mb-4 block" style={{ color: "#C9A24A" }}>The Vision</span>
-              <h2 className="h-section" style={{ maxWidth: "18ch", margin: "0 auto" }}>The arc continues — as a loop</h2>
+              <h2 className="h-section" style={{ maxWidth: "30ch", margin: "0 auto" }}>The arc continues — as a loop</h2>
             </div>
           </Reveal>
 
@@ -2020,7 +2020,7 @@ export default function FounderPage() {
                     boxShadow: i === 2 ? "0 0 40px -20px rgba(201,162,74,.18)" : "none",
                   }}
                 >
-                  <span className="font-sans block mb-2" style={{ fontSize: "9.5px", fontWeight: 500, letterSpacing: ".18em", textTransform: "uppercase", color: i === 2 ? "#C9A24A" : "#4A4A52" }}>
+                  <span className="font-sans block mb-2" style={{ fontSize: "9.5px", fontWeight: 500, letterSpacing: ".18em", textTransform: "uppercase", color: "#C9A24A" }}>
                     {stage.sn}
                   </span>
                   <h4 className="font-serif mb-3" style={{ fontSize: 20, color: i === 2 ? "#EDEBE3" : "#CCCAC2", fontWeight: 400, lineHeight: 1.18 }}>
@@ -2042,7 +2042,7 @@ export default function FounderPage() {
 
             {/* Connector — thesis anchor, soft Axion open-door */}
             <Reveal>
-              <p className="font-serif italic mb-10" style={{ fontSize: "clamp(17px,1.7vw,21px)", color: "#B8B8C0", lineHeight: 1.65, maxWidth: "52ch", margin: "0 auto 40px" }}>
+              <p className="font-serif italic mb-10" style={{ fontSize: "clamp(15px,1.4vw,19px)", color: "#B8B8C0", lineHeight: 1.65, maxWidth: "52ch", margin: "0 auto 40px" }}>
                 Twenty-three years of evidence points to one thing: organisations don't break at the strategy layer. They break at the people layer — quietly, before anyone names it. That is what I have spent my career learning to read. And it is what Axion Index is built to address.
               </p>
             </Reveal>
@@ -2062,7 +2062,7 @@ export default function FounderPage() {
               <div className="flex flex-col items-center gap-1 mb-16">
                 <span style={{ color: "rgba(201,162,74,.5)", fontSize: 18, lineHeight: 1 }}>◇</span>
                 <span className="font-serif" style={{ fontSize: 32, color: "#C9A24A", marginTop: 8 }}>Nitin Nahata</span>
-                <span className="font-sans" style={{ fontSize: "9.5px", fontWeight: 500, letterSpacing: ".22em", textTransform: "uppercase", color: "#8A8A96" }}>
+                <span className="font-sans" style={{ fontSize: "12px", fontWeight: 500, letterSpacing: ".22em", textTransform: "uppercase", color: "#8A8A96" }}>
                   The Operating Architect
                 </span>
                 <a
@@ -2070,7 +2070,7 @@ export default function FounderPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="font-sans mt-2"
-                  style={{ fontSize: "10px", letterSpacing: ".08em", color: "#5A5A62", textDecoration: "none" }}
+                  style={{ fontSize: "13px", letterSpacing: ".08em", color: "#5A5A62", textDecoration: "none" }}
                 >
                   LinkedIn ↗
                 </a>
@@ -2093,7 +2093,7 @@ export default function FounderPage() {
                   <div className="absolute pointer-events-none" style={{ top: -52, left: -56, width: 48, height: 1, background: "#C9A24A", opacity: .4 }} />
                   <div className="absolute pointer-events-none" style={{ top: -52, right: -56, width: 48, height: 1, background: "#C9A24A", opacity: .4 }} />
 
-                  <span className="font-sans block mb-4" style={{ fontSize: "9.5px", fontWeight: 600, letterSpacing: ".28em", textTransform: "uppercase", color: "#C9A24A", opacity: .75 }}>
+                  <span className="font-sans block mb-4" style={{ fontSize: "12px", fontWeight: 600, letterSpacing: ".28em", textTransform: "uppercase", color: "#C9A24A", opacity: .75 }}>
                     Axion Index
                   </span>
                   <p className="font-serif mx-auto mb-10" style={{ fontSize: "clamp(18px,1.9vw,23px)", lineHeight: 1.48, color: "#D4D2CA", maxWidth: "34ch" }}>
@@ -2117,7 +2117,7 @@ export default function FounderPage() {
                     Start the conversation ↗
                   </a>
 
-                  <p className="font-sans mt-5" style={{ fontSize: "11px", color: "#4A4A52", letterSpacing: ".04em" }}>
+                  <p className="font-sans mt-5" style={{ fontSize: "14px", color: "#4A4A52", letterSpacing: ".04em" }}>
                     via Axion Index
                   </p>
                 </div>
