@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
     const practices = [...new Set(
       (data.signals || []).map((s: string) => 
         ALL_SIGNALS.find((a) => a.text === s)?.practice
-      ).filter((p): p is string => Boolean(p))
+      ).filter((p: string | undefined): p is string => Boolean(p))
     )];
     
     const docData = {
