@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRef, useState } from "react";
 import { motion, useScroll, useTransform, useInView, AnimatePresence } from "framer-motion";
 import { ArrowRight, ChevronDown } from "lucide-react";
+import DiagnosticModal from "@/components/DiagnosticModal";
 
 /* ─────────────────────────────────────────
    SHARED PRIMITIVES
@@ -123,25 +124,44 @@ function Eyebrow({ children, center = false }: { children: React.ReactNode; cent
 /* Gold CTA button */
 function GoldBtn({
   href,
+  onClick,
   children,
 }: {
-  href: string;
+  href?: string;
+  onClick?: () => void;
   children: React.ReactNode;
 }) {
   return (
     <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
-      <Link
-        href={href}
-        className="inline-flex items-center gap-3 px-10 py-4 font-mono text-[11px] tracking-[0.28em] uppercase rounded-full font-semibold"
-        style={{
-          background: "linear-gradient(135deg,#C9A84C 0%,#E8C97A 50%,#C9A84C 100%)",
-          color: "#080A0F",
-          boxShadow: "0 0 40px rgba(201,168,76,0.18)",
-        }}
-      >
-        {children}
-        <ArrowRight size={13} />
-      </Link>
+      {href ? (
+        <Link
+          href={href}
+          className="inline-flex items-center gap-3 px-10 py-4 font-mono text-[11px] tracking-[0.28em] uppercase rounded-full font-semibold"
+          style={{
+            background: "linear-gradient(135deg,#C9A84C 0%,#E8C97A 50%,#C9A84C 100%)",
+            color: "#080A0F",
+            boxShadow: "0 0 40px rgba(201,168,76,0.18)",
+          }}
+        >
+          {children}
+          <ArrowRight size={13} />
+        </Link>
+      ) : (
+        <button
+          onClick={onClick}
+          className="inline-flex items-center gap-3 px-10 py-4 font-mono text-[11px] tracking-[0.28em] uppercase rounded-full font-semibold"
+          style={{
+            background: "linear-gradient(135deg,#C9A84C 0%,#E8C97A 50%,#C9A84C 100%)",
+            color: "#080A0F",
+            boxShadow: "0 0 40px rgba(201,168,76,0.18)",
+            cursor: "pointer",
+            border: "none",
+          }}
+        >
+          {children}
+          <ArrowRight size={13} />
+        </button>
+      )}
     </motion.div>
   );
 }
@@ -212,6 +232,7 @@ const whoWeWorkWith = [
    PAGE
 ───────────────────────────────────────── */
 export default function About() {
+  const [diagOpen, setDiagOpen] = useState(false);
   return (
     <div className="min-h-screen overflow-x-hidden">
 
@@ -258,7 +279,9 @@ export default function About() {
       {/* ══════════════════════════════════════
           S9 — END NOTE / FINAL CTA
       ══════════════════════════════════════ */}
-      <EndSection />
+      <EndSection onStartDiagnostic={() => setDiagOpen(true)} />
+
+      {diagOpen && <DiagnosticModal onClose={() => setDiagOpen(false)} />}
 
     </div>
   );
@@ -1019,7 +1042,7 @@ function WhoSection() {
 /* ─────────────────────────────────────────
    S9 — END NOTE / FINAL CTA
 ───────────────────────────────────────── */
-function EndSection() {
+function EndSection({ onStartDiagnostic }: { onStartDiagnostic: () => void }) {
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: "-5% 0px" });
 
@@ -1106,7 +1129,7 @@ function EndSection() {
         {/* CTAs */}
         <FadeUp delay={0.35}>
           <div className="flex flex-wrap justify-center gap-4">
-            <GoldBtn href="/connect">Start Diagnostic</GoldBtn>
+            <GoldBtn onClick={onStartDiagnostic}>Start Diagnostic</GoldBtn>
             <GhostBtn href="/founder">Read about the founder</GhostBtn>
           </div>
         </FadeUp>

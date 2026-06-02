@@ -1956,9 +1956,7 @@ export default function FounderPage() {
           CHROs and boards navigating growth, AI and consequence.
         </p>
         <a
-          href="https://axionindex.org"
-          target="_blank"
-          rel="noopener noreferrer"
+          href="/connect"
           className="font-mono"
           style={{
             display: 'inline-flex',
@@ -2105,9 +2103,7 @@ export default function FounderPage() {
                   </p>
 
                   <a
-                    href="https://axionindex.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    href="/connect"
                     className="font-sans inline-flex items-center gap-3"
                     style={{
                       fontSize: "11px", fontWeight: 600, letterSpacing: ".18em", textTransform: "uppercase",
