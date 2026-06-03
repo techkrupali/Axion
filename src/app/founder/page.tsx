@@ -1411,18 +1411,19 @@ export default function FounderPage() {
         <div className="shell">
 
           {/* Intro */}
-          <div style={{ maxWidth: 1120, margin: "0 auto 56px", paddingLeft: "32px" }}>
+          <div style={{ maxWidth: 1120, margin: "0 auto 56px" }}>
             <Reveal>
               <span className="eyebrow mb-4 block" style={{ color: "#C9A24A" }}>The Operating Patterns</span>
             </Reveal>
             <Reveal delay={0.08}>
-              <p className="font-serif" style={{ fontSize: "clamp(19px,2vw,24px)", lineHeight: 1.38, color: "#CCCAC2", maxWidth: "36ch" }}>
-                <span style={{ color: "#FFFFFF", textShadow: "0 0 20px rgba(255,255,255,0.4)" }}>What does an organisation actually run on — beneath the strategy, beneath the talent?</span>{" "}
+              <p className="font-serif" style={{ fontSize: "clamp(19px,2vw,24px)", lineHeight: 1.38, color: "#CCCAC2", maxWidth: "80ch" }}>
+                <span style={{ color: "#FFFFFF", textShadow: "0 0 20px rgba(255,255,255,0.4)" }}>What does an organisation actually run on — beneath the strategy, beneath the talent?</span>
+                <br />
                 <span style={{ color: "#C9A24A" }}>Eight patterns. Two tiers. The difference between a system that holds and one that doesn't.</span>
               </p>
             </Reveal>
             <Reveal delay={0.14}>
-              <p style={{ marginTop: 14, fontSize: "15px", color: "#8A8A96", maxWidth: "62ch", lineHeight: 1.68 }}>
+              <p style={{ marginTop: 14, fontSize: "15px", color: "#8A8A96", maxWidth: "90ch", lineHeight: 1.68 }}>
                 The startup, the scaling company, the family business — the{" "}
                 <em style={{ color: "#C9A24A", fontStyle: "italic" }}>unfinished organisation</em>{" "}
                 — is still writing its operating system. These patterns are for them.
