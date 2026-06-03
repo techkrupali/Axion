@@ -384,17 +384,64 @@ export default function FounderPage() {
           display: flex; align-items: center;
           background: rgba(8,10,15,.6); backdrop-filter: blur(18px);
           border-bottom: 1px solid rgba(237,235,227,.08);
-          transition: background .3s;
+          transition: all 0.5s var(--ease);
         }
-        .fn-nav.s { background: rgba(8,10,15,.95); }
-        .fn-nav-inner { max-width: 1160px; margin: 0 auto; padding: 0 38px; display: flex; align-items: center; justify-content: space-between; width: 100%; }
-        .fn-brand { font-family: var(--font-serif); font-size: 20px; font-weight: 400; color: #EDEBE3; letter-spacing: .01em; text-decoration: none; }
-        .fn-nl { display: flex; align-items: center; gap: 30px; }
-        .fn-nl a { font-family: var(--font-sans); font-size: 11px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: #B8B8C0; transition: color .2s; padding: 5px 0; position: relative; text-decoration: none; }
+        .fn-nav.s { 
+          background: rgba(8,10,15,.99); 
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+          box-shadow: 0 1px 0 rgba(255,255,255,0.04);
+          height: 58px;
+        }
+        .fn-nav-inner { 
+          width: 100%; 
+          padding: 0 32px; 
+          display: flex; 
+          align-items: center; 
+          justify-content: space-between; 
+        }
+        .fn-brand { 
+          font-family: var(--font-serif); 
+          font-size: 22px; 
+          font-weight: 500; 
+          color: #EDEBE3; 
+          letter-spacing: -0.01em; 
+          text-decoration: none;
+          display: flex;
+          align-items: baseline;
+          gap: 10px;
+          transition: opacity 0.3s;
+        }
+        .fn-brand:hover { opacity: 0.8; }
+        .fn-nl { display: flex; align-items: center; gap: 32px; }
+        .fn-nl a { 
+          font-family: var(--font-mono); 
+          font-size: 10.5px; 
+          font-weight: 500; 
+          letter-spacing: 0.24em; 
+          text-transform: uppercase; 
+          color: #B8B8C0; 
+          transition: color .3s; 
+          padding: 5px 0; 
+          position: relative; 
+          text-decoration: none; 
+        }
         .fn-nl a:hover, .fn-nl a.on { color: #E2C078; }
         .fn-nl a.on::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; background: #C9A24A; }
-        .fn-nl .fn-btn { color: #C9A24A; border: 1px solid rgba(201,162,74,.28); border-radius: 2px; padding: 8px 15px; }
-        .fn-nl .fn-btn:hover { background: rgba(201,162,74,.08); }
+        .fn-nl .fn-btn { 
+          color: #080A0F; 
+          background: linear-gradient(135deg, #C9A84C 0%, #E8C97A 50%, #C9A84C 100%);
+          border: none;
+          border-radius: 100px; 
+          padding: 8px 20px; 
+          font-weight: 600;
+          box-shadow: 0 0 20px rgba(201,168,76,0.2);
+          transition: all 0.3s var(--ease);
+        }
+        .fn-nl .fn-btn:hover { 
+          background: linear-gradient(135deg, #E8C97A 0%, #C9A84C 50%, #E8C97A 100%);
+          transform: translateY(-1px);
+          box-shadow: 0 0 30px rgba(201,168,76,0.4);
+        }
         .fn-hamb { display: none; background: none; border: 1px solid rgba(237,235,227,.08); color: #EDEBE3; width: 42px; height: 38px; border-radius: 4px; cursor: pointer; align-items: center; justify-content: center; }
 
         /* Spine draw animation */
