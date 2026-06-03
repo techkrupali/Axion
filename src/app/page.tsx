@@ -696,11 +696,11 @@ export default function Home() {
       {/* ══════════════════════════════════════════
           ROLES — Where You Sit
       ══════════════════════════════════════════ */}
-      <section className="chapter section-dark min-h-screen flex items-center py-20" id="roles">
+      <section className="chapter--tight section-dark py-12" id="roles">
         <div className="shell">
-          <div className="grid grid-cols-1 lg:grid-cols-[0.8fr_3fr] gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-[0.8fr_3fr] gap-10 items-center">
             {/* Left col */}
-            <div className="lg:sticky lg:top-[20vh] h-fit flex flex-col gap-6">
+            <div className="lg:sticky lg:top-[15vh] h-fit flex flex-col gap-4">
               <Reveal>
                 <h2 className="h-statement">
                   What changes — depending on <em>where you sit.</em>
@@ -708,9 +708,6 @@ export default function Home() {
               </Reveal>
               <Reveal delay={0.15}>
                 <div className="w-16 h-[2px] bg-gradient-to-r from-[var(--accent)] to-transparent mb-4" />
-                <p className="font-serif italic text-[clamp(14px,1.2vw,17px)] text-[var(--fg-3)] leading-relaxed">
-                  We don't advise from the outside. We install architecture into how the organisation actually runs — and stay until it holds without us.
-                </p>
               </Reveal>
               <Reveal delay={0.25}>
                 <Link
