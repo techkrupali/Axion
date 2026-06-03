@@ -696,34 +696,34 @@ export default function Home() {
       {/* ══════════════════════════════════════════
           ROLES — Where You Sit
       ══════════════════════════════════════════ */}
-      <section className="chapter section-dark" id="roles">
+      <section className="chapter section-dark min-h-screen flex items-center py-20" id="roles">
         <div className="shell">
-          <div className="grid grid-cols-1 lg:grid-cols-[minmax(280px,1fr)_2.5fr] gap-20 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-[0.8fr_3fr] gap-12 items-center">
             {/* Left col */}
-            <div className="lg:sticky lg:top-[25vh] h-fit flex flex-col gap-10 -mt-4">
+            <div className="lg:sticky lg:top-[20vh] h-fit flex flex-col gap-6">
               <Reveal>
                 <h2 className="h-statement">
                   What changes — depending on <em>where you sit.</em>
                 </h2>
               </Reveal>
               <Reveal delay={0.15}>
-                <div className="w-20 h-[2px] bg-gradient-to-r from-[var(--accent)] to-transparent mb-6" />
-                <p className="font-serif italic text-[clamp(16px,1.4vw,19px)] text-[var(--fg-3)] leading-relaxed">
+                <div className="w-16 h-[2px] bg-gradient-to-r from-[var(--accent)] to-transparent mb-4" />
+                <p className="font-serif italic text-[clamp(14px,1.2vw,17px)] text-[var(--fg-3)] leading-relaxed">
                   We don't advise from the outside. We install architecture into how the organisation actually runs — and stay until it holds without us.
                 </p>
               </Reveal>
               <Reveal delay={0.25}>
                 <Link
                   href="/connect"
-                  className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-[var(--accent)] via-[#E8C97A] to-[var(--accent)] text-[#080A0F] font-mono text-[11px] tracking-[0.28em] uppercase rounded-full font-semibold shadow-[0_0_30px_rgba(201,168,76,0.2)] hover:shadow-[0_0_40px_rgba(201,168,76,0.4)] transition-all duration-300 group"
+                  className="inline-flex items-center gap-3 px-6 py-2.5 bg-gradient-to-r from-[var(--accent)] via-[#E8C97A] to-[var(--accent)] text-[#080A0F] font-mono text-[10px] tracking-[0.28em] uppercase rounded-full font-semibold shadow-[0_0_30px_rgba(201,168,76,0.2)] hover:shadow-[0_0_40px_rgba(201,168,76,0.4)] transition-all duration-300 group"
                 >
-                  Reach Us <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform" />
+                  Reach Us <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
                 </Link>
               </Reveal>
             </div>
 
-            {/* Right col — stacked interactive cards */}
-            <div className="flex flex-col gap-4">
+            {/* Right col — grid of interactive cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {[
                 {
                   role: "Founder / CEO",
@@ -750,28 +750,28 @@ export default function Home() {
                   icon: "📊"
                 },
               ].map((item, i) => (
-                <Reveal key={i} delay={i * 0.12}>
+                <Reveal key={i} delay={i * 0.12} className="h-full">
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="relative h-full p-7 rounded-[24px] border-2 border-[var(--line)] hover:border-[var(--line-gold)] bg-gradient-to-br from-[rgba(12,14,20,0.95)] to-[rgba(8,10,15,0.98)] group hover:shadow-[0_30px_80px_rgba(0,0,0,0.7),0_0_0_1px_rgba(201,168,76,0.15)] transition-all duration-500 overflow-hidden"
+                    className="relative h-full p-5 rounded-[24px] border-2 border-[var(--line)] hover:border-[var(--line-gold)] bg-gradient-to-br from-[rgba(12,14,20,0.95)] to-[rgba(8,10,15,0.98)] group hover:shadow-[0_30px_80px_rgba(0,0,0,0.7),0_0_0_1px_rgba(201,168,76,0.15)] transition-all duration-500 overflow-hidden"
                   >
                     {/* Accent corner */}
                     <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--accent)] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     
-                    <div className="flex items-start gap-5">
-                      <div className="text-3xl flex-shrink-0 opacity-70 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="flex items-start gap-4">
+                      <div className="text-2xl flex-shrink-0 opacity-70 group-hover:opacity-100 transition-opacity duration-300">
                         {item.icon}
                       </div>
                       <div className="flex-1">
-                        <span className="font-mono text-[11px] tracking-[0.35em] uppercase text-[var(--accent)] mb-3 block font-semibold">{item.role}</span>
-                        <p className="font-serif text-[clamp(16px,1.5vw,20px)] leading-snug text-[var(--fg-2)] group-hover:text-[var(--fg)] transition-colors mb-4 font-medium">
+                        <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-[var(--accent)] mb-2 block font-semibold">{item.role}</span>
+                        <p className="font-serif text-[clamp(14px,1.2vw,17px)] leading-snug text-[var(--fg-2)] group-hover:text-[var(--fg)] transition-colors mb-3 font-medium">
                           {item.pull}
                         </p>
-                        <div className="flex items-start gap-2">
-                          <div className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] mt-2 flex-shrink-0" />
-                          <p className="font-mono text-[12px] tracking-[0.15em] text-[var(--fg-4)] group-hover:text-[var(--fg-3)] transition-colors leading-relaxed">
+                        <div className="flex items-start gap-1.5">
+                          <div className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] mt-1.5 flex-shrink-0" />
+                          <p className="font-mono text-[11px] tracking-[0.15em] text-[var(--fg-4)] group-hover:text-[var(--fg-3)] transition-colors leading-relaxed">
                             {item.work}
                           </p>
                         </div>
