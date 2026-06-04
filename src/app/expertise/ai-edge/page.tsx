@@ -1115,7 +1115,10 @@ export default function AIEdgeLab() {
                     <span>{role}</span><span>{org}</span>
                   </div>
                 ))}
-                <div style={{ fontFamily: S.mono, fontSize: "15px", color: S.gold, marginTop: "18px", letterSpacing: "0.06em" }}>nitin@axionindex.org</div>
+                <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginTop: "18px" }}>
+                  <a href="mailto:nitin@axionindex.org" style={{ fontFamily: S.mono, fontSize: "15px", color: S.gold, letterSpacing: "0.06em", textDecoration: "none" }}>nitin@axionindex.org</a>
+                  <a href="https://www.linkedin.com/in/nahatanitin" target="_blank" rel="noopener noreferrer" style={{ fontFamily: S.mono, fontSize: "15px", color: S.gold, letterSpacing: "0.06em", textDecoration: "none" }}>linkedin.com/in/nahatanitin</a>
+                </div>
               </div>
               <div style={{ paddingLeft: "52px" }}>
                 {["Nitin Nahata is a CHRO and organisational architect whose work centres on a single structural question: how do organisations and the people inside them evolve when intelligence becomes abundant?","Twenty-three years of organisational design across Tata · Starbucks India · Udaan · Gameskraft — through growth, hypergrowth, and consequence — have shaped his thinking on the architecture of decision-making, the future structure of work, and how organisations redesign talent systems in the AI era.","As CHRO of Gameskraft, he sees firsthand how AI is changing the structure of work inside a fast-scaling organisation. As Founder of Axionindex, he is building the frameworks and instruments to measure and redesign those changes at scale."].map((p, i) => (

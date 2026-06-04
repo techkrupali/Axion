@@ -1930,7 +1930,7 @@ export default function FounderPage() {
               <div className="ch-soon">Coming soon</div>
               <div className="ch-cta">NOTIFY ME →</div>
             </div>
-            <a className="ch-card" href="https://www.linkedin.com/in/nitinnahata" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
+            <a className="ch-card" href="https://www.linkedin.com/in/nahatanitin" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
               <div className="ch-type">LinkedIn</div>
               <div className="ch-name">Field notes and<br/><em>frameworks,</em><br/>as they form</div>
               <div className="ch-sub">Followed by founders & operators</div>
@@ -2116,7 +2116,7 @@ export default function FounderPage() {
                   The Operating Architect
                 </span>
                 <a
-                  href="https://www.linkedin.com/in/nitinnahata"
+                  href="https://www.linkedin.com/in/nahatanitin"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="font-sans mt-2"
@@ -2284,7 +2284,7 @@ export default function FounderPage() {
               </p>
               <div className="flex flex-col gap-4">
                 <a
-                  href="https://www.linkedin.com/in/nitinnahata"
+                  href="https://www.linkedin.com/in/nahatanitin"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group inline-flex items-center gap-3 font-mono"
@@ -2338,7 +2338,7 @@ export default function FounderPage() {
             </span>
             <div className="flex items-center gap-6">
               {[
-                { href: "https://www.linkedin.com/in/nitinnahata", label: "LinkedIn", external: true },
+                { href: "https://www.linkedin.com/in/nahatanitin", label: "LinkedIn", external: true },
                 { href: "/", label: "Axion Index", external: false },
                 { href: "#patterns", label: "Operating Patterns", external: false },
                 { href: "#story", label: "Story", external: false },

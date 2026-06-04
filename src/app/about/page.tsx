@@ -1144,6 +1144,10 @@ function EndSection({ onStartDiagnostic }: { onStartDiagnostic: () => void }) {
             <a href="mailto:office@axionindex.com" className="hover:text-[var(--accent)] transition-colors">
               office@axionindex.com
             </a>
+            <span className="text-[var(--line-gold)]">·</span>
+            <a href="https://www.linkedin.com/in/nahatanitin" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--accent)] transition-colors">
+              linkedin.com/in/nahatanitin
+            </a>
           </div>
         </FadeUp>
       </motion.div>
