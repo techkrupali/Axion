@@ -777,8 +777,8 @@ export default function AIEdgeLab() {
         {/* ── PULLQUOTE ── */}
         <div style={{ padding: "60px", background: S.ink, borderBottom: "1px solid rgba(255,255,255,0.08)", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center" }}>
           <div style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.24em", textTransform: "uppercase", color: S.gold, marginBottom: "28px" }}>The AI Edge Lab · 2026</div>
-          <div style={{ fontFamily: S.display, fontSize: "clamp(28px,4vw,48px)", lineHeight: 1.05, letterSpacing: "0.02em", color: S.white, maxWidth: "1200px" }}>
-            AI DOES NOT ELIMINATE WORK FIRST.<br /><span style={{ whiteSpace: "nowrap" }}>IT ELIMINATES THE <span style={{ color: S.gold2 }}>STRUCTURAL PREMIUM</span> ON INTELLIGENCE INSIDE WORK.</span>
+          <div style={{ fontFamily: S.display, fontSize: "clamp(18px,2.4vw,32px)", lineHeight: 1.1, letterSpacing: "0.02em", color: S.white, maxWidth: "100%" }}>
+            AI DOES NOT ELIMINATE WORK FIRST.<br /><span>IT ELIMINATES THE <span style={{ color: S.gold2 }}>STRUCTURAL PREMIUM</span> ON INTELLIGENCE INSIDE WORK.</span>
           </div>
           <div style={{ fontFamily: S.mono, fontSize: "12px", color: S.gold, marginTop: "28px", letterSpacing: "0.12em", textTransform: "uppercase" }}>Nitin Nahata · CHRO, Gameskraft · Founder, Axion Index</div>
         </div>
