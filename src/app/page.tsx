@@ -232,7 +232,6 @@ function SignalsSection() {
 }
 
 export default function Home() {
-  const [activePractice, setActivePractice] = useState(0);
   const [diagOpen, setDiagOpen] = useState(false);
   const heroRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
@@ -448,7 +447,7 @@ export default function Home() {
       </section>
 
       {/* ══════════════════════════════════════════
-          PRACTICES — Interactive Accordion
+          PRACTICES — Equal Cards Grid
       ══════════════════════════════════════════ */}
       <section className="chapter section-deep overflow-hidden pb-10" id="practices">
         <div className="shell">
@@ -462,8 +461,8 @@ export default function Home() {
             </Reveal>
           </div>
 
-          {/* Desktop accordion */}
-          <div className="hidden lg:flex gap-3 min-h-[560px]">
+          {/* Desktop & Tablet grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
               { 
                 num: "01", 
@@ -494,123 +493,42 @@ export default function Home() {
                 promise: "We codify ownership, authority, and decision rights into architecture that survives the generational handover.",
               },
             ].map((practice, i) => {
-              const isActive = activePractice === i;
               const words = practice.name.split(' ');
               const first = words[0];
               const rest = words.slice(1).join(' ');
               return (
                 <motion.div
                   key={i}
-                  onMouseEnter={() => setActivePractice(i)}
-                  className={`relative overflow-hidden cursor-pointer rounded-[28px] border transition-colors duration-500 ${
-                    isActive
-                      ? "flex-[3] bg-[#0A0A0B] border-[rgba(201,162,74,0.2)]"
-                      : "flex-1 bg-[#0A0A0B] border-[rgba(240,241,245,0.1)] hover:border-[rgba(201,162,74,0.2)]"
-                  }`}
-                  layout
-                  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-8%" }}
+                  transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: i * 0.1 }}
                 >
-                  {/* Collapsed state */}
-                  {!isActive && (
-                    <div className="absolute inset-0 flex flex-col items-center justify-between py-8 px-3">
-                      <span className="font-mono text-[12px] tracking-[0.3em] text-[#4A4F62]">[{practice.num}]</span>
-                      <span
-                        className="font-serif text-[18px] text-[#F0F1F5] tracking-wide whitespace-nowrap"
-                        style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}
-                      >
-                        {practice.name}
-                      </span>
-                      <span className="text-[#C9A24A] opacity-40 text-[16px]">+</span>
+                  <Link
+                    href={practice.href}
+                    className="group block h-full p-6 rounded-[24px] border border-[rgba(240,241,245,0.1)] hover:border-[rgba(201,162,74,0.2)] bg-[#0A0A0B] transition-all duration-400"
+                  >
+                    <span className="font-mono text-[12px] tracking-[0.3em] text-[#C9A24A] mb-4 block">[{practice.num}]</span>
+                    <h3 className="font-serif text-[28px] leading-[1.1] text-[#F0F1F5] mb-5 group-hover:text-[#C9A24A] transition-colors">
+                      {first}<br /><em className="text-[#C9A24A]">{rest}</em>
+                    </h3>
+                    <div className="mb-4">
+                      <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#8A8FA4] block mb-2">The Signal</span>
+                      <p className="text-[15px] text-[#D4D7E0] leading-relaxed">{practice.condition}</p>
                     </div>
-                  )}
-
-                  {/* Expanded state */}
-                  {isActive && (
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ duration: 0.3 }}
-                      className="absolute inset-0 p-8 flex flex-col"
-                    >
-                      <span className="font-mono text-[13px] tracking-[0.3em] text-[#C9A24A] mb-5">[{practice.num}]</span>
-                      <h3 className="font-serif text-[clamp(30px,3.2vw,48px)] leading-[1.1] text-[#F0F1F5] mb-5">
-                        {first}<br /><em className="text-[#C9A24A]">{rest}</em>
-                      </h3>
-                      <div className="mb-4">
-                        <span className="font-mono text-[11px] tracking-[0.2em] uppercase text-[#8A8FA4] block mb-2">The Signal</span>
-                        <p className="text-[16px] text-[#D4D7E0] leading-relaxed">{practice.condition}</p>
-                      </div>
-                      <div className="mb-6">
-                        <span className="font-mono text-[11px] tracking-[0.2em] uppercase text-[#8A8FA4] block mb-2">What We Build</span>
-                        <p className="text-[16px] text-[#B8BDCE] leading-relaxed">{practice.promise}</p>
-                      </div>
-                      <div className="pt-5 border-t border-[rgba(240,241,245,0.1)] mt-auto">
-                        <Link
-                          href={practice.href}
-                          className="inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.28em] uppercase text-[#C9A24A] hover:text-[#F0F1F5] transition-colors group"
-                        >
-                          Enter {practice.name} <ArrowRight size={11} className="group-hover:translate-x-1 transition-transform" />
-                        </Link>
-                      </div>
-                    </motion.div>
-                  )}
+                    <div className="mb-5">
+                      <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#8A8FA4] block mb-2">What We Build</span>
+                      <p className="text-[15px] text-[#B8BDCE] leading-relaxed">{practice.promise}</p>
+                    </div>
+                    <div className="pt-4 border-t border-[rgba(240,241,245,0.1)]">
+                      <span className="inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.28em] uppercase text-[#C9A24A] group-hover:text-[#F0F1F5] transition-colors">
+                        Enter {practice.name} <ArrowRight size={11} className="group-hover:translate-x-1 transition-transform" />
+                      </span>
+                    </div>
+                  </Link>
                 </motion.div>
               );
             })}
-          </div>
-
-          {/* Mobile stacked */}
-          <div className="flex lg:hidden flex-col gap-4">
-            {[
-              { 
-                num: "01", 
-                name: "People Architecture", 
-                href: "/expertise/people", 
-                condition: "When the organisation depends on who is in the room — not on how it is built.",
-                promise: "We codify judgment, decision rights, and succession into structure the company keeps after people leave.",
-              },
-              { 
-                num: "02", 
-                name: "Labour Codes", 
-                href: "/expertise/labour", 
-                condition: "When cost, classification, and compliance stop aligning — and you can't see why.",
-                promise: "We turn your workforce from headcount into auditable control architecture that holds when rules change.",
-              },
-              { 
-                num: "03", 
-                name: "AI Edge Lab", 
-                href: "/expertise/ai-edge", 
-                condition: "When AI is making you faster, but not wiser — speed without architecture scales bad judgment.",
-                promise: "We build the decision layer where AI accelerates, and where a human must still hold the call.",
-              },
-              { 
-                num: "04", 
-                name: "Family Business", 
-                href: "/expertise/family", 
-                condition: "When continuity depends on individuals, not structure — and succession is the risk no one says out loud.",
-                promise: "We codify ownership, authority, and decision rights into architecture that survives the generational handover.",
-              },
-            ].map((practice, i) => (
-              <Link
-                key={i}
-                href={practice.href}
-                className="group block p-6 rounded-[20px] border border-[rgba(240,241,245,0.1)] hover:border-[rgba(201,162,74,0.2)] bg-[#0A0A0B] transition-all duration-300"
-              >
-                <div className="flex items-center justify-between mb-3">
-                  <span className="font-mono text-[12px] tracking-[0.3em] text-[#C9A24A]">[{practice.num}]</span>
-                  <ArrowRight size={13} className="text-[#C9A24A] opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
-                </div>
-                <h3 className="font-serif text-[26px] text-[#F0F1F5] mb-4">{practice.name}</h3>
-                <div className="mb-3">
-                  <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#8A8FA4] block mb-1">The Signal</span>
-                  <p className="text-[15px] text-[#D4D7E0] leading-relaxed">{practice.condition}</p>
-                </div>
-                <div>
-                  <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#8A8FA4] block mb-1">What We Build</span>
-                  <p className="text-[15px] text-[#B8BDCE] leading-relaxed">{practice.promise}</p>
-                </div>
-              </Link>
-            ))}
           </div>
 
           {/* Catch-all line */}
