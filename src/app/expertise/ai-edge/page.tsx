@@ -590,7 +590,7 @@ export default function AIEdgeLab() {
               <div style={{ fontFamily: S.mono, fontSize: "10.4px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.gold }}>The Evidence Wall · Why This Doctrine Was Built</div>
               <div style={{ fontFamily: S.mono, fontSize: "10.4px", letterSpacing: "0.14em", color: "#9C978C" }}>01.5 / 06</div>
             </div>
-            <h2 style={{ fontFamily: S.display, fontSize: "clamp(40px,5.4vw,72px)", lineHeight: 0.96, textTransform: "uppercase", color: S.white, letterSpacing: "0.005em", marginBottom: "18px", marginLeft: "auto", marginRight: "auto" }}>Twelve Reports. Seven Institutions.<br />One <span style={{ color: S.gold }}>Structural Diagnosis</span>.</h2>
+            <h2 style={{ fontFamily: S.display, fontSize: "clamp(40px,5.4vw,72px)", lineHeight: 0.96, textTransform: "uppercase", color: S.white, letterSpacing: "0.005em", marginBottom: "18px", marginLeft: "auto", marginRight: "auto" }}>12 Reports. Seven Institutions.<br />One <span style={{ color: S.gold }}>Structural Diagnosis</span>.</h2>
             <p style={{ fontFamily: S.serif, fontStyle: "italic", fontSize: "14.4px", lineHeight: 1.6, color: "#9C978C", maxWidth: "780px", marginBottom: "36px", marginLeft: "auto", marginRight: "auto" }}>Six months of synthesis across every major AI transformation report — MIT NANDA, McKinsey, Gartner, RAND, BCG, IBM, S&P Global, WEF, and others. The findings converge with unusual clarity.</p>
             <div className="grid grid-cols-2 md:grid-cols-5" style={{ gap: "12px", marginBottom: "36px" }}>
               {[["12","Reports analysed"],["7","Institutions"],["15K+","Executives surveyed"],["$665B","Invested in AI"],["95%","Zero P&L impact"]].map(([v, l]) => (
@@ -880,7 +880,7 @@ export default function AIEdgeLab() {
             {/* BDI */}
             <div style={{ marginTop: "64px", marginBottom: "22px" }}>
               <div style={{ fontFamily: S.mono, fontSize: "9.600000000000001px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.mid, marginBottom: "8px" }}>03 · For Leaders / CXO</div>
-              <div style={{ fontFamily: S.display, fontSize: "clamp(28px,3.4vw,44px)", letterSpacing: "0.02em", color: S.gold, lineHeight: 1.02 }}>Brainpower Density Index©<span style={{ color: S.ink, display: "block", fontSize: "0.496em", marginTop: "4px" }}>What is my new structural role?</span></div>
+              <div style={{ fontFamily: S.display, fontSize: "clamp(28px,3.4vw,44px)", letterSpacing: "0.02em", color: S.gold, lineHeight: 1.02 }}>Brainpower Density Index©<span style={{ color: S.ink, display: "block", fontSize: "0.496em", marginTop: "4px" }}>— What is my new structural role?</span></div>
             </div>
             <DiagCards cur={cur} tiers={[
               { tier: "Pure Report", name: "BDI© Report", inr: "₹5,999", usd: "$179", time: "Brainpower Density report for your leadership layer", feats: ["Judgment-to-intelligence ratio by layer","Compression exposure of senior roles","Decision-velocity-per-head read","Layer redesign signals"], dark: false, onCta: () => openModal("leader") },
@@ -890,7 +890,7 @@ export default function AIEdgeLab() {
             {/* ORG */}
             <div style={{ marginTop: "64px", marginBottom: "22px" }}>
               <div style={{ fontFamily: S.mono, fontSize: "9.600000000000001px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.mid, marginBottom: "8px" }}>04 · For Organisations</div>
-              <div style={{ fontFamily: S.display, fontSize: "clamp(28px,3.4vw,44px)", letterSpacing: "0.02em", color: S.gold, lineHeight: 1.02 }}>ORG AI DARS©<span style={{ color: S.ink, display: "block", fontSize: "0.496em", marginTop: "4px" }}>Map our AI decision architecture</span></div>
+              <div style={{ fontFamily: S.display, fontSize: "clamp(28px,3.4vw,44px)", letterSpacing: "0.02em", color: S.gold, lineHeight: 1.02 }}>ORG AI DARS©<span style={{ color: S.ink, display: "block", fontSize: "0.496em", marginTop: "4px" }}>— Map our AI decision architecture</span></div>
             </div>
             <div style={{ background: S.ink, color: S.white, padding: "36px 40px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "24px" }}>
               <div style={{ flex: 1, minWidth: "300px", maxWidth: "680px" }}>
@@ -1074,7 +1074,7 @@ export default function AIEdgeLab() {
                 <h2 style={{ fontFamily: S.display, fontSize: "clamp(56px,8vw,88px)", lineHeight: 0.95, color: S.ink, marginBottom: "28px" }}>NOT A<br />PREDICTION.<br /><span style={{ color: S.gold }}>A PATTERN.</span></h2>
               </div>
               <div style={{ paddingLeft: "52px", display: "flex", alignItems: "center" }}>
-                <p style={{ fontSize: "16.8px", color: S.mid, lineHeight: 1.9, fontWeight: 300, maxWidth: "100%" }}>Six anchor reports — published in the last six months by McKinsey, MIT, WEF, BCG, PwC and EY — confirm what the AI Edge doctrine has been mapping. The convergence is now unmistakable.</p>
+                <p style={{ fontSize: "16.8px", color: S.mid, lineHeight: 1.9, fontWeight: 300, maxWidth: "100%" }}>12 reports analysed across leading institutional sources — published in the last six months by McKinsey, MIT, WEF, BCG, PwC and EY — confirm what the AI Edge doctrine has been mapping. The convergence is now unmistakable.</p>
               </div>
             </div>
           </div>
