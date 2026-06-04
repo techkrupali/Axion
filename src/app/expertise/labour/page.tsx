@@ -86,7 +86,7 @@ export default function LabourCodes() {
             <div className="eyebrow eyebrow--center mb-8 text-[var(--accent)]">Decision Architecture · 2026</div>
           </Reveal>
           <Reveal delay={0.1}>
-            <h1 className="hero-glow mb-8 drop-shadow-2xl">
+            <h1 className="mb-8">
               <span className="block font-serif font-medium text-[clamp(28px,3.5vw,52px)] leading-[1.15] tracking-[-0.01em] text-[var(--fg-2)] mb-2">
                 29 Laws Consolidated. 4 Codes.
               </span>
@@ -109,8 +109,6 @@ export default function LabourCodes() {
             </div>
           </Reveal>
         </div>
-        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(160,160,160,0.03)_0%,transparent_50%)] pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-full h-[40vh] bg-gradient-to-t from-[#06070B] to-transparent pointer-events-none" />
       </header>
 
       {/* DIAGNOSTIC QUESTION */}
@@ -189,7 +187,7 @@ export default function LabourCodes() {
                     }}
                     className={`relative flex-1 min-w-[300px] max-w-[340px] h-[480px] p-8 rounded-[24px] border transition-all duration-500 flex flex-col ${
                       isActive 
-                        ? "border-[var(--accent)] bg-[rgba(160,160,160,0.03)] shadow-[0_0_40px_rgba(160,160,160,0.05)]" 
+                        ? "border-[var(--accent)] bg-[rgba(160,160,160,0.03)]" 
                         : "border-[rgba(255,255,255,0.05)] bg-[rgba(255,255,255,0.01)] scale-90 cursor-pointer hover:border-[rgba(255,255,255,0.2)]"
                     }`}
                   >
@@ -396,7 +394,6 @@ export default function LabourCodes() {
             </Reveal>
           </div>
         </div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(160,160,160,0.04)_0%,transparent_70%)] pointer-events-none" />
       </section>
 
       {/* SOURCES */}

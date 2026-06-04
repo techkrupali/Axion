@@ -258,12 +258,11 @@ export default function Home() {
           </Reveal>
 
           <Reveal delay={0.1}>
-            <h1 className="h-display hero-glow mb-8">
-              {/* Fix 6 — strikethrough contrast raised */}
-              From <s className="opacity-80 decoration-[#C9A24A] decoration-2">ambiguity</s><br />
-              to <em>architecture.</em>
-            </h1>
-          </Reveal>
+              <h1 className="h-display mb-8">
+                From <s className="opacity-80 decoration-[var(--accent)] decoration-2">ambiguity</s><br />
+                to <em>architecture.</em>
+              </h1>
+            </Reveal>
 
           <Reveal delay={0.2}>
             <p className="lead mx-auto mb-14 text-[#D4D7E0] max-w-[48ch]">

@@ -283,10 +283,9 @@ function BedrockRows() {
               width: 64, height: 64,
               border: `1px solid ${isHovered ? "rgba(201,162,74,0.6)" : "rgba(201,162,74,0.2)"}`,
               borderRadius: "50%",
-              color: "#C9A24A",
+              color: "var(--accent)",
               fontSize: 26,
-              transition: "border-color 0.3s, box-shadow 0.3s",
-              boxShadow: isHovered ? "0 0 16px rgba(201,162,74,0.25)" : "none",
+              transition: "border-color 0.3s",
             }}>
               {card.icon}
             </div>
@@ -322,7 +321,7 @@ function BedrockRows() {
               whileInView={{ height: 40 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: i * 0.1 + 0.3 }}
-              style={{ width: 2, background: `linear-gradient(180deg, transparent, #C9A24A, transparent)`, borderRadius: 2 }}
+              style={{ width: 2, background: `var(--accent)`, borderRadius: 2 }}
             />
           </motion.div>
         );
@@ -429,20 +428,17 @@ export default function FounderPage() {
         .fn-nl a:hover, .fn-nl a.on { color: #E2C078; }
         .fn-nl a.on::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; background: #C9A24A; }
         .fn-nl .fn-btn { 
-          color: #080A0F; 
-          background: linear-gradient(135deg, #C9A84C 0%, #E8C97A 50%, #C9A84C 100%);
-          border: none;
-          border-radius: 100px; 
-          padding: 8px 20px; 
-          font-weight: 600;
-          box-shadow: 0 0 20px rgba(201,168,76,0.2);
-          transition: all 0.3s var(--ease);
-        }
-        .fn-nl .fn-btn:hover { 
-          background: linear-gradient(135deg, #E8C97A 0%, #C9A84C 50%, #E8C97A 100%);
-          transform: translateY(-1px);
-          box-shadow: 0 0 30px rgba(201,168,76,0.4);
-        }
+              color: #0A0A0B; 
+              background: var(--accent);
+              border: none;
+              border-radius: 100px; 
+              padding: 8px 20px; 
+              font-weight: 600;
+              transition: all 0.3s var(--ease);
+            }
+            .fn-nl .fn-btn:hover { 
+              opacity: 0.9;
+            }
         .fn-hamb { display: none; background: none; border: 1px solid rgba(237,235,227,.08); color: #EDEBE3; width: 42px; height: 38px; border-radius: 4px; cursor: pointer; align-items: center; justify-content: center; }
 
         /* Spine draw animation */
@@ -497,7 +493,7 @@ export default function FounderPage() {
       {/* ── FIXED NAV ── */}
       <nav className={`fn-nav${navScrolled ? " s" : ""}`} aria-label="Primary">
         <div className="fn-nav-inner">
-          <a className="fn-brand" href="#story">Nitin <span style={{ color: "#C9A24A" }}>Nahata</span></a>
+          <a className="fn-brand" href="#story">Nitin <span style={{ color: "var(--accent)" }}>Nahata</span></a>
           <button
             className="fn-hamb"
             aria-label="Menu"
@@ -547,18 +543,13 @@ export default function FounderPage() {
           className="founder-hero-img"
           style={{
             position: "relative",
-            background: "radial-gradient(120% 90% at 30% 30%, #1a1c24, #080A0F 70%)",
+            background: "var(--bg)",
             overflow: "hidden",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
           }}
         >
-          {/* ::before equivalent */}
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{ background: "radial-gradient(60% 50% at 50% 42%, rgba(201,162,74,.05), transparent 70%)" }}
-          />
           {/* ::after equivalent — right fade into bg */}
           <div
             className="absolute pointer-events-none"
@@ -604,12 +595,11 @@ export default function FounderPage() {
                 borderRadius: 10,
                 padding: "14px 32px",
                 background: "rgba(201,162,74,0.07)",
-                boxShadow: "0 0 24px -8px rgba(201,162,74,0.2)",
               }}
             >
               <p
                 className="font-sans"
-                style={{ fontSize: "12px", fontWeight: 600, letterSpacing: ".32em", textTransform: "uppercase", color: "#C9A24A", margin: 0 }}
+                style={{ fontSize: "12px", fontWeight: 600, letterSpacing: ".32em", textTransform: "uppercase", color: "var(--accent)", margin: 0 }}
               >
                 The Operating Architect
               </p>
@@ -626,11 +616,6 @@ export default function FounderPage() {
             position: "relative",
           }}
         >
-          {/* Radial glow behind text */}
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{ background: "radial-gradient(80% 60% at 70% 40%, rgba(201,162,74,.035), transparent 70%)" }}
-          />
           <div style={{ position: "relative" }}>
             <Reveal>
               <span

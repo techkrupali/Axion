@@ -43,7 +43,7 @@ export default function AxionWordmark({ href = "/", className = "" }: { href?: s
           fontWeight="400"
           fontSize="8"
           letterSpacing="3"
-          fill="#C9A24A"
+          fill="var(--accent)"
           opacity="0.85"
         >
           INDEX

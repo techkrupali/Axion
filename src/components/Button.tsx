@@ -34,8 +34,8 @@ export default function Button({
   };
 
   const variantClasses = {
-    primary: "bg-[#C9A24A] text-[#0A0A0B] hover:scale-105",
-    secondary: "border border-[rgba(201,162,74,0.2)] text-[#C9A24A] hover:border-[#C9A24A] hover:scale-105"
+    primary: "bg-[var(--accent)] text-[#0A0A0B] hover:scale-105",
+    secondary: "border border-[rgba(201,162,74,0.2)] text-[var(--accent)] hover:border-[var(--accent)] hover:scale-105"
   };
 
   const content = (
