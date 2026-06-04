@@ -247,9 +247,9 @@ function MicroDiagnostic({ S, onOpenModal }: { S: Record<string, string>; onOpen
   };
 
   const archCards = [
-    { key: "aspiring" as ArchKey, num: "01", name: "Aspiring", desc: "Student or entering the workforce. Building foundations for an AI-era career.", inst: "AAI© · AI Alignment Index" },
-    { key: "working" as ArchKey, num: "02", name: "Working", desc: "In a role being reshaped by AI in real time. Mid-career professional.", inst: "ARI© · AI Replaceability Index" },
-    { key: "leader" as ArchKey, num: "03", name: "Leader · CXO", desc: "Accountable for the structural outcomes of a team, function, or organisation.", inst: "BDI© · Brainpower Density Index" },
+    { key: "aspiring" as ArchKey, num: "01", name: "Aspiring Professional", desc: "Student or entering the workforce. Building foundations for an AI-era career.", inst: "AI Alignment Index©" },
+    { key: "working" as ArchKey, num: "02", name: "Working Professional", desc: "In a role being reshaped by AI in real time. Mid-career professional.", inst: "AI Replaceability Index©" },
+    { key: "leader" as ArchKey, num: "03", name: "Leader · CXO", desc: "Accountable for the structural outcomes of a team, function, or organisation.", inst: "Brainpower Density Index©" },
     { key: "org" as ArchKey, num: "04", name: "Organisation", desc: "CHRO, CEO, founder — reading the org's structural position at population scale.", inst: "ORG AI DARS©" },
   ];
 
@@ -509,7 +509,7 @@ export default function AIEdgeLab() {
         <header style={{ position: "sticky", top: 0, zIndex: 200, height: "56px", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 52px", background: "rgba(247,246,243,0.94)", backdropFilter: "blur(12px)", borderBottom: `1px solid ${S.rule}` }}>
           <div style={{ fontFamily: S.mono, fontSize: "10.4px", letterSpacing: "0.24em", textTransform: "uppercase" }}>AI Edge Lab · <Link href="/" style={{ color: "inherit", textDecoration: "none" }}>Axionindex</Link></div>
           <nav className="hidden md:flex" style={{ alignItems: "center", gap: "28px" }}>
-            {[["the-evidence-wall","The Evidence Wall"],["#actors","Workplace"],["#framework","Framework"],["doctrine","Doctrine"],["#research","Research"],["methodology","Methodology"],["#micro-diagnostic","Diagnostic"],["#about","About"]].map(([href, label]) => (
+            {[["the-evidence-wall","The Evidence Wall"],["#actors","Workplace Framework"],["doctrine","Doctrine"],["#research","Research"],["methodology","Methodology"],["#micro-diagnostic","Diagnostic"],["#about","About"]].map(([href, label]) => (
               <a key={href as string} href={href as string} className="hdr-link" style={{ fontFamily: S.mono, fontSize: "8.8px", letterSpacing: "0.18em", textTransform: "uppercase", color: S.mid, textDecoration: "none", transition: "color .2s" }}>{label as string}</a>
             ))}
             <button onClick={() => openModal("working")} style={{ fontFamily: S.mono, fontSize: "8.8px", letterSpacing: "0.18em", textTransform: "uppercase", background: S.ink, color: S.white, padding: "9px 20px", border: "none", cursor: "pointer" }}>Find My AI Edge</button>
@@ -780,7 +780,7 @@ export default function AIEdgeLab() {
           <div style={{ fontFamily: S.display, fontSize: "clamp(34px,5vw,68px)", lineHeight: 1.05, letterSpacing: "0.02em", color: S.white, maxWidth: "1200px" }}>
             AI DOES NOT ELIMINATE WORK FIRST.<br /><span style={{ whiteSpace: "nowrap" }}>IT ELIMINATES THE <span style={{ color: S.gold2 }}>STRUCTURAL PREMIUM</span> ON INTELLIGENCE INSIDE WORK.</span>
           </div>
-          <div style={{ fontFamily: S.mono, fontSize: "14.4px", color: S.gold, marginTop: "28px", letterSpacing: "0.12em", textTransform: "uppercase" }}>Nitin Nahata · CHRO, Gameskraft · Founder, Axionindex</div>
+          <div style={{ fontFamily: S.mono, fontSize: "14.4px", color: S.gold, marginTop: "28px", letterSpacing: "0.12em", textTransform: "uppercase" }}>Nitin Nahata · CHRO, Gameskraft · Founder, Axion Index</div>
         </div>
 
         {/* ── WHAT YOU GET ── */}
@@ -1110,7 +1110,7 @@ export default function AIEdgeLab() {
                 </div>
                 <div style={{ fontFamily: S.display, fontSize: "41.6px", letterSpacing: "0.02em", color: S.ink, marginBottom: "6px" }}>NITIN NAHATA</div>
                 <div style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.18em", color: S.gold, textTransform: "uppercase", marginBottom: "24px" }}>CHRO · Organisational Architect · Founder</div>
-                {[["CHRO","Gameskraft"],["Founder","Axionindex"],["Creator","AI Edge Diagnostic©"],["Founder","HROS"]].map(([role, org], i) => (
+                {[["CHRO","Gameskraft"],["Founder","Axion Index"],["Creator","AI Edge Diagnostic©"],["Founder","HROS"]].map(([role, org], i) => (
                   <div key={i} style={{ display: "flex", justifyContent: "space-between", fontFamily: S.mono, fontSize: "12px", color: S.mid, padding: "10px 0", borderBottom: `1px solid ${S.rule}`, letterSpacing: "0.04em" }}>
                     <span>{role}</span><span>{org}</span>
                   </div>
@@ -1121,7 +1121,7 @@ export default function AIEdgeLab() {
                 </div>
               </div>
               <div style={{ paddingLeft: "52px" }}>
-                {["Nitin Nahata is a CHRO and organisational architect whose work centres on a single structural question: how do organisations and the people inside them evolve when intelligence becomes abundant?","Twenty-three years of organisational design across Wipro · Standard Chartered · HSBC · Tata · Lodha · Marico · Udaan · Gameskraft — through growth, hypergrowth, and consequence — have shaped his thinking on the architecture of decision-making, the future structure of work, and how organisations redesign talent systems in the AI era.","As CHRO of Gameskraft, he sees firsthand how AI is changing the structure of work inside a fast-scaling organisation. As Founder of Axionindex, he is building the frameworks and instruments to measure and redesign those changes at scale."].map((p, i) => (
+                {["Nitin Nahata is a CHRO and organisational architect whose work centres on a single structural question: how do organisations and the people inside them evolve when intelligence becomes abundant?","Twenty-three years of organisational design across Wipro · Standard Chartered · HSBC · Tata · Lodha · Marico · Udaan · Gameskraft — through growth, hypergrowth, and consequence — have shaped his thinking on the architecture of decision-making, the future structure of work, and how organisations redesign talent systems in the AI era.","As CHRO of Gameskraft, he sees firsthand how AI is changing the structure of work inside a fast-scaling organisation. As Founder of Axion Index, he is building the frameworks and instruments to measure and redesign those changes at scale."].map((p, i) => (
                   <p key={i} style={{ fontSize: "16.8px", color: S.mid, lineHeight: 1.9, marginBottom: "18px", fontWeight: 300 }}>{p}</p>
                 ))}
                 <div style={{ background: S.white2, padding: "34px 38px", marginTop: "10px", borderLeft: `2px solid ${S.gold}` }}>
@@ -1251,7 +1251,7 @@ export default function AIEdgeLab() {
           <div style={{ height: "1px", background: "rgba(255,255,255,0.06)", margin: "0 52px" }} />
           <div style={{ padding: "24px 52px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "14px" }}>
             <div style={{ fontFamily: S.display, fontSize: "16px", letterSpacing: "0.04em", color: S.white }}>The <span style={{ color: S.gold }}>AI Edge Lab</span>
-              <div style={{ fontFamily: S.mono, fontSize: "7.2px", letterSpacing: "0.18em", color: S.mid, marginTop: "6px", textTransform: "none" }}>an Axionindex initiative</div>
+              <div style={{ fontFamily: S.mono, fontSize: "7.2px", letterSpacing: "0.18em", color: S.mid, marginTop: "6px", textTransform: "none" }}>an Axion Index initiative</div>
             </div>
             <div style={{ fontFamily: S.mono, fontSize: "8.8px", color: S.dim, letterSpacing: "0.06em" }}>© 2026 Axionindex · axionindex.org · Private. Confidential.</div>
           </div>
