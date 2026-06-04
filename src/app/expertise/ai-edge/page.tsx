@@ -664,9 +664,9 @@ export default function AIEdgeLab() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4" style={{ gap: "1px", background: S.rule, marginTop: "40px" }}>
             {[
-              { key: "aspiring", n: "01 · Student", who: "Aspiring Professional", inst: "AI Alignment Index©", inr: "₹799", usd: "$24", go: "See where I'm building →" },
-              { key: "working", n: "02 · Professional", who: "Working Professional", inst: "AI Replaceability Index©", inr: "₹1,499", usd: "$44", go: "See my compression risk →" },
-              { key: "leader", n: "03 · Leader / CXO", who: "Leader / CXO", inst: "Brainpower Density Index©", inr: "₹5,999", usd: "$179", go: "Measure my leadership edge →" },
+              { key: "aspiring", n: "01 · Student", who: "Aspiring Professional", inst: "AI Alignment Index©", inr: "₹ 799", usd: "$24", go: "See where I'm building →" },
+              { key: "working", n: "02 · Professional", who: "Working Professional", inst: "AI Replaceability Index©", inr: "₹ 1,499", usd: "$44", go: "See my compression risk →" },
+              { key: "leader", n: "03 · Leader / CXO", who: "Leader / CXO", inst: "Brainpower Density Index©", inr: "₹ 5,999", usd: "$179", go: "Measure my leadership edge →" },
               { key: "org", n: "04", who: "Organisation", inst: "ORG AI DARS©", inr: "Invite", usd: "Invite", go: "Map our AI decision architecture →" },
             ].map((c) => (
               <button key={c.key} onClick={() => openModal(c.key)} className="jcard"
@@ -844,12 +844,14 @@ export default function AIEdgeLab() {
                 <p style={{ fontSize: "16.8px", color: S.mid, lineHeight: 1.9, fontWeight: 300, maxWidth: "100%" }}>You cannot redesign what you cannot see. The AI Edge assessment suite makes structural position visible — for individuals, leaders, and organisations.</p>
               </div>
             </div>
-            <div style={{ display: "inline-flex", border: `1px solid ${S.rule2}`, marginBottom: "8px", overflow: "hidden" }}>
-              {(["inr","usd"] as Cur[]).map((c) => (
-                <button key={c} onClick={() => setCur(c)} style={{ fontFamily: S.mono, fontSize: "9.600000000000001px", letterSpacing: "0.14em", textTransform: "uppercase", padding: "9px 18px", background: cur === c ? S.ink : S.white, color: cur === c ? S.white : S.mid, border: "none", cursor: "pointer", transition: "background .2s,color .2s" }}>
-                  {c === "inr" ? "₹ India (INR)" : "$ Global (USD)"}
-                </button>
-              ))}
+            <div style={{ display: "inline-flex", alignItems: "center", border: `1px solid ${S.rule2}`, marginBottom: "8px", overflow: "hidden" }}>
+              <button onClick={() => setCur("inr")} style={{ fontFamily: S.mono, fontSize: "9.600000000000001px", letterSpacing: "0.14em", textTransform: "uppercase", padding: "9px 18px", background: cur === "inr" ? S.ink : S.white, color: cur === "inr" ? S.white : S.mid, border: "none", cursor: "pointer", transition: "background .2s,color .2s" }}>
+                ₹ India (INR)
+              </button>
+              <span style={{ fontFamily: S.mono, fontSize: "9.600000000000001px", color: S.mid, padding: "0 2px", pointerEvents: "none", background: S.white2 }}>·</span>
+              <button onClick={() => setCur("usd")} style={{ fontFamily: S.mono, fontSize: "9.600000000000001px", letterSpacing: "0.14em", textTransform: "uppercase", padding: "9px 18px", background: cur === "usd" ? S.ink : S.white, color: cur === "usd" ? S.white : S.mid, border: "none", cursor: "pointer", transition: "background .2s,color .2s" }}>
+                $ Global (USD)
+              </button>
             </div>
             <div style={{ fontFamily: S.mono, fontSize: "9.600000000000001px", letterSpacing: "0.06em", color: S.dim, marginBottom: "24px" }}>
               {cur === "inr" ? "Showing INR — India pricing. Tap to switch." : "Showing USD — global pricing. Tap to switch."}
@@ -858,7 +860,7 @@ export default function AIEdgeLab() {
             {/* AAI */}
             <div style={{ marginBottom: "22px" }}>
               <div style={{ fontFamily: S.mono, fontSize: "9.600000000000001px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.mid, marginBottom: "8px" }}>01 · For Aspiring Professionals</div>
-              <div style={{ fontFamily: S.display, fontSize: "clamp(28px,3.4vw,44px)", letterSpacing: "0.02em", color: S.gold, lineHeight: 1.02 }}>AI Alignment Index©<span style={{ color: S.ink, display: "block", fontSize: "0.496em", marginTop: "4px" }}>Am I building the right foundations?</span></div>
+              <div style={{ fontFamily: S.display, fontSize: "clamp(28px,3.4vw,44px)", letterSpacing: "0.02em", color: S.gold, lineHeight: 1.02 }}>AI Alignment Index©<span style={{ color: S.ink, display: "block", fontSize: "0.496em", marginTop: "4px" }}>— Am I building the right foundations?</span></div>
             </div>
             <DiagCards cur={cur} tiers={[
               { tier: "Pure Report", name: "AAI© Report", inr: "₹799", usd: "$24", time: "Full alignment report · delivered within 48 hours", feats: ["Foundation alignment across four E.D.G.E. dimensions","Which skills stay relevant vs compressible","Dominant work-type signal","Personalised development roadmap"], dark: false, onCta: () => openModal("aspiring") },
@@ -868,7 +870,7 @@ export default function AIEdgeLab() {
             {/* ARI */}
             <div style={{ marginTop: "64px", marginBottom: "22px" }}>
               <div style={{ fontFamily: S.mono, fontSize: "9.600000000000001px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.mid, marginBottom: "8px" }}>02 · For Working Professionals</div>
-              <div style={{ fontFamily: S.display, fontSize: "clamp(28px,3.4vw,44px)", letterSpacing: "0.02em", color: S.gold, lineHeight: 1.02 }}>AI Replaceability Index©<span style={{ color: S.ink, display: "block", fontSize: "0.496em", marginTop: "4px" }}>Where am I structurally positioned?</span></div>
+              <div style={{ fontFamily: S.display, fontSize: "clamp(28px,3.4vw,44px)", letterSpacing: "0.02em", color: S.gold, lineHeight: 1.02 }}>AI Replaceability Index©<span style={{ color: S.ink, display: "block", fontSize: "0.496em", marginTop: "4px" }}>— Where am I structurally positioned?</span></div>
             </div>
             <DiagCards cur={cur} tiers={[
               { tier: "Pure Report", name: "ARI© Report", inr: "₹1,499", usd: "$44", time: "Full structural report · delivered within 48 hours", feats: ["Full E.D.G.E. score — all four dimensions","Edge band: Accelerating / Holding / Thinning","Role Composition Map — six work types","Salary Sustainability Index (SSI)","Personalised structural roadmap"], dark: false, onCta: () => openModal("working") },
