@@ -92,8 +92,9 @@ export default function SubscriptionsPage() {
     <div className="space-y-10">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-[#e5e5e5]">Subscriptions</h1>
-          <p className="text-[#737373] mt-2 font-medium">Manage user billing cycles and service plans.</p>
+          <p className="text-[10px] font-mono tracking-[0.35em] uppercase text-[#737373] mb-2">Admin · Subscriptions</p>
+          <h1 className="text-[28px] font-bold leading-tight tracking-tight text-[#e5e5e5]">Subscriptions</h1>
+          <p className="text-[15px] text-[#737373] mt-1.5 leading-[1.6]">Manage user billing cycles and service plans.</p>
         </div>
         <button 
           onClick={() => { setEditingSub(null); setIsModalOpen(true); }}

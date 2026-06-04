@@ -228,8 +228,9 @@ export default function SubscriptionPlansPage() {
     <div className="space-y-10">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-[#e5e5e5]">Subscription Plans</h1>
-          <p className="text-[#737373] mt-2 font-medium">Configure plan tiers, features, and usage quotas.</p>
+          <p className="text-[10px] font-mono tracking-[0.35em] uppercase text-[#737373] mb-2">Admin · Plans</p>
+          <h1 className="text-[28px] font-bold leading-tight tracking-tight text-[#e5e5e5]">Subscription Plans</h1>
+          <p className="text-[15px] text-[#737373] mt-1.5 leading-[1.6]">Configure plan tiers, features, and usage quotas.</p>
         </div>
         <div className="flex gap-4">
           <button 

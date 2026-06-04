@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Users, Search, ShieldCheck, Calendar, Loader2 } from "lucide-react";
 
 interface IUser {
@@ -33,8 +33,9 @@ export default function UsersPage() {
     <div className="space-y-10">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-[#e5e5e5]">Users</h1>
-          <p className="text-[#737373] mt-2 font-medium">Manage personnel access and permission levels.</p>
+          <p className="text-[10px] font-mono tracking-[0.35em] uppercase text-[#737373] mb-2">Admin · Users</p>
+          <h1 className="text-[28px] font-bold leading-tight tracking-tight text-[#e5e5e5]">Users</h1>
+          <p className="text-[15px] text-[#737373] mt-1.5 leading-[1.6]">Manage personnel access and permission levels.</p>
         </div>
       </div>
 

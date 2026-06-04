@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Users, Activity, Database, ArrowUpRight, Loader2 } from "lucide-react";
 
 export default function AdminDashboard() {
@@ -17,8 +17,9 @@ export default function AdminDashboard() {
   return (
     <div className="space-y-10">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight text-[#e5e5e5]">Dashboard</h1>
-        <p className="text-[#737373] mt-2 font-medium">Welcome back. Here is your system overview.</p>
+        <p className="text-[10px] font-mono tracking-[0.35em] uppercase text-[#737373] mb-2">Admin · Dashboard</p>
+        <h1 className="text-[28px] font-bold leading-tight tracking-tight text-[#e5e5e5]">Dashboard</h1>
+        <p className="text-[15px] text-[#737373] mt-1.5 leading-[1.6]">Welcome back. Here is your system overview.</p>
       </div>
 
       {loading ? (
