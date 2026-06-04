@@ -154,7 +154,7 @@ body::before {
   .chapter + .chapter { @apply border-t border-[var(--line)]; }
 
   .section-dark  { @apply bg-[var(--bg)]; }
-  .section-deep  { @apply bg-[#050609]; }
+  .section-deep  { @apply bg-[var(--bg)]; }
   .section-tint  { background: linear-gradient(180deg, rgba(201,168,76,0.02) 0%, transparent 100%), var(--bg); }
 
   /* ── Navbar ── */

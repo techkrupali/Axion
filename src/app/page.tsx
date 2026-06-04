@@ -40,7 +40,7 @@ function Orbs() {
       <div
         className="absolute w-[400px] h-[400px] rounded-full opacity-[0.04]"
         style={{
-          background: "radial-gradient(circle, #4A9EFF 0%, transparent 70%)",
+          background: "radial-gradient(circle, #C9A84C 0%, transparent 70%)",
           top: "50%", left: "10%",
           animation: "float 16s ease-in-out infinite reverse",
         }}
@@ -146,9 +146,9 @@ function StatementCard({ item, i }: { item: { num: string; title: string; desc: 
 
 const BRIDGE_ITEMS = [
   { title: "Where the system is breaking", step: "01", bg: "linear-gradient(180deg, rgba(201,168,76,0.06) 0%, transparent 100%)" },
-  { title: "What's holding it together artificially", step: "02", bg: "linear-gradient(180deg, rgba(74,158,255,0.04) 0%, transparent 100%)" },
+  { title: "What's holding it together artificially", step: "02", bg: "linear-gradient(180deg, rgba(201,168,76,0.04) 0%, transparent 100%)" },
   { title: "What will fail next", step: "03", bg: "linear-gradient(180deg, rgba(201,168,76,0.04) 0%, transparent 100%)" },
-  { title: "Then we redesign it so it holds", step: "04", bg: "linear-gradient(180deg, rgba(240,241,245,0.03) 0%, transparent 100%)" },
+  { title: "Then we redesign it so it holds", step: "04", bg: "linear-gradient(180deg, rgba(201,168,76,0.03) 0%, transparent 100%)" },
 ];
 
 function BridgeCards() {
