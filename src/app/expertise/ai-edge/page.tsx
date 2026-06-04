@@ -155,7 +155,7 @@ function PersonaModal({ open, onClose, initialKey }: { open: boolean; onClose: (
                     <span style={{ fontFamily: S.mono, fontSize: "8px", color: S.gold, letterSpacing: "0.1em", flexShrink: 0, width: "22px" }}>0{i+1}</span>
                     <span style={{ flex: 1 }}>
                       <span style={{ display: "block", fontFamily: S.display, fontSize: "20.8px", color: S.ink, lineHeight: 1, marginBottom: "7px" }}>
-                        {["Aspiring Professional","Working Professional","Leader · CXO","Organisation"][i]}
+                        {["Aspiring Professional","Working Professional","Leader / CXO","Organisation"][i]}
                       </span>
                       <span style={{ display: "block", fontSize: "10px", color: S.mid, lineHeight: 1.6, fontStyle: "italic" }}>
                         {['"Am I building the right foundations — or skills AI has already absorbed?"','"Am I structurally positioned — or in the compression zone without knowing it?"','"My advantage was informational. AI eliminated it. What is my new structural role?"','"We invest in AI at scale. Why don\'t outcomes match — and what are we measuring wrong?"'][i]}
@@ -249,7 +249,7 @@ function MicroDiagnostic({ S, onOpenModal }: { S: Record<string, string>; onOpen
   const archCards = [
     { key: "aspiring" as ArchKey, num: "01", name: "Aspiring Professional", desc: "Student or entering the workforce. Building foundations for an AI-era career.", inst: "AI Alignment Index©" },
     { key: "working" as ArchKey, num: "02", name: "Working Professional", desc: "In a role being reshaped by AI in real time. Mid-career professional.", inst: "AI Replaceability Index©" },
-    { key: "leader" as ArchKey, num: "03", name: "Leader · CXO", desc: "Accountable for the structural outcomes of a team, function, or organisation.", inst: "Brainpower Density Index©" },
+    { key: "leader" as ArchKey, num: "03", name: "Leader / CXO", desc: "Accountable for the structural outcomes of a team, function, or organisation.", inst: "Brainpower Density Index©" },
     { key: "org" as ArchKey, num: "04", name: "Organisation", desc: "CHRO, CEO, founder — reading the org's structural position at population scale.", inst: "ORG AI DARS©" },
   ];
 
@@ -568,8 +568,8 @@ export default function AIEdgeLab() {
             {[
               { num: "01 · Aspiring", who: "Aspiring\nProfessional", inst: "AI Alignment Index©", bg: "#F2F0EA", color: S.ink, goldColor: S.gold, href: "#micro-diagnostic" },
               { num: "02 · Working", who: "Working\nProfessional", inst: "AI Replaceability Index©", bg: "#D8D2C5", color: S.ink, goldColor: "#5A4218", href: "#micro-diagnostic" },
-              { num: "03 · Leader · CXO", who: "Leader", inst: "Brainpower Density Index©", bg: "#7A7468", color: S.white, goldColor: S.gold2, href: "#micro-diagnostic" },
-              { num: "04 · Organisation", who: "Organisation", inst: "ORG AI DARS©", bg: S.ink, color: S.white, goldColor: S.gold, href: "#micro-diagnostic" },
+              { num: "03 · Leader / CXO", who: "Leader /\nCXO", inst: "Brainpower Density Index©", bg: "#7A7468", color: S.white, goldColor: S.gold2, href: "#micro-diagnostic" },
+              { num: "04", who: "Organisation", inst: "ORG AI DARS©", bg: S.ink, color: S.white, goldColor: S.gold, href: "#micro-diagnostic" },
             ].map((c, i) => (
               <a key={i} href={c.href} style={{ padding: "36px 32px 28px", display: "flex", flexDirection: "column", gap: "14px", transition: "transform .25s ease,box-shadow .25s ease", borderRight: i < 3 ? `1px solid ${S.rule}` : "none", textDecoration: "none", background: c.bg }}
                 onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; }}
@@ -666,8 +666,8 @@ export default function AIEdgeLab() {
             {[
               { key: "aspiring", n: "01 · Student", who: "Aspiring Professional", inst: "AI Alignment Index©", inr: "₹799", usd: "$24", go: "See where I'm building →" },
               { key: "working", n: "02 · Professional", who: "Working Professional", inst: "AI Replaceability Index©", inr: "₹1,499", usd: "$44", go: "See my compression risk →" },
-              { key: "leader", n: "03 · Leader · CXO", who: "Leader", inst: "Brainpower Density Index©", inr: "₹5,999", usd: "$179", go: "Measure my leadership edge →" },
-              { key: "org", n: "04 · Organisation", who: "Organisation", inst: "ORG AI DARS©", inr: "Invite", usd: "Invite", go: "Map our AI decision architecture →" },
+              { key: "leader", n: "03 · Leader / CXO", who: "Leader / CXO", inst: "Brainpower Density Index©", inr: "₹5,999", usd: "$179", go: "Measure my leadership edge →" },
+              { key: "org", n: "04", who: "Organisation", inst: "ORG AI DARS©", inr: "Invite", usd: "Invite", go: "Map our AI decision architecture →" },
             ].map((c) => (
               <button key={c.key} onClick={() => openModal(c.key)} className="jcard"
                 style={{ background: S.white, padding: "32px 26px", display: "flex", flexDirection: "column", cursor: "pointer", transition: "background .25s ease, transform .25s ease, box-shadow .25s ease", border: "none", textAlign: "left" }}>
@@ -877,7 +877,7 @@ export default function AIEdgeLab() {
 
             {/* BDI */}
             <div style={{ marginTop: "64px", marginBottom: "22px" }}>
-              <div style={{ fontFamily: S.mono, fontSize: "9.600000000000001px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.mid, marginBottom: "8px" }}>03 · For Leaders · CXO</div>
+              <div style={{ fontFamily: S.mono, fontSize: "9.600000000000001px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.mid, marginBottom: "8px" }}>03 · For Leaders / CXO</div>
               <div style={{ fontFamily: S.display, fontSize: "clamp(28px,3.4vw,44px)", letterSpacing: "0.02em", color: S.gold, lineHeight: 1.02 }}>Brainpower Density Index©<span style={{ color: S.ink, display: "block", fontSize: "0.496em", marginTop: "4px" }}>What is my new structural role?</span></div>
             </div>
             <DiagCards cur={cur} tiers={[
@@ -918,7 +918,7 @@ export default function AIEdgeLab() {
             {[
               { tag: "Essay 01 · For Aspiring Professionals", title: <>Where to Begin When the <span style={{ color: S.gold }}>Ladder</span> Is Repricing</>, prev: "The career ladder built by the Knowledge Economy was a pedagogy — the bottom rungs were the school. AI now does the work that constituted the school. The standard advice given to graduates in 2026 is calibrated to a labour market that no longer exists. This essay describes what aspiring professionals should optimise for instead.", meta: "2,100 words · 10 min", href: "research-essay-01-aspiring.html" },
               { tag: "Essay 02 · For Working Professionals", title: <>The <span style={{ color: S.gold }}>AI Repricing</span> of Mid-Career Work</>, prev: "A 42-year-old Director's job description has not changed. Her performance reviews remain strong. Her composition of work has quietly drifted toward what AI now does competently. She is being repriced — invisibly, quarterly, without anyone yet naming the pattern. This essay names it.", meta: "2,000 words · 10 min", href: "research-repricing-mid-career-work.html" },
-              { tag: "Essay 03 · For Leaders · CXO", title: <>The Leader's <span style={{ color: S.gold }}>Exposure</span> Is Greater Than Their Team's</>, prev: "It is convenient for senior leaders to frame the AI transition as a workforce problem. The convenience is precisely what makes it dangerous. Senior careers were built on the analytical excellence AI now compresses fastest — making the leader's exposure structurally higher than the workforce she is trying to manage.", meta: "2,200 words · 11 min", href: "research-essay-03-leaders.html" },
+              { tag: "Essay 03 · For Leaders / CXO", title: <>The Leader's <span style={{ color: S.gold }}>Exposure</span> Is Greater Than Their Team's</>, prev: "It is convenient for senior leaders to frame the AI transition as a workforce problem. The convenience is precisely what makes it dangerous. Senior careers were built on the analytical excellence AI now compresses fastest — making the leader's exposure structurally higher than the workforce she is trying to manage.", meta: "2,200 words · 11 min", href: "research-essay-03-leaders.html" },
               { tag: "Essay 04 · For Organisations", title: <><span style={{ color: S.gold }}>Brainpower Density</span> — The Productivity Metric the AI Era Demands</>, prev: "An organisation can report record productivity in 2026 by every metric its board sees, and be structurally fragile by 2028. The metrics are not lying. They are answering yesterday's question. This essay describes the productivity metric the AI era structurally requires.", meta: "2,200 words · 11 min", href: "research-essay-04-organisations.html" },
             ].map((e, i) => (
               <a key={i} href={e.href} className="ec" style={{ background: S.white, padding: "40px 40px", display: "flex", flexDirection: "column", gap: "14px", textDecoration: "none", color: "inherit", transition: "background .2s ease" }}>
