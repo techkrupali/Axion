@@ -128,7 +128,7 @@ function PersonaModal({ open, onClose, initialKey }: { open: boolean; onClose: (
 
   const S = {
     white: "#F7F6F3", white2: "#EEECEA", ink: "#0D0D0B", ink2: "#1A1A18",
-    mid: "#7A7870", dim: "#B0AEA8", gold: "#8A7338", gold2: "#C9A24A",
+    mid: "#7A7870", dim: "#B0AEA8", gold: "#A07830", gold2: "#C49848",
     rule: "rgba(13,13,11,0.1)", rule2: "rgba(13,13,11,0.18)",
     mono: "var(--font-geist-mono),'JetBrains Mono',ui-monospace,monospace", display: "var(--font-cormorant-garamond),'Cormorant Garamond',serif",
   };

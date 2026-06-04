@@ -115,6 +115,7 @@ function CustomSelect({
               zIndex: 9999,
               background: "rgba(14,16,24,0.99)",
               border: "1px solid rgba(201,168,76,0.25)",
+              boxShadow: "0 16px 48px rgba(0,0,0,0.8), 0 0 0 1px rgba(201,168,76,0.08)",
               backdropFilter: "blur(20px)",
               borderRadius: "14px",
               maxHeight: "240px",
@@ -342,8 +343,9 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
           onClick={e => e.stopPropagation()}
           className="relative w-full max-w-[580px] rounded-[28px] flex flex-col"
           style={{
-            background: "rgba(10,12,18,0.99)",
-                    border: "1px solid rgba(201,168,76,0.35)",
+            background: "rgba(10,12,18,0.98)",
+            border: "1px solid rgba(201,168,76,0.35)",
+            boxShadow: "0 40px 100px rgba(0,0,0,0.8), 0 0 0 1px rgba(201,168,76,0.08)",
             maxHeight: "85vh",
             height: "auto",
           }}

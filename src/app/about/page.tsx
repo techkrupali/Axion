@@ -111,7 +111,17 @@ function Orb({
   );
 }
 
-
+/* Eyebrow label */
+function Eyebrow({ children, center = false }: { children: React.ReactNode; center?: boolean }) {
+  return (
+    <div className={`flex items-center gap-3 mb-6 ${center ? "justify-center" : ""}`}>
+      {!center && <span className="w-6 h-[1px] bg-[var(--accent)] opacity-60 shrink-0" />}
+      <span className="font-mono text-[10.5px] tracking-[0.38em] uppercase text-[var(--fg-4)]">
+        {children}
+      </span>
+    </div>
+  );
+}
 
 /* Gold CTA button */
 function GoldBtn({
@@ -130,8 +140,9 @@ function GoldBtn({
           href={href}
           className="inline-flex items-center gap-3 px-10 py-4 font-mono text-[11px] tracking-[0.28em] uppercase rounded-full font-semibold"
           style={{
-            background: "var(--accent)",
-            color: "#0A0A0B",
+            background: "linear-gradient(135deg,#C9A84C 0%,#E8C97A 50%,#C9A84C 100%)",
+            color: "#080A0F",
+            boxShadow: "0 0 40px rgba(201,168,76,0.18)",
           }}
         >
           {children}
@@ -142,8 +153,9 @@ function GoldBtn({
           onClick={onClick}
           className="inline-flex items-center gap-3 px-10 py-4 font-mono text-[11px] tracking-[0.28em] uppercase rounded-full font-semibold"
           style={{
-            background: "var(--accent)",
-            color: "#0A0A0B",
+            background: "linear-gradient(135deg,#C9A84C 0%,#E8C97A 50%,#C9A84C 100%)",
+            color: "#080A0F",
+            boxShadow: "0 0 40px rgba(201,168,76,0.18)",
             cursor: "pointer",
             border: "none",
           }}
@@ -290,6 +302,16 @@ function HeroSection() {
   return (
     <header ref={ref} className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <GridBg id="hero-grid" opacity={0.028} />
+      <Orb size={700} color="#C9A84C" opacity={0.055} top="20%" left="70%" duration={16} />
+      <Orb size={400} color="#4A9EFF" opacity={0.035} top="65%" left="15%" duration={20} />
+
+      {/* Scan line */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div
+          className="absolute w-full h-[1px] bg-gradient-to-r from-transparent via-[var(--accent)] to-transparent opacity-20"
+          style={{ animation: "scan-line 10s linear infinite" }}
+        />
+      </div>
 
       <motion.div style={{ y, opacity }} className="shell text-center relative z-10 pt-24">
         {/* Eyebrow */}
@@ -308,17 +330,18 @@ function HeroSection() {
 
         {/* Main heading */}
         <motion.h1
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.1, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-            className="font-serif font-normal leading-[0.95] tracking-[-0.025em] text-[var(--fg)] mb-10"
-            style={{
-              fontSize: "clamp(64px, 10vw, 140px)",
-            }}
-          >
-            AXION<br />
-            <em className="text-[var(--accent)] italic">INDEX</em>
-          </motion.h1>
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.1, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+          className="font-serif font-normal leading-[0.95] tracking-[-0.025em] text-[var(--fg)] mb-10"
+          style={{
+            fontSize: "clamp(64px, 10vw, 140px)",
+            textShadow: "0 0 80px rgba(201,168,76,0.1), 0 0 200px rgba(201,168,76,0.04)",
+          }}
+        >
+          AXION<br />
+          <em className="text-[var(--accent)] italic">INDEX</em>
+        </motion.h1>
 
         {/* Primary subtext */}
         <motion.p
@@ -396,7 +419,7 @@ function WhatWeDoSection() {
           {/* LEFT — sticky context */}
           <div className="lg:sticky lg:top-32 h-fit">
             <FadeUp>
-              <div className="eyebrow">What We Do</div>
+              <Eyebrow>What We Do</Eyebrow>
             </FadeUp>
             <FadeUp delay={0.1}>
               <h2
@@ -431,25 +454,30 @@ function WhatWeDoSection() {
             </FadeUp>
 
             {diagnosticQuestions.map((q, i) => (
-            <FadeUp key={i} delay={0.08 + i * 0.1}>
-              <motion.div
-                whileHover={{ y: -4, borderColor: "rgba(201,168,76,0.35)" }}
-                transition={{ duration: 0.3 }}
-                className="group relative overflow-hidden p-7 rounded-[24px] border border-[var(--line)] cursor-default"
-                style={{ background: "rgba(12,14,20,0.55)", backdropFilter: "blur(12px)" }}
-              >
-                {/* Number */}
-                <span className="font-mono text-[10px] text-[var(--accent)] opacity-50 mb-4 block tracking-[0.3em]">
-                  [ 0{i + 1} ]
-                </span>
-                <p className="font-serif text-[19px] leading-[1.45] text-[var(--fg-2)] group-hover:text-[var(--fg)] transition-colors duration-400">
-                  {q}
-                </p>
-                {/* Bottom accent line */}
-                <div className="absolute bottom-0 left-0 h-[1px] w-0 group-hover:w-full bg-[var(--accent)] opacity-40 transition-all duration-600" />
-              </motion.div>
-            </FadeUp>
-          ))}
+              <FadeUp key={i} delay={0.08 + i * 0.1}>
+                <motion.div
+                  whileHover={{ y: -4, borderColor: "rgba(201,168,76,0.35)" }}
+                  transition={{ duration: 0.3 }}
+                  className="group relative overflow-hidden p-7 rounded-[24px] border border-[var(--line)] cursor-default"
+                  style={{ background: "rgba(12,14,20,0.55)", backdropFilter: "blur(12px)" }}
+                >
+                  {/* Number */}
+                  <span className="font-mono text-[10px] text-[var(--accent)] opacity-50 mb-4 block tracking-[0.3em]">
+                    [ 0{i + 1} ]
+                  </span>
+                  <p className="font-serif text-[19px] leading-[1.45] text-[var(--fg-2)] group-hover:text-[var(--fg)] transition-colors duration-400">
+                    {q}
+                  </p>
+                  {/* Hover glow */}
+                  <div
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-[24px]"
+                    style={{ background: "linear-gradient(135deg, rgba(201,168,76,0.06) 0%, transparent 60%)" }}
+                  />
+                  {/* Bottom accent line */}
+                  <div className="absolute bottom-0 left-0 h-[1px] w-0 group-hover:w-full bg-[var(--accent)] opacity-40 transition-all duration-600" />
+                </motion.div>
+              </FadeUp>
+            ))}
 
             <FadeUp delay={0.5}>
               <p className="font-serif italic text-[clamp(20px,2.4vw,28px)] text-[var(--accent)] mt-4 leading-snug">
@@ -476,6 +504,12 @@ function StatementSection() {
       className="relative flex items-center justify-center overflow-hidden"
       style={{ minHeight: "70vh", background: "#050609" }}
     >
+      {/* Radial glow */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{ background: "radial-gradient(ellipse 70% 60% at 50% 50%, rgba(201,168,76,0.06) 0%, transparent 70%)" }}
+      />
+
       {/* Horizontal lines */}
       <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[var(--line-gold)] to-transparent opacity-60" />
       <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[var(--line-gold)] to-transparent opacity-60" />
@@ -490,11 +524,12 @@ function StatementSection() {
           The operating thesis
         </p>
         <h2
-            className="font-serif font-normal leading-[1.0] tracking-[-0.02em] text-[var(--fg)]"
-            style={{
-              fontSize: "clamp(42px, 7vw, 100px)",
-            }}
-          >
+          className="font-serif font-normal leading-[1.0] tracking-[-0.02em] text-[var(--fg)]"
+          style={{
+            fontSize: "clamp(42px, 7vw, 100px)",
+            textShadow: "0 0 60px rgba(201,168,76,0.08)",
+          }}
+        >
           We are Rewriting<br />
           the Operating Logic<br />
           <em className="italic text-[var(--accent)]">of Work.</em>
@@ -511,6 +546,7 @@ function WhySection() {
   return (
     <section className="relative py-[clamp(100px,14vh,180px)] bg-[var(--bg)]" id="why">
       <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[var(--line)] to-transparent" />
+      <Orb size={600} color="#C9A84C" opacity={0.04} top="50%" left="90%" duration={18} />
 
       {/* Watermark */}
       <div className="absolute right-[-8%] top-[15%] font-serif italic pointer-events-none select-none"
@@ -521,7 +557,7 @@ function WhySection() {
       <div className="shell">
         <div className="max-w-[860px]">
           <FadeUp>
-            <div className="eyebrow">Why Axion Index Exists</div>
+            <Eyebrow>Why Axion Index Exists</Eyebrow>
           </FadeUp>
           <FadeUp delay={0.1}>
             <h2
@@ -569,7 +605,7 @@ function WhySection() {
           <FadeUp delay={0.5}>
             <div
               className="relative p-10 rounded-[28px] border border-[var(--line-gold)] mb-12 overflow-hidden"
-              style={{ background: "rgba(12,14,20,0.8)" }}
+              style={{ background: "linear-gradient(135deg, rgba(201,168,76,0.05) 0%, rgba(12,14,20,0.8) 100%)" }}
             >
               <div className="absolute top-0 left-0 w-1 h-full bg-[var(--accent)] opacity-60 rounded-l-[28px]" />
               <p
@@ -610,12 +646,13 @@ function ApproachSection() {
     <section className="relative py-[clamp(100px,14vh,180px)]" style={{ background: "#050609" }} id="approach">
       <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[var(--line-gold)] to-transparent opacity-50" />
       <GridBg id="approach-grid" opacity={0.018} />
+      <Orb size={500} color="#4A9EFF" opacity={0.03} top="30%" left="80%" duration={22} />
 
       <div className="shell">
         {/* Header */}
         <div className="mb-20">
           <FadeUp>
-            <div className="eyebrow">Our Approach</div>
+            <Eyebrow>Our Approach</Eyebrow>
           </FadeUp>
           <FadeUp delay={0.1}>
             <h2
@@ -682,7 +719,7 @@ function ApproachSection() {
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                 className="relative p-12 rounded-[32px] border border-[var(--line-gold)] overflow-hidden"
-                style={{ background: "rgba(8,10,15,0.9)" }}
+                style={{ background: "linear-gradient(135deg, rgba(201,168,76,0.06) 0%, rgba(8,10,15,0.9) 100%)" }}
               >
                 {/* Big number watermark */}
                 <div
@@ -753,9 +790,20 @@ function PhilosophySection() {
       <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[var(--line-gold)] to-transparent opacity-60" />
       <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[var(--line-gold)] to-transparent opacity-60" />
 
+      {/* Parallax glow */}
+      <motion.div
+        style={{ y: bgY }}
+        className="absolute inset-0 pointer-events-none"
+      >
+        <div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] rounded-full"
+          style={{ background: "radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%)" }}
+        />
+      </motion.div>
+
       <div className="shell relative z-10 flex flex-col items-center justify-center py-40 text-center">
         <FadeUp>
-          <div className="eyebrow eyebrow--center">Founding Philosophy</div>
+          <Eyebrow center>Founding Philosophy</Eyebrow>
         </FadeUp>
 
         {/* BCR flow */}
@@ -818,6 +866,7 @@ function DifferentSection() {
   return (
     <section className="relative py-[clamp(100px,14vh,180px)] bg-[var(--bg)]" id="different">
       <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[var(--line)] to-transparent" />
+      <Orb size={500} color="#C9A84C" opacity={0.04} top="60%" left="5%" duration={20} />
 
       <div className="shell">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.3fr] gap-20 items-start">
@@ -825,7 +874,7 @@ function DifferentSection() {
           {/* LEFT — sticky */}
           <div className="lg:sticky lg:top-32 h-fit">
             <FadeUp>
-              <div className="eyebrow">What Makes Us Different</div>
+              <Eyebrow>What Makes Us Different</Eyebrow>
             </FadeUp>
             <FadeUp delay={0.1}>
               <h2
@@ -907,7 +956,7 @@ function WhoSection() {
       <div className="shell">
         <div className="mb-20">
           <FadeUp>
-            <div className="eyebrow">Who We Work With</div>
+            <Eyebrow>Who We Work With</Eyebrow>
           </FadeUp>
           <FadeUp delay={0.1}>
             <h2

@@ -74,7 +74,7 @@ const Navbar = () => {
             <button
               className={`text-[11px] font-mono tracking-[0.24em] uppercase flex items-center gap-2 outline-none transition-colors duration-300 min-h-[44px] ${
                 pathname.startsWith("/expertise")
-                  ? "text-[var(--accent)]"
+                  ? "text-[#C9A24A]"
                   : "text-[var(--fg-3)] hover:text-[var(--fg)]"
               }`}
             >
@@ -105,7 +105,7 @@ const Navbar = () => {
                     >
                       <Link
                         href={link.href}
-                        className={`nav-dropdown-item ${pathname === link.href ? "text-[var(--accent)] bg-[rgba(201,162,74,0.05)]" : ""}`}
+                        className={`nav-dropdown-item ${pathname === link.href ? "text-[#C9A24A] bg-[rgba(201,162,74,0.05)]" : ""}`}
                         onClick={() => setIsExpertiseOpen(false)}
                       >
                         <div>
@@ -126,13 +126,13 @@ const Navbar = () => {
 
           <Link
             href="/connect"
-            className="ml-1 px-5 py-3 font-mono text-[11px] tracking-[0.22em] uppercase font-semibold rounded-full transition-all duration-300 active:scale-[0.97] inline-flex items-center gap-2 min-h-[44px] bg-[var(--accent)] text-[#0A0A0B]"
+            className="ml-1 px-5 py-3 font-mono text-[11px] tracking-[0.22em] uppercase font-semibold rounded-full transition-all duration-300 active:scale-[0.97] inline-flex items-center gap-2 min-h-[44px] bg-[#C9A24A] text-[#0A0A0B]"
           >
             Reach Us <ArrowRight size={12} />
           </Link>
           <Link
             href="/admin/login"
-            className="ml-1 px-4 py-3 font-mono text-[11px] tracking-[0.22em] uppercase rounded-full border border-[rgba(201,162,74,0.25)] text-[var(--fg-4)] hover:text-[var(--accent)] hover:border-[rgba(201,162,74,0.5)] transition-colors duration-300 min-h-[44px]"
+            className="ml-1 px-4 py-3 font-mono text-[11px] tracking-[0.22em] uppercase rounded-full border border-[rgba(201,162,74,0.25)] text-[var(--fg-4)] hover:text-[#C9A24A] hover:border-[rgba(201,162,74,0.5)] transition-all duration-300 min-h-[44px]"
           >
             Login
           </Link>
@@ -177,10 +177,10 @@ const Navbar = () => {
                   <Link
                     href={link.href}
                     className={`block py-4 font-mono text-[12px] tracking-[0.24em] uppercase border-b transition-colors duration-200 min-h-[48px] ${
-                        pathname === link.href
-                          ? "text-[var(--accent)] border-[rgba(201,162,74,0.15)]"
-                          : "text-[var(--fg-3)] border-[rgba(255,255,255,0.05)] hover:text-[var(--fg)]"
-                      }`}
+                      pathname === link.href
+                        ? "text-[#C9A24A] border-[rgba(201,162,74,0.15)]"
+                        : "text-[var(--fg-3)] border-[rgba(255,255,255,0.05)] hover:text-[var(--fg)]"
+                    }`}
                   >
                     {link.label}
                   </Link>
@@ -194,7 +194,7 @@ const Navbar = () => {
               >
                 <Link
                   href="/connect"
-                  className="block w-full text-center py-4 font-mono text-[12px] tracking-[0.24em] uppercase border border-[rgba(201,162,74,0.25)] text-[#0A0A0B] bg-[var(--accent)] hover:bg-[rgba(201,162,74,0.9)] transition-colors rounded-lg min-h-[48px]"
+                  className="block w-full text-center py-4 font-mono text-[12px] tracking-[0.24em] uppercase border border-[rgba(201,162,74,0.25)] text-[#0A0A0B] bg-[#C9A24A] hover:bg-[rgba(201,162,74,0.9)] transition-colors rounded-lg min-h-[48px]"
                 >
                   Reach Us →
                 </Link>
@@ -218,12 +218,12 @@ function NavLink({ href, label, active }: { href: string; label: string; active:
     <Link
       href={href}
       className={`text-[11px] font-mono tracking-[0.24em] uppercase transition-colors duration-300 relative group whitespace-nowrap min-h-[44px] inline-flex items-center ${
-        active ? "text-[var(--accent)]" : "text-[var(--fg-3)] hover:text-[var(--fg)]"
+        active ? "text-[#C9A24A]" : "text-[var(--fg-3)] hover:text-[var(--fg)]"
       }`}
     >
       {label}
       <span
-        className="absolute -bottom-1 left-0 h-[1px] bg-[var(--accent)] transition-all duration-400 origin-left"
+        className="absolute -bottom-1 left-0 h-[1px] bg-[#C9A24A] transition-all duration-400 origin-left"
         style={{ width: active ? "100%" : "0%", transform: "scaleX(1)" }}
       />
     </Link>

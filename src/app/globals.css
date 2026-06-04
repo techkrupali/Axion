@@ -57,17 +57,12 @@ body {
   background: #0A0A0B;
   color: #F7F6F3;
   font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
-  font-size: 16px;
-  line-height: 1.65;
+  font-size: 17px;
+  line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
-}
-@media (min-width: 768px) {
-  body {
-    font-size: 17px;
-  }
 }
 
 /* Premium scrollbar */
@@ -122,13 +117,13 @@ body::before {
 
   /* ── Eyebrow ── */
   .eyebrow {
-    @apply font-mono tracking-[0.35em] uppercase text-[var(--accent)] opacity-80 inline-flex items-center gap-3;
+    @apply font-mono tracking-[0.35em] uppercase text-white inline-flex items-center gap-3;
     letter-spacing: 0.35em;
-    font-size: 11px;
+    font-size: 12px;
   }
   @media (min-width: 640px) {
     .eyebrow {
-      font-size: 12px;
+      font-size: 13px;
     }
   }
   .eyebrow::before {
@@ -159,18 +154,13 @@ body::before {
   .h-statement em { @apply italic text-[var(--accent)]; }
 
   .lead {
-    @apply leading-[1.65] text-[var(--fg-2)] font-light max-w-[56ch];
-    font-size: clamp(16px, 2vw, 20px);
+    @apply leading-[1.7] text-[var(--fg-2)] font-light max-w-[56ch];
+    font-size: clamp(17px, 2vw, 22px);
   }
 
   .body-text {
-    @apply leading-[1.65] text-[var(--fg-2)] max-w-[60ch];
-    font-size: 16px;
-  }
-  @media (min-width: 768px) {
-    .body-text {
-      font-size: 17px;
-    }
+    @apply leading-[1.75] text-[var(--fg-2)] max-w-[60ch];
+    font-size: 17px;
   }
 
   /* ── Sections ── */

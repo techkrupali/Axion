@@ -71,7 +71,7 @@ export default function FamilyBusiness() {
             <div className="eyebrow eyebrow--center mb-8 text-[var(--accent)]">AXION&nbsp;&nbsp;·&nbsp;&nbsp;FAMILY BUSINESS</div>
           </Reveal>
           <Reveal delay={0.1}>
-            <h1 className="mb-8">
+            <h1 className="hero-glow mb-8 drop-shadow-2xl">
               <span className="block font-serif font-medium text-[clamp(28px,3.5vw,52px)] leading-[1.15] tracking-[-0.01em] text-[var(--fg-2)] mb-2">
                 Family enterprises don&apos;t fail at strategy.
               </span>
@@ -94,6 +94,8 @@ export default function FamilyBusiness() {
             </div>
           </Reveal>
         </div>
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(160,160,160,0.03)_0%,transparent_50%)] pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-full h-[40vh] bg-gradient-to-t from-[#06070B] to-transparent pointer-events-none" />
       </header>
 
       {/* FIVE ARCHITECTURES */}
@@ -238,6 +240,7 @@ export default function FamilyBusiness() {
             </Reveal>
           </div>
         </div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(160,160,160,0.04)_0%,transparent_70%)] pointer-events-none" />
       </section>
 
       <Footer />

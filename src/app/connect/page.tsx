@@ -37,12 +37,26 @@ export default function Connect() {
 
       {/* HERO */}
       <header className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <svg className="absolute inset-0 w-full h-full opacity-[0.02]" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="grid-connect" width="80" height="80" patternUnits="userSpaceOnUse">
+                <path d="M 80 0 L 0 0 0 80" fill="none" stroke="rgba(201,168,76,1)" strokeWidth="0.5"/>
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid-connect)" />
+          </svg>
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_50%,transparent_30%,var(--bg)_100%)]" />
+        </div>
+        <div className="absolute top-[20%] right-[20%] w-[500px] h-[500px] rounded-full opacity-[0.04] pointer-events-none"
+          style={{ background: "radial-gradient(circle, #C9A84C 0%, transparent 70%)", animation: "float 14s ease-in-out infinite" }} />
+
         <div className="shell text-center relative z-10 pt-20">
           <Reveal>
             <div className="eyebrow eyebrow--center mb-10 text-[var(--accent)]">AXION&nbsp;&nbsp;·&nbsp;&nbsp;CONNECT</div>
           </Reveal>
           <Reveal delay={0.1}>
-            <h1 className="mb-8">
+            <h1 className="hero-glow mb-8">
               <span className="block font-serif font-normal text-[clamp(28px,3.5vw,52px)] leading-[1.15] tracking-[-0.01em] text-[var(--fg-2)] mb-2">
                 Begin a conversation.
               </span>
@@ -62,6 +76,7 @@ export default function Connect() {
             </a>
           </Reveal>
         </div>
+        <div className="absolute bottom-0 left-0 w-full h-[35vh] bg-gradient-to-t from-[var(--bg)] to-transparent pointer-events-none" />
       </header>
 
       {/* FORM + SIDEBAR */}
@@ -154,7 +169,8 @@ export default function Connect() {
                     type="submit"
                     whileHover={{ scale: 1.03 }}
                     whileTap={{ scale: 0.97 }}
-                    className="inline-flex items-center gap-3 px-10 py-4 font-mono text-[11px] tracking-[0.28em] uppercase rounded-full font-semibold bg-[var(--accent)] text-[#080A0F]"
+                    className="inline-flex items-center gap-3 px-10 py-4 font-mono text-[11px] tracking-[0.28em] uppercase rounded-full font-semibold"
+                    style={{ background: "linear-gradient(135deg, #C9A84C 0%, #E8C97A 50%, #C9A84C 100%)", color: "#080A0F" }}
                   >
                     Send written intent
                     <ArrowRight size={13} />
