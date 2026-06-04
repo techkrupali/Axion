@@ -276,32 +276,8 @@ export default function Home() {
           <Reveal delay={0.3}>
             {/* Fix 2 — primary gold CTA + secondary outline; Fix 5 — "signals" plural; Fix 7 — one scroll prompt */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <motion.a
-                href="/connect"
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                className="inline-flex items-center gap-3 px-8 py-4 font-mono text-[11px] tracking-[0.28em] uppercase rounded-full font-semibold"
-                style={{
-                  background: "#C9A24A",
-                  color: "#0A0A0B",
-                }}
-              >
-                Reach Us
-                <ArrowRight size={13} />
-              </motion.a>
-              <motion.a
-                href="#signals"
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                className="group relative inline-flex items-center gap-3 px-8 py-4 font-mono text-[11px] tracking-[0.28em] uppercase rounded-full"
-                style={{
-                  border: "1px solid rgba(201,162,74,0.2)",
-                  color: "#C9A24A",
-                }}
-              >
-                <span className="relative z-10">Read the signals</span>
-                <ArrowRight size={13} className="relative z-10 group-hover:translate-x-1 transition-transform" />
-              </motion.a>
+              <Button href="/connect" variant="primary" showArrow={true}>Reach Us</Button>
+              <Button href="#signals" variant="secondary" showArrow={true}>Read the signals</Button>
             </div>
           </Reveal>
 
@@ -648,13 +624,7 @@ export default function Home() {
                   If what's breaking doesn't fit a category, that is still a signal — bring it, and we read the architecture wherever it lives.
                 </p>
               </div>
-              <Link
-                href="/connect"
-                className="shrink-0 inline-flex items-center gap-2 px-6 py-3 font-mono text-[10px] tracking-[0.28em] uppercase rounded-full font-semibold"
-                style={{ background: "#C9A24A", color: "#0A0A0B" }}
-              >
-                Reach Us <ArrowRight size={11} />
-              </Link>
+              <Button href="/connect" variant="primary" showArrow={true} size="sm">Reach Us</Button>
             </div>
           </Reveal>
         </div>
@@ -677,12 +647,7 @@ export default function Home() {
                 <div className="w-16 h-[2px] bg-[#C9A24A] mb-4" />
               </Reveal>
               <Reveal delay={0.25}>
-                <Link
-                  href="/connect"
-                  className="inline-flex items-center gap-3 px-6 py-2.5 bg-[#C9A24A] text-[#0A0A0B] font-mono text-[10px] tracking-[0.28em] uppercase rounded-full font-semibold transition-all duration-300 group"
-                >
-                  Reach Us <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
-                </Link>
+                <Button href="/connect" variant="primary" showArrow={true} size="sm">Reach Us</Button>
               </Reveal>
             </div>
 
@@ -857,19 +822,7 @@ export default function Home() {
           </Reveal>
           <Reveal delay={0.2}>
             <div className="flex flex-col items-center gap-4">
-              <motion.button
-                onClick={() => setDiagOpen(true)}
-                whileHover={{ scale: 1.04 }}
-                whileTap={{ scale: 0.97 }}
-                className="inline-flex items-center gap-3 px-10 py-5 font-mono text-[11px] tracking-[0.28em] uppercase rounded-full font-semibold"
-                style={{
-                  background: "#C9A24A",
-                  color: "#0A0A0B",
-                }}
-              >
-                Start Diagnostic
-                <ArrowRight size={14} />
-              </motion.button>
+              <Button onClick={() => setDiagOpen(true)} variant="primary" showArrow={true}>Start Diagnostic</Button>
               <p className="font-mono text-[10px] tracking-[0.15em] text-[#8A8FA4] max-w-[44ch] text-center leading-relaxed">
                 A 30-minute architectural read. You bring the signal — we tell you what's structurally producing it. No fee, no pitch.
               </p>

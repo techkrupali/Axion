@@ -4,6 +4,8 @@ import Link from "next/link";
 import { Reveal } from "@/components/Reveal";
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
+import Footer from "@/components/Footer";
+import Button from "@/components/Button";
 
 const FamilyThreeScene = dynamic(() => import("@/components/FamilyThreeScene"), { ssr: false });
 
@@ -85,12 +87,7 @@ export default function FamilyBusiness() {
           </Reveal>
           <Reveal delay={0.3}>
             <div className="flex flex-col items-center gap-10">
-              <Link
-                href="/connect?practice=family-business"
-                className="nav-cta scale-125 px-12 py-5 bg-[var(--fg)] text-[var(--bg)] border-none hover:bg-[var(--accent)] hover:text-[var(--bg)] transition-all duration-500 shadow-[0_0_30px_rgba(255,255,255,0.1)]"
-              >
-                Begin a Conversation
-              </Link>
+              <Button href="/connect?practice=family-business" variant="primary" showArrow={true} size="lg">Begin a Conversation</Button>
               <a className="kbd-arrow text-[var(--fg-3)] hover:text-[var(--accent)]" href="#architectures">
                 Read the five architectures
               </a>
@@ -237,13 +234,8 @@ export default function FamilyBusiness() {
             </Reveal>
             <Reveal delay={0.3}>
               <div className="flex flex-wrap justify-center gap-4 mb-20">
-                <Link
-                  href="/connect?practice=family-business"
-                  className="nav-cta bg-[var(--fg)] text-[var(--bg)] border-none hover:bg-[var(--accent)] transition-all duration-500"
-                >
-                  Begin a Conversation
-                </Link>
-                <Link href="/#practices" className="nav-cta">Other practices</Link>
+                <Button href="/connect?practice=family-business" variant="primary" showArrow={true}>Begin a Conversation</Button>
+                <Button href="/#practices" variant="secondary" showArrow={true}>Other practices</Button>
               </div>
             </Reveal>
           </div>
@@ -251,6 +243,7 @@ export default function FamilyBusiness() {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(160,160,160,0.04)_0%,transparent_70%)] pointer-events-none" />
       </section>
 
+      <Footer />
     </div>
   );
 }

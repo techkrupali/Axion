@@ -1,6 +1,7 @@
 'use client';
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import Button from "./Button";
 
 export default function Footer() {
   return (
@@ -112,19 +113,7 @@ export default function Footer() {
                 >
                   office@axionindex.com
                 </a>
-              <Link
-                href="/connect"
-                className="group inline-flex items-center gap-2 font-mono text-[13px] tracking-[0.18em] uppercase font-semibold transition-all duration-300 mt-2"
-                style={{
-                  color: "#080A0F",
-                  background: "linear-gradient(135deg, #C9A24A 0%, #E8C97A 50%, #C9A24A 100%)",
-                  borderRadius: 6,
-                  padding: "8px 16px",
-                }}
-              >
-                Reach Us
-                <ArrowRight size={11} className="group-hover:translate-x-0.5 transition-transform duration-300" />
-              </Link>
+              <Button href="/connect" variant="primary" showArrow={true}>Reach Us</Button>
             </div>
           </div>
 

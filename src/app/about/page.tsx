@@ -1132,8 +1132,8 @@ function EndSection({ onStartDiagnostic }: { onStartDiagnostic: () => void }) {
         {/* CTAs */}
         <FadeUp delay={0.35}>
           <div className="flex flex-wrap justify-center gap-4">
-            <GoldBtn onClick={onStartDiagnostic}>Start Diagnostic</GoldBtn>
-            <GhostBtn href="/founder">Read about the founder</GhostBtn>
+            <Button onClick={onStartDiagnostic} variant="primary" showArrow={true}>Start Diagnostic</Button>
+            <Button href="/founder" variant="secondary" showArrow={true}>Read about the founder</Button>
           </div>
         </FadeUp>
 

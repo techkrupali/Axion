@@ -103,12 +103,8 @@ export default function LabourCodes() {
           <Reveal delay={0.3}>
             <div className="flex flex-col items-center gap-10">
               <div className="flex flex-wrap justify-center gap-6">
-                <Link href="/connect?practice=labour-codes" className="nav-cta scale-110 px-10 py-4 bg-[var(--fg)] text-[var(--bg)] border-none hover:bg-[var(--accent)] hover:text-[var(--bg)] transition-all duration-500 shadow-[0_0_30px_rgba(255,255,255,0.1)]">
-                  Request a Diagnostic →
-                </Link>
-                <a className="nav-cta scale-110 px-10 py-4 border border-[var(--line)] text-[var(--fg-2)] hover:border-[var(--accent)] hover:text-[var(--accent)] transition-all duration-500" href="#classify">
-                  Explore the 4 Codes →
-                </a>
+                <Button href="/connect?practice=labour-codes" variant="primary" showArrow={true} size="lg">Request a Diagnostic</Button>
+                <Button href="#classify" variant="secondary" showArrow={true} size="lg">Explore the 4 Codes</Button>
               </div>
             </div>
           </Reveal>

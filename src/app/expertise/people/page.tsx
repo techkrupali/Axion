@@ -87,12 +87,7 @@ export default function PeopleArchitecture() {
           </Reveal>
           <Reveal delay={0.3}>
             <div className="flex flex-col items-center gap-10">
-              <Link
-                href="/connect?practice=people-architecture"
-                className="nav-cta scale-125 px-12 py-5 bg-[var(--fg)] text-[var(--bg)] border-none hover:bg-[var(--accent)] hover:text-[var(--bg)] transition-all duration-500 shadow-[0_0_30px_rgba(255,255,255,0.1)]"
-              >
-                Begin a Diagnostic
-              </Link>
+              <Button href="/connect?practice=people-architecture" variant="primary" showArrow={true} size="lg">Begin a Diagnostic</Button>
               <a className="kbd-arrow text-[var(--fg-3)] hover:text-[var(--accent)]" href="#bcr">
                 Read the BCR framework
               </a>
@@ -233,13 +228,8 @@ export default function PeopleArchitecture() {
             </Reveal>
             <Reveal delay={0.3}>
               <div className="flex flex-wrap justify-center gap-4 mb-20">
-                <Link
-                  href="/connect?practice=people-architecture"
-                  className="nav-cta bg-[var(--fg)] text-[var(--bg)] border-none hover:bg-[var(--accent)] transition-all duration-500"
-                >
-                  Begin a Diagnostic
-                </Link>
-                <Link href="/#practices" className="nav-cta">Other practices</Link>
+                <Button href="/connect?practice=people-architecture" variant="primary" showArrow={true}>Begin a Diagnostic</Button>
+                <Button href="/#practices" variant="secondary" showArrow={true}>Other practices</Button>
               </div>
             </Reveal>
           </div>
