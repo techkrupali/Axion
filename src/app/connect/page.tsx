@@ -19,10 +19,10 @@ const readings = [
 ];
 
 const sidebarItems = [
-  { label: "Direct", content: <a href="mailto:nitin@axionindex.org" className="font-serif text-[18px] text-[var(--fg)] hover:text-[var(--accent)] transition-colors duration-300 block">nitin@axionindex.org</a> },
+  { label: "Direct: nitin@axionindex.org", content: <a href="mailto:nitin@axionindex.org" className="font-serif text-[18px] text-[var(--fg)] hover:text-[var(--accent)] transition-colors duration-300 block">nitin@axionindex.org</a> },
   { label: "Calendar", content: <p className="text-[14px] leading-[1.65] text-[var(--fg-4)]">Calls are arranged after the written intent — not before.</p> },
   { label: "Press & speaking", content: <p className="text-[14px] leading-[1.65] text-[var(--fg-4)]">Press, speaking and editorial requests via the same channel — please mark the subject line accordingly.</p> },
-  { label: "On discretion", content: <p className="text-[14px] leading-[1.65] text-[var(--fg-4)]">Axion Index works with founders, boards and CHROs in regulated and family-held contexts. References, case material, and engagement details are not published on the website. They are shared on request, with relevance.</p> },
+  { label: "On discretion", content: <p className="text-[14px] leading-[1.65] text-[var(--fg-4)]">Axion Index works with founders, boards and CHROs in regulated and family-held contexts. References, case material, and engagement details are not published on the website. They are shared on request, where relevant.</p> },
   { label: "What we don't do", content: <p className="text-[14px] leading-[1.65] text-[var(--fg-4)]">Recruiting · payroll · vendor management · executive coaching · culture surveys · &ldquo;engagement&rdquo; programs.</p> },
 ];
 
@@ -61,13 +61,13 @@ export default function Connect() {
                 Begin a conversation.
               </span>
               <em className="block font-serif font-medium text-[clamp(28px,3.5vw,52px)] leading-[1.15] tracking-[-0.01em] text-[var(--accent)] italic">
-                From ambiguity, to architecture.
+                From ambiguity to architecture.
               </em>
             </h1>
           </Reveal>
           <Reveal delay={0.2}>
             <p className="lead mx-auto mb-14 text-[var(--fg-3)] max-w-[50ch]">
-              Axion Index does not run discovery calls. Every engagement begins with a written intent — a short note about where the architecture is under stress and what change is being considered. We respond within 48 hours.
+              Axion Index does not start with discovery calls. Every engagement begins with a written intent — a short note about where the architecture is under stress and what change is being considered. We respond within 48 hours.
             </p>
           </Reveal>
           <Reveal delay={0.3}>
@@ -113,7 +113,7 @@ export default function Connect() {
 
                 {/* Practice */}
                 <div className="flex flex-col gap-4">
-                  <label className="font-mono text-[10px] tracking-widest uppercase text-[var(--fg-4)]">Practice of interest</label>
+                  <label className="font-mono text-[10px] tracking-widest uppercase text-[var(--fg-4)]">Practice of interest: People Architecture · Labour Codes · AI Edge Lab · Family Business · Not sure yet</label>
                   <div className="flex flex-wrap gap-3">
                     {practices.map((p) => (
                       <motion.button
@@ -174,7 +174,7 @@ export default function Connect() {
                     Send written intent
                     <ArrowRight size={13} />
                   </motion.button>
-                  <span className="font-mono text-[10px] tracking-widest uppercase text-[var(--fg-5)]">Response within 48 hours</span>
+                  <span className="font-mono text-[10px] tracking-widest uppercase text-[var(--fg-5)]">Send written intent · Response within 48 hours</span>
                 </div>
               </form>
             </motion.div>
