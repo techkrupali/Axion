@@ -128,18 +128,13 @@ const Navbar = () => {
 
           <Link
             href="/connect"
-            className="ml-1 px-5 py-3 font-mono text-[11px] tracking-[0.22em] uppercase font-semibold rounded-full transition-all duration-300 active:scale-[0.97] inline-flex items-center gap-2 min-h-[44px]"
-            style={{
-              background: "linear-gradient(135deg, #C9A84C 0%, #E8C97A 50%, #C9A84C 100%)",
-              color: "#080A0F",
-              boxShadow: "0 0 20px rgba(201,168,76,0.2)",
-            }}
+            className="ml-1 px-5 py-3 font-mono text-[11px] tracking-[0.22em] uppercase font-semibold rounded-full transition-all duration-300 active:scale-[0.97] inline-flex items-center gap-2 min-h-[44px] bg-[#C9A24A] text-[#0A0A0B]"
           >
             Reach Us <ArrowRight size={12} />
           </Link>
           <Link
             href="/admin/login"
-            className="ml-1 px-4 py-3 font-mono text-[11px] tracking-[0.22em] uppercase rounded-full border border-[rgba(201,168,76,0.25)] text-[var(--fg-4)] hover:text-[#C9A24A] hover:border-[rgba(201,168,76,0.5)] transition-all duration-300 min-h-[44px]"
+            className="ml-1 px-4 py-3 font-mono text-[11px] tracking-[0.22em] uppercase rounded-full border border-[rgba(201,162,74,0.25)] text-[var(--fg-4)] hover:text-[#C9A24A] hover:border-[rgba(201,162,74,0.5)] transition-all duration-300 min-h-[44px]"
           >
             Login
           </Link>
@@ -167,8 +162,7 @@ const Navbar = () => {
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
             className="fixed top-[72px] left-0 right-0 z-[79] flex flex-col"
             style={{
-              background: "rgba(8,10,15,0.98)",
-              backdropFilter: "blur(32px)",
+              background: "#0A0A0B",
               borderBottom: "1px solid rgba(255,255,255,0.1)",
               maxHeight: "calc(100vh - 72px)",
               overflowY: "auto",
@@ -186,7 +180,7 @@ const Navbar = () => {
                     href={link.href}
                     className={`block py-4 font-mono text-[12px] tracking-[0.24em] uppercase border-b transition-colors duration-200 min-h-[48px] ${
                       pathname === link.href
-                        ? "text-[#C9A24A] border-[rgba(201,168,76,0.15)]"
+                        ? "text-[#C9A24A] border-[rgba(201,162,74,0.15)]"
                         : "text-[var(--fg-3)] border-[rgba(255,255,255,0.05)] hover:text-[var(--fg)]"
                     }`}
                   >
@@ -202,10 +196,7 @@ const Navbar = () => {
               >
                 <Link
                   href="/connect"
-                  className="block w-full text-center py-4 font-mono text-[12px] tracking-[0.24em] uppercase border border-[rgba(201,168,76,0.3)] text-[#080A0F] hover:bg-[rgba(201,168,76,0.9)] transition-colors rounded-lg min-h-[48px]"
-                  style={{
-                    background: "linear-gradient(135deg, #C9A84C 0%, #E8C97A 50%, #C9A84C 100%)",
-                  }}
+                  className="block w-full text-center py-4 font-mono text-[12px] tracking-[0.24em] uppercase border border-[rgba(201,162,74,0.25)] text-[#0A0A0B] bg-[#C9A24A] hover:bg-[rgba(201,162,74,0.9)] transition-colors rounded-lg min-h-[48px]"
                 >
                   Reach Us →
                 </Link>

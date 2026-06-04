@@ -99,14 +99,32 @@ body::before {
 
   /* Shell */
   .shell {
-    @apply w-full max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8;
+    @apply w-full max-w-[1200px] mx-auto px-4;
+  }
+  @media (min-width: 640px) {
+    .shell {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+  @media (min-width: 768px) {
+    .shell {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
   }
   .shell--narrow { @apply max-w-[900px]; }
 
   /* ── Eyebrow ── */
   .eyebrow {
-    @apply font-mono text-[12px] sm:text-[13px] tracking-[0.35em] uppercase text-white inline-flex items-center gap-3;
+    @apply font-mono tracking-[0.35em] uppercase text-white inline-flex items-center gap-3;
     letter-spacing: 0.35em;
+    font-size: 12px;
+  }
+  @media (min-width: 640px) {
+    .eyebrow {
+      font-size: 13px;
+    }
   }
   .eyebrow::before {
     content: "";
@@ -136,11 +154,13 @@ body::before {
   .h-statement em { @apply italic text-[var(--accent)]; }
 
   .lead {
-    @apply text-[clamp(17px, 2vw, 22px)] leading-[1.7] text-[var(--fg-2)] font-light max-w-[56ch];
+    @apply leading-[1.7] text-[var(--fg-2)] font-light max-w-[56ch];
+    font-size: clamp(17px, 2vw, 22px);
   }
 
   .body-text {
-    @apply text-[17px] leading-[1.75] text-[var(--fg-2)] max-w-[60ch];
+    @apply leading-[1.75] text-[var(--fg-2)] max-w-[60ch];
+    font-size: 17px;
   }
 
   /* ── Sections ── */
@@ -156,33 +176,66 @@ body::before {
 
   /* ── Navbar ── */
   .nav {
-    @apply fixed top-0 left-0 right-0 z-[80] px-4 sm:px-6 lg:px-8 py-4 sm:py-5 flex items-center justify-between;
+    @apply fixed top-0 left-0 right-0 z-[80] px-4 py-4 flex items-center justify-between;
     transition: all 0.5s var(--ease);
-    background: rgba(10,10,11,0.95);
-    backdrop-filter: blur(12px);
+    background: #0A0A0B;
     border-bottom: 1px solid rgba(240,241,245,0.1);
   }
+  @media (min-width: 640px) {
+    .nav {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+      padding-top: 1.25rem;
+      padding-bottom: 1.25rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .nav {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
   .nav.is-scrolled {
-    background: rgba(10,10,11,0.98);
+    background: #0A0A0B;
     padding-top: 12px;
     padding-bottom: 12px;
   }
 
   /* ── Brand ── */
   .brand {
-    @apply font-serif text-[20px] sm:text-[22px] font-medium tracking-[-0.01em] text-[var(--fg)] inline-flex items-baseline gap-2;
+    @apply font-serif font-medium tracking-[-0.01em] text-[var(--fg)] inline-flex items-baseline gap-2;
     transition: opacity 0.3s;
+    font-size: 20px;
+  }
+  @media (min-width: 640px) {
+    .brand {
+      font-size: 22px;
+    }
   }
   .brand:hover { opacity: 0.85; }
   .brand em { @apply italic; }
   .brand .domain {
-    @apply font-mono text-[9px] sm:text-[10px] tracking-[0.35em] uppercase text-[var(--accent-muted)] opacity-100;
+    @apply font-mono tracking-[0.35em] uppercase text-[var(--accent-muted)] opacity-100;
+    font-size: 9px;
+  }
+  @media (min-width: 640px) {
+    .brand .domain {
+      font-size: 10px;
+    }
   }
 
   /* ── Nav CTA ── */
   .nav-cta {
-    @apply font-mono text-[11px] sm:text-[10.5px] tracking-[0.22em] uppercase text-[var(--fg)] inline-flex items-center gap-2 px-4 sm:px-5 py-3 border border-[var(--line)] rounded-full bg-[#0A0A0B] min-h-[44px];
+    @apply font-mono tracking-[0.22em] uppercase text-[var(--fg)] inline-flex items-center gap-2 px-4 py-3 border border-[var(--line)] rounded-full bg-[#0A0A0B] min-h-[44px];
     transition: all 0.25s var(--ease);
+    font-size: 11px;
+  }
+  @media (min-width: 640px) {
+    .nav-cta {
+      font-size: 10.5px;
+      padding-left: 1.25rem;
+      padding-right: 1.25rem;
+    }
   }
   .nav-cta:hover {
     @apply border-[var(--line-gold)] text-[var(--accent)];
@@ -196,8 +249,9 @@ body::before {
     border: 1px solid rgba(201,162,74,0.2);
   }
   .nav-dropdown-item {
-    @apply px-4 py-3 text-[11px] font-mono tracking-[0.2em] uppercase text-[var(--fg-3)] flex items-center justify-between rounded-[10px] min-h-[44px];
+    @apply px-4 py-3 font-mono tracking-[0.2em] uppercase text-[var(--fg-3)] flex items-center justify-between rounded-[10px] min-h-[44px];
     transition: all 0.2s;
+    font-size: 11px;
   }
   .nav-dropdown-item:hover {
     @apply text-[var(--accent)] bg-[rgba(201,162,74,0.05)];
@@ -207,20 +261,32 @@ body::before {
 
   /* ── Scroll Arrow ── */
   .kbd-arrow {
-    @apply font-mono text-[12px] sm:text-[11px] tracking-[0.2em] uppercase text-[var(--fg-3)] inline-flex items-center gap-3;
+    @apply font-mono tracking-[0.2em] uppercase text-[var(--fg-3)] inline-flex items-center gap-3;
     transition: color 0.3s;
+    font-size: 12px;
+  }
+  @media (min-width: 640px) {
+    .kbd-arrow {
+      font-size: 11px;
+    }
   }
   .kbd-arrow::before {
     content: "↓";
-    @apply inline-block text-[18px] text-[var(--accent)] opacity-70;
+    @apply inline-block text-[var(--accent)] opacity-70;
     animation: nudge 2.4s ease-in-out infinite;
+    font-size: 18px;
   }
   .kbd-arrow:hover { @apply text-[var(--accent)]; }
 
   /* ── Cards ── */
   .cool-card {
-    @apply relative p-6 sm:p-8 border border-[var(--line)] bg-[#0A0A0B] rounded-[28px];
+    @apply relative p-6 border border-[var(--line)] bg-[#0A0A0B] rounded-[28px];
     transition: all 0.5s var(--ease);
+  }
+  @media (min-width: 640px) {
+    .cool-card {
+      padding: 2rem;
+    }
   }
   .cool-card:hover {
     border-color: var(--line-gold);
@@ -237,10 +303,7 @@ body::before {
     border-color: var(--line-gold);
   }
 
-  /* ── Hero Glow (subtle) ── */
-  .hero-glow {
-    text-shadow: 0 0 40px rgba(201,162,74,0.15);
-  }
+
 
   /* ── Gold Line ── */
   .gold-line {
@@ -272,8 +335,9 @@ body::before {
 
   /* ── Illuminated (legacy compat) ── */
   .ill-btn {
-    @apply font-mono text-[12px] tracking-[0.2em] uppercase text-[var(--fg)] px-6 py-4 border border-[var(--line-strong)] bg-transparent inline-flex items-center gap-3 min-h-[44px];
+    @apply font-mono tracking-[0.2em] uppercase text-[var(--fg)] px-6 py-4 border border-[var(--line-strong)] bg-transparent inline-flex items-center gap-3 min-h-[44px];
     transition: all 0.25s var(--ease);
+    font-size: 12px;
   }
   .ill-btn:hover {
     @apply border-[var(--accent)] text-[var(--accent)];
