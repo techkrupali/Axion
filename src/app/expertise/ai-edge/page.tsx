@@ -1150,12 +1150,13 @@ export default function AIEdgeLab() {
               <div style={{ fontFamily: S.mono, fontSize: "10.4px", letterSpacing: "0.24em", textTransform: "uppercase", color: S.gold, marginBottom: "10px" }}>For Individuals</div>
               <h3 style={{ fontFamily: S.display, fontSize: "clamp(34px,4.2vw,50px)", lineHeight: 1.02, textTransform: "uppercase", letterSpacing: "0.005em", color: S.white, marginBottom: "10px" }}>Begin Your <span style={{ color: S.gold }}>Diagnostic</span>.</h3>
               <p style={{ fontFamily: S.serif, fontSize: "15.200000000000001px", lineHeight: 1.7, color: S.dim, marginBottom: "16px" }}>Three personal diagnostics — <strong style={{ color: S.white, fontWeight: 500 }}>AAI©</strong> for aspiring professionals, <strong style={{ color: S.white, fontWeight: 500 }}>ARI©</strong> for working professionals, <strong style={{ color: S.white, fontWeight: 500 }}>BDI©</strong> for leaders. Your structural read in 48 hours.</p>
-              <div style={{ display: "flex", flexDirection: "column", gap: "14px", marginTop: "auto" }}>
+              <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", alignItems: "center", gap: "14px", marginTop: "auto" }}>
                 <button onClick={() => openModal("working")} style={{ fontFamily: S.mono, fontSize: "10.4px", letterSpacing: "0.2em", textTransform: "uppercase", padding: "20px 32px", background: S.gold, color: S.white, border: `1px solid ${S.gold}`, textDecoration: "none", textAlign: "center", cursor: "pointer", transition: "all .2s ease" }}
                   onMouseEnter={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = S.gold; }}
                   onMouseLeave={e => { e.currentTarget.style.background = S.gold; e.currentTarget.style.color = S.white; }}>
                   Find My AI Edge →
                 </button>
+                <span style={{ fontFamily: S.mono, fontSize: "10.4px", color: S.gold }}>·</span>
                 <button onClick={() => openModal()} style={{ fontFamily: S.mono, fontSize: "10.4px", letterSpacing: "0.2em", textTransform: "uppercase", padding: "20px 32px", background: "transparent", color: S.dim, border: "1px solid rgba(213,210,201,0.25)", cursor: "pointer", transition: "all .2s ease" }}
                   onMouseEnter={e => { e.currentTarget.style.color = S.white; e.currentTarget.style.borderColor = S.white; }}
                   onMouseLeave={e => { e.currentTarget.style.color = S.dim; e.currentTarget.style.borderColor = "rgba(213,210,201,0.25)"; }}>
@@ -1239,8 +1240,8 @@ export default function AIEdgeLab() {
             {[
               { h: "For Whom", links: [["for-students.html","Aspiring Professional · AAI©"],["for-professionals.html","Working Professional · ARI©"],["for-leaders.html","Leader / CXO · BDI©"],["for-organisations.html","Organisation · ORG AI DARS©"]] },
               { h: "The Institution", links: [["the-evidence-wall.html","The Evidence Wall · 12 reports"],["doctrine.html","The Doctrine · 4 statements"],["lexicon.html","The Lexicon · 19 terms"],["methodology.html","Methodology"],["#research","Research · 4 essays"],["#about","About Nitin Nahata"],["mailto:nitin@axionindex.org","nitin@axionindex.org"]] },
-              { h: "The Framework", links: [["#framework","E.D.G.E. Framework"],["#framework","Six Work Types"],["lexicon.html","Brainpower Density"],["lexicon.html","Edge Score"],["lexicon.html","Judgment Ownership"]] },
-              { h: "The Instruments", links: [["sample-report.html","ARI© · Working Professionals"],["sample-report-bdi.html","BDI© · Leaders"],["sample-report-dars.html","ORG AI DARS© · Organisations"],["#diagnostic","Begin a Diagnostic →"],["#enquire","Request an Engagement →"]] },
+              { h: "The Framework", links: [["#framework","E.D.G.E. Framework · Six Work Types"],["lexicon.html","Brainpower Density"],["lexicon.html","Edge Score"],["lexicon.html","Judgment Ownership"]] },
+              { h: "The Instruments", links: [["sample-report.html","ARI© · Working Professionals"],["sample-report-bdi.html","BDI© · Leaders"],["sample-report-dars.html","ORG AI DARS© · Organisations"],["#diagnostic","Begin a Diagnostic → · Request an Engagement →"]] },
             ].map((col, i) => (
               <div key={i}>
                 <div style={{ fontFamily: S.mono, fontSize: "7.2px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.gold, marginBottom: "18px" }}>{col.h}</div>
@@ -1253,9 +1254,9 @@ export default function AIEdgeLab() {
           <div style={{ height: "1px", background: "rgba(255,255,255,0.06)", margin: "0 52px" }} />
           <div style={{ padding: "24px 52px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "14px" }}>
             <div style={{ fontFamily: S.display, fontSize: "16px", letterSpacing: "0.04em", color: S.white }}>The <span style={{ color: S.gold }}>AI Edge Lab</span>
-              <div style={{ fontFamily: S.mono, fontSize: "7.2px", letterSpacing: "0.18em", color: S.mid, marginTop: "6px", textTransform: "none" }}>an Axion Index initiative</div>
+              <div style={{ fontFamily: S.mono, fontSize: "7.2px", letterSpacing: "0.18em", color: S.mid, marginTop: "6px", textTransform: "none" }}>An Axion Index initiative</div>
             </div>
-            <div style={{ fontFamily: S.mono, fontSize: "8.8px", color: S.dim, letterSpacing: "0.06em" }}>© 2026 Axionindex · axionindex.org · Private. Confidential.</div>
+            <div style={{ fontFamily: S.mono, fontSize: "8.8px", color: S.dim, letterSpacing: "0.06em" }}>© 2026 Axion Index · axionindex.org · Private. Confidential.</div>
           </div>
         </footer>
 
