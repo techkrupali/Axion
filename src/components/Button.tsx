@@ -25,12 +25,12 @@ export default function Button({
   showArrow = false,
   size = "md"
 }: ButtonProps) {
-  const baseClasses = "inline-flex items-center gap-3 font-mono text-[11px] tracking-[0.28em] uppercase rounded-full font-semibold transition-all duration-500";
+  const baseClasses = "inline-flex items-center justify-center gap-3 font-mono text-[12px] sm:text-[11px] tracking-[0.28em] uppercase rounded-full font-semibold transition-all duration-500 min-h-[44px]";
   
   const sizeClasses = {
-    sm: "px-6 py-3",
-    md: "px-8 py-4",
-    lg: "px-10 py-5"
+    sm: "px-6 py-3 min-h-[44px]",
+    md: "px-8 py-4 min-h-[48px]",
+    lg: "px-10 py-5 min-h-[52px]"
   };
 
   const variantClasses = {
@@ -41,7 +41,7 @@ export default function Button({
   const content = (
     <>
       {children}
-      {showArrow && <ArrowRight size={11} className="group-hover:translate-x-1 transition-transform" />}
+      {showArrow && <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform" />}
     </>
   );
 

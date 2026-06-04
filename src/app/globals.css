@@ -17,12 +17,12 @@
   --bg-glass: #0A0A0B;
   --bg-card: #0A0A0B;
 
-  /* Typography */
-  --fg: #F0F1F5;
+  /* Typography - improved for readability */
+  --fg: #F7F6F3; /* Brighter primary text */
   --fg-2: #D4D7E0;
   --fg-3: #B8BDCE;
-  --fg-4: #8A8FA4;
-  --fg-5: #4A4F62;
+  --fg-4: #9DA3B6; /* Brighter secondary, min contrast */
+  --fg-5: #6B7280;
 
   /* Gold accent — warm, premium */
   --accent: #C9A24A;
@@ -39,8 +39,8 @@
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-out: cubic-bezier(0.0, 0.0, 0.2, 1);
 
-  --chap: clamp(100px, 14vh, 180px);
-  --chap-tight: clamp(72px, 10vh, 120px);
+  --chap: clamp(80px, 12vh, 160px);
+  --chap-tight: clamp(60px, 8vh, 100px);
 }
 
 /* ============================================================
@@ -55,10 +55,10 @@ html {
 body {
   margin: 0; padding: 0;
   background: #0A0A0B;
-  color: #F0F1F5;
+  color: #F7F6F3;
   font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
   font-size: 17px;
-  line-height: 1.6;
+  line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -66,20 +66,18 @@ body {
 }
 
 /* Premium scrollbar */
-::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
 
 /* Dropdown — hide scrollbar until hover/scroll */
-.dropdown-scroll { scrollbar-width: none; }
-.dropdown-scroll::-webkit-scrollbar { width: 0px; }
-.dropdown-scroll:hover { scrollbar-width: thin; scrollbar-color: rgba(201,168,76,0.35) transparent; }
-.dropdown-scroll:hover::-webkit-scrollbar { width: 3px; }
-.dropdown-scroll:hover::-webkit-scrollbar-track { background: transparent; }
-.dropdown-scroll:hover::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.35); border-radius: 4px; }
+.dropdown-scroll { scrollbar-width: thin; }
+.dropdown-scroll::-webkit-scrollbar { width: 4px; }
+.dropdown-scroll::-webkit-scrollbar-track { background: transparent; }
+.dropdown-scroll::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.35); border-radius: 2px; }
 
 /* Selection */
-::selection { background: var(--accent-soft); color: var(--accent-2); }
+::selection { background: rgba(201, 162, 74, 0.2); color: var(--fg); }
 
 /* ============================================================
    NOISE TEXTURE OVERLAY
@@ -88,7 +86,7 @@ body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.02'/%3E%3C/svg%3E");
   pointer-events: none;
   z-index: 9999;
   opacity: 0.4;
@@ -107,8 +105,8 @@ body::before {
 
   /* ── Eyebrow ── */
   .eyebrow {
-    @apply font-mono text-[13px] tracking-[0.38em] uppercase text-white inline-flex items-center gap-3;
-    letter-spacing: 0.38em;
+    @apply font-mono text-[12px] sm:text-[13px] tracking-[0.35em] uppercase text-white inline-flex items-center gap-3;
+    letter-spacing: 0.35em;
   }
   .eyebrow::before {
     content: "";
@@ -119,29 +117,30 @@ body::before {
 
   /* ── Typography Scale ── */
   .h-display {
-    @apply font-serif font-normal leading-[1.0] tracking-[-0.02em] text-[var(--fg)];
-    font-size: clamp(52px, 7vw, 108px);
+    @apply font-serif font-normal leading-[1.05] tracking-[-0.02em] text-[var(--fg)];
+    font-size: clamp(40px, 8vw, 108px);
   }
   .h-display em { @apply italic text-[var(--accent)]; }
+  .h-display s { text-decoration: line-through; text-decoration-thickness: 2px; text-decoration-color: var(--accent); opacity: 0.9; }
 
   .h-section {
-    @apply font-serif font-normal leading-[1.06] tracking-[-0.015em] text-[var(--fg)];
-    font-size: clamp(36px, 4.2vw, 60px);
+    @apply font-serif font-normal leading-[1.1] tracking-[-0.015em] text-[var(--fg)];
+    font-size: clamp(32px, 5vw, 60px);
   }
   .h-section em { @apply italic text-[var(--accent)]; }
 
   .h-statement {
-    @apply font-serif font-normal leading-[1.12] tracking-[-0.01em] text-[var(--fg)];
-    font-size: clamp(28px, 3.2vw, 46px);
+    @apply font-serif font-normal leading-[1.15] tracking-[-0.01em] text-[var(--fg)];
+    font-size: clamp(26px, 4vw, 46px);
   }
   .h-statement em { @apply italic text-[var(--accent)]; }
 
   .lead {
-    @apply text-[clamp(18px,1.6vw,22px)] leading-[1.6] text-[var(--fg-2)] font-light max-w-[56ch];
+    @apply text-[clamp(17px, 2vw, 22px)] leading-[1.7] text-[var(--fg-2)] font-light max-w-[56ch];
   }
 
   .body-text {
-    @apply text-[17px] leading-[1.7] text-[var(--fg-2)] max-w-[60ch];
+    @apply text-[17px] leading-[1.75] text-[var(--fg-2)] max-w-[60ch];
   }
 
   /* ── Sections ── */
@@ -157,32 +156,32 @@ body::before {
 
   /* ── Navbar ── */
   .nav {
-    @apply fixed top-0 left-0 right-0 z-[80] px-8 py-5 flex items-center justify-between;
+    @apply fixed top-0 left-0 right-0 z-[80] px-4 sm:px-6 lg:px-8 py-4 sm:py-5 flex items-center justify-between;
     transition: all 0.5s var(--ease);
-    background: #0A0A0B;
+    background: rgba(10,10,11,0.95);
+    backdrop-filter: blur(12px);
     border-bottom: 1px solid rgba(240,241,245,0.1);
   }
   .nav.is-scrolled {
-    background: #0A0A0B;
-    border-bottom: 1px solid rgba(240,241,245,0.1);
-    padding-top: 14px;
-    padding-bottom: 14px;
+    background: rgba(10,10,11,0.98);
+    padding-top: 12px;
+    padding-bottom: 12px;
   }
 
   /* ── Brand ── */
   .brand {
-    @apply font-serif text-[22px] font-medium tracking-[-0.01em] text-[var(--fg)] inline-flex items-baseline gap-[10px];
+    @apply font-serif text-[20px] sm:text-[22px] font-medium tracking-[-0.01em] text-[var(--fg)] inline-flex items-baseline gap-2;
     transition: opacity 0.3s;
   }
-  .brand:hover { opacity: 0.8; }
+  .brand:hover { opacity: 0.85; }
   .brand em { @apply italic; }
   .brand .domain {
-    @apply font-mono text-[9px] tracking-[0.38em] uppercase text-[var(--accent-muted)] opacity-100;
+    @apply font-mono text-[9px] sm:text-[10px] tracking-[0.35em] uppercase text-[var(--accent-muted)] opacity-100;
   }
 
   /* ── Nav CTA ── */
   .nav-cta {
-    @apply font-mono text-[10.5px] tracking-[0.22em] uppercase text-[var(--fg)] inline-flex items-center gap-[10px] px-5 py-[10px] border border-[var(--line)] rounded-full bg-[#0A0A0B];
+    @apply font-mono text-[11px] sm:text-[10.5px] tracking-[0.22em] uppercase text-[var(--fg)] inline-flex items-center gap-2 px-4 sm:px-5 py-3 border border-[var(--line)] rounded-full bg-[#0A0A0B] min-h-[44px];
     transition: all 0.25s var(--ease);
   }
   .nav-cta:hover {
@@ -192,35 +191,35 @@ body::before {
 
   /* ── Dropdown ── */
   .nav-dropdown {
-    @apply absolute top-full left-0 mt-3 min-w-[260px] p-2 flex flex-col gap-1 z-[90] rounded-[16px];
+    @apply absolute top-full left-0 mt-3 min-w-[260px] p-3 flex flex-col gap-1 z-[90] rounded-[16px];
     background: #0A0A0B;
     border: 1px solid rgba(201,162,74,0.2);
   }
   .nav-dropdown-item {
-    @apply px-4 py-3 text-[10.5px] font-mono tracking-[0.2em] uppercase text-[var(--fg-3)] flex items-center justify-between rounded-[10px];
+    @apply px-4 py-3 text-[11px] font-mono tracking-[0.2em] uppercase text-[var(--fg-3)] flex items-center justify-between rounded-[10px] min-h-[44px];
     transition: all 0.2s;
   }
   .nav-dropdown-item:hover {
-    @apply text-[var(--accent)] bg-[#0A0A0B];
+    @apply text-[var(--accent)] bg-[rgba(201,162,74,0.05)];
   }
   .nav-dropdown-item span { transition: transform 0.2s; }
   .nav-dropdown-item:hover span { transform: translateX(4px); }
 
   /* ── Scroll Arrow ── */
   .kbd-arrow {
-    @apply font-mono text-[11px] tracking-[0.2em] uppercase text-[var(--fg-3)] inline-flex items-center gap-3;
+    @apply font-mono text-[12px] sm:text-[11px] tracking-[0.2em] uppercase text-[var(--fg-3)] inline-flex items-center gap-3;
     transition: color 0.3s;
   }
   .kbd-arrow::before {
     content: "↓";
-    @apply inline-block text-[16px] text-[var(--accent)] opacity-70;
+    @apply inline-block text-[18px] text-[var(--accent)] opacity-70;
     animation: nudge 2.4s ease-in-out infinite;
   }
   .kbd-arrow:hover { @apply text-[var(--accent)]; }
 
   /* ── Cards ── */
   .cool-card {
-    @apply relative p-8 border border-[var(--line)] bg-[#0A0A0B] rounded-[28px];
+    @apply relative p-6 sm:p-8 border border-[var(--line)] bg-[#0A0A0B] rounded-[28px];
     transition: all 0.5s var(--ease);
   }
   .cool-card:hover {
@@ -238,9 +237,9 @@ body::before {
     border-color: var(--line-gold);
   }
 
-  /* ── Hero Glow (removed glow!) ── */
+  /* ── Hero Glow (subtle) ── */
   .hero-glow {
-    text-shadow: none;
+    text-shadow: 0 0 40px rgba(201,162,74,0.15);
   }
 
   /* ── Gold Line ── */
@@ -273,12 +272,11 @@ body::before {
 
   /* ── Illuminated (legacy compat) ── */
   .ill-btn {
-    @apply font-mono text-[11px] tracking-[0.2em] uppercase text-[var(--fg)] px-[22px] py-[14px] border border-[var(--line-strong)] bg-transparent inline-flex items-center gap-[10px];
+    @apply font-mono text-[12px] tracking-[0.2em] uppercase text-[var(--fg)] px-6 py-4 border border-[var(--line-strong)] bg-transparent inline-flex items-center gap-3 min-h-[44px];
     transition: all 0.25s var(--ease);
   }
   .ill-btn:hover {
     @apply border-[var(--accent)] text-[var(--accent)];
-    box-shadow: 0 0 20px var(--accent-glow);
   }
 }
 
@@ -287,7 +285,7 @@ body::before {
    ============================================================ */
 @keyframes nudge {
   0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(5px); }
+  50%       { transform: translateY(6px); }
 }
 
 @keyframes shimmer {
@@ -331,42 +329,44 @@ body::before {
 .font-mono  { font-family: var(--font-mono); }
 
 /* ============================================================
-   READABILITY: SUBPOINT & SECONDARY TEXT SIZE FLOOR
-   Addresses tiny subpoint text (9px–11px) being hard to read.
-   Bumps the common small-text patterns to a comfortable minimum.
+   RESPONSIVE & MOBILE READABILITY
    ============================================================ */
 
-/* 9px → 12px */
-.text-\[9px\]   { font-size: 12px !important; }
+/* Mobile-specific improvements */
+@media (max-width: 768px) {
+  .h-display {
+    font-size: clamp(36px, 10vw, 52px);
+    line-height: 1.1;
+  }
 
-/* 10px → 13px */
-.text-\[10px\]  { font-size: 13px !important; }
-.text-\[10\.5px\] { font-size: 13px !important; }
+  .h-section {
+    font-size: clamp(28px, 7vw, 44px);
+    line-height: 1.15;
+  }
 
-/* 11px → 14px */
-.text-\[11px\]  { font-size: 14px !important; }
-.text-\[11\.5px\] { font-size: 14px !important; }
+  .h-statement {
+    font-size: clamp(24px, 6vw, 36px);
+    line-height: 1.2;
+  }
 
-/* text-xs (12px) → 14px */
-.text-xs        { font-size: 14px !important; }
+  /* Improve touch targets */
+  button, a, [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
 
-/* 12px → 14px */
-.text-\[12px\]  { font-size: 14px !important; }
+  /* Prevent horizontal overflow */
+  img, iframe, video {
+    max-width: 100%;
+  }
+}
 
-/* 12.5px → 14px */
-.text-\[12\.5px\] { font-size: 14px !important; }
-
-/* 13px → 15px */
-.text-\[13px\]  { font-size: 15px !important; }
-
-/* text-sm (14px) → 15px */
-.text-sm        { font-size: 15px !important; }
-
-/* Smooth image rendering */
-img { image-rendering: -webkit-optimize-contrast; }
-
-/* Focus visible */
+/* Focus visible for accessibility */
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
+  border-radius: 4px;
 }
+
+/* Smooth image rendering */
+img { image-rendering: -webkit-optimize-contrast; }

@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -34,7 +34,7 @@ const Navbar = () => {
 
   const expertiseLinks = [
     { name: "People Architecture", href: "/expertise/people", desc: "BCR · Structure · Signalling" },
-    { name: "AI Edge Lab", href: "/expertise/ai-edge", desc: "Judgment · Architecture · Governance" },
+    { name: "AI Edge Lab", href: "/expertise/ai-edge", desc: "Judgement · Architecture · Governance" },
     { name: "Labour Codes", href: "/expertise/labour", desc: "Cost · Classification · Compliance" },
     { name: "Family Business", href: "/expertise/family", desc: "Ownership · Succession · Institution" },
   ];
@@ -74,9 +74,9 @@ const Navbar = () => {
             onMouseLeave={() => setIsExpertiseOpen(false)}
           >
             <button
-              className={`text-[10.5px] font-mono tracking-[0.24em] uppercase flex items-center gap-2 outline-none transition-colors duration-300 ${
+              className={`text-[11px] font-mono tracking-[0.24em] uppercase flex items-center gap-2 outline-none transition-colors duration-300 min-h-[44px] ${
                 pathname.startsWith("/expertise")
-                  ? "text-[var(--accent)]"
+                  ? "text-[#C9A24A]"
                   : "text-[var(--fg-3)] hover:text-[var(--fg)]"
               }`}
             >
@@ -85,7 +85,7 @@ const Navbar = () => {
                 animate={{ rotate: isExpertiseOpen ? 180 : 0 }}
                 transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
               >
-                <ChevronDown size={11} />
+                <ChevronDown size={12} />
               </motion.div>
             </button>
 
@@ -107,12 +107,12 @@ const Navbar = () => {
                     >
                       <Link
                         href={link.href}
-                        className={`nav-dropdown-item ${pathname === link.href ? "text-[var(--accent)] bg-[var(--accent-soft)]" : ""}`}
+                        className={`nav-dropdown-item ${pathname === link.href ? "text-[#C9A24A] bg-[rgba(201,162,74,0.05)]" : ""}`}
                         onClick={() => setIsExpertiseOpen(false)}
                       >
                         <div>
-                          <div className="text-[10.5px] tracking-[0.2em]">{link.name}</div>
-                          <div className="text-[9px] text-[var(--fg-5)] tracking-[0.1em] mt-0.5 normal-case font-sans">{link.desc}</div>
+                          <div className="text-[11px] tracking-[0.2em]">{link.name}</div>
+                          <div className="text-[10px] text-[var(--fg-5)] tracking-[0.1em] mt-0.5 normal-case font-sans">{link.desc}</div>
                         </div>
                         <span className="text-[var(--accent)] opacity-0 group-hover:opacity-100">→</span>
                       </Link>
@@ -128,18 +128,18 @@ const Navbar = () => {
 
           <Link
             href="/connect"
-            className="ml-1 px-5 py-2.5 font-mono text-[9.5px] tracking-[0.22em] uppercase font-semibold rounded-full transition-all duration-300 active:scale-[0.97] inline-flex items-center gap-2"
+            className="ml-1 px-5 py-3 font-mono text-[11px] tracking-[0.22em] uppercase font-semibold rounded-full transition-all duration-300 active:scale-[0.97] inline-flex items-center gap-2 min-h-[44px]"
             style={{
               background: "linear-gradient(135deg, #C9A84C 0%, #E8C97A 50%, #C9A84C 100%)",
               color: "#080A0F",
               boxShadow: "0 0 20px rgba(201,168,76,0.2)",
             }}
           >
-            Reach Us <ArrowRight size={11} />
+            Reach Us <ArrowRight size={12} />
           </Link>
           <Link
             href="/admin/login"
-            className="ml-1 px-4 py-2.5 font-mono text-[9.5px] tracking-[0.22em] uppercase rounded-full border border-[rgba(201,168,76,0.25)] text-[var(--fg-4)] hover:text-[var(--accent)] hover:border-[rgba(201,168,76,0.5)] transition-all duration-300"
+            className="ml-1 px-4 py-3 font-mono text-[11px] tracking-[0.22em] uppercase rounded-full border border-[rgba(201,168,76,0.25)] text-[var(--fg-4)] hover:text-[#C9A24A] hover:border-[rgba(201,168,76,0.5)] transition-all duration-300 min-h-[44px]"
           >
             Login
           </Link>
@@ -149,10 +149,10 @@ const Navbar = () => {
         <div className="flex lg:hidden items-center gap-3">
           <button
             onClick={() => setIsMobileOpen(!isMobileOpen)}
-            className="p-2 text-[var(--fg-3)] hover:text-[var(--fg)] transition-colors"
+            className="p-3 text-[var(--fg-3)] hover:text-[var(--fg)] transition-colors min-h-[44px] min-w-[44px]"
             aria-label="Toggle menu"
           >
-            {isMobileOpen ? <X size={20} /> : <Menu size={20} />}
+            {isMobileOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
       </motion.nav>
@@ -165,16 +165,16 @@ const Navbar = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed top-[64px] left-0 right-0 z-[79] flex flex-col"
+            className="fixed top-[72px] left-0 right-0 z-[79] flex flex-col"
             style={{
-              background: "rgba(8,10,15,0.97)",
+              background: "rgba(8,10,15,0.98)",
               backdropFilter: "blur(32px)",
               borderBottom: "1px solid rgba(255,255,255,0.1)",
-              maxHeight: "calc(100vh - 64px)",
+              maxHeight: "calc(100vh - 72px)",
               overflowY: "auto",
             }}
           >
-            <div className="px-6 py-6 flex flex-col gap-1">
+            <div className="px-5 sm:px-6 py-6 flex flex-col gap-1">
               {allLinks.map((link, i) => (
                 <motion.div
                   key={link.href}
@@ -184,9 +184,9 @@ const Navbar = () => {
                 >
                   <Link
                     href={link.href}
-                    className={`block py-4 font-mono text-[11px] tracking-[0.24em] uppercase border-b transition-colors duration-200 ${
+                    className={`block py-4 font-mono text-[12px] tracking-[0.24em] uppercase border-b transition-colors duration-200 min-h-[48px] ${
                       pathname === link.href
-                        ? "text-[var(--accent)] border-[rgba(201,168,76,0.15)]"
+                        ? "text-[#C9A24A] border-[rgba(201,168,76,0.15)]"
                         : "text-[var(--fg-3)] border-[rgba(255,255,255,0.05)] hover:text-[var(--fg)]"
                     }`}
                   >
@@ -198,17 +198,20 @@ const Navbar = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: allLinks.length * 0.04 + 0.1 }}
-                className="pt-4"
+                className="pt-4 flex flex-col gap-3"
               >
                 <Link
                   href="/connect"
-                  className="block w-full text-center py-4 font-mono text-[11px] tracking-[0.24em] uppercase border border-[rgba(201,168,76,0.3)] text-[var(--accent)] hover:bg-[rgba(201,168,76,0.06)] transition-colors rounded-lg"
+                  className="block w-full text-center py-4 font-mono text-[12px] tracking-[0.24em] uppercase border border-[rgba(201,168,76,0.3)] text-[#080A0F] hover:bg-[rgba(201,168,76,0.9)] transition-colors rounded-lg min-h-[48px]"
+                  style={{
+                    background: "linear-gradient(135deg, #C9A84C 0%, #E8C97A 50%, #C9A84C 100%)",
+                  }}
                 >
-                  Reach us →
+                  Reach Us →
                 </Link>
                 <Link
                   href="/admin/login"
-                  className="block w-full text-center py-4 font-mono text-[11px] tracking-[0.24em] uppercase border border-[rgba(255,255,255,0.08)] text-[var(--fg-4)] hover:text-[var(--fg)] transition-colors rounded-lg mt-2"
+                  className="block w-full text-center py-4 font-mono text-[12px] tracking-[0.24em] uppercase border border-[rgba(255,255,255,0.08)] text-[var(--fg-4)] hover:text-[var(--fg)] transition-colors rounded-lg min-h-[48px]"
                 >
                   Login
                 </Link>
@@ -225,13 +228,13 @@ function NavLink({ href, label, active }: { href: string; label: string; active:
   return (
     <Link
       href={href}
-      className={`text-[10.5px] font-mono tracking-[0.24em] uppercase transition-colors duration-300 relative group whitespace-nowrap ${
-        active ? "text-[var(--accent)]" : "text-[var(--fg-3)] hover:text-[var(--fg)]"
+      className={`text-[11px] font-mono tracking-[0.24em] uppercase transition-colors duration-300 relative group whitespace-nowrap min-h-[44px] inline-flex items-center ${
+        active ? "text-[#C9A24A]" : "text-[var(--fg-3)] hover:text-[var(--fg)]"
       }`}
     >
       {label}
       <span
-        className="absolute -bottom-1 left-0 h-[1px] bg-[var(--accent)] transition-all duration-400 origin-left"
+        className="absolute -bottom-1 left-0 h-[1px] bg-[#C9A24A] transition-all duration-400 origin-left"
         style={{ width: active ? "100%" : "0%", transform: "scaleX(1)" }}
       />
     </Link>
