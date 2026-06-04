@@ -146,7 +146,7 @@ function PersonaModal({ open, onClose, initialKey }: { open: boolean; onClose: (
           {view === "gate" && (
             <>
               <div style={{ fontFamily: S.mono, fontSize: "8.8px", letterSpacing: "0.24em", textTransform: "uppercase", color: S.gold, marginBottom: "16px" }}>Step 01 · Who are you in the AI economy?</div>
-              <div style={{ fontFamily: S.display, fontSize: "clamp(30px,5vw,46px)", lineHeight: 1, color: S.ink, marginBottom: "10px" }}>Where is your edge?</div>
+              <div style={{ fontFamily: S.display, fontSize: "clamp(18px,3vw,30px)", lineHeight: 1, color: S.ink, marginBottom: "10px" }}>Where is your edge?</div>
               <p style={{ fontSize: "10.4px", color: S.mid, lineHeight: 1.7, marginBottom: "34px" }}>Each actor in the AI workplace faces a different structural challenge — and a different instrument. Choose where you stand.</p>
               <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
                 {(["aspiring","working","leader","org"] as ArchKey[]).map((p, i) => (
@@ -154,7 +154,7 @@ function PersonaModal({ open, onClose, initialKey }: { open: boolean; onClose: (
                     style={{ textAlign: "left", width: "100%", border: `1px solid ${S.rule2}`, background: S.white, padding: "22px 24px", cursor: "pointer", display: "flex", alignItems: "center", gap: "22px" }}>
                     <span style={{ fontFamily: S.mono, fontSize: "8px", color: S.gold, letterSpacing: "0.1em", flexShrink: 0, width: "22px" }}>0{i+1}</span>
                     <span style={{ flex: 1 }}>
-                      <span style={{ display: "block", fontFamily: S.display, fontSize: "20.8px", color: S.ink, lineHeight: 1, marginBottom: "7px" }}>
+                      <span style={{ display: "block", fontFamily: S.display, fontSize: "14px", color: S.ink, lineHeight: 1, marginBottom: "7px" }}>
                         {["Aspiring Professional","Working Professional","Leader / CXO","Organisation"][i]}
                       </span>
                       <span style={{ display: "block", fontSize: "10px", color: S.mid, lineHeight: 1.6, fontStyle: "italic" }}>
@@ -173,7 +173,7 @@ function PersonaModal({ open, onClose, initialKey }: { open: boolean; onClose: (
             <>
               <button onClick={() => setView("gate")} style={{ fontFamily: S.mono, fontSize: "8.8px", letterSpacing: "0.18em", textTransform: "uppercase", color: S.mid, cursor: "pointer", background: "none", border: "none", marginBottom: "24px" }}>← All actors</button>
               <div style={{ fontFamily: S.mono, fontSize: "8.8px", letterSpacing: "0.2em", textTransform: "uppercase", color: S.gold, marginBottom: "12px" }}>{I.tag}</div>
-              <div style={{ fontFamily: S.display, fontSize: "clamp(34px,6vw,54px)", lineHeight: 0.95, color: S.ink, marginBottom: "14px" }}>{I.name}</div>
+              <div style={{ fontFamily: S.display, fontSize: "clamp(20px,3.5vw,34px)", lineHeight: 0.95, color: S.ink, marginBottom: "14px" }}>{I.name}</div>
               <p style={{ fontSize: "10.8px", color: S.ink2, lineHeight: 1.7, marginBottom: "26px", maxWidth: "560px" }}>{I.body}</p>
               <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginBottom: "24px" }}>
                 {["01 · Choose tier","02 · Secure payment","03 · Complete diagnostic","04 · Report within 48h"].map((s, i) => (
@@ -184,10 +184,10 @@ function PersonaModal({ open, onClose, initialKey }: { open: boolean; onClose: (
                 {I.tiers.map((t, i) => (
                   <div key={i} style={{ background: S.white, padding: "18px 22px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "16px", flexWrap: "wrap" }}>
                     <span style={{ flex: 1, minWidth: "180px" }}>
-                      <span style={{ display: "block", fontSize: "11.200000000000001px", color: S.ink, marginBottom: "4px" }}>{t.n}</span>
+                      <span style={{ display: "block", fontSize: "9.5px", color: S.ink, marginBottom: "4px" }}>{t.n}</span>
                       <span style={{ display: "block", fontSize: "9.200000000000001px", color: S.mid, lineHeight: 1.5 }}>{t.d}</span>
                     </span>
-                    <span style={{ fontFamily: S.display, fontSize: "20.8px", color: S.ink, lineHeight: 1 }}>{cur === "inr" ? t.p : (t.u || t.p)}</span>
+                    <span style={{ fontFamily: S.display, fontSize: "14px", color: S.ink, lineHeight: 1 }}>{cur === "inr" ? t.p : (t.u || t.p)}</span>
                     {t.enq ? (
                       <button onClick={() => handleCta(t)} style={{ fontFamily: S.mono, fontSize: "8.8px", letterSpacing: "0.18em", textTransform: "uppercase", padding: "13px 22px", background: S.ink, color: S.white, border: `1px solid ${S.ink}`, cursor: "pointer" }}>Enquire →</button>
                     ) : t.wait ? (
@@ -257,8 +257,8 @@ function MicroDiagnostic({ S, onOpenModal }: { S: Record<string, string>; onOpen
     <section id="micro-diagnostic" style={{ padding: "80px 24px", background: "#EFEEEA", borderTop: `1px solid ${S.rule}`, borderBottom: `1px solid ${S.rule}` }}>
       <div style={{ width: "100%", maxWidth: "none", margin: "0 0 48px 0" }}>
         <div style={{ fontFamily: S.mono, fontSize: "10.4px", letterSpacing: "0.24em", textTransform: "uppercase", color: S.gold, marginBottom: "18px" }}>30-Second Structural Read · Free</div>
-        <h2 style={{ fontFamily: S.display, fontSize: "clamp(40px,6vw,72px)", lineHeight: 0.96, letterSpacing: "0.005em", color: S.ink, textTransform: "uppercase", marginBottom: "22px", textAlign: "left" }}>Take a <span style={{ color: S.gold }}>5-question</span> read on where your edge sits.</h2>
-        <p style={{ fontFamily: "var(--font-cormorant-garamond),'Cormorant Garamond',Georgia,serif", fontSize: "16.8px", fontStyle: "italic", lineHeight: 1.7, color: "#2E2E2C", maxWidth: "100%", paddingLeft: "18px", borderLeft: `3px solid ${S.gold}` }}>Five questions. Each maps to a canonical doctrine concept. Score lands you in one of three structural bands — Edge Accelerating, Edge Holding, or Edge Thinning.</p>
+        <h2 style={{ fontFamily: S.display, fontSize: "clamp(24px,4vw,44px)", lineHeight: 0.96, letterSpacing: "0.005em", color: S.ink, textTransform: "uppercase", marginBottom: "22px", textAlign: "left" }}>Take a <span style={{ color: S.gold }}>5-question</span> read on where your edge sits.</h2>
+        <p style={{ fontFamily: "var(--font-cormorant-garamond),'Cormorant Garamond',Georgia,serif", fontSize: "13px", fontStyle: "italic", lineHeight: 1.7, color: "#2E2E2C", maxWidth: "100%", paddingLeft: "18px", borderLeft: `3px solid ${S.gold}` }}>Five questions. Each maps to a canonical doctrine concept. Score lands you in one of three structural bands — Edge Accelerating, Edge Holding, or Edge Thinning.</p>
         <div style={{ display: "flex", flexWrap: "wrap", gap: "18px", marginTop: "24px", paddingTop: "20px", borderTop: `1px solid ${S.rule}` }}>
           {["Q1 · Role Composition Map","Q2 · Judgment Ownership","Q3 · Thinking Ownership","Q4 · Personal Dividend","Q5 · Work Redesign"].map(p => (
             <span key={p} style={{ fontFamily: S.mono, fontSize: "9.600000000000001px", letterSpacing: "0.16em", textTransform: "uppercase", color: "#2E2E2C", padding: "7px 14px", background: "rgba(160,120,48,0.08)", border: "1px solid rgba(160,120,48,0.18)" }}>{p}</span>
@@ -270,7 +270,7 @@ function MicroDiagnostic({ S, onOpenModal }: { S: Record<string, string>; onOpen
         {/* PICKER */}
         {stage === "picker" && (
           <>
-            <div style={{ fontFamily: S.mono, fontSize: "11.200000000000001px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.mid, marginBottom: "20px", textAlign: "left" }}>Begin · Which describes you?</div>
+            <div style={{ fontFamily: S.mono, fontSize: "9.5px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.mid, marginBottom: "20px", textAlign: "left" }}>Begin · Which describes you?</div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4" style={{ gap: "1px", background: S.rule, border: `1px solid ${S.rule}` }}>
               {archCards.map(c => (
                 <button key={c.key} onClick={() => startQuiz(c.key)}
@@ -294,8 +294,8 @@ function MicroDiagnostic({ S, onOpenModal }: { S: Record<string, string>; onOpen
                     if (children[4]) children[4].style.color = S.gold; // begin
                   }}>
                   <div style={{ fontFamily: S.mono, fontSize: "9.600000000000001px", letterSpacing: "0.22em", color: S.gold, transition: "color .25s ease" }}>{c.num}</div>
-                  <div style={{ fontFamily: S.display, fontSize: "28.8px", lineHeight: 1, color: S.ink, textTransform: "uppercase", letterSpacing: "0.005em", transition: "color .25s ease" }}>{c.name}</div>
-                  <div style={{ fontFamily: "var(--font-cormorant-garamond),'Cormorant Garamond',Georgia,serif", fontSize: "12.8px", fontStyle: "italic", color: "#2E2E2C", lineHeight: 1.5, minHeight: "64px", transition: "color .25s ease" }}>{c.desc}</div>
+                  <div style={{ fontFamily: S.display, fontSize: "18px", lineHeight: 1, color: S.ink, textTransform: "uppercase", letterSpacing: "0.005em", transition: "color .25s ease" }}>{c.name}</div>
+                  <div style={{ fontFamily: "var(--font-cormorant-garamond),'Cormorant Garamond',Georgia,serif", fontSize: "11px", fontStyle: "italic", color: "#2E2E2C", lineHeight: 1.5, minHeight: "64px", transition: "color .25s ease" }}>{c.desc}</div>
                   <div style={{ fontFamily: S.mono, fontSize: "8.8px", letterSpacing: "0.12em", textTransform: "uppercase", color: S.mid, paddingTop: "18px", borderTop: `1px solid ${S.rule}`, transition: "color .25s ease" }}>{c.inst}</div>
                   <div style={{ fontFamily: S.mono, fontSize: "9.600000000000001px", letterSpacing: "0.18em", textTransform: "uppercase", color: S.gold, transition: "color .25s ease" }}>Begin →</div>
                 </button>
@@ -317,11 +317,11 @@ function MicroDiagnostic({ S, onOpenModal }: { S: Record<string, string>; onOpen
               </div>
             </div>
             <div style={{ fontFamily: S.mono, fontSize: "8px", letterSpacing: "0.24em", textTransform: "uppercase", color: S.gold, marginBottom: "14px" }}>{ARCH_QUIZ[arch].questions[qIdx].anchor}</div>
-            <h3 style={{ fontFamily: S.display, fontSize: "clamp(24px,3.2vw,36px)", lineHeight: 1.14, letterSpacing: "0.005em", color: S.ink, marginBottom: "30px" }}>{ARCH_QUIZ[arch].questions[qIdx].q}</h3>
+            <h3 style={{ fontFamily: S.display, fontSize: "clamp(15px,2.2vw,22px)", lineHeight: 1.14, letterSpacing: "0.005em", color: S.ink, marginBottom: "30px" }}>{ARCH_QUIZ[arch].questions[qIdx].q}</h3>
             <div style={{ display: "flex", flexDirection: "column", gap: "1px", background: S.rule, border: `1px solid ${S.rule}` }}>
               {ARCH_QUIZ[arch].questions[qIdx].opts.map((o, i) => (
                 <button key={i} onClick={() => answer(o.s)}
-                  style={{ background: S.white, border: "none", padding: "22px 28px", textAlign: "left", cursor: "pointer", fontFamily: "var(--font-geist-sans),system-ui,sans-serif", fontSize: "12.8px", color: "#1A1A18", lineHeight: 1.6, transition: "background .2s ease,padding-left .2s ease", borderLeft: "3px solid transparent", display: "flex", alignItems: "flex-start", gap: "18px" }}
+                  style={{ background: S.white, border: "none", padding: "22px 28px", textAlign: "left", cursor: "pointer", fontFamily: "var(--font-geist-sans),system-ui,sans-serif", fontSize: "11px", color: "#1A1A18", lineHeight: 1.6, transition: "background .2s ease,padding-left .2s ease", borderLeft: "3px solid transparent", display: "flex", alignItems: "flex-start", gap: "18px" }}
                   onMouseEnter={e => { e.currentTarget.style.background = S.ink; e.currentTarget.style.color = S.white; e.currentTarget.style.paddingLeft = "36px"; e.currentTarget.style.borderLeftColor = S.gold; }}
                   onMouseLeave={e => { e.currentTarget.style.background = S.white; e.currentTarget.style.color = "#1A1A18"; e.currentTarget.style.paddingLeft = "28px"; e.currentTarget.style.borderLeftColor = "transparent"; }}>
                   <span style={{ fontFamily: S.mono, fontSize: "8px", letterSpacing: "0.18em", color: S.gold, textTransform: "uppercase", flexShrink: 0, width: "16px", paddingTop: "2px" }}>{["A","B","C","D"][i]}</span>
@@ -337,13 +337,13 @@ function MicroDiagnostic({ S, onOpenModal }: { S: Record<string, string>; onOpen
           <div style={{ background: S.ink, color: S.white, padding: "56px 36px" }}>
             <div style={{ fontFamily: S.mono, fontSize: "8.8px", letterSpacing: "0.24em", textTransform: "uppercase", color: S.gold, marginBottom: "24px" }}>Your Indicative Band</div>
             <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: "24px", flexWrap: "wrap", marginBottom: "18px" }}>
-              <div style={{ fontFamily: S.display, fontSize: "clamp(48px,8vw,92px)", lineHeight: 0.9, letterSpacing: "0.005em", color: bandColor, textTransform: "uppercase" }}>{bandLabel}</div>
-              <div style={{ fontFamily: S.display, fontSize: "38.400000000000006px", lineHeight: 0.9, color: S.gold }}>
+              <div style={{ fontFamily: S.display, fontSize: "clamp(28px,5vw,52px)", lineHeight: 0.9, letterSpacing: "0.005em", color: bandColor, textTransform: "uppercase" }}>{bandLabel}</div>
+              <div style={{ fontFamily: S.display, fontSize: "24px", lineHeight: 0.9, color: S.gold }}>
                 {Math.round(total)}<span style={{ fontFamily: S.mono, fontSize: "8.8px", color: S.dim, letterSpacing: "0.18em", marginLeft: "4px" }}>/100</span>
               </div>
             </div>
             <div style={{ height: "1px", background: "rgba(160,120,48,0.4)", margin: "28px 0" }} />
-            <p style={{ fontFamily: "var(--font-cormorant-garamond),'Cormorant Garamond',Georgia,serif", fontSize: "13.600000000000001px", lineHeight: 1.65, color: "rgba(247,246,243,0.85)", marginBottom: "34px", maxWidth: "100%" }}>{bandNarrative(arch)}</p>
+            <p style={{ fontFamily: "var(--font-cormorant-garamond),'Cormorant Garamond',Georgia,serif", fontSize: "11.5px", lineHeight: 1.65, color: "rgba(247,246,243,0.85)", marginBottom: "34px", maxWidth: "100%" }}>{bandNarrative(arch)}</p>
             <div style={{ display: "flex", alignItems: "center", gap: "24px", flexWrap: "wrap", marginBottom: "28px" }}>
               <button onClick={() => onOpenModal(arch)} style={{ display: "inline-block", padding: "16px 30px", background: S.gold, color: S.ink, fontFamily: S.mono, fontSize: "8.8px", letterSpacing: "0.2em", textTransform: "uppercase", fontWeight: 500, cursor: "pointer", border: "none" }}>
                 {ARCH_QUIZ[arch].price === "Enquire" ? "Enquire about " : "Take the full "}{ARCH_QUIZ[arch].instrument} →
@@ -352,7 +352,7 @@ function MicroDiagnostic({ S, onOpenModal }: { S: Record<string, string>; onOpen
             </div>
             <div style={{ paddingTop: "32px", marginTop: "32px", borderTop: "1px solid rgba(160,120,48,0.18)" }}>
               <div style={{ fontFamily: S.mono, fontSize: "8px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.gold, marginBottom: "10px" }}>Or get a structural read in your inbox monthly</div>
-              <p style={{ fontFamily: "var(--font-cormorant-garamond),'Cormorant Garamond',Georgia,serif", fontSize: "12.8px", lineHeight: 1.6, color: "rgba(247,246,243,0.65)", marginBottom: "18px", maxWidth: "100%", fontStyle: "italic" }}>Subscribe to One Structural Read A Month — published when there is something to say.</p>
+              <p style={{ fontFamily: "var(--font-cormorant-garamond),'Cormorant Garamond',Georgia,serif", fontSize: "11px", lineHeight: 1.6, color: "rgba(247,246,243,0.65)", marginBottom: "18px", maxWidth: "100%", fontStyle: "italic" }}>Subscribe to One Structural Read A Month — published when there is something to say.</p>
               <form onSubmit={handleSubscribe} style={{ display: "flex", gap: "1px", background: "rgba(255,255,255,0.08)", maxWidth: "100%", border: "1px solid rgba(160,120,48,0.3)" }}>
                 <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="your email" required style={{ flex: 1, background: "transparent", border: "none", padding: "14px 18px", fontFamily: S.mono, fontSize: "10.4px", color: S.white, outline: "none", letterSpacing: "0.04em" }} />
                 <button type="submit" style={{ background: S.gold, color: S.ink, border: "none", padding: "14px 22px", fontFamily: S.mono, fontSize: "8px", letterSpacing: "0.16em", textTransform: "uppercase", cursor: "pointer", fontWeight: 500 }}>Subscribe →</button>
@@ -378,13 +378,13 @@ function DiagCards({ cur, tiers, S }: {
       {tiers.map((t, i) => (
         <div key={i} style={{ background: t.dark ? S.ink : S.white, padding: "30px 26px", display: "flex", flexDirection: "column" }}>
           <div style={{ fontFamily: S.mono, fontSize: "9.600000000000001px", letterSpacing: "0.18em", textTransform: "uppercase", color: t.dark ? S.gold2 : S.mid, marginBottom: "14px" }}>{t.tier}</div>
-          <div style={{ fontFamily: S.display, fontSize: "24px", letterSpacing: "0.02em", color: t.dark ? S.white : S.ink, lineHeight: 1, marginBottom: "10px" }}>{t.name}</div>
-          <div style={{ fontFamily: S.display, fontSize: "32px", color: t.dark ? S.white : S.ink, lineHeight: 1, marginBottom: "5px" }}>{cur === "inr" ? t.inr : t.usd}</div>
-          <div style={{ fontFamily: "var(--font-cormorant-garamond),'Cormorant Garamond',Georgia,serif", fontStyle: "italic", fontSize: "11.200000000000001px", color: S.gold, marginBottom: "14px", letterSpacing: "0.01em" }}>Priced to filter, not to fund.</div>
-          <div style={{ fontSize: "11.200000000000001px", color: t.dark ? S.dim : S.mid, lineHeight: 1.6, marginBottom: "16px", minHeight: "34px" }}>{t.time}</div>
+          <div style={{ fontFamily: S.display, fontSize: "16px", letterSpacing: "0.02em", color: t.dark ? S.white : S.ink, lineHeight: 1, marginBottom: "10px" }}>{t.name}</div>
+          <div style={{ fontFamily: S.display, fontSize: "20px", color: t.dark ? S.white : S.ink, lineHeight: 1, marginBottom: "5px" }}>{cur === "inr" ? t.inr : t.usd}</div>
+          <div style={{ fontFamily: "var(--font-cormorant-garamond),'Cormorant Garamond',Georgia,serif", fontStyle: "italic", fontSize: "9.5px", color: S.gold, marginBottom: "14px", letterSpacing: "0.01em" }}>Priced to filter, not to fund.</div>
+          <div style={{ fontSize: "9.5px", color: t.dark ? S.dim : S.mid, lineHeight: 1.6, marginBottom: "16px", minHeight: "34px" }}>{t.time}</div>
           <div style={{ marginBottom: "26px", flex: 1 }}>
             {t.feats.map((f, j) => (
-              <div key={j} style={{ fontSize: "11.200000000000001px", color: t.dark ? S.white2 : S.ink2, padding: "7px 0", borderBottom: `1px solid ${t.dark ? "rgba(247,246,243,0.12)" : S.rule}`, lineHeight: 1.5 }}>{f}</div>
+              <div key={j} style={{ fontSize: "9.5px", color: t.dark ? S.white2 : S.ink2, padding: "7px 0", borderBottom: `1px solid ${t.dark ? "rgba(247,246,243,0.12)" : S.rule}`, lineHeight: 1.5 }}>{f}</div>
             ))}
           </div>
           {t.waitlist ? (
@@ -532,15 +532,15 @@ export default function AIEdgeLab() {
           <div style={{ width: "100%", height: "300px", background: "linear-gradient(160deg,#1A1C20 0%,#282C32 35%,#353830 65%,#1E1E1A 100%)", position: "relative", overflow: "hidden" }}>
             <div style={{ position: "absolute", inset: 0, background: "repeating-linear-gradient(90deg,transparent 0px,transparent 2px,rgba(255,255,255,0.008) 2px,rgba(255,255,255,0.008) 4px)" }} />
             <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "55%", background: "linear-gradient(to top,#0A0B0E 0%,#0E1014 20%,transparent 100%)" }} />
-            <div className="hidden md:block" style={{ position: "absolute", right: "44px", top: "50%", transform: "translateY(-50%) rotate(90deg)", transformOrigin: "center center", fontFamily: S.display, fontSize: "38.400000000000006px", letterSpacing: "0.12em", color: "#FFFFFF", whiteSpace: "nowrap" }}>AI EDGE LAB</div>
+            <div className="hidden md:block" style={{ position: "absolute", right: "44px", top: "50%", transform: "translateY(-50%) rotate(90deg)", transformOrigin: "center center", fontFamily: S.display, fontSize: "24px", letterSpacing: "0.12em", color: "#FFFFFF", whiteSpace: "nowrap" }}>AI EDGE LAB</div>
             <div style={{ position: "absolute", bottom: "32px", left: "52px", fontFamily: S.mono, fontSize: "8px", letterSpacing: "0.22em", textTransform: "uppercase", color: "#FFFFFF" }}>The Architecture of Work in the Post-AI Era · 2026</div>
           </div>
           {/* Hero two-col */}
           <div className="grid grid-cols-1 md:grid-cols-2" style={{ borderBottom: `1px solid ${S.rule}` }}>
             <div style={{ padding: "52px", borderRight: `1px solid ${S.rule}` }}>
               <div style={{ fontFamily: S.mono, fontSize: "10.4px", letterSpacing: "0.24em", textTransform: "uppercase", color: S.mid, marginBottom: "20px" }}>AI Edge Lab · Four Actors · One Transformation</div>
-              <h1 style={{ fontFamily: S.display, fontSize: "clamp(64px,9vw,110px)", lineHeight: 0.95, letterSpacing: "0.01em", color: S.ink }}>THE<br />WORK<br /><span style={{ color: S.gold }}>SHIFT.</span></h1>
-              <p style={{ fontFamily: S.display, fontSize: "clamp(20px,2.2vw,30px)", color: S.ink, lineHeight: 1.15, letterSpacing: "0.015em", textTransform: "uppercase", marginTop: "28px", maxWidth: "520px" }}>
+              <h1 style={{ fontFamily: S.display, fontSize: "clamp(36px,5vw,64px)", lineHeight: 0.95, letterSpacing: "0.01em", color: S.ink }}>THE<br />WORK<br /><span style={{ color: S.gold }}>SHIFT.</span></h1>
+              <p style={{ fontFamily: S.display, fontSize: "clamp(14px,1.6vw,20px)", color: S.ink, lineHeight: 1.15, letterSpacing: "0.015em", textTransform: "uppercase", marginTop: "28px", maxWidth: "520px" }}>
                 Measure where you stand in the AI Era — and how long your <span style={{ color: S.gold }}>edge will hold.</span>
               </p>
               <button onClick={() => openModal("working")} className="explore-link" style={{ display: "inline-flex", alignItems: "center", gap: "12px", fontFamily: S.mono, fontSize: "9.600000000000001px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.ink, paddingBottom: "10px", transition: "gap .25s ease,color .25s ease,border-color .25s ease", marginTop: "36px", background: "none", border: "none", borderBottom: `1px solid ${S.ink}`, cursor: "pointer" }}>
@@ -549,17 +549,17 @@ export default function AIEdgeLab() {
               <div style={{ fontFamily: S.mono, fontSize: "8.8px", letterSpacing: "0.14em", textTransform: "uppercase", color: S.mid, marginTop: "16px" }}>Private · Confidential · Not shared with your employer</div>
             </div>
             <div style={{ padding: "52px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-              <p style={{ fontSize: "14.4px", color: S.mid, lineHeight: 1.9, fontWeight: 300, marginBottom: "32px", maxWidth: "400px" }}>The workplace now has four actors: the Employee, the CXO, the Organisation — and AI. Each is being reshaped by a different kind of pressure. AI Edge Lab maps that pressure, measures your exposure, and shows where judgment still creates advantage.</p>
+              <p style={{ fontSize: "12px", color: S.mid, lineHeight: 1.9, fontWeight: 300, marginBottom: "32px", maxWidth: "400px" }}>The workplace now has four actors: the Employee, the CXO, the Organisation — and AI. Each is being reshaped by a different kind of pressure. AI Edge Lab maps that pressure, measures your exposure, and shows where judgment still creates advantage.</p>
               <div style={{ display: "flex", gap: "32px", marginBottom: "32px", flexWrap: "wrap" }}>
                 {[{ n: "39%", l: "Skills change by 2030 · WEF", href: "https://www.weforum.org/publications/the-future-of-jobs-report-2025/" },{ n: "23%", l: "Scaled AI · McKinsey", href: "https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai" },{ n: "95%", l: "No P&L impact · MIT NANDA", href: "https://mlq.ai/media/quarterly_decks/v0.1_State_of_AI_in_Business_2025_Report.pdf" }].map((s, i) => (
                   <a key={i} href={s.href} target="_blank" rel="noopener" style={{ borderLeft: `1px solid ${S.rule2}`, paddingLeft: "16px", textDecoration: "none" }}>
-                    <div style={{ fontFamily: S.display, fontSize: "28.8px", color: S.ink, lineHeight: 1 }}>{s.n}</div>
+                    <div style={{ fontFamily: S.display, fontSize: "18px", color: S.ink, lineHeight: 1 }}>{s.n}</div>
                     <div style={{ fontFamily: S.mono, fontSize: "8.8px", letterSpacing: "0.14em", textTransform: "uppercase", color: S.mid, marginTop: "4px" }}>{s.l}</div>
                   </a>
                 ))}
               </div>
-              <button onClick={() => openModal()} className="framework-link" style={{ display: "inline-flex", alignItems: "center", gap: "12px", fontFamily: S.mono, fontSize: "11.200000000000001px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.ink, paddingBottom: "10px", transition: "gap .25s ease,color .25s ease,border-color .25s ease", background: "none", border: "none", borderBottom: `1px solid ${S.ink}`, cursor: "pointer" }}>
-                Explore the Framework <span style={{ fontSize: "16px", fontFamily: S.display }}>→</span>
+              <button onClick={() => openModal()} className="framework-link" style={{ display: "inline-flex", alignItems: "center", gap: "12px", fontFamily: S.mono, fontSize: "9.5px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.ink, paddingBottom: "10px", transition: "gap .25s ease,color .25s ease,border-color .25s ease", background: "none", border: "none", borderBottom: `1px solid ${S.ink}`, cursor: "pointer" }}>
+                Explore the Framework <span style={{ fontSize: "13px", fontFamily: S.display }}>→</span>
               </button>
             </div>
           </div>
@@ -575,7 +575,7 @@ export default function AIEdgeLab() {
                 onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; }}
                 onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; }}>
                 <div style={{ fontFamily: S.mono, fontSize: "9.600000000000001px", letterSpacing: "0.18em", textTransform: "uppercase", color: c.color, opacity: 0.65 }}>{c.num}</div>
-                <div style={{ fontFamily: S.display, fontSize: "20.8px", lineHeight: 1, letterSpacing: "0.01em", textTransform: "uppercase", color: c.color, whiteSpace: "pre-line" }}>{c.who}</div>
+                <div style={{ fontFamily: S.display, fontSize: "14px", lineHeight: 1, letterSpacing: "0.01em", textTransform: "uppercase", color: c.color, whiteSpace: "pre-line" }}>{c.who}</div>
                 <div style={{ fontFamily: S.mono, fontSize: "9.600000000000001px", letterSpacing: "0.14em", textTransform: "uppercase", color: c.color, opacity: 0.55, marginTop: "auto" }}>{c.inst}</div>
                 <div style={{ fontFamily: S.mono, fontSize: "9.600000000000001px", letterSpacing: "0.16em", textTransform: "uppercase", color: c.goldColor, display: "inline-flex", alignItems: "center", gap: "6px" }}>Read →</div>
               </a>
@@ -595,13 +595,13 @@ export default function AIEdgeLab() {
             <div className="grid grid-cols-2 md:grid-cols-5" style={{ gap: "12px", marginBottom: "36px" }}>
               {[["12","Reports analysed"],["7","Institutions"],["15K+","Executives surveyed"],["$665B","Invested in AI"],["95%","Zero P&L impact"]].map(([v, l]) => (
                 <div key={l} style={{ background: S.ink, padding: "24px 22px", textAlign: "center", border: "1px solid rgba(201,168,76,0.35)", borderRadius: "8px", boxShadow: "0 0 20px rgba(201,168,76,0.15), inset 0 0 20px rgba(201,168,76,0.05)" }}>
-                  <div style={{ fontFamily: S.display, fontSize: "35.2px", lineHeight: 1, color: S.gold, letterSpacing: "0.005em", marginBottom: "6px" }}>{v}</div>
+                  <div style={{ fontFamily: S.display, fontSize: "22px", lineHeight: 1, color: S.gold, letterSpacing: "0.005em", marginBottom: "6px" }}>{v}</div>
                   <div style={{ fontFamily: S.mono, fontSize: "8px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#9C978C" }}>{l}</div>
                 </div>
               ))}
             </div>
             <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexWrap: "wrap", gap: "18px" }}>
-              <p style={{ fontFamily: S.serif, fontStyle: "italic", fontSize: "13.600000000000001px", color: "#E8E6E0", maxWidth: "640px", lineHeight: 1.55 }}><strong style={{ color: S.white, fontStyle: "normal", fontWeight: 500 }}>The technology works. The architecture does not.</strong> Naming the new problem is the precondition for solving it.</p>
+              <p style={{ fontFamily: S.serif, fontStyle: "italic", fontSize: "11.5px", color: "#E8E6E0", maxWidth: "640px", lineHeight: 1.55 }}><strong style={{ color: S.white, fontStyle: "normal", fontWeight: 500 }}>The technology works. The architecture does not.</strong> Naming the new problem is the precondition for solving it.</p>
               <a href="#research" style={{ fontFamily: S.mono, fontSize: "8.8px", letterSpacing: "0.2em", textTransform: "uppercase", color: S.gold, border: `1px solid ${S.gold}`, padding: "14px 22px", textDecoration: "none", transition: "all .2s ease", whiteSpace: "nowrap" }}
                 onMouseEnter={e => { e.currentTarget.style.background = S.gold; e.currentTarget.style.color = S.white; }}
                 onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = S.gold; }}>
@@ -623,10 +623,10 @@ export default function AIEdgeLab() {
           <div style={{ padding: "28px 52px" }}>
             <div className="grid grid-cols-1 md:grid-cols-2" style={{ marginBottom: "28px" }}>
               <div style={{ borderRight: `1px solid ${S.rule}`, paddingRight: "52px" }}>
-                <h2 style={{ fontFamily: S.display, fontSize: "clamp(60px,8vw,104px)", lineHeight: 0.95, letterSpacing: "0.01em", color: S.ink, marginBottom: "28px" }}>THE<br />FOUR<br /><span style={{ color: S.gold }}>ACTORS.</span></h2>
+                <h2 style={{ fontFamily: S.display, fontSize: "clamp(34px,5vw,60px)", lineHeight: 0.95, letterSpacing: "0.01em", color: S.ink, marginBottom: "28px" }}>THE<br />FOUR<br /><span style={{ color: S.gold }}>ACTORS.</span></h2>
               </div>
               <div style={{ paddingLeft: "52px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
-                <p style={{ fontSize: "16.8px", color: S.mid, lineHeight: 1.9, fontWeight: 300, maxWidth: "100%" }}>For decades, three actors shaped work: the employee, the leader, and the organisation. AI has entered as a fourth — not as a tool in the org chart, but as an actor that absorbs work, reprices what humans do, and forces every other actor to reckon with their structural position.</p>
+                <p style={{ fontSize: "13px", color: S.mid, lineHeight: 1.9, fontWeight: 300, maxWidth: "100%" }}>For decades, three actors shaped work: the employee, the leader, and the organisation. AI has entered as a fourth — not as a tool in the org chart, but as an actor that absorbs work, reprices what humans do, and forces every other actor to reckon with their structural position.</p>
               </div>
             </div>
           </div>
@@ -639,11 +639,11 @@ export default function AIEdgeLab() {
             ].map((a, i) => (
               <div key={i} className="actor" style={{ background: S.white, padding: "36px 28px", display: "flex", flexDirection: "column", gap: "14px", transition: "background .25s" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-                  <div style={{ fontFamily: S.display, fontSize: "38.400000000000006px", lineHeight: 0.9, color: "rgba(13,13,11,0.07)" }}>{a.num}</div>
+                  <div style={{ fontFamily: S.display, fontSize: "24px", lineHeight: 0.9, color: "rgba(13,13,11,0.07)" }}>{a.num}</div>
                   <div style={{ fontFamily: S.mono, fontSize: "8px", letterSpacing: "0.2em", textTransform: "uppercase", color: S.gold, border: `1px solid ${S.gold}`, padding: "4px 10px" }}>{a.badge}</div>
                 </div>
-                <div style={{ fontFamily: S.display, fontSize: "clamp(28px,3vw,38px)", letterSpacing: "0.02em", color: S.ink, lineHeight: 1 }}>{a.name}<span style={{ color: S.gold }}>{a.accent}</span></div>
-                <div style={{ fontSize: "11.200000000000001px", fontStyle: "italic", color: S.mid, lineHeight: 1.75, borderLeft: `2px solid ${S.rule2}`, paddingLeft: "14px", fontWeight: 300 }}>{a.q}</div>
+                <div style={{ fontFamily: S.display, fontSize: "clamp(17px,2.2vw,26px)", letterSpacing: "0.02em", color: S.ink, lineHeight: 1 }}>{a.name}<span style={{ color: S.gold }}>{a.accent}</span></div>
+                <div style={{ fontSize: "9.5px", fontStyle: "italic", color: S.mid, lineHeight: 1.75, borderLeft: `2px solid ${S.rule2}`, paddingLeft: "14px", fontWeight: 300 }}>{a.q}</div>
                 <a href={a.href} style={{ fontFamily: S.mono, fontSize: "8.8px", letterSpacing: "0.16em", textTransform: "uppercase", color: S.gold, textDecoration: "none", marginTop: "auto" }}>{a.arrow}</a>
               </div>
             ))}
@@ -653,13 +653,13 @@ export default function AIEdgeLab() {
         {/* ── AUDIENCE JOURNEY ── */}
         <section id="start" style={{ borderTop: `1px solid ${S.rule}`, borderBottom: `1px solid ${S.rule}`, background: S.white2 }}>
           <div style={{ padding: "56px 52px 0" }}>
-            <div style={{ fontFamily: S.mono, fontSize: "11.200000000000001px", letterSpacing: "0.24em", textTransform: "uppercase", color: S.gold, marginBottom: "16px" }}>START HERE · WHERE DO YOU STAND?</div>
-            <h2 style={{ fontFamily: S.display, fontSize: "clamp(56px,8vw,108px)", letterSpacing: "0.01em", color: S.ink, lineHeight: 0.95, marginBottom: "14px", textTransform: "uppercase" }}>FIND YOUR <span style={{ color: S.gold }}>EDGE.</span></h2>
-            <p style={{ fontSize: "16.8px", color: S.mid, lineHeight: 1.65, maxWidth: "100%" }}>Four actors, four instruments. Choose where you stand — your assessment is built for it, and your report lands within 48 hours.</p>
+            <div style={{ fontFamily: S.mono, fontSize: "9.5px", letterSpacing: "0.24em", textTransform: "uppercase", color: S.gold, marginBottom: "16px" }}>START HERE · WHERE DO YOU STAND?</div>
+            <h2 style={{ fontFamily: S.display, fontSize: "clamp(32px,5vw,60px)", letterSpacing: "0.01em", color: S.ink, lineHeight: 0.95, marginBottom: "14px", textTransform: "uppercase" }}>FIND YOUR <span style={{ color: S.gold }}>EDGE.</span></h2>
+            <p style={{ fontSize: "13px", color: S.mid, lineHeight: 1.65, maxWidth: "100%" }}>Four actors, four instruments. Choose where you stand — your assessment is built for it, and your report lands within 48 hours.</p>
             <p style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.16em", textTransform: "uppercase", color: S.mid, maxWidth: "100%", marginTop: "14px" }}>Calibrated against the four E.D.G.E. dimensions <span style={{ color: S.gold }}>·</span> Exposure <span style={{ color: S.gold }}>·</span> Decision Density <span style={{ color: S.gold }}>·</span> Growth of Boundary <span style={{ color: S.gold }}>·</span> Economic Anchoring</p>
           </div>
           <div style={{ margin: "56px 52px 0" }}>
-            <div style={{ fontFamily: S.display, fontSize: "clamp(28px,3.6vw,52px)", lineHeight: 1, letterSpacing: "0.015em", color: S.ink, marginBottom: "18px" }}>MEASURE YOUR HUMAN ADVANTAGE IN THE <span style={{ color: S.gold }}>AI ERA.</span></div>
+            <div style={{ fontFamily: S.display, fontSize: "clamp(18px,2.5vw,32px)", lineHeight: 1, letterSpacing: "0.015em", color: S.ink, marginBottom: "18px" }}>MEASURE YOUR HUMAN ADVANTAGE IN THE <span style={{ color: S.gold }}>AI ERA.</span></div>
             <div style={{ height: "1px", background: S.gold, width: "100%", animation: "edgeRuleDraw 1.3s 0.35s cubic-bezier(.2,.7,.2,1) both", transformOrigin: "left" }} />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4" style={{ gap: "1px", background: S.rule, marginTop: "40px" }}>
@@ -672,9 +672,9 @@ export default function AIEdgeLab() {
               <button key={c.key} onClick={() => openModal(c.key)} className="jcard"
                 style={{ background: S.white, padding: "32px 26px", display: "flex", flexDirection: "column", cursor: "pointer", transition: "background .25s ease, transform .25s ease, box-shadow .25s ease", border: "none", textAlign: "left" }}>
                 <div className="jcard-n" style={{ fontFamily: S.mono, fontSize: "8.8px", letterSpacing: "0.18em", textTransform: "uppercase", color: S.gold, marginBottom: "18px", transition: "color .25s" }}>{c.n}</div>
-                <div className="jcard-who" style={{ fontFamily: S.display, fontSize: "clamp(24px,2.4vw,32px)", letterSpacing: "0.02em", color: S.ink, lineHeight: 1.04, marginBottom: "10px", transition: "color .25s" }}>{c.who}</div>
+                <div className="jcard-who" style={{ fontFamily: S.display, fontSize: "clamp(15px,1.6vw,20px)", letterSpacing: "0.02em", color: S.ink, lineHeight: 1.04, marginBottom: "10px", transition: "color .25s" }}>{c.who}</div>
                 <div className="jcard-inst" style={{ fontFamily: S.mono, fontSize: "8.8px", letterSpacing: "0.1em", textTransform: "uppercase", color: S.mid, marginBottom: "18px", lineHeight: 1.5, transition: "color .25s" }}>{c.inst}</div>
-                <div className="jcard-price" style={{ fontFamily: S.display, fontSize: "33.6px", color: S.ink, lineHeight: 1, marginTop: "auto", transition: "color .25s" }}>
+                <div className="jcard-price" style={{ fontFamily: S.display, fontSize: "21px", color: S.ink, lineHeight: 1, marginTop: "auto", transition: "color .25s" }}>
                   {c.inr !== "Invite" && <span className="jcard-from" style={{ fontFamily: S.mono, fontSize: "9.600000000000001px", color: S.mid, letterSpacing: "0.06em", display: "block", marginBottom: "4px", transition: "color .25s" }}>From</span>}
                   {price(c.inr, c.usd)}
                 </div>
@@ -689,10 +689,10 @@ export default function AIEdgeLab() {
           <div className="grid grid-cols-1 md:grid-cols-2" style={{ padding: "56px 52px 36px", gap: 0 }}>
             <div style={{ borderRight: `1px solid ${S.rule}`, paddingRight: "52px" }}>
               <div style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.gold, marginBottom: "12px" }}>The Diagnostic Journey · 12 minutes · 48 hours</div>
-              <h2 style={{ fontFamily: S.display, fontSize: "clamp(48px,7vw,84px)", letterSpacing: "0.02em", color: S.ink, lineHeight: 1 }}>Measure. <span style={{ color: S.gold }}>Decode.</span><br />Reposition.</h2>
+              <h2 style={{ fontFamily: S.display, fontSize: "clamp(28px,4.5vw,52px)", letterSpacing: "0.02em", color: S.ink, lineHeight: 1 }}>Measure. <span style={{ color: S.gold }}>Decode.</span><br />Reposition.</h2>
             </div>
             <div style={{ paddingLeft: "52px", display: "flex", alignItems: "center" }}>
-              <p style={{ fontSize: "16.8px", color: S.ink2, lineHeight: 1.7, maxWidth: "100%" }}>What happens between choosing your instrument and acting on the result. Three steps. One report. A practical direction for what to do next.</p>
+              <p style={{ fontSize: "13px", color: S.ink2, lineHeight: 1.7, maxWidth: "100%" }}>What happens between choosing your instrument and acting on the result. Three steps. One report. A practical direction for what to do next.</p>
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3" style={{ gap: 0, background: S.rule }}>
@@ -703,8 +703,8 @@ export default function AIEdgeLab() {
             ].map((step, i) => (
               <div key={i} style={{ padding: "44px 36px", position: "relative", minHeight: "240px", display: "flex", flexDirection: "column", background: step.bg }}>
                 <div style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.gold2, marginBottom: "22px" }}>{step.n}</div>
-                <div style={{ fontFamily: S.display, fontSize: "clamp(48px,5.5vw,68px)", letterSpacing: "0.02em", lineHeight: 0.95, marginBottom: "18px", color: step.verbColor }}>{step.verb}</div>
-                <p style={{ fontSize: "15.200000000000001px", lineHeight: 1.7, marginTop: "auto", color: step.bodyColor }}>{step.body}</p>
+                <div style={{ fontFamily: S.display, fontSize: "clamp(28px,3.5vw,42px)", letterSpacing: "0.02em", lineHeight: 0.95, marginBottom: "18px", color: step.verbColor }}>{step.verb}</div>
+                <p style={{ fontSize: "12px", lineHeight: 1.7, marginTop: "auto", color: step.bodyColor }}>{step.body}</p>
 
               </div>
             ))}
@@ -720,10 +720,10 @@ export default function AIEdgeLab() {
           <div style={{ padding: "52px" }}>
             <div className="grid grid-cols-1 md:grid-cols-2" style={{ marginBottom: "40px" }}>
               <div style={{ borderRight: `1px solid ${S.rule}`, paddingRight: "52px" }}>
-                <h2 style={{ fontFamily: S.display, fontSize: "clamp(60px,8vw,100px)", lineHeight: 0.95, color: S.ink, marginBottom: "28px" }}>THE<br />THREE<br /><span style={{ color: S.gold }}>LAWS.</span></h2>
+                <h2 style={{ fontFamily: S.display, fontSize: "clamp(34px,5vw,56px)", lineHeight: 0.95, color: S.ink, marginBottom: "28px" }}>THE<br />THREE<br /><span style={{ color: S.gold }}>LAWS.</span></h2>
               </div>
               <div style={{ paddingLeft: "52px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
-                <p style={{ fontSize: "16.8px", color: S.mid, lineHeight: 1.9, fontWeight: 300, maxWidth: "100%" }}>These are not predictions. They are structural observations about what is already happening — in the data, in organisations, in the careers of professionals who feel the compression without yet having a name for it.</p>
+                <p style={{ fontSize: "13px", color: S.mid, lineHeight: 1.9, fontWeight: 300, maxWidth: "100%" }}>These are not predictions. They are structural observations about what is already happening — in the data, in organisations, in the careers of professionals who feel the compression without yet having a name for it.</p>
               </div>
             </div>
           </div>
@@ -738,8 +738,8 @@ export default function AIEdgeLab() {
                   <span style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.gold, flexShrink: 0 }}>{law.num}</span>
                   <span className="law-arrow" style={{ fontFamily: S.sans, fontSize: "17.6px", color: S.gold, opacity: 0, transform: "translateX(-8px)", transition: "opacity .3s ease,transform .3s ease", marginLeft: "auto" }}>→</span>
                 </div>
-                <div style={{ fontFamily: S.display, fontSize: "clamp(32px,3.6vw,48px)", lineHeight: 1.05, color: S.ink, letterSpacing: "0.02em", marginTop: "8px" }}>{law.title}</div>
-                <div className="law-body" style={{ fontSize: "15.200000000000001px", color: S.mid, lineHeight: 1.85, fontWeight: 300, maxWidth: "100%", marginTop: 0, maxHeight: 0, opacity: 0, transition: "max-height .45s ease,opacity .4s ease,margin-top .4s ease", overflow: "hidden" }}>{law.body}</div>
+                <div style={{ fontFamily: S.display, fontSize: "clamp(17px,2.2vw,26px)", lineHeight: 1.05, color: S.ink, letterSpacing: "0.02em", marginTop: "8px" }}>{law.title}</div>
+                <div className="law-body" style={{ fontSize: "12px", color: S.mid, lineHeight: 1.85, fontWeight: 300, maxWidth: "100%", marginTop: 0, maxHeight: 0, opacity: 0, transition: "max-height .45s ease,opacity .4s ease,margin-top .4s ease", overflow: "hidden" }}>{law.body}</div>
               </div>
             ))}
           </div>
@@ -751,9 +751,9 @@ export default function AIEdgeLab() {
             ].map((era, i) => (
               <div key={i} style={{ padding: "40px 32px", position: "relative", background: era.bg }}>
                 {era.now && <div style={{ position: "absolute", top: "16px", right: "16px", fontFamily: S.mono, fontSize: "11.200000000000001px", letterSpacing: "0.14em", textTransform: "uppercase", background: S.gold, color: S.white, padding: "8px 18px" }}>Now</div>}
-                <div style={{ fontFamily: S.mono, fontSize: "11.200000000000001px", letterSpacing: "0.2em", textTransform: "uppercase", color: era.labelColor, marginBottom: "18px" }}>{era.label}</div>
-                <div style={{ fontFamily: S.display, fontSize: "clamp(28px,3vw,40px)", letterSpacing: "0.02em", color: era.resourceColor, marginBottom: "12px" }}>{era.resource}</div>
-                <p style={{ fontSize: "13.600000000000001px", color: era.descColor, lineHeight: 1.75, fontWeight: 300 }}>{era.desc}</p>
+                <div style={{ fontFamily: S.mono, fontSize: "9.5px", letterSpacing: "0.2em", textTransform: "uppercase", color: era.labelColor, marginBottom: "18px" }}>{era.label}</div>
+                <div style={{ fontFamily: S.display, fontSize: "clamp(17px,2.2vw,26px)", letterSpacing: "0.02em", color: era.resourceColor, marginBottom: "12px" }}>{era.resource}</div>
+                <p style={{ fontSize: "11.5px", color: era.descColor, lineHeight: 1.75, fontWeight: 300 }}>{era.desc}</p>
               </div>
             ))}
           </div>
@@ -776,11 +776,11 @@ export default function AIEdgeLab() {
 
         {/* ── PULLQUOTE ── */}
         <div style={{ padding: "60px", background: S.ink, borderBottom: "1px solid rgba(255,255,255,0.08)", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center" }}>
-          <div style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.26em", textTransform: "uppercase", color: S.gold, marginBottom: "28px" }}>The Doctrine in One Sentence · AI Edge Lab · 2026</div>
-          <div style={{ fontFamily: S.display, fontSize: "clamp(34px,5vw,68px)", lineHeight: 1.05, letterSpacing: "0.02em", color: S.white, maxWidth: "1200px" }}>
+          <div style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.24em", textTransform: "uppercase", color: S.gold, marginBottom: "28px" }}>The AI Edge Lab · 2026</div>
+          <div style={{ fontFamily: S.display, fontSize: "clamp(28px,4vw,48px)", lineHeight: 1.05, letterSpacing: "0.02em", color: S.white, maxWidth: "1200px" }}>
             AI DOES NOT ELIMINATE WORK FIRST.<br /><span style={{ whiteSpace: "nowrap" }}>IT ELIMINATES THE <span style={{ color: S.gold2 }}>STRUCTURAL PREMIUM</span> ON INTELLIGENCE INSIDE WORK.</span>
           </div>
-          <div style={{ fontFamily: S.mono, fontSize: "14.4px", color: S.gold, marginTop: "28px", letterSpacing: "0.12em", textTransform: "uppercase" }}>Nitin Nahata · CHRO, Gameskraft · Founder, Axion Index</div>
+          <div style={{ fontFamily: S.mono, fontSize: "12px", color: S.gold, marginTop: "28px", letterSpacing: "0.12em", textTransform: "uppercase" }}>Nitin Nahata · CHRO, Gameskraft · Founder, Axion Index</div>
         </div>
 
         {/* ── WHAT YOU GET ── */}
@@ -792,15 +792,15 @@ export default function AIEdgeLab() {
           <div style={{ padding: "52px 52px 0" }}>
             <div className="grid grid-cols-1 md:grid-cols-2" style={{ marginBottom: "36px" }}>
               <div style={{ borderRight: `1px solid ${S.rule}`, paddingRight: "52px" }}>
-                <h2 style={{ fontFamily: S.display, fontSize: "clamp(52px,7vw,80px)", lineHeight: 0.95, color: S.ink, marginBottom: "28px" }}>NOT A<br />SCORE.<br /><span style={{ color: S.gold }}>A MAP.</span></h2>
+                <h2 style={{ fontFamily: S.display, fontSize: "clamp(32px,4.5vw,52px)", lineHeight: 0.95, color: S.ink, marginBottom: "28px" }}>NOT A<br />SCORE.<br /><span style={{ color: S.gold }}>A MAP.</span></h2>
               </div>
               <div style={{ paddingLeft: "52px", display: "flex", alignItems: "center" }}>
-                <p style={{ fontSize: "16.8px", color: S.mid, lineHeight: 1.9, fontWeight: 300, maxWidth: "100%" }}>
+                <p style={{ fontSize: "13px", color: S.mid, lineHeight: 1.9, fontWeight: 300, maxWidth: "100%" }}>
                   Every diagnostic produces a structural report, not a number. Here is what lands in your inbox within 48 hours — built for who you are.{" "}
                   <span style={{ color: S.mid }}>·</span>{" "}
                   See samples:{" "}
                   {[["sample-report-aai.html","AAI©"],["sample-report.html","ARI©"],["sample-report-bdi.html","BDI©"],["sample-report-dars.html","DARS©"]].map(([href, label]) => (
-                    <a key={href} href={href} target="_blank" rel="noopener" style={{ fontFamily: S.mono, fontSize: "11.200000000000001px", letterSpacing: "0.14em", textTransform: "uppercase", color: S.gold, borderBottom: `1px solid ${S.gold}`, paddingBottom: "2px", marginLeft: "8px", textDecoration: "none" }}>{label}</a>
+                    <a key={href} href={href} target="_blank" rel="noopener" style={{ fontFamily: S.mono, fontSize: "9.5px", letterSpacing: "0.14em", textTransform: "uppercase", color: S.gold, borderBottom: `1px solid ${S.gold}`, paddingBottom: "2px", marginLeft: "8px", textDecoration: "none" }}>{label}</a>
                   ))}
                 </p>
               </div>
@@ -814,9 +814,9 @@ export default function AIEdgeLab() {
             ].map((col, i) => (
               <div key={i} style={{ background: S.white, padding: "40px 34px", display: "flex", flexDirection: "column" }}>
                 <div style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.18em", textTransform: "uppercase", color: S.gold, marginBottom: "10px" }}>{col.aud}</div>
-                <div style={{ fontFamily: S.display, fontSize: "25.6px", letterSpacing: "0.02em", color: S.ink, lineHeight: 1, marginBottom: "26px" }}>{col.inst}</div>
+                <div style={{ fontFamily: S.display, fontSize: "16px", letterSpacing: "0.02em", color: S.ink, lineHeight: 1, marginBottom: "26px" }}>{col.inst}</div>
                 {col.items.map((item, j) => (
-                  <div key={j} style={{ display: "flex", gap: "12px", fontSize: "13.600000000000001px", color: S.ink2, lineHeight: 1.6, padding: "14px 0", borderBottom: j < col.items.length - 1 ? `1px solid ${S.rule}` : "none" }}>
+                  <div key={j} style={{ display: "flex", gap: "12px", fontSize: "11.5px", color: S.ink2, lineHeight: 1.6, padding: "14px 0", borderBottom: j < col.items.length - 1 ? `1px solid ${S.rule}` : "none" }}>
                     <span style={{ width: "6px", height: "6px", background: S.gold, borderRadius: "50%", flexShrink: 0, marginTop: "8px" }} />
                     {item}
                   </div>
@@ -838,10 +838,10 @@ export default function AIEdgeLab() {
           <div style={{ padding: "52px" }}>
             <div className="grid grid-cols-1 md:grid-cols-2" style={{ marginBottom: "40px" }}>
               <div style={{ borderRight: `1px solid ${S.rule}`, paddingRight: "52px" }}>
-                <h2 style={{ fontFamily: S.display, fontSize: "clamp(56px,8vw,88px)", lineHeight: 0.95, color: S.ink }}>MEASURE<br />YOUR<br /><span style={{ color: S.gold }}>POSITION.</span></h2>
+                <h2 style={{ fontFamily: S.display, fontSize: "clamp(32px,4.5vw,52px)", lineHeight: 0.95, color: S.ink }}>MEASURE<br />YOUR<br /><span style={{ color: S.gold }}>POSITION.</span></h2>
               </div>
               <div style={{ paddingLeft: "52px", display: "flex", alignItems: "center" }}>
-                <p style={{ fontSize: "16.8px", color: S.mid, lineHeight: 1.9, fontWeight: 300, maxWidth: "100%" }}>You cannot redesign what you cannot see. The AI Edge assessment suite makes structural position visible — for individuals, leaders, and organisations.</p>
+                <p style={{ fontSize: "13px", color: S.mid, lineHeight: 1.9, fontWeight: 300, maxWidth: "100%" }}>You cannot redesign what you cannot see. The AI Edge assessment suite makes structural position visible — for individuals, leaders, and organisations.</p>
               </div>
             </div>
             <div style={{ display: "inline-flex", alignItems: "center", border: `1px solid ${S.rule2}`, marginBottom: "8px", overflow: "hidden" }}>
@@ -860,7 +860,7 @@ export default function AIEdgeLab() {
             {/* AAI */}
             <div style={{ marginBottom: "22px" }}>
               <div style={{ fontFamily: S.mono, fontSize: "9.600000000000001px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.mid, marginBottom: "8px" }}>01 · For Aspiring Professionals</div>
-              <div style={{ fontFamily: S.display, fontSize: "clamp(28px,3.4vw,44px)", letterSpacing: "0.02em", color: S.gold, lineHeight: 1.02 }}>AI Alignment Index©<span style={{ color: S.ink, display: "block", fontSize: "0.496em", marginTop: "4px" }}>— Am I building the right foundations?</span></div>
+              <div style={{ fontFamily: S.display, fontSize: "clamp(17px,2.2vw,28px)", letterSpacing: "0.02em", color: S.gold, lineHeight: 1.02 }}>AI Alignment Index©<span style={{ color: S.ink, display: "block", fontSize: "0.496em", marginTop: "4px" }}>— Am I building the right foundations?</span></div>
             </div>
             <DiagCards cur={cur} tiers={[
               { tier: "Pure Report", name: "AAI© Report", inr: "₹799", usd: "$24", time: "Full alignment report · delivered within 48 hours", feats: ["Foundation alignment across four E.D.G.E. dimensions","Which skills stay relevant vs compressible","Dominant work-type signal","Personalised development roadmap"], dark: false, onCta: () => openModal("aspiring") },
@@ -870,7 +870,7 @@ export default function AIEdgeLab() {
             {/* ARI */}
             <div style={{ marginTop: "64px", marginBottom: "22px" }}>
               <div style={{ fontFamily: S.mono, fontSize: "9.600000000000001px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.mid, marginBottom: "8px" }}>02 · For Working Professionals</div>
-              <div style={{ fontFamily: S.display, fontSize: "clamp(28px,3.4vw,44px)", letterSpacing: "0.02em", color: S.gold, lineHeight: 1.02 }}>AI Replaceability Index©<span style={{ color: S.ink, display: "block", fontSize: "0.496em", marginTop: "4px" }}>— Where am I structurally positioned?</span></div>
+              <div style={{ fontFamily: S.display, fontSize: "clamp(17px,2.2vw,28px)", letterSpacing: "0.02em", color: S.gold, lineHeight: 1.02 }}>AI Replaceability Index©<span style={{ color: S.ink, display: "block", fontSize: "0.496em", marginTop: "4px" }}>— Where am I structurally positioned?</span></div>
             </div>
             <DiagCards cur={cur} tiers={[
               { tier: "Pure Report", name: "ARI© Report", inr: "₹1,499", usd: "$44", time: "Full structural report · delivered within 48 hours", feats: ["Full E.D.G.E. score — all four dimensions","Edge band: Accelerating / Holding / Thinning","Role Composition Map — six work types","Salary Sustainability Index (SSI)","Personalised structural roadmap"], dark: false, onCta: () => openModal("working") },
@@ -880,7 +880,7 @@ export default function AIEdgeLab() {
             {/* BDI */}
             <div style={{ marginTop: "64px", marginBottom: "22px" }}>
               <div style={{ fontFamily: S.mono, fontSize: "9.600000000000001px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.mid, marginBottom: "8px" }}>03 · For Leaders / CXO</div>
-              <div style={{ fontFamily: S.display, fontSize: "clamp(28px,3.4vw,44px)", letterSpacing: "0.02em", color: S.gold, lineHeight: 1.02 }}>Brainpower Density Index©<span style={{ color: S.ink, display: "block", fontSize: "0.496em", marginTop: "4px" }}>— What is my new structural role?</span></div>
+              <div style={{ fontFamily: S.display, fontSize: "clamp(17px,2.2vw,28px)", letterSpacing: "0.02em", color: S.gold, lineHeight: 1.02 }}>Brainpower Density Index©<span style={{ color: S.ink, display: "block", fontSize: "0.496em", marginTop: "4px" }}>— What is my new structural role?</span></div>
             </div>
             <DiagCards cur={cur} tiers={[
               { tier: "Pure Report", name: "BDI© Report", inr: "₹5,999", usd: "$179", time: "Brainpower Density report for your leadership layer", feats: ["Judgment-to-intelligence ratio by layer","Compression exposure of senior roles","Decision-velocity-per-head read","Layer redesign signals"], dark: false, onCta: () => openModal("leader") },
@@ -890,12 +890,12 @@ export default function AIEdgeLab() {
             {/* ORG */}
             <div style={{ marginTop: "64px", marginBottom: "22px" }}>
               <div style={{ fontFamily: S.mono, fontSize: "9.600000000000001px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.mid, marginBottom: "8px" }}>04 · For Organisations</div>
-              <div style={{ fontFamily: S.display, fontSize: "clamp(28px,3.4vw,44px)", letterSpacing: "0.02em", color: S.gold, lineHeight: 1.02 }}>ORG AI DARS©<span style={{ color: S.ink, display: "block", fontSize: "0.496em", marginTop: "4px" }}>— Map our AI decision architecture</span></div>
+              <div style={{ fontFamily: S.display, fontSize: "clamp(17px,2.2vw,28px)", letterSpacing: "0.02em", color: S.gold, lineHeight: 1.02 }}>ORG AI DARS©<span style={{ color: S.ink, display: "block", fontSize: "0.496em", marginTop: "4px" }}>— Map our AI decision architecture</span></div>
             </div>
             <div style={{ background: S.ink, color: S.white, padding: "36px 40px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "24px" }}>
               <div style={{ flex: 1, minWidth: "300px", maxWidth: "680px" }}>
                 <div style={{ fontFamily: S.mono, fontSize: "8px", letterSpacing: "0.18em", textTransform: "uppercase", color: S.gold, marginBottom: "10px" }}>Enterprise engagement · By invitation</div>
-                <div style={{ fontFamily: S.serif, fontSize: "12.4px", lineHeight: 1.65, color: S.dim }}>ORG AI DARS© is a workforce-scale diagnostic and redesign engagement for CHROs, CXOs, and founder-CEOs. Each engagement is scoped to your organisation. <strong style={{ color: S.white, fontWeight: 500 }}>Begin with a scoping conversation.</strong></div>
+                <div style={{ fontFamily: S.serif, fontSize: "11px", lineHeight: 1.65, color: S.dim }}>ORG AI DARS© is a workforce-scale diagnostic and redesign engagement for CHROs, CXOs, and founder-CEOs. Each engagement is scoped to your organisation. <strong style={{ color: S.white, fontWeight: 500 }}>Begin with a scoping conversation.</strong></div>
               </div>
               <a href="#enquire" style={{ fontFamily: S.mono, fontSize: "8.8px", letterSpacing: "0.2em", textTransform: "uppercase", padding: "16px 28px", background: S.gold, color: S.white, border: `1px solid ${S.gold}`, textDecoration: "none", transition: "all .2s ease", whiteSpace: "nowrap" }}
                 onMouseEnter={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = S.gold; }}
@@ -913,8 +913,8 @@ export default function AIEdgeLab() {
               <div style={{ fontFamily: S.mono, fontSize: "8.8px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.gold, flex: 1 }}>AI Edge Lab · Research</div>
               <div style={{ fontFamily: S.mono, fontSize: "8.8px", letterSpacing: "0.18em", color: S.mid }}>05.5 / 06</div>
             </div>
-            <h2 style={{ fontFamily: S.display, fontSize: "clamp(48px,6vw,84px)", lineHeight: 0.96, letterSpacing: "0.005em", textTransform: "uppercase", color: S.ink, marginBottom: "24px", maxWidth: "880px" }}>Four <span style={{ color: S.gold }}>Essays</span>. One Pattern.</h2>
-            <p style={{ fontFamily: S.serif, fontStyle: "italic", fontSize: "15.200000000000001px", lineHeight: 1.55, color: "#2E2E2C", maxWidth: "760px", paddingLeft: "18px", borderLeft: `3px solid ${S.gold}` }}>"The conviction before action is as important as the assessment of position. Each essay is calibrated to one archetype — read the one written for you."</p>
+            <h2 style={{ fontFamily: S.display, fontSize: "clamp(30px,4.5vw,52px)", lineHeight: 0.96, letterSpacing: "0.005em", textTransform: "uppercase", color: S.ink, marginBottom: "24px", maxWidth: "880px" }}>Four <span style={{ color: S.gold }}>Essays</span>. One Pattern.</h2>
+            <p style={{ fontFamily: S.serif, fontStyle: "italic", fontSize: "12px", lineHeight: 1.55, color: "#2E2E2C", maxWidth: "760px", paddingLeft: "18px", borderLeft: `3px solid ${S.gold}` }}>"The conviction before action is as important as the assessment of position. Each essay is calibrated to one archetype — read the one written for you."</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2" style={{ maxWidth: "1240px", margin: "0 auto", gap: "1px", background: S.rule, border: `1px solid ${S.rule}` }}>
             {[
@@ -925,8 +925,8 @@ export default function AIEdgeLab() {
             ].map((e, i) => (
               <a key={i} href={e.href} className="ec" style={{ background: S.white, padding: "40px 40px", display: "flex", flexDirection: "column", gap: "14px", textDecoration: "none", color: "inherit", transition: "background .2s ease" }}>
                 <div style={{ fontFamily: S.mono, fontSize: "8px", letterSpacing: "0.24em", textTransform: "uppercase", color: S.gold, marginBottom: "6px" }}>{e.tag}</div>
-                <h3 style={{ fontFamily: S.display, fontSize: "clamp(26px,3vw,34px)", lineHeight: 1.04, letterSpacing: "0.005em", textTransform: "uppercase", color: S.ink, marginBottom: "6px" }}>{e.title}</h3>
-                <p style={{ fontFamily: S.serif, fontSize: "12.4px", lineHeight: 1.7, color: "#2E2E2C", marginBottom: "14px" }}>{e.prev}</p>
+                <h3 style={{ fontFamily: S.display, fontSize: "clamp(16px,2vw,22px)", lineHeight: 1.04, letterSpacing: "0.005em", textTransform: "uppercase", color: S.ink, marginBottom: "6px" }}>{e.title}</h3>
+                <p style={{ fontFamily: S.serif, fontSize: "11px", lineHeight: 1.7, color: "#2E2E2C", marginBottom: "14px" }}>{e.prev}</p>
                 <div style={{ fontFamily: S.mono, fontSize: "8px", letterSpacing: "0.14em", textTransform: "uppercase", color: S.mid, marginTop: "auto", paddingTop: "14px", borderTop: `1px solid ${S.rule}`, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <span>{e.meta}</span><span style={{ color: S.gold }}>Read essay →</span>
                 </div>
@@ -934,7 +934,7 @@ export default function AIEdgeLab() {
             ))}
           </div>
           <div style={{ maxWidth: "1240px", margin: "36px auto 0", padding: "20px 24px", border: `1px dashed ${S.rule}`, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "18px" }}>
-            <div style={{ fontFamily: S.serif, fontStyle: "italic", fontSize: "11.600000000000001px", color: "#2E2E2C", maxWidth: "560px" }}>A monthly research note from the AI Edge Lab on how AI is repricing work, leadership, and organisations. Published when there is something to say.</div>
+            <div style={{ fontFamily: S.serif, fontStyle: "italic", fontSize: "9.5px", color: "#2E2E2C", maxWidth: "560px" }}>A monthly research note from the AI Edge Lab on how AI is repricing work, leadership, and organisations. Published when there is something to say.</div>
             <a href="#mailinglist" style={{ fontFamily: S.mono, fontSize: "8px", letterSpacing: "0.18em", textTransform: "uppercase", color: S.gold, border: `1px solid ${S.gold}`, padding: "11px 18px", textDecoration: "none", transition: "all .2s ease" }}
               onMouseEnter={e => { e.currentTarget.style.background = S.gold; e.currentTarget.style.color = S.white; }}
               onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = S.gold; }}>
@@ -952,7 +952,7 @@ export default function AIEdgeLab() {
           <div style={{ padding: "52px" }}>
             <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: 0 }}>
               <div style={{ borderRight: `1px solid ${S.rule}`, paddingRight: "52px" }}>
-                <h3 style={{ fontFamily: S.display, fontSize: "clamp(28px,3vw,38px)", letterSpacing: "0.02em", color: S.ink, lineHeight: 1, marginBottom: "8px" }}>Your structural position.</h3>
+                <h3 style={{ fontFamily: S.display, fontSize: "clamp(17px,2vw,26px)", letterSpacing: "0.02em", color: S.ink, lineHeight: 1, marginBottom: "8px" }}>Your structural position.</h3>
                 <p style={{ fontFamily: S.mono, fontSize: "9.600000000000001px", letterSpacing: "0.1em", color: S.dim, marginBottom: 0, textTransform: "uppercase" }}>Four dimensions · the measurement architecture</p>
                 <div style={{ display: "flex", flexDirection: "column", gap: "1px", background: S.rule, marginTop: "24px" }}>
                   {[
@@ -962,9 +962,9 @@ export default function AIEdgeLab() {
                     { letter: "E", name: "Economic Anchoring", desc: "Whether compensation is tied to scarce contribution.", dir: "Anchored = salary structurally durable" },
                   ].map((item, i) => (
                     <div key={i} style={{ background: S.white, padding: "20px 24px", display: "grid", gridTemplateColumns: "36px 1fr", gap: 0, alignItems: "start" }}>
-                      <div style={{ fontFamily: S.display, fontSize: "22.400000000000002px", color: S.gold, lineHeight: 1, marginTop: "2px" }}>{item.letter}</div>
+                      <div style={{ fontFamily: S.display, fontSize: "15px", color: S.gold, lineHeight: 1, marginTop: "2px" }}>{item.letter}</div>
                       <div style={{ paddingLeft: "12px" }}>
-                        <div style={{ fontSize: "11.200000000000001px", fontWeight: 500, color: S.ink, marginBottom: "4px" }}>{item.name}</div>
+                        <div style={{ fontSize: "9.5px", fontWeight: 500, color: S.ink, marginBottom: "4px" }}>{item.name}</div>
                         <div style={{ fontSize: "10.4px", color: S.mid, lineHeight: 1.6, fontWeight: 300 }}>{item.desc}</div>
                         <div style={{ fontFamily: S.mono, fontSize: "8.8px", color: S.gold, marginTop: "5px", letterSpacing: "0.06em" }}>{item.dir}</div>
                       </div>
@@ -973,7 +973,7 @@ export default function AIEdgeLab() {
                 </div>
               </div>
               <div style={{ paddingLeft: "52px" }}>
-                <h3 style={{ fontFamily: S.display, fontSize: "clamp(28px,3vw,38px)", letterSpacing: "0.02em", color: S.ink, lineHeight: 1, marginBottom: "8px" }}>The six work types.</h3>
+                <h3 style={{ fontFamily: S.display, fontSize: "clamp(17px,2vw,26px)", letterSpacing: "0.02em", color: S.ink, lineHeight: 1, marginBottom: "8px" }}>The six work types.</h3>
                 <p style={{ fontFamily: S.mono, fontSize: "9.600000000000001px", letterSpacing: "0.1em", color: S.dim, marginBottom: 0, textTransform: "uppercase" }}>AI compression coefficients by work type</p>
                 <div style={{ marginTop: "22px" }}>
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 80px 60px", padding: "8px 0", borderBottom: `1px solid ${S.rule2}` }}>
@@ -1013,10 +1013,10 @@ export default function AIEdgeLab() {
           <div style={{ padding: "52px" }}>
             <div className="grid grid-cols-1 md:grid-cols-2" style={{ marginBottom: "40px" }}>
               <div style={{ borderRight: `1px solid ${S.rule}`, paddingRight: "52px" }}>
-                <h2 style={{ fontFamily: S.display, fontSize: "clamp(52px,7vw,80px)", lineHeight: 0.95, color: S.ink }}>THE<br />ORGANISATION<br /><span style={{ color: S.gold }}>LAYER.</span></h2>
+                <h2 style={{ fontFamily: S.display, fontSize: "clamp(32px,4.5vw,52px)", lineHeight: 0.95, color: S.ink }}>THE<br />ORGANISATION<br /><span style={{ color: S.gold }}>LAYER.</span></h2>
               </div>
               <div style={{ paddingLeft: "52px", display: "flex", alignItems: "center" }}>
-                <p style={{ fontSize: "16.8px", color: S.mid, lineHeight: 1.9, fontWeight: 300, maxWidth: "100%" }}>Individuals and leaders can read their own position. The organisation needs a different instrument — one that places it on a maturity curve and redesigns its decision architecture at population scale.</p>
+                <p style={{ fontSize: "13px", color: S.mid, lineHeight: 1.9, fontWeight: 300, maxWidth: "100%" }}>Individuals and leaders can read their own position. The organisation needs a different instrument — one that places it on a maturity curve and redesigns its decision architecture at population scale.</p>
               </div>
             </div>
             <div style={{ fontFamily: S.mono, fontSize: "9.600000000000001px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.gold, marginBottom: "18px" }}>ORG AI Readiness Framework — Four-Stage Maturity Model</div>
@@ -1028,9 +1028,9 @@ export default function AIEdgeLab() {
                 { n: "04", name: "AI Born", desc: "Structure assumes abundant intelligence from the start. Judgment density is the organising principle, not a retrofit.", bg: S.ink, nameColor: S.gold2, descColor: "rgba(247,246,243,0.65)", nColor: S.gold2 },
               ].map((s, i) => (
                 <div key={i} style={{ background: s.bg, padding: "40px 32px" }}>
-                  <div style={{ fontFamily: S.mono, fontSize: "11.200000000000001px", letterSpacing: "0.22em", textTransform: "uppercase", color: s.nColor, marginBottom: "16px" }}>{s.n}</div>
-                  <div style={{ fontFamily: S.display, fontSize: "clamp(28px,3vw,36px)", letterSpacing: "0.02em", color: s.nameColor, lineHeight: 1, marginBottom: "14px" }}>{s.name}</div>
-                  <p style={{ fontSize: "13.600000000000001px", color: s.descColor, lineHeight: 1.7, fontWeight: 300 }}>{s.desc}</p>
+                  <div style={{ fontFamily: S.mono, fontSize: "9.5px", letterSpacing: "0.22em", textTransform: "uppercase", color: s.nColor, marginBottom: "16px" }}>{s.n}</div>
+                  <div style={{ fontFamily: S.display, fontSize: "clamp(17px,2vw,22px)", letterSpacing: "0.02em", color: s.nameColor, lineHeight: 1, marginBottom: "14px" }}>{s.name}</div>
+                  <p style={{ fontSize: "11.5px", color: s.descColor, lineHeight: 1.7, fontWeight: 300 }}>{s.desc}</p>
                 </div>
               ))}
             </div>
@@ -1042,18 +1042,18 @@ export default function AIEdgeLab() {
               ].map((c, i) => (
                 <div key={i} style={{ background: S.white, padding: "40px 34px", display: "flex", flexDirection: "column" }}>
                   <div style={{ fontFamily: S.mono, fontSize: "9.600000000000001px", letterSpacing: "0.18em", textTransform: "uppercase", color: S.gold, marginBottom: "12px" }}>{c.tag}</div>
-                  <div style={{ fontFamily: S.display, fontSize: "clamp(28px,3vw,36px)", letterSpacing: "0.02em", color: S.ink, lineHeight: 1, marginBottom: "16px" }}>{c.name}</div>
-                  <p style={{ fontSize: "13.600000000000001px", color: S.mid, lineHeight: 1.7, marginBottom: "20px", fontWeight: 300 }}>{c.body}</p>
+                  <div style={{ fontFamily: S.display, fontSize: "clamp(17px,2vw,22px)", letterSpacing: "0.02em", color: S.ink, lineHeight: 1, marginBottom: "16px" }}>{c.name}</div>
+                  <p style={{ fontSize: "11.5px", color: S.mid, lineHeight: 1.7, marginBottom: "20px", fontWeight: 300 }}>{c.body}</p>
                   <div style={{ display: "flex", flexDirection: "column", gap: "16px", flex: 1 }}>
                     {c.details.map(([k, v], j) => (
                       <div key={j} style={{ borderTop: `1px solid ${S.rule}`, paddingTop: "14px" }}>
                         <div style={{ fontFamily: S.mono, fontSize: "8.8px", letterSpacing: "0.14em", textTransform: "uppercase", color: S.gold, marginBottom: "6px" }}>{k}</div>
-                        <div style={{ fontSize: "12.8px", color: S.ink2, lineHeight: 1.6 }}>{v}</div>
+                        <div style={{ fontSize: "11px", color: S.ink2, lineHeight: 1.6 }}>{v}</div>
                       </div>
                     ))}
                   </div>
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: "18px", flexWrap: "wrap", gap: "14px" }}>
-                    <span style={{ fontFamily: S.mono, fontSize: "11.200000000000001px", letterSpacing: "0.08em", color: S.ink }}>{c.price}</span>
+                    <span style={{ fontFamily: S.mono, fontSize: "9.5px", letterSpacing: "0.08em", color: S.ink }}>{c.price}</span>
                     <span style={{ fontFamily: S.mono, fontSize: "9.600000000000001px", letterSpacing: "0.14em", textTransform: "uppercase", color: S.gold, border: `1px solid ${S.gold}`, padding: "6px 14px" }}>{c.status}</span>
                   </div>
                 </div>
@@ -1071,10 +1071,10 @@ export default function AIEdgeLab() {
           <div style={{ padding: "52px 52px 0" }}>
             <div className="grid grid-cols-1 md:grid-cols-2" style={{ paddingBottom: "40px" }}>
               <div style={{ borderRight: `1px solid ${S.rule}`, paddingRight: "52px" }}>
-                <h2 style={{ fontFamily: S.display, fontSize: "clamp(56px,8vw,88px)", lineHeight: 0.95, color: S.ink, marginBottom: "28px" }}>NOT A<br />PREDICTION.<br /><span style={{ color: S.gold }}>A PATTERN.</span></h2>
+                <h2 style={{ fontFamily: S.display, fontSize: "clamp(32px,5vw,56px)", lineHeight: 0.95, color: S.ink, marginBottom: "28px" }}>NOT A<br />PREDICTION.<br /><span style={{ color: S.gold }}>A PATTERN.</span></h2>
               </div>
               <div style={{ paddingLeft: "52px", display: "flex", alignItems: "center" }}>
-                <p style={{ fontSize: "16.8px", color: S.mid, lineHeight: 1.9, fontWeight: 300, maxWidth: "100%" }}>12 reports analysed across leading institutional sources — published in the last six months by McKinsey, MIT, WEF, BCG, PwC and EY — confirm what the AI Edge doctrine has been mapping. The convergence is now unmistakable.</p>
+                <p style={{ fontSize: "13px", color: S.mid, lineHeight: 1.9, fontWeight: 300, maxWidth: "100%" }}>12 reports analysed across leading institutional sources — published in the last six months by McKinsey, MIT, WEF, BCG, PwC and EY — confirm what the AI Edge doctrine has been mapping. The convergence is now unmistakable.</p>
               </div>
             </div>
           </div>
@@ -1088,10 +1088,10 @@ export default function AIEdgeLab() {
               { stat: "96%", label: "Report productivity gains — fewer scale impact", body: "Productivity from AI is now widespread; transformational impact is not. Governance, structure, and judgment architecture remain the bottleneck.", src: "EY · AI Pulse Survey 2025 ↗", href: "https://www.ey.com/en_us/insights/emerging-technologies/pulse-ai-survey" },
             ].map((ev, i) => (
               <a key={i} href={ev.href} target="_blank" rel="noopener" className="ev" style={{ display: "block", padding: "40px 34px", textDecoration: "none", transition: "background .3s ease" }}>
-                <div className="ev-stat" style={{ fontFamily: S.display, fontSize: "clamp(56px,6vw,76px)", lineHeight: 0.9, marginBottom: "14px", letterSpacing: "0.01em", transition: "color .2s" }}>{ev.stat}</div>
-                <div className="ev-label" style={{ fontSize: "14.4px", fontWeight: 500, marginBottom: "10px", lineHeight: 1.35 }}>{ev.label}</div>
-                <div className="ev-body" style={{ fontSize: "13.600000000000001px", color: S.mid, lineHeight: 1.75, marginBottom: "14px", fontWeight: 300 }}>{ev.body}</div>
-                <div className="ev-src" style={{ fontFamily: S.mono, fontSize: "11.200000000000001px", color: S.dim, letterSpacing: "0.08em", transition: "color .2s" }}>{ev.src}</div>
+                <div className="ev-stat" style={{ fontFamily: S.display, fontSize: "clamp(32px,4vw,44px)", lineHeight: 0.9, marginBottom: "14px", letterSpacing: "0.01em", transition: "color .2s" }}>{ev.stat}</div>
+                <div className="ev-label" style={{ fontSize: "12px", fontWeight: 500, marginBottom: "10px", lineHeight: 1.35 }}>{ev.label}</div>
+                <div className="ev-body" style={{ fontSize: "11.5px", color: S.mid, lineHeight: 1.75, marginBottom: "14px", fontWeight: 300 }}>{ev.body}</div>
+                <div className="ev-src" style={{ fontFamily: S.mono, fontSize: "9.5px", color: S.dim, letterSpacing: "0.08em", transition: "color .2s" }}>{ev.src}</div>
               </a>
             ))}
           </div>
@@ -1110,7 +1110,7 @@ export default function AIEdgeLab() {
                   <img src="/nitishcolorfull.png" alt="Nitin Nahata" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top", display: "block" }} />
                   <span style={{ position: "absolute", bottom: "20px", left: "20px", fontFamily: S.mono, fontSize: "13.600000000000001px", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(247,246,243,0.35)" }}>Nitin Nahata · CHRO · Founder</span>
                 </div>
-                <div style={{ fontFamily: S.display, fontSize: "41.6px", letterSpacing: "0.02em", color: S.ink, marginBottom: "6px" }}>NITIN NAHATA</div>
+                <div style={{ fontFamily: S.display, fontSize: "26px", letterSpacing: "0.02em", color: S.ink, marginBottom: "6px" }}>NITIN NAHATA</div>
                 <div style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.18em", color: S.gold, textTransform: "uppercase", marginBottom: "24px" }}>CHRO · Organisational Architect · Founder</div>
                 {[["CHRO","Gameskraft"],["Founder","Axion Index"],["Creator","AI Edge Diagnostic©"],["Founder","HROS"]].map(([role, org], i) => (
                   <div key={i} style={{ display: "flex", justifyContent: "space-between", fontFamily: S.mono, fontSize: "12px", color: S.mid, padding: "10px 0", borderBottom: `1px solid ${S.rule}`, letterSpacing: "0.04em" }}>
@@ -1124,11 +1124,11 @@ export default function AIEdgeLab() {
               </div>
               <div style={{ paddingLeft: "52px" }}>
                 {["Nitin Nahata is a CHRO and organisational architect whose work centres on a single structural question: how do organisations and the people inside them evolve when intelligence becomes abundant?","Twenty-three years of organisational design across Wipro · Standard Chartered · HSBC · Tata · Lodha · Marico · Udaan · Gameskraft — through growth, hypergrowth, and consequence — have shaped his thinking on the architecture of decision-making, the future structure of work, and how organisations redesign talent systems in the AI era.","As CHRO of Gameskraft, he sees firsthand how AI is changing the structure of work inside a fast-scaling organisation. As Founder of Axion Index, he is building the frameworks and instruments to measure and redesign those changes at scale."].map((p, i) => (
-                  <p key={i} style={{ fontSize: "16.8px", color: S.mid, lineHeight: 1.9, marginBottom: "18px", fontWeight: 300 }}>{p}</p>
+                  <p key={i} style={{ fontSize: "13px", color: S.mid, lineHeight: 1.9, marginBottom: "18px", fontWeight: 300 }}>{p}</p>
                 ))}
                 <div style={{ background: S.white2, padding: "34px 38px", marginTop: "10px", borderLeft: `2px solid ${S.gold}` }}>
-                  <div style={{ fontFamily: S.mono, fontSize: "11.200000000000001px", letterSpacing: "0.2em", textTransform: "uppercase", color: S.mid, marginBottom: "18px" }}>The Conviction</div>
-                  <div style={{ fontFamily: S.display, fontSize: "clamp(24px,3vw,34px)", lineHeight: 1.1, letterSpacing: "0.02em", color: S.ink }}>
+                  <div style={{ fontFamily: S.mono, fontSize: "9.5px", letterSpacing: "0.2em", textTransform: "uppercase", color: S.mid, marginBottom: "18px" }}>The Conviction</div>
+                  <div style={{ fontFamily: S.display, fontSize: "clamp(15px,2vw,22px)", lineHeight: 1.1, letterSpacing: "0.02em", color: S.ink }}>
                     "THE QUESTION IS NOT WHETHER AI WILL CHANGE YOUR WORK. IT IS WHETHER YOU UNDERSTAND THE <span style={{ color: S.gold }}>STRUCTURE</span> OF THAT CHANGE."
                   </div>
                 </div>
@@ -1141,15 +1141,15 @@ export default function AIEdgeLab() {
         <section id="enquire" style={{ background: S.ink, color: S.white, padding: "96px 52px 80px", position: "relative", overflow: "hidden" }}>
           <div style={{ maxWidth: "1200px", margin: "0 auto 56px", textAlign: "center" }}>
             <div style={{ fontFamily: S.mono, fontSize: "10.4px", letterSpacing: "0.24em", textTransform: "uppercase", color: S.gold, marginBottom: "20px" }}>AI Edge Diagnostic© · Available Now · axionindex.org</div>
-            <h2 style={{ fontFamily: S.display, fontSize: "clamp(56px,9vw,120px)", lineHeight: 0.95, textTransform: "uppercase", letterSpacing: "0.005em", color: S.white }}>Where Is Your<br /><span style={{ color: S.gold }}>Structural Position</span> Today?</h2>
-            <p style={{ fontFamily: S.serif, fontStyle: "italic", fontSize: "16.8px", lineHeight: 1.6, color: S.dim, maxWidth: "860px", margin: "24px auto 0" }}>The AI Edge Diagnostic measures your position relative to the compression line — across six work types, four E.D.G.E. dimensions, and two ownership signals. A full structural report, prepared and delivered within 48 hours. Private.</p>
+            <h2 style={{ fontFamily: S.display, fontSize: "clamp(32px,5vw,68px)", lineHeight: 0.95, textTransform: "uppercase", letterSpacing: "0.005em", color: S.white }}>Where Is Your<br /><span style={{ color: S.gold }}>Structural Position</span> Today?</h2>
+            <p style={{ fontFamily: S.serif, fontStyle: "italic", fontSize: "13px", lineHeight: 1.6, color: S.dim, maxWidth: "860px", margin: "24px auto 0" }}>The AI Edge Diagnostic measures your position relative to the compression line — across six work types, four E.D.G.E. dimensions, and two ownership signals. A full structural report, prepared and delivered within 48 hours. Private.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: "1px", background: "rgba(160,120,48,0.2)", maxWidth: "1200px", margin: "0 auto", border: "1px solid rgba(160,120,48,0.2)" }}>
             {/* Door 1 · Individuals */}
             <div style={{ background: S.ink, padding: "56px 48px", display: "flex", flexDirection: "column", gap: "20px" }}>
               <div style={{ fontFamily: S.mono, fontSize: "10.4px", letterSpacing: "0.24em", textTransform: "uppercase", color: S.gold, marginBottom: "10px" }}>For Individuals</div>
-              <h3 style={{ fontFamily: S.display, fontSize: "clamp(34px,4.2vw,50px)", lineHeight: 1.02, textTransform: "uppercase", letterSpacing: "0.005em", color: S.white, marginBottom: "10px" }}>Begin Your <span style={{ color: S.gold }}>Diagnostic</span>.</h3>
-              <p style={{ fontFamily: S.serif, fontSize: "15.200000000000001px", lineHeight: 1.7, color: S.dim, marginBottom: "16px" }}>Three personal diagnostics — <strong style={{ color: S.white, fontWeight: 500 }}>AAI©</strong> for aspiring professionals, <strong style={{ color: S.white, fontWeight: 500 }}>ARI©</strong> for working professionals, <strong style={{ color: S.white, fontWeight: 500 }}>BDI©</strong> for leaders. Your structural read in 48 hours.</p>
+              <h3 style={{ fontFamily: S.display, fontSize: "clamp(20px,2.8vw,32px)", lineHeight: 1.02, textTransform: "uppercase", letterSpacing: "0.005em", color: S.white, marginBottom: "10px" }}>Begin Your <span style={{ color: S.gold }}>Diagnostic</span>.</h3>
+              <p style={{ fontFamily: S.serif, fontSize: "12px", lineHeight: 1.7, color: S.dim, marginBottom: "16px" }}>Three personal diagnostics — <strong style={{ color: S.white, fontWeight: 500 }}>AAI©</strong> for aspiring professionals, <strong style={{ color: S.white, fontWeight: 500 }}>ARI©</strong> for working professionals, <strong style={{ color: S.white, fontWeight: 500 }}>BDI©</strong> for leaders. Your structural read in 48 hours.</p>
               <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", alignItems: "center", gap: "14px", marginTop: "auto" }}>
                 <button onClick={() => openModal("working")} style={{ fontFamily: S.mono, fontSize: "10.4px", letterSpacing: "0.2em", textTransform: "uppercase", padding: "20px 32px", background: S.gold, color: S.white, border: `1px solid ${S.gold}`, textDecoration: "none", textAlign: "center", cursor: "pointer", transition: "all .2s ease" }}
                   onMouseEnter={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = S.gold; }}
@@ -1170,15 +1170,15 @@ export default function AIEdgeLab() {
             {/* Door 2 · Organisations */}
             <div style={{ background: S.ink, padding: "56px 48px", display: "flex", flexDirection: "column", gap: "20px" }}>
               <div style={{ fontFamily: S.mono, fontSize: "10.4px", letterSpacing: "0.24em", textTransform: "uppercase", color: S.gold, marginBottom: "10px" }}>For Organisations · ORG AI DARS©</div>
-              <h3 style={{ fontFamily: S.display, fontSize: "clamp(34px,4.2vw,50px)", lineHeight: 1.02, textTransform: "uppercase", letterSpacing: "0.005em", color: S.white, marginBottom: "10px" }}>Map Your <span style={{ color: S.gold }}>Structural Position</span>.</h3>
-              <p style={{ fontFamily: S.serif, fontSize: "15.200000000000001px", lineHeight: 1.7, color: S.dim, marginBottom: "16px" }}>For CHROs, CXOs, and founder-CEOs leading organisations through the AI shift. Maps workforce-scale compression risk, decision-architecture gaps, and the redesign moves available to you.</p>
+              <h3 style={{ fontFamily: S.display, fontSize: "clamp(20px,2.8vw,32px)", lineHeight: 1.02, textTransform: "uppercase", letterSpacing: "0.005em", color: S.white, marginBottom: "10px" }}>Map Your <span style={{ color: S.gold }}>Structural Position</span>.</h3>
+              <p style={{ fontFamily: S.serif, fontSize: "12px", lineHeight: 1.7, color: S.dim, marginBottom: "16px" }}>For CHROs, CXOs, and founder-CEOs leading organisations through the AI shift. Maps workforce-scale compression risk, decision-architecture gaps, and the redesign moves available to you.</p>
               <form onSubmit={handleEnquiry} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
                 <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: "14px" }}>
                   {[["Name","name","text","name"],["Email","email","email","email"],["Organisation","org","text","organization"],["Role","role","text","organization-title"]].map(([label, field, type, auto]) => (
                     <div key={field} style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
                       <label style={{ fontFamily: S.mono, fontSize: "9.600000000000001px", letterSpacing: "0.16em", textTransform: "uppercase", color: S.mid }}>{label}</label>
                       <input type={type} value={(enquiryForm as any)[field]} onChange={e => setEnquiryForm({ ...enquiryForm, [field]: e.target.value })} required autoComplete={auto}
-                        style={{ background: "transparent", border: "none", borderBottom: "1px solid rgba(213,210,201,0.25)", padding: "12px 0", fontFamily: S.mono, fontSize: "13.600000000000001px", color: S.white, outline: "none", transition: "border-color .2s ease", letterSpacing: "0.02em" }}
+                        style={{ background: "transparent", border: "none", borderBottom: "1px solid rgba(213,210,201,0.25)", padding: "12px 0", fontFamily: S.mono, fontSize: "11.5px", color: S.white, outline: "none", transition: "border-color .2s ease", letterSpacing: "0.02em" }}
                         onFocus={e => (e.target.style.borderColor = S.gold)}
                         onBlur={e => (e.target.style.borderColor = "rgba(213,210,201,0.25)")} />
                     </div>
@@ -1187,7 +1187,7 @@ export default function AIEdgeLab() {
                 <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
                   <label style={{ fontFamily: S.mono, fontSize: "9.600000000000001px", letterSpacing: "0.16em", textTransform: "uppercase", color: S.mid }}>Brief context — what triggered the enquiry</label>
                   <textarea value={enquiryForm.message} onChange={e => setEnquiryForm({ ...enquiryForm, message: e.target.value })} required rows={2}
-                    style={{ background: "transparent", border: "none", borderBottom: "1px solid rgba(213,210,201,0.25)", padding: "12px 0", fontFamily: S.sans, fontSize: "13.600000000000001px", color: S.white, outline: "none", resize: "vertical", minHeight: "70px", lineHeight: 1.6 }}
+                    style={{ background: "transparent", border: "none", borderBottom: "1px solid rgba(213,210,201,0.25)", padding: "12px 0", fontFamily: S.sans, fontSize: "11.5px", color: S.white, outline: "none", resize: "vertical", minHeight: "70px", lineHeight: 1.6 }}
                     onFocus={e => (e.target.style.borderColor = S.gold)}
                     onBlur={e => (e.target.style.borderColor = "rgba(213,210,201,0.25)")} />
                 </div>
@@ -1213,13 +1213,13 @@ export default function AIEdgeLab() {
           <div style={{ maxWidth: "920px", margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "48px", alignItems: "start" }} className="grid grid-cols-1 md:grid-cols-2">
             <div>
               <div style={{ fontFamily: S.mono, fontSize: "8px", letterSpacing: "0.24em", textTransform: "uppercase", color: S.gold, marginBottom: "18px" }}>The AI Edge Lab</div>
-              <h3 style={{ fontFamily: S.display, fontSize: "clamp(36px,4.4vw,56px)", lineHeight: 0.96, textTransform: "uppercase", letterSpacing: "0.005em", color: S.white, marginBottom: "18px" }}>One <span style={{ color: S.gold }}>Structural</span> Read A Month</h3>
-              <p style={{ fontFamily: S.serif, fontStyle: "italic", fontSize: "12.8px", lineHeight: 1.6, color: S.dim, maxWidth: "480px" }}>A monthly research note from the AI Edge Lab on how AI is repricing work, leadership, and organisations. Published when there is something to say.</p>
+              <h3 style={{ fontFamily: S.display, fontSize: "clamp(22px,3vw,36px)", lineHeight: 0.96, textTransform: "uppercase", letterSpacing: "0.005em", color: S.white, marginBottom: "18px" }}>One <span style={{ color: S.gold }}>Structural</span> Read A Month</h3>
+              <p style={{ fontFamily: S.serif, fontStyle: "italic", fontSize: "11px", lineHeight: 1.6, color: S.dim, maxWidth: "480px" }}>A monthly research note from the AI Edge Lab on how AI is repricing work, leadership, and organisations. Published when there is something to say.</p>
             </div>
             <div style={{ paddingTop: "8px" }}>
               <form onSubmit={handleMlSubmit} style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
                 <input type="email" value={mlEmail} onChange={e => setMlEmail(e.target.value)} placeholder="your email" required
-                  style={{ background: "transparent", border: "none", borderBottom: "1px solid rgba(213,210,201,0.3)", padding: "14px 0", fontFamily: S.mono, fontSize: "11.200000000000001px", color: S.white, outline: "none", letterSpacing: "0.04em" }}
+                  style={{ background: "transparent", border: "none", borderBottom: "1px solid rgba(213,210,201,0.3)", padding: "14px 0", fontFamily: S.mono, fontSize: "9.5px", color: S.white, outline: "none", letterSpacing: "0.04em" }}
                   onFocus={e => (e.target.style.borderColor = S.gold)}
                   onBlur={e => (e.target.style.borderColor = "rgba(213,210,201,0.3)")} />
                 <button type="submit" style={{ background: S.gold, color: S.white, border: `1px solid ${S.gold}`, padding: "14px 22px", fontFamily: S.mono, fontSize: "8.8px", letterSpacing: "0.2em", textTransform: "uppercase", cursor: "pointer", transition: "all .2s ease", alignSelf: "flex-start" }}
