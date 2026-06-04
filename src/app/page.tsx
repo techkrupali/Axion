@@ -577,10 +577,34 @@ export default function Home() {
           {/* Desktop accordion */}
           <div className="hidden lg:flex gap-3 min-h-[560px]">
             {[
-              { num: "01", name: "People Architecture", href: "/expertise/people", sub: "When the organisation depends on who is in the room — not on how it is built. We codify the judgment, decision rights, and succession logic your best people carry in their heads into structure the company keeps after they leave. The layer beneath the org chart, made durable." },
-              { num: "02", name: "Labour Codes", href: "/expertise/labour", sub: "When cost, classification, and compliance stop aligning — and you can't see why. We turn your workforce from headcount into auditable control architecture: contracts, classification, and risk mapped to the structure that governs them. Built to hold when the rules change retroactively." },
-              { num: "03", name: "AI Edge Lab", href: "/expertise/ai-edge", sub: "When AI is making you faster, but not wiser. Output rises while decision quality quietly erodes — speed without architecture just scales bad judgment. We build the decision layer: where AI accelerates, and where a human must still hold the call. The edge is the architecture around the model, not the model." },
-              { num: "04", name: "Family Business", href: "/expertise/family", sub: "When continuity depends on individuals, not structure — and succession is the risk no one says out loud. We codify ownership, authority, and decision rights into architecture that survives the generational handover. What holds when the founder is no longer the system." },
+              { 
+                num: "01", 
+                name: "People Architecture", 
+                href: "/expertise/people", 
+                condition: "When the organisation depends on who is in the room — not on how it is built.",
+                promise: "We codify judgment, decision rights, and succession into structure the company keeps after people leave.",
+              },
+              { 
+                num: "02", 
+                name: "Labour Codes", 
+                href: "/expertise/labour", 
+                condition: "When cost, classification, and compliance stop aligning — and you can't see why.",
+                promise: "We turn your workforce from headcount into auditable control architecture that holds when rules change.",
+              },
+              { 
+                num: "03", 
+                name: "AI Edge Lab", 
+                href: "/expertise/ai-edge", 
+                condition: "When AI is making you faster, but not wiser — speed without architecture scales bad judgment.",
+                promise: "We build the decision layer where AI accelerates, and where a human must still hold the call.",
+              },
+              { 
+                num: "04", 
+                name: "Family Business", 
+                href: "/expertise/family", 
+                condition: "When continuity depends on individuals, not structure — and succession is the risk no one says out loud.",
+                promise: "We codify ownership, authority, and decision rights into architecture that survives the generational handover.",
+              },
             ].map((practice, i) => {
               const isActive = activePractice === i;
               const words = practice.name.split(' ');
@@ -624,10 +648,15 @@ export default function Home() {
                       <h3 className="font-serif text-[clamp(30px,3.2vw,48px)] leading-[1.1] text-[var(--fg)] mb-5">
                         {first}<br /><em className="text-[var(--accent)]">{rest}</em>
                       </h3>
-                      <p className="text-[16px] text-[var(--fg-2)] leading-relaxed flex-1">
-                        {practice.sub}
-                      </p>
-                      <div className="pt-5 border-t border-[var(--line)] mt-4">
+                      <div className="mb-4">
+                        <span className="font-mono text-[11px] tracking-[0.2em] uppercase text-[var(--fg-4)] block mb-2">The Signal</span>
+                        <p className="text-[16px] text-[var(--fg-2)] leading-relaxed">{practice.condition}</p>
+                      </div>
+                      <div className="mb-6">
+                        <span className="font-mono text-[11px] tracking-[0.2em] uppercase text-[var(--fg-4)] block mb-2">What We Build</span>
+                        <p className="text-[16px] text-[var(--fg-3)] leading-relaxed">{practice.promise}</p>
+                      </div>
+                      <div className="pt-5 border-t border-[var(--line)] mt-auto">
                         <Link
                           href={practice.href}
                           className="inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.28em] uppercase text-[var(--accent)] hover:text-[var(--fg)] transition-colors group"
@@ -650,10 +679,34 @@ export default function Home() {
           {/* Mobile stacked */}
           <div className="flex lg:hidden flex-col gap-4">
             {[
-              { num: "01", name: "People Architecture", href: "/expertise/people", sub: "When the organisation depends on who is in the room — not on how it is built. We codify the judgment, decision rights, and succession logic your best people carry in their heads into structure the company keeps after they leave." },
-              { num: "02", name: "Labour Codes", href: "/expertise/labour", sub: "When cost, classification, and compliance stop aligning — and you can't see why. We turn your workforce from headcount into auditable control architecture." },
-              { num: "03", name: "AI Edge Lab", href: "/expertise/ai-edge", sub: "When AI is making you faster, but not wiser. We build the decision layer: where AI accelerates, and where a human must still hold the call." },
-              { num: "04", name: "Family Business", href: "/expertise/family", sub: "When continuity depends on individuals, not structure. We codify ownership, authority, and decision rights into architecture that survives the generational handover." },
+              { 
+                num: "01", 
+                name: "People Architecture", 
+                href: "/expertise/people", 
+                condition: "When the organisation depends on who is in the room — not on how it is built.",
+                promise: "We codify judgment, decision rights, and succession into structure the company keeps after people leave.",
+              },
+              { 
+                num: "02", 
+                name: "Labour Codes", 
+                href: "/expertise/labour", 
+                condition: "When cost, classification, and compliance stop aligning — and you can't see why.",
+                promise: "We turn your workforce from headcount into auditable control architecture that holds when rules change.",
+              },
+              { 
+                num: "03", 
+                name: "AI Edge Lab", 
+                href: "/expertise/ai-edge", 
+                condition: "When AI is making you faster, but not wiser — speed without architecture scales bad judgment.",
+                promise: "We build the decision layer where AI accelerates, and where a human must still hold the call.",
+              },
+              { 
+                num: "04", 
+                name: "Family Business", 
+                href: "/expertise/family", 
+                condition: "When continuity depends on individuals, not structure — and succession is the risk no one says out loud.",
+                promise: "We codify ownership, authority, and decision rights into architecture that survives the generational handover.",
+              },
             ].map((practice, i) => (
               <Link
                 key={i}
@@ -664,8 +717,15 @@ export default function Home() {
                   <span className="font-mono text-[12px] tracking-[0.3em] text-[var(--accent)]">[{practice.num}]</span>
                   <ArrowRight size={13} className="text-[var(--accent)] opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
                 </div>
-                <h3 className="font-serif text-[26px] text-[var(--fg)] mb-3">{practice.name}</h3>
-                <p className="text-[15px] text-[var(--fg-2)] leading-relaxed">{practice.sub}</p>
+                <h3 className="font-serif text-[26px] text-[var(--fg)] mb-4">{practice.name}</h3>
+                <div className="mb-3">
+                  <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[var(--fg-4)] block mb-1">The Signal</span>
+                  <p className="text-[15px] text-[var(--fg-2)] leading-relaxed">{practice.condition}</p>
+                </div>
+                <div>
+                  <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[var(--fg-4)] block mb-1">What We Build</span>
+                  <p className="text-[15px] text-[var(--fg-3)] leading-relaxed">{practice.promise}</p>
+                </div>
               </Link>
             ))}
           </div>
