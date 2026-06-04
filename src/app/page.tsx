@@ -307,8 +307,8 @@ export default function Home() {
                 </Reveal>
                 <Reveal delay={0.1}>
                   <h2 className="h-display text-[clamp(32px,4.5vw,56px)] leading-[0.95] mb-6">
-                    We don't explore the <em>problem.</em><br />
-                    We map what carries<br />the consequence.
+                    We don't start with the symptom. We map the<br />
+                    architecture carrying the consequence.
                   </h2>
                 </Reveal>
                 <Reveal delay={0.3}>
@@ -539,7 +539,7 @@ export default function Home() {
                   Four practices. <em style={{ color: "#C9A24A" }}>One method.</em>
                 </p>
                 <p className="font-serif text-[clamp(14px,1.2vw,17px)] text-[#8A8FA4] max-w-[56ch] leading-relaxed">
-                  If what's breaking doesn't fit a category, that is still a signal — bring it, and we read the architecture wherever it lives.
+                  If what is breaking does not fit a category, that is still a signal. Bring us the pressure; we will read the architecture behind it.
                 </p>
               </div>
               <Button href="/connect" variant="primary" showArrow={true} size="sm">Reach Us</Button>
@@ -581,7 +581,7 @@ export default function Home() {
                 {
                   role: "CFO",
                   pull: "Cost is climbing, and headcount explains some of it — not the part that keeps you up.",
-                  work: "Read workforce as cost, risk, and control architecture, then install the structure that makes the number governable — not just reported.",
+                  work: "Read the workforce as cost, risk, and control architecture, then install the structure that makes the number governable — not just reported.",
                   icon: "💰"
                 },
                 {
@@ -593,7 +593,7 @@ export default function Home() {
                 {
                   role: "Investor / Board",
                   pull: "The thesis is sound. The question is whether the organisation can carry it.",
-                  work: "Diligence the operating architecture — what survives the founder, and what is quietly held by individuals who can leave.",
+                  work: "Diligence the organisation's operating architecture — what survives the founder, and what is quietly held by individuals who can leave.",
                   icon: "📊"
                 },
               ].map((item, i) => (

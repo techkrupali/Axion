@@ -206,13 +206,13 @@ const whoWeWorkWith = [
   },
   {
     role: "CFO",
-    statement: "Read workforce as cost, risk, and control architecture — not headcount.",
+    statement: "Read the workforce as cost, risk, and control architecture — not headcount.",
     detail: "Workforce is your largest cost line and your least-read risk register. We change that.",
   },
   {
     role: "CHRO",
     statement: "Stop running HR programs. Start running the operating system underneath them.",
-    detail: "The programs are symptoms. The architecture is the cause. We work at the cause.",
+    detail: "The programs are symptoms. The architecture is where the cause usually sits. We work there.",
   },
 ];
 
@@ -414,7 +414,7 @@ function WhatWeDoSection() {
             </FadeUp>
             <FadeUp delay={0.2}>
               <p className="text-[var(--fg-3)] leading-relaxed max-w-[34ch] mb-6 text-[17px]">
-                Axion Index is an operating intelligence company focused on one question.
+                Axion Index is an operating intelligence company built around one question: is the organisation structurally ready for what comes next?
               </p>
             </FadeUp>
             <FadeUp delay={0.28}>
@@ -462,7 +462,7 @@ function WhatWeDoSection() {
 
             <FadeUp delay={0.5}>
               <p className="font-serif italic text-[clamp(20px,2.4vw,28px)] text-[var(--accent)] mt-4 leading-snug">
-                We are Rewriting the Operating Logic of Work.
+                We are rewriting the operating logic of work.
               </p>
             </FadeUp>
           </div>
@@ -592,7 +592,7 @@ function WhySection() {
                 style={{ fontSize: "clamp(18px,2.2vw,26px)" }}
               >
                 The result is a system that looks functional on the surface —<br />
-                but is broken by design underneath.
+                but is structurally fragile underneath.
               </p>
               <p className="text-[16px] text-[var(--fg-3)] leading-relaxed">
                 The next phase of work will not be defined by tools.<br />
@@ -637,14 +637,9 @@ function ApproachSection() {
             <h2
               className="h-section mb-6"
             >
-              We don&apos;t explore the<br />
-              <em className="italic text-[var(--accent)]">problem.</em>
+              We don&apos;t start with the symptom.<br />
+              <em className="italic text-[var(--accent)]">We map the architecture carrying the consequence.</em>
             </h2>
-          </FadeUp>
-          <FadeUp delay={0.2}>
-            <p className="font-serif italic text-[clamp(18px,2vw,24px)] text-[var(--fg-3)] max-w-[42ch] leading-tight">
-              We map the architecture that carries the consequence.
-            </p>
           </FadeUp>
         </div>
 
@@ -829,7 +824,7 @@ function PhilosophySection() {
 
         <FadeUp delay={0.55}>
           <p className="text-[16px] text-[var(--fg-4)] leading-relaxed max-w-[46ch] mx-auto">
-            We don&apos;t sell services. We read what is already breaking — and build what must hold.
+            We do not start with services. We read what is already breaking, then build what must hold.
           </p>
         </FadeUp>
       </div>
@@ -939,7 +934,7 @@ function WhoSection() {
             <h2
               className="h-section"
             >
-              Who we engage with{" "}
+              Who we work with,{" "}
               <em className="italic text-[var(--accent)]">depending on where you sit.</em>
             </h2>
           </FadeUp>

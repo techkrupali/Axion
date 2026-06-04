@@ -20,21 +20,21 @@ const classifications = [
 ];
 
 const codes = [
-  { num: "01", label: "Code I · Wages", title: "The Code on Wages", desc: "Universal definition of wages. Statutory minimum wage floor across all employees. The basic-allowance arithmetic that determines PF, gratuity and bonus liabilities.", tags: ["Statute · Centre", "State drafts ongoing"] },
-  { num: "02", label: "Code II · Industrial Relations", title: "Industrial Relations", desc: "Standing orders threshold. Recognition of unions. Dispute resolution architecture. Workforce-size-driven obligations sharpen with scale.", tags: ["Statute · Centre", "State variation"] },
+  { num: "01", label: "Code I · Wages", title: "The Code on Wages", desc: "Universal definition of wages. Statutory minimum wage floor across all employees. The basic-allowance arithmetic that determines PF, gratuity and bonus liabilities.", tags: ["Statute · Centre", "State · drafts ongoing"] },
+  { num: "02", label: "Code II · Industrial Relations", title: "Industrial Relations", desc: "Standing orders threshold. Recognition of unions. Dispute resolution architecture. Workforce-size-driven obligations sharpen with scale.", tags: ["Statute · Centre", "State · variation"] },
   { num: "03", label: "Code III · Social Security", title: "Social Security", desc: "Universal social security architecture. Gig and platform workers in scope for the first time. Aggregator levy, ESIC expansion, gratuity portability.", tags: ["Statute · Centre", "Schemes drafting"] },
   { num: "04", label: "Code IV · OSH", title: "Safety, Health & Working Conditions", desc: "Single registration. Threshold-driven obligations. Working hours, leave, women in night-shift, contract labour licensing — all consolidated.", tags: ["Statute · Centre", "Notification phased"] },
 ];
 
 const questions = [
-  { id: "Cost", q: "How much will my annual statutory cost change under the new wage definition?", a: "A short, principled answer lives here. The complete reading — by workforce category, by state notification, by cost line — is part of the Interpret stage of the 3i engagement." },
-  { id: "Classification", q: "Are my fixed-term employees now eligible for pro-rata gratuity?", a: "A short, principled answer lives here. The complete reading — by workforce category, by state notification, by cost line — is part of the Interpret stage of the 3i engagement." },
-  { id: "Operations", q: "What changes for my contract labour licensing thresholds?", a: "A short, principled answer lives here. The complete reading — by workforce category, by state notification, by cost line — is part of the Interpret stage of the 3i engagement." },
-  { id: "Benefits", q: "Do gig and platform workers get ESIC, PF, or a separate scheme?", a: "A short, principled answer lives here. The complete reading — by workforce category, by state notification, by cost line — is part of the Interpret stage of the 3i engagement." },
-  { id: "Structure", q: "Should I restructure my basic-allowance ratio to manage statutory liability?", a: "A short, principled answer lives here. The complete reading — by workforce category, by state notification, by cost line — is part of the Interpret stage of the 3i engagement." },
-  { id: "State", q: "If my workforce is split across states, which state's draft rules apply?", a: "A short, principled answer lives here. The complete reading — by workforce category, by state notification, by cost line — is part of the Interpret stage of the 3i engagement." },
-  { id: "Overtime", q: "Have overtime caps and double-rate provisions changed under the OSH Code?", a: "A short, principled answer lives here. The complete reading — by workforce category, by state notification, by cost line — is part of the Interpret stage of the 3i engagement." },
-  { id: "Contract", q: "What are my principal-employer obligations under the new IR Code?", a: "A short, principled answer lives here. The complete reading — by workforce category, by state notification, by cost line — is part of the Interpret stage of the 3i engagement." },
+  { id: "Cost", q: "How much will my annual statutory cost change under the new wage definition?", a: "The wage definition broadens under Code I — basic typically needs to be at least 50% of CTC, which directly increases PF, gratuity, and bonus bases. The exact impact depends on your current basic-allowance split and headcount mix." },
+  { id: "Classification", q: "Are my fixed-term employees now eligible for pro-rata gratuity?", a: "Yes. The Code on Social Security provides for pro-rata gratuity for fixed-term employees proportionate to their service period, closing the historical gap with permanent employees." },
+  { id: "Operations", q: "What changes for my contract labour licensing thresholds?", a: "The OSH Code consolidates licensing thresholds. Principal-employer obligations are sharpened, and audit trails for contract labour are now a statutory requirement, not a best practice." },
+  { id: "Benefits", q: "Do gig and platform workers get ESIC, PF, or a separate scheme?", a: "Neither directly. The Social Security Code creates a separate Social Security Fund for gig and platform workers, funded by an aggregator levy. ESIC and PF remain for conventional employees." },
+  { id: "Structure", q: "Should I restructure my basic-allowance ratio to manage statutory liability?", a: "Restructuring below the 50% threshold carries compliance risk. The full cost-benefit analysis — by workforce category and state notification — is part of the Interpret stage of the 3i engagement." },
+  { id: "State", q: "If my workforce is split across states, which state's draft rules apply?", a: "Each state publishes its own draft rules under each Code. Until a state notifies its rules, the central rules apply as a floor. Multi-state employers carry compounded uncertainty until state notifications converge." },
+  { id: "Overtime", q: "Have overtime caps and double-rate provisions changed under the OSH Code?", a: "The OSH Code retains double-rate overtime but adjusts daily and weekly hour caps. State-level variation in notification status means the operative rule differs by geography." },
+  { id: "Contract", q: "What are my principal-employer obligations under the new IR Code?", a: "Principal-employer liability for contract labour wages and conditions is retained and sharpened. Threshold-driven licensing requirements and mandatory audit trails are the key operational changes." },
 ];
 
 const engagementRows = [
@@ -88,10 +88,10 @@ export default function LabourCodes() {
           <Reveal delay={0.1}>
             <h1 className="hero-glow mb-8 drop-shadow-2xl">
               <span className="block font-serif font-medium text-[clamp(28px,3.5vw,52px)] leading-[1.15] tracking-[-0.01em] text-[var(--fg-2)] mb-2">
-                29 Laws Consolidated. 4 Codes.
+                29 laws consolidated. Four Codes.
               </span>
               <em className="block font-serif font-medium text-[clamp(28px,3.5vw,52px)] leading-[1.15] tracking-[-0.01em] text-[var(--accent)] italic">
-                One Reset.
+                One reset.
               </em>
             </h1>
           </Reveal>
@@ -145,8 +145,8 @@ export default function LabourCodes() {
               <div className="font-serif italic text-[120px] leading-none text-[var(--accent)] opacity-10 mb-4">29</div>
             </Reveal>
             <Reveal><span className="eyebrow mb-6 text-[var(--accent)]">Worker classification grid</span></Reveal>
-            <Reveal delay={0.1}><h2 className="h-statement">Six categories. <em className="text-[var(--accent)]">Each with its own architecture.</em></h2></Reveal>
-            <Reveal delay={0.2}><p className="lead text-[var(--fg-3)] mt-6 max-w-[52ch]">Six categories. Each with its own architecture. Classification drives everything downstream — comp, social security, OSH, governance. The codes do not merely consolidate language; they redraw the boundaries of who counts as what.</p></Reveal>
+            <Reveal delay={0.1}><h2 className="h-statement">Six categories, <em className="text-[var(--accent)]">each with its own architecture.</em></h2></Reveal>
+            <Reveal delay={0.2}><p className="lead text-[var(--fg-3)] mt-6 max-w-[52ch]">Classification drives everything downstream — compensation, social security, OSH, and governance. The codes do not merely consolidate language; they redraw the boundaries of who counts as what.</p></Reveal>
           </div>
 
           <div className="relative h-[520px] flex items-center justify-center">
@@ -406,7 +406,7 @@ export default function LabourCodes() {
             <div>
               <span className="eyebrow mb-8 text-[var(--accent)]">Sources & legal basis</span>
               <div className="flex flex-col gap-4">
-                {["Code on Wages, 2019", "Industrial Relations Code, 2020", "Social Security Code, 2020", "OSH&WC Code, 2020"].map(source => (
+                {["Code on Wages, 2019", "Industrial Relations Code, 2020", "Social Security Code, 2020", "Occupational Safety, Health and Working Conditions Code, 2020"].map(source => (
                   <div key={source} className="font-serif text-[18px] text-[var(--fg-3)] flex items-center gap-3">
                     <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] opacity-40" />
                     {source}
@@ -414,7 +414,7 @@ export default function LabourCodes() {
                 ))}
               </div>
               <div className="mt-12 flex gap-8">
-                <Link href="/connect" className="text-[var(--accent)] font-mono text-[11px] tracking-widest uppercase hover:underline">Continue</Link>
+                <Link href="/connect" className="text-[var(--accent)] font-mono text-[11px] tracking-widest uppercase hover:underline">Continue to enquiry</Link>
                 <Link href="/#practices" className="text-[var(--fg-4)] font-mono text-[11px] tracking-widest uppercase hover:underline">Other practices →</Link>
               </div>
             </div>

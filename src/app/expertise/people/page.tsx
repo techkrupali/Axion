@@ -14,7 +14,7 @@ const bcrSteps = [
     num: "01",
     letter: "B",
     name: "Belief",
-    desc: "What the founder, board and operating leadership actually hold to be true about people, scale, performance, and risk. Often inconsistent across the room. Always upstream of every other failure.",
+    desc: "What the founder, board, and operating leadership actually hold to be true about people, scale, performance, and risk. Often inconsistent across the room. Always upstream of every other failure.",
     breakMode: "Belief drift",
   },
   {
@@ -86,8 +86,9 @@ export default function PeopleArchitecture() {
             </p>
           </Reveal>
           <Reveal delay={0.3}>
-            <div className="flex flex-col items-center gap-10">
+            <div className="flex flex-row items-center gap-4">
               <Button href="/connect?practice=people-architecture" variant="primary" showArrow={true} size="lg">Begin a Diagnostic</Button>
+              <span className="text-[var(--fg-4)]">·</span>
               <a className="kbd-arrow text-[var(--fg-3)] hover:text-[var(--accent)]" href="#bcr">
                 Read the BCR framework
               </a>
@@ -223,7 +224,7 @@ export default function PeopleArchitecture() {
             </Reveal>
             <Reveal delay={0.2}>
               <p className="lead text-[var(--fg-3)] mb-12 mx-auto">
-                A People Architecture engagement runs across all four surfaces and ends with a redesign and an operating handover. Most engagements run 12–16 weeks for the diagnostic and codification.
+                A People Architecture engagement runs across all four surfaces and ends with a redesign and an operating handover. Most engagements run 12–16 weeks across diagnostic, codification, and operating handover.
               </p>
             </Reveal>
             <Reveal delay={0.3}>

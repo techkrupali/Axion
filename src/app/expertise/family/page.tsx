@@ -39,7 +39,7 @@ const architectures = [
     letter: "S",
     name: "Succession",
     sub: "Roles · readiness · sequencing",
-    body: "Not 'who comes next' but 'what role does the next generation hold, when, and on what readiness'. Codified before it is needed; decoupled from death and divorce; built around capability and contribution.",
+    body: "Not 'who comes next', but 'what role does the next generation hold, when, and on what readiness basis?' Codified before it is needed; decoupled from death and divorce; built around capability and contribution.",
     failure: "Inheritance treated as event, not architecture.",
   },
   {
@@ -73,11 +73,8 @@ export default function FamilyBusiness() {
           <Reveal delay={0.1}>
             <h1 className="hero-glow mb-8 drop-shadow-2xl">
               <span className="block font-serif font-medium text-[clamp(28px,3.5vw,52px)] leading-[1.15] tracking-[-0.01em] text-[var(--fg-2)] mb-2">
-                Family enterprises don&apos;t fail at strategy.
+                Family enterprises don&apos;t fail at strategy. They fail at architecture.
               </span>
-              <em className="block font-serif font-medium text-[clamp(28px,3.5vw,52px)] leading-[1.15] tracking-[-0.01em] text-[var(--accent)] italic">
-                They fail at architecture.
-              </em>
             </h1>
           </Reveal>
           <Reveal delay={0.2}>
@@ -184,9 +181,9 @@ export default function FamilyBusiness() {
               <table className="w-full border-collapse">
                 <thead>
                   <tr>
-                    {["Architecture", "Built", "Improvised", "Missing"].map((h) => (
+                    {["Architecture", "Built", "Improvised", "Missing"].map((h, i) => (
                       <th key={h} className="p-4 text-left border-b border-[rgba(255,255,255,0.06)] font-mono text-[10px] tracking-widest uppercase text-[var(--accent)] opacity-70 font-medium">
-                        {h}
+                        {i > 0 && <span className="mr-2 opacity-40">·</span>}{h}
                       </th>
                     ))}
                   </tr>
@@ -229,7 +226,7 @@ export default function FamilyBusiness() {
             </Reveal>
             <Reveal delay={0.2}>
               <p className="lead text-[var(--fg-3)] mb-12 mx-auto">
-                Family Business engagements run private — typically 6–9 months across the five architectures, often longer for the institution and operator layers. References available on request, not on the website.
+                Family Business engagements are run privately — typically over 6–9 months across the five architectures, often longer for the institution and operator layers. References available on request, not on the website.
               </p>
             </Reveal>
             <Reveal delay={0.3}>
