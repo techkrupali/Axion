@@ -107,11 +107,11 @@ export default function Footer() {
               <div className="flex flex-col gap-4">
                 <span className="font-mono text-[12px] tracking-[0.18em] uppercase" style={{ color: "#EDEBE3" }}>Bengaluru, India</span>
                 <a
-                  href="mailto:office@axionindex.com"
+                  href="mailto:office@axionindex.org"
                   className="font-mono text-[13px] tracking-[0.1em] hover:text-[#C9A24A] transition-colors duration-300 normal-case break-words"
                   style={{ color: "#EDEBE3" }}
                 >
-                  office@axionindex.com
+                  office@axionindex.org
                 </a>
               <Button href="/connect" variant="primary" showArrow={true} className="w-full sm:w-auto mt-2">Reach Us</Button>
             </div>

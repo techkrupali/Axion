@@ -6,22 +6,22 @@ export interface Question { id: string; title: string; subtitle: string; type: Q
 
 export const INDEX_DEFINITIONS: Record<IndexType, { name: string; audience: string; reportTitle: string; framing: string; weights?: Partial<Record<string, number>> }> = {
   alignment: {
-    name: 'AI Alignment Index™', audience: 'Students / Early Career', reportTitle: 'AI Alignment Report',
+    name: 'AI Alignment Index©', audience: 'Students / Early Career', reportTitle: 'AI Alignment Report',
     framing: 'Measures judgment readiness in an AI-compressed work world.',
     weights: { judgmentDensity: 0.42, outputProtection: 0.20, consequenceSignal: 0.13, impactScore: 0.10, growthSignal: 0.15 }
   },
   replaceability: {
-    name: 'AI Replaceability Index™', audience: 'Working Professionals', reportTitle: 'AI Edge Diagnostic Report',
+    name: 'AI Replaceability Index©', audience: 'Working Professionals', reportTitle: 'AI Edge Diagnostic Report',
     framing: 'Measures how structurally scarce your work remains when intelligence becomes cheap.',
     weights: { judgmentDensity: 0.40, outputProtection: 0.25, consequenceSignal: 0.20, impactScore: 0.10, growthSignal: 0.05 }
   },
   brainpower: {
-    name: 'Brainpower Density Index™', audience: 'CXOs / Senior Leaders', reportTitle: 'Brainpower Density Report',
+    name: 'Brainpower Density Index©', audience: 'CXOs / Senior Leaders', reportTitle: 'Brainpower Density Report',
     framing: 'Measures leadership leverage, judgment density, and consequence ownership in AI-first organisations.',
     weights: { judgmentDensity: 0.38, outputProtection: 0.15, consequenceSignal: 0.22, impactScore: 0.15, growthSignal: 0.10 }
   },
   oda: {
-    name: 'Organisation Decision Architecture™', audience: 'Organisations', reportTitle: 'Organisation Decision Architecture Report',
+    name: 'Organisation Decision Architecture©', audience: 'Organisations', reportTitle: 'Organisation Decision Architecture Report',
     framing: 'Measures where decision rights, judgment ownership, and AI compression sit across the organisation.',
     weights: { judgmentDensity: 0.32, outputProtection: 0.18, consequenceSignal: 0.20, impactScore: 0.20, growthSignal: 0.10 }
   }

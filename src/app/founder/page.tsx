@@ -2318,13 +2318,13 @@ export default function FounderPage() {
                   Axion Index ↗
                 </a>
                 <a
-                  href="mailto:office@axionindex.com"
+                  href="mailto:office@axionindex.org"
                   className="font-mono"
                   style={{ fontSize: "12px", letterSpacing: ".1em", color: "#EDEBE3", textDecoration: "none", textTransform: "none", transition: "color 0.3s" }}
                   onMouseEnter={e => (e.currentTarget.style.color = "var(--accent)")}
                   onMouseLeave={e => (e.currentTarget.style.color = "#EDEBE3")}
                 >
-                  office@axionindex.com
+                  office@axionindex.org
                 </a>
               </div>
             </div>
