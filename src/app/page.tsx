@@ -299,7 +299,7 @@ export default function Home() {
       ══════════════════════════════════════════ */}
       <section className="chapter section-deep relative py-0" id="bridge">
         <div className="shell">
-          <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-0 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-0 items-start">
             <div className="lg:sticky lg:top-0 h-fit flex flex-col justify-start pt-40 pb-40 lg:pr-10 z-30 pointer-events-none">
               <div className="pointer-events-auto">
                 <Reveal>

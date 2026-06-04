@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import AxionWordmark from "@/components/AxionWordmark";
 
 /* ─── Types ─── */
 type Cur = "inr" | "usd";

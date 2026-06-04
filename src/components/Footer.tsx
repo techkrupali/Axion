@@ -24,33 +24,38 @@ export default function Footer() {
 
           {/* Brand + tagline + follow capture */}
           <div className="flex flex-col gap-8 sm:col-span-2 lg:col-span-1">
-            <div>
-              <AxionWordmark className="mb-3" />
-              <p className="font-serif italic text-[clamp(16px,2vw,17px)] text-[#B8BDCE] leading-relaxed max-w-[32ch]">
-                Codifying the operating patterns of the unfinished organisation.
-              </p>
-            </div>
-
-            {/* Follow capture */}
-            <div>
-              <p className="font-mono text-[11px] tracking-[0.45em] uppercase mb-4" style={{ color: "#EDEBE3" }}>Follow the work</p>
-              <a
-                href="https://linkedin.com/company/axionindex"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group inline-flex items-center gap-3 font-mono text-[12px] tracking-[0.22em] uppercase hover:text-[#C9A24A] transition-colors duration-300 min-h-[44px]"
-                style={{ color: "#EDEBE3" }}
-              >
-                <span
-                  className="w-10 h-10 rounded-full border border-[rgba(240,241,245,0.1)] group-hover:border-[#C9A24A] flex items-center justify-center transition-colors duration-300"
-                  style={{ background: "rgba(12,14,20,0.8)" }}
+            <div className="flex flex-col gap-8">
+              <Link href="/" aria-label="Axion Index — home" className="inline-block">
+                <img
+                  src="/axion-index-lockup-gold-on-black.svg"
+                  alt="Axion Index"
+                  className="object-contain"
+                  style={{
+                    width: "clamp(260px, 30vw, 420px)",
+                  }}
+                />
+              </Link>
+              {/* Follow capture */}
+              <div>
+                <p className="font-mono text-[11px] tracking-[0.45em] uppercase mb-4" style={{ color: "#EDEBE3" }}>Follow the work</p>
+                <a
+                  href="https://linkedin.com/company/axionindex"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-3 font-mono text-[12px] tracking-[0.22em] uppercase hover:text-[#C9A24A] transition-colors duration-300 min-h-[44px]"
+                  style={{ color: "#EDEBE3" }}
                 >
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" className="text-[#6B7280] group-hover:text-[#C9A24A] transition-colors duration-300">
-                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                  </svg>
-                </span>
-                LinkedIn
-              </a>
+                  <span
+                    className="w-10 h-10 rounded-full border border-[rgba(240,241,245,0.1)] group-hover:border-[#C9A24A] flex items-center justify-center transition-colors duration-300"
+                    style={{ background: "rgba(12,14,20,0.8)" }}
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" className="text-[#6B7280] group-hover:text-[#C9A24A] transition-colors duration-300">
+                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    </svg>
+                  </span>
+                  LinkedIn
+                </a>
+              </div>
             </div>
           </div>
 
