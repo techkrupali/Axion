@@ -1,8 +1,19 @@
 import Link from "next/link";
 
-export default function AxionWordmark({ href = "/", className = "", color = "default" }: { href?: string; className?: string; color?: "default" | "white" | "gold" }) {
-  const svgSrc = color === "white" ? "/axion-index-wordmark-white.svg" : "/axion-index-wordmark-gold.svg";
-  
+export default function AxionWordmark({
+  href = "/",
+  className = "",
+  color = "gold",
+}: {
+  href?: string;
+  className?: string;
+  color?: "gold" | "white";
+}) {
+  const svgSrc =
+    color === "white"
+      ? "/axion-index-wordmark-white.svg"
+      : "/axion-index-wordmark-gold.svg";
+
   return (
     <Link href={href} aria-label="Axion Index — home" className={`inline-flex items-center ${className}`}>
       <img
@@ -10,7 +21,9 @@ export default function AxionWordmark({ href = "/", className = "", color = "def
         alt="Axion Index"
         className="object-contain"
         style={{
-          width: "clamp(105px, 14vw, 155px)",
+          width: "clamp(105px, 12vw, 155px)", /* mobile: 105px, desktop: 130–155px */
+          height: "auto",
+          display: "block",
         }}
       />
     </Link>

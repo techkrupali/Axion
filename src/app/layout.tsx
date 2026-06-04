@@ -29,6 +29,32 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Axion Index — From ambiguity to architecture.",
   description: "Axion Index is an operating architect. We do not begin by selling a service. We read what is already breaking — and build what must hold.",
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon-16.png", sizes: "16x16", type: "image/png" },
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+    shortcut: "/favicon.ico",
+  },
+  openGraph: {
+    title: "Axion Index — From ambiguity to architecture.",
+    description: "We read what is already breaking — and build what must hold.",
+    url: "https://axionindex.org",
+    siteName: "Axion Index",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Axion Index — From ambiguity to architecture.",
+    description: "We read what is already breaking — and build what must hold.",
+  },
 };
 
 export default function RootLayout({

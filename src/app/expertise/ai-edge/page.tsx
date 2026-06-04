@@ -507,7 +507,7 @@ export default function AIEdgeLab() {
 
         {/* ── HEADER ── */}
         <header style={{ position: "sticky", top: 0, zIndex: 200, height: "56px", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 52px", background: "rgba(247,246,243,0.94)", backdropFilter: "blur(12px)", borderBottom: `1px solid ${S.rule}` }}>
-          <div style={{ fontFamily: S.mono, fontSize: "10.4px", letterSpacing: "0.24em", textTransform: "uppercase" }}>AI Edge Lab · <Link href="/" style={{ color: "inherit", textDecoration: "none" }}>Axionindex</Link></div>
+          <div style={{ fontFamily: S.mono, fontSize: "10.4px", letterSpacing: "0.24em", textTransform: "uppercase" }}>AI Edge Lab · <Link href="/" style={{ color: "inherit", textDecoration: "none" }}>Axion Index</Link></div>
           <nav className="hidden md:flex" style={{ alignItems: "center", gap: "28px" }}>
             {[["the-evidence-wall","The Evidence Wall"],["#actors","Workplace Framework"],["doctrine","Doctrine"],["#research","Research"],["methodology","Methodology"],["#micro-diagnostic","Diagnostic"],["#about","About"]].map(([href, label]) => (
               <a key={href as string} href={href as string} className="hdr-link" style={{ fontFamily: S.mono, fontSize: "8.8px", letterSpacing: "0.18em", textTransform: "uppercase", color: S.mid, textDecoration: "none", transition: "color .2s" }}>{label as string}</a>

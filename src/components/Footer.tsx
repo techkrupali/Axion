@@ -25,14 +25,13 @@ export default function Footer() {
           {/* Brand + tagline + follow capture */}
           <div className="flex flex-col gap-8 sm:col-span-2 lg:col-span-1">
             <div className="flex flex-col gap-8">
+              {/* Full lockup: mark + AXION INDEX + 2-line tagline */}
               <Link href="/" aria-label="Axion Index — home" className="inline-block">
                 <img
                   src="/axion-index-lockup-gold-on-black.svg"
                   alt="Axion Index"
                   className="object-contain"
-                  style={{
-                    width: "clamp(260px, 30vw, 420px)",
-                  }}
+                  style={{ width: "clamp(200px, 26vw, 320px)", height: "auto" }}
                 />
               </Link>
               {/* Follow capture */}
