@@ -91,13 +91,13 @@ const ROOTS_TABS = [
   {
     id: "tata", label: "Tata", num: "IV.", period: "2009–2019",
     title: "The Decade That Made the Architect",
-    sub: "Global HR · M&A · Starbucks India",
+    sub: "Global HR · M&A · Tata/Starbucks JV",
     body: "Ten years. Three stints. Global HR across the Americas, Australia, the Middle East, Europe & Asia. M&A integration of Tata Tea, Tetley and Eight O'Clock Coffee. Anchoring Starbucks India as a joint venture. Relocating the global headquarters from London to Mumbai — 200+ roles, continuity preserved. And the crystallisation of the floor that never left: Humanity Over Hierarchy.",
     scar: "Culture is not what organisations declare. It is what their systems enforce.",
     installations: [
       { n: "01", title: "The Maverick Principle", desc: "HR earns the seat by making the business unable to decide without it." },
       { n: "02", title: "Coherence Across Difference", desc: "Scale is not uniformity — design what must be common, protect what must stay distinct." },
-      { n: "03", title: "Anchoring the Starbucks People Charter", desc: "Values survive only when embedded in operating systems." },
+      { n: "03", title: "Anchoring the Tata/Starbucks People Charter", desc: "Values survive only when embedded in operating systems." },
       { n: "04", title: "Inducting My Own Incoming Boss", desc: "Institutional courage: security without need for approval." },
     ],
     installed: "Institutional scale, coherence across difference, and Humanity Over Hierarchy as the operating floor.",
@@ -289,7 +289,7 @@ function BedrockRows() {
               transition: "border-color 0.3s, box-shadow 0.3s",
               boxShadow: isHovered ? "0 0 16px rgba(201,162,74,0.25)" : "none",
             }}>
-              {card.icon}
+              <span aria-hidden="true">{card.icon}</span>
             </div>
 
             {/* Label */}
@@ -661,7 +661,7 @@ export default function FounderPage() {
                 className="font-sans"
                 style={{ fontWeight: 300, fontSize: "clamp(15px,1.45vw,18px)", color: "#AEAEB8", maxWidth: "38ch", marginBottom: 32, lineHeight: 1.6, letterSpacing: ".01em" }}
               >
-                A 23-year journey through collision, scars &amp; conviction.
+                A 23-year journey through collision, scars, and conviction.
               </p>
             </Reveal>
             <Reveal delay={0.26}>
@@ -803,12 +803,7 @@ export default function FounderPage() {
                     className="font-serif italic text-[clamp(40px,6vw,72px)] leading-none group-hover:text-[var(--accent)] transition-colors duration-500"
                     style={{ WebkitTextStroke: "1px currentColor", color: "transparent" }}
                   >
-                    {i + 1}
-                  </span>
-                  <span
-                    className="font-serif italic text-[clamp(24px,4vw,42px)] leading-none text-[var(--accent)] opacity-70 group-hover:opacity-100 transition-all duration-500"
-                  >
-                    {item.num}
+                    {item.num}.
                   </span>
                 </div>
               </div>
@@ -835,7 +830,7 @@ export default function FounderPage() {
                 </blockquote>
                 {item.last && (
                   <div className="font-mono mt-3" style={{ fontSize: "9px", letterSpacing: ".28em", textTransform: "uppercase", color: "#C9A24A" }}>
-                    ◆ Bedrock
+                    <span aria-hidden="true">◆</span> Bedrock
                   </div>
                 )}
               </div>
@@ -990,6 +985,7 @@ export default function FounderPage() {
                           </div>
                           {activeTab === i && (
                             <motion.button
+                              aria-label="Close"
                               whileHover={{ scale: 1.1 }}
                               whileTap={{ scale: 0.95 }}
                               onClick={(e) => {
@@ -1002,7 +998,7 @@ export default function FounderPage() {
                                 border: "1px solid rgba(201,162,74,0.3)"
                               }}
                             >
-                              <span className="text-[var(--accent)] text-xl leading-none">×</span>
+                              <span className="text-[var(--accent)] text-xl leading-none" aria-hidden="true">×</span>
                             </motion.button>
                           )}
                         </div>
@@ -1220,7 +1216,7 @@ export default function FounderPage() {
                       <span className="font-sans" style={{ fontSize: "10px", fontWeight: 600, letterSpacing: ".15em", textTransform: "uppercase", color: "#C9A24A" }}>
                         {c.label}
                       </span>
-                      <span style={{ color: "rgba(201,162,74,.25)", fontSize: 18 }}>◆</span>
+                      <span style={{ color: "rgba(201,162,74,.25)", fontSize: 18 }} aria-hidden="true">◆</span>
                     </div>
                     
                     {/* Heading */}
@@ -1445,7 +1441,7 @@ export default function FounderPage() {
                 {/* Tier header */}
                 <div className="flex items-baseline gap-4 mb-3">
                   <span className="font-sans" style={{ fontSize: "13px", fontWeight: 600, letterSpacing: ".22em", textTransform: "uppercase", color: "#EDEBE3" }}>
-                    Threshold — the floor
+                    Threshold — the floor · Foundation
                   </span>
                   <span
                     className="font-sans"
@@ -1498,7 +1494,7 @@ export default function FounderPage() {
                 {/* Tier header */}
                 <div className="flex items-baseline gap-4 mb-3">
                   <span className="font-sans" style={{ fontSize: "13px", fontWeight: 600, letterSpacing: ".22em", textTransform: "uppercase", color: "#EDEBE3" }}>
-                    Signature — the ceiling
+                    Signature — the ceiling · Differentiator
                   </span>
                   <span
                     className="font-sans"
@@ -1828,7 +1824,7 @@ export default function FounderPage() {
               <div className="mast-meta">
                 Essays · Frameworks · Field Notes<br/>
                 Building people systems · Unfinished organisations<br/>
-                Publishing through 2025–26
+                Publishing through 2026
               </div>
             </div>
             <div className="mast-r">
@@ -1845,7 +1841,6 @@ export default function FounderPage() {
           {/* TICKER */}
           <div className="ticker">
             <div className="ticker-track">
-              <div className="t-seg"><div className="t-pip"></div>AI & HR<div className="t-pip"></div>Startups<div className="t-pip"></div>HR Strategy<div className="t-pip"></div>HR Leadership<div className="t-pip"></div>HR Tech<div className="t-pip"></div>Performance</div>
               <div className="t-seg"><div className="t-pip"></div>AI & HR<div className="t-pip"></div>Startups<div className="t-pip"></div>HR Strategy<div className="t-pip"></div>HR Leadership<div className="t-pip"></div>HR Tech<div className="t-pip"></div>Performance</div>
             </div>
           </div>
@@ -1864,7 +1859,7 @@ export default function FounderPage() {
               maxWidth: '600px',
               margin: 0
             }}>
-              Start here if you want to understand the shifts I’m writing from inside of.
+              Start here if you want to understand the shifts I am writing from inside.
             </p>
           </div>
 
@@ -1882,16 +1877,16 @@ export default function FounderPage() {
             <div className="feat-aside">
               <div>
                 <div className="feat-label">Status</div>
-                <div className="feat-soon">Coming<br/><strong>soon<span className="cursor">_</span></strong></div>
+                <div className="feat-soon">Coming<br/><strong>soon</strong></div>
               </div>
-              <div className="feat-label">Estimated Q3 2025</div>
+              <div className="feat-label">Publishing through 2026</div>
             </div>
           </div>
 
           {/* ESSAYS — row 1 (3-col) */}
           <div className="sec-head">
             <div className="sec-title">Essays</div>
-            <div className="sec-meta">Publishing through 2025–26</div>
+            <div className="sec-meta">Publishing through 2026</div>
           </div>
           <div className="essays-grid">
             {ARTICLES.slice(0, 3).map((a, i) => (
