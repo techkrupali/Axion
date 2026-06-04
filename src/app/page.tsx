@@ -14,51 +14,23 @@ function GridBackground() {
       <svg className="absolute inset-0 w-full h-full opacity-[0.025]" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse">
-            <path d="M 80 0 L 0 0 0 80" fill="none" stroke="rgba(201,168,76,1)" strokeWidth="0.5"/>
+            <path d="M 80 0 L 0 0 0 80" fill="none" stroke="#C9A24A" strokeWidth="0.5"/>
           </pattern>
         </defs>
         <rect width="100%" height="100%" fill="url(#grid)" />
       </svg>
-      {/* Radial fade over grid */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_50%,transparent_30%,var(--bg)_100%)]" />
     </div>
   );
 }
 
 /* ── Floating orbs ── */
 function Orbs() {
-  return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden">
-      <div
-        className="absolute w-[600px] h-[600px] rounded-full opacity-[0.06]"
-        style={{
-          background: "radial-gradient(circle, #C9A84C 0%, transparent 70%)",
-          top: "10%", left: "60%",
-          animation: "float 12s ease-in-out infinite",
-        }}
-      />
-      <div
-        className="absolute w-[400px] h-[400px] rounded-full opacity-[0.04]"
-        style={{
-          background: "radial-gradient(circle, #C9A84C 0%, transparent 70%)",
-          top: "50%", left: "10%",
-          animation: "float 16s ease-in-out infinite reverse",
-        }}
-      />
-    </div>
-  );
+  return null;
 }
 
 function StatementCard({ item, i }: { item: { num: string; title: string; desc: string }; i: number }) {
   const ref = useRef<HTMLDivElement>(null);
-  const [pos, setPos] = useState({ x: 0, y: 0 });
   const [hovered, setHovered] = useState(false);
-
-  function onMouseMove(e: React.MouseEvent<HTMLDivElement>) {
-    const rect = ref.current?.getBoundingClientRect();
-    if (!rect) return;
-    setPos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
-  }
 
   return (
     <motion.div
@@ -67,51 +39,31 @@ function StatementCard({ item, i }: { item: { num: string; title: string; desc: 
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-10%" }}
       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: i * 0.12 }}
-      animate={hovered ? { y: -10, scale: 1.03 } : { y: 0, scale: 1 }}
-      onMouseMove={onMouseMove}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      className="group relative p-8 border rounded-[24px] bg-[var(--bg-1)] overflow-hidden cursor-default"
+      className="group relative p-8 border rounded-[24px] bg-[#0A0A0B] cursor-default"
       style={{
-        borderColor: hovered ? "rgba(201,168,76,0.6)" : "var(--line)",
-        boxShadow: hovered ? "0 20px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(201,168,76,0.2)" : "none",
-        transition: "border-color 0.4s, box-shadow 0.4s",
+        borderColor: hovered ? "rgba(201,162,74,0.2)" : "rgba(240,241,245,0.1)",
+        transition: "border-color 0.4s",
       }}
     >
-      {/* Mouse spotlight */}
-      {hovered && (
-        <div
-          className="absolute pointer-events-none rounded-full"
-          style={{
-            width: 220,
-            height: 220,
-            top: pos.y - 110,
-            left: pos.x - 110,
-            background: "radial-gradient(circle, rgba(201,168,76,0.12) 0%, transparent 70%)",
-            transition: "top 0.05s, left 0.05s",
-          }}
-        />
-      )}
-
       {/* Animated top border beam */}
       <motion.div
-        className="absolute top-0 left-0 h-[2px] bg-gradient-to-r from-transparent via-[var(--accent)] to-transparent"
+        className="absolute top-0 left-0 h-[1px]"
         initial={{ scaleX: 0, originX: 0 }}
         whileInView={{ scaleX: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 1, delay: 0.3 + i * 0.12, ease: "easeOut" }}
-        style={{ width: "100%" }}
+        style={{ width: "100%", background: "#C9A24A" }}
       />
 
       {/* Number tag */}
-      <div className="font-mono text-[10px] tracking-[0.4em] text-[var(--accent)] mb-6" style={{ opacity: hovered ? 1 : 0.5, transition: "opacity 0.3s" }}>
+      <div className="font-mono text-[10px] tracking-[0.4em] text-[#C9A24A] mb-6" style={{ opacity: hovered ? 1 : 0.5, transition: "opacity 0.3s" }}>
         [ {item.num} ]
       </div>
 
       {/* Title */}
       <motion.h3
         className="font-serif text-[28px] mb-4"
-        animate={{ color: hovered ? "var(--accent)" : "var(--fg)" }}
+        animate={{ color: hovered ? "#C9A24A" : "#F0F1F5" }}
         transition={{ duration: 0.35 }}
       >
         {item.title}
@@ -119,7 +71,7 @@ function StatementCard({ item, i }: { item: { num: string; title: string; desc: 
 
       {/* Desc — slides up on hover */}
       <motion.p
-        className="text-[14px] text-[var(--fg-3)] leading-relaxed max-w-[20ch]"
+        className="text-[14px] text-[#B8BDCE] leading-relaxed max-w-[20ch]"
         animate={{ y: hovered ? -2 : 0, opacity: hovered ? 1 : 0.7 }}
         transition={{ duration: 0.35 }}
       >
@@ -128,27 +80,19 @@ function StatementCard({ item, i }: { item: { num: string; title: string; desc: 
 
       {/* Expanding gold line */}
       <motion.div
-        className="mt-8 h-[1px] bg-[var(--accent)]"
+        className="mt-8 h-[1px] bg-[#C9A24A]"
         animate={{ width: hovered ? "100%" : "40px" }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      />
-
-      {/* Bottom glow */}
-      <motion.div
-        className="absolute bottom-0 left-0 w-full h-20 pointer-events-none"
-        animate={{ opacity: hovered ? 1 : 0 }}
-        transition={{ duration: 0.4 }}
-        style={{ background: "linear-gradient(to top, rgba(201,168,76,0.08), transparent)" }}
       />
     </motion.div>
   );
 }
 
 const BRIDGE_ITEMS = [
-  { title: "Where the system is breaking", step: "01", bg: "linear-gradient(180deg, rgba(201,168,76,0.06) 0%, transparent 100%)" },
-  { title: "What's holding it together artificially", step: "02", bg: "linear-gradient(180deg, rgba(201,168,76,0.04) 0%, transparent 100%)" },
-  { title: "What will fail next", step: "03", bg: "linear-gradient(180deg, rgba(201,168,76,0.04) 0%, transparent 100%)" },
-  { title: "Then we redesign it so it holds", step: "04", bg: "linear-gradient(180deg, rgba(201,168,76,0.03) 0%, transparent 100%)" },
+  { title: "Where the system is breaking", step: "01", bg: "#0A0A0B" },
+  { title: "What's holding it together artificially", step: "02", bg: "#0A0A0B" },
+  { title: "What will fail next", step: "03", bg: "#0A0A0B" },
+  { title: "Then we redesign it so it holds", step: "04", bg: "#0A0A0B" },
 ];
 
 function BridgeCards() {
@@ -169,7 +113,7 @@ function BridgeCards() {
   return (
     <div ref={sectionRef} style={{ height: `${BRIDGE_ITEMS.length * 50}vh` }}>
       <div className="sticky top-[20vh]">
-        <div className="relative border-l border-[var(--line)] pl-10 md:pl-20 flex flex-col gap-6 pt-20 pb-20">
+        <div className="relative border-l border-[rgba(240,241,245,0.1)] pl-10 md:pl-20 flex flex-col gap-6 pt-20 pb-20">
           {BRIDGE_ITEMS.map((item, i) => (
             <div
               key={i}
@@ -180,14 +124,14 @@ function BridgeCards() {
               }}
             >
               <div className="absolute left-[-41px] md:left-[-81px] top-1/2 -translate-y-1/2 flex flex-col items-center gap-3">
-                <div className="w-3 h-3 rounded-full bg-[var(--bg)] border-2 border-[var(--accent)] z-20 group-hover:scale-[1.8] transition-transform duration-500 shadow-[0_0_15px_var(--accent-soft)]" />
-                <span className="font-serif italic text-[28px] text-[var(--fg-5)] group-hover:text-[var(--accent)] transition-colors duration-500">{item.step}</span>
+                <div className="w-3 h-3 rounded-full bg-[#0A0A0B] border-2 border-[#C9A24A] z-20 group-hover:scale-[1.8] transition-transform duration-500" />
+                <span className="font-serif italic text-[28px] text-[#4A4F62] group-hover:text-[#C9A24A] transition-colors duration-500">{item.step}</span>
               </div>
               <div
-                className="p-6 md:p-8 rounded-[28px] border border-[var(--line)] backdrop-blur-2xl transition-all duration-700 group-hover:border-[var(--line-gold)] group-hover:shadow-[0_30px_70px_rgba(0,0,0,0.6)]"
+                className="p-6 md:p-8 rounded-[28px] border border-[rgba(240,241,245,0.1)] transition-all duration-700 group-hover:border-[rgba(201,162,74,0.2)]"
                 style={{ background: item.bg }}
               >
-                <h3 className="font-serif text-[clamp(16px,1.6vw,22px)] leading-[1.2] text-[var(--fg)]">{item.title}</h3>
+                <h3 className="font-serif text-[clamp(16px,1.6vw,22px)] leading-[1.2] text-[#F0F1F5]">{item.title}</h3>
               </div>
             </div>
           ))}
@@ -262,16 +206,16 @@ function SignalsSection() {
                 >
                   <Link
                     href={signal.href}
-                    className="group block bg-[var(--bg-1)] border border-[var(--line-strong)] hover:border-[var(--line-gold)] transition-all duration-400 shadow-[0_8px_32px_rgba(0,0,0,0.4)] rounded-[24px] px-6 py-5"
+                    className="group block bg-[#0A0A0B] border border-[rgba(240,241,245,0.1)] hover:border-[rgba(201,162,74,0.2)] transition-all duration-400 rounded-[24px] px-6 py-5"
                   >
                     <div className="flex items-center justify-between mb-3">
-                      <span className="font-mono text-[10px] text-[var(--accent)] tracking-[0.35em] font-semibold">SIGNAL {signal.num}</span>
-                      <span className="font-mono text-[9px] tracking-[0.2em] uppercase text-[var(--fg-5)] group-hover:text-[var(--accent)] transition-colors duration-300 flex items-center gap-1">
+                      <span className="font-mono text-[10px] text-[#C9A24A] tracking-[0.35em] font-semibold">SIGNAL {signal.num}</span>
+                      <span className="font-mono text-[9px] tracking-[0.2em] uppercase text-[#4A4F62] group-hover:text-[#C9A24A] transition-colors duration-300 flex items-center gap-1">
                         → {signal.dest}
                       </span>
                     </div>
                     <h3
-                      className="text-[clamp(18px,2.2vw,26px)] font-serif leading-[1.35] text-[var(--fg-2)] group-hover:text-[var(--fg)] transition-colors duration-400"
+                      className="text-[clamp(18px,2.2vw,26px)] font-serif leading-[1.35] text-[#D4D7E0] group-hover:text-[#F0F1F5] transition-colors duration-400"
                       dangerouslySetInnerHTML={{ __html: signal.text }}
                     />
                   </Link>
@@ -303,17 +247,11 @@ export default function Home() {
       ══════════════════════════════════════════ */}
       <header ref={heroRef} className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <GridBackground />
-        <Orbs />
-
-        {/* Scan line effect */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-[0.015]">
-          <div className="absolute w-full h-[2px] bg-[var(--accent)]" style={{ animation: "scan-line 8s linear infinite" }} />
-        </div>
 
         <motion.div style={{ y: heroY, opacity: heroOpacity }} className="shell text-center relative z-10 pt-20">
           <Reveal>
             {/* Fix 3 — classification eyebrow, corner strips merged in */}
-            <div className="eyebrow eyebrow--center mb-10 text-[var(--fg-3)]">
+            <div className="eyebrow eyebrow--center mb-10 text-[#B8BDCE]">
               OPERATING ARCHITECTURE PRACTICE
             </div>
           </Reveal>
@@ -321,13 +259,13 @@ export default function Home() {
           <Reveal delay={0.1}>
             <h1 className="h-display hero-glow mb-8">
               {/* Fix 6 — strikethrough contrast raised */}
-              From <s className="opacity-80 decoration-[var(--accent)] decoration-2">ambiguity</s><br />
+              From <s className="opacity-80 decoration-[#C9A24A] decoration-2">ambiguity</s><br />
               to <em>architecture.</em>
             </h1>
           </Reveal>
 
           <Reveal delay={0.2}>
-            <p className="lead mx-auto mb-14 text-[var(--fg-2)] max-w-[48ch]">
+            <p className="lead mx-auto mb-14 text-[#D4D7E0] max-w-[48ch]">
               Most organisations don't fail when strategy breaks.<br />
               They fail when their internal architecture cannot carry<br />what they are becoming.
             </p>
@@ -342,9 +280,8 @@ export default function Home() {
                 whileTap={{ scale: 0.97 }}
                 className="inline-flex items-center gap-3 px-8 py-4 font-mono text-[11px] tracking-[0.28em] uppercase rounded-full font-semibold"
                 style={{
-                  background: "linear-gradient(135deg, #C9A84C 0%, #E8C97A 50%, #C9A84C 100%)",
-                  color: "#080A0F",
-                  boxShadow: "0 0 32px rgba(201,168,76,0.25)",
+                  background: "#C9A24A",
+                  color: "#0A0A0B",
                 }}
               >
                 Reach Us
@@ -354,15 +291,14 @@ export default function Home() {
                 href="#signals"
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
-                className="group relative inline-flex items-center gap-3 px-8 py-4 font-mono text-[11px] tracking-[0.28em] uppercase overflow-hidden rounded-full"
+                className="group relative inline-flex items-center gap-3 px-8 py-4 font-mono text-[11px] tracking-[0.28em] uppercase rounded-full"
                 style={{
-                  border: "1px solid rgba(201,168,76,0.3)",
-                  color: "var(--accent-2)",
+                  border: "1px solid rgba(201,162,74,0.2)",
+                  color: "#C9A24A",
                 }}
               >
                 <span className="relative z-10">Read the signals</span>
                 <ArrowRight size={13} className="relative z-10 group-hover:translate-x-1 transition-transform" />
-                <div className="absolute inset-0 bg-[var(--accent-soft)] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </motion.a>
             </div>
           </Reveal>
@@ -374,9 +310,6 @@ export default function Home() {
             </div>
           </Reveal>
         </motion.div>
-
-        {/* Bottom gradient fade */}
-        <div className="absolute bottom-0 left-0 w-full h-[35vh] bg-gradient-to-t from-[var(--bg)] to-transparent pointer-events-none" />
       </header>
 
       {/* ══════════════════════════════════════════
@@ -393,7 +326,7 @@ export default function Home() {
             <div className="lg:sticky lg:top-0 h-fit flex flex-col justify-start pt-40 pb-40 lg:pr-10 z-30 pointer-events-none">
               <div className="pointer-events-auto">
                 <Reveal>
-                  <span className="eyebrow mb-8 text-[var(--accent)]">How We Do It</span>
+                  <span className="eyebrow mb-8 text-[#C9A24A]">How We Do It</span>
                 </Reveal>
                 <Reveal delay={0.1}>
                   <h2 className="h-display text-[clamp(32px,4.5vw,56px)] leading-[0.95] mb-6">
@@ -402,8 +335,8 @@ export default function Home() {
                   </h2>
                 </Reveal>
                 <Reveal delay={0.3}>
-                  <div className="pt-10 border-t border-[var(--line)]">
-                    <span className="font-mono text-[10px] tracking-[0.5em] uppercase text-[var(--accent)] opacity-80">We map:</span>
+                  <div className="pt-10 border-t border-[rgba(240,241,245,0.1)]">
+                    <span className="font-mono text-[10px] tracking-[0.5em] uppercase text-[#C9A24A] opacity-80">We map:</span>
                   </div>
                 </Reveal>
               </div>
@@ -428,7 +361,7 @@ export default function Home() {
               </h2>
             </Reveal>
             <Reveal delay={0.2}>
-              <p className="text-[clamp(16px,1.4vw,19px)] text-[var(--fg-2)] mb-16 max-w-[52ch] leading-relaxed">
+              <p className="text-[clamp(16px,1.4vw,19px)] text-[#D4D7E0] mb-16 max-w-[52ch] leading-relaxed">
                 Not designed in a deck. Forged in the field — then interpreted across labour, AI, people, and ownership.
               </p>
             </Reveal>
@@ -440,24 +373,21 @@ export default function Home() {
                   num: "01",
                   label: "Belief",
                   desc: "Where every operating logic begins. A conviction about how an organisation should hold — before the pressure arrives.",
-                  accent: "rgba(201,168,76,0.35)",
-                  glow: "rgba(201,168,76,0.06)",
+                  accent: "#C9A24A",
                   tag: "ORIGIN",
                 },
                 {
                   num: "02",
                   label: "Conviction",
                   desc: "Belief that has survived collision with reality. Tested against data, cost, and consequence — not opinion.",
-                  accent: "rgba(201,168,76,0.65)",
-                  glow: "rgba(201,168,76,0.10)",
+                  accent: "#C9A24A",
                   tag: "TESTED",
                 },
                 {
                   num: "03",
                   label: "Rhythm",
                   desc: "When conviction stops depending on the person. Codified into repeatable behaviour the organisation keeps on its own.",
-                  accent: "#C9A84C",
-                  glow: "rgba(201,168,76,0.18)",
+                  accent: "#C9A24A",
                   tag: "CODIFIED",
                 },
               ].map((item, i) => (
@@ -467,36 +397,27 @@ export default function Home() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-8%" }}
                   transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: i * 0.15 }}
-                  whileHover={{ y: -6 }}
-                  className="group relative overflow-hidden cursor-default text-left"
+                  className="group relative cursor-default text-left"
                   style={{
-                    background: `linear-gradient(160deg, rgba(12,14,20,0.95) 0%, rgba(8,10,15,0.98) 100%)`,
-                    border: `1px solid ${i === 2 ? "rgba(201,168,76,0.3)" : "rgba(240,241,245,0.07)"}`,
+                    background: "#0A0A0B",
+                    border: "1px solid rgba(240,241,245,0.1)",
                     borderRadius: 20,
                     padding: "36px 32px 32px",
-                    boxShadow: i === 2 ? `0 0 60px ${item.glow}, 0 20px 40px rgba(0,0,0,0.4)` : "0 8px 32px rgba(0,0,0,0.3)",
-                    transition: "box-shadow 0.5s, border-color 0.5s",
+                    transition: "border-color 0.5s",
                   }}
+                  whileHover={{ borderColor: "rgba(201,162,74,0.2)" }}
                 >
                   {/* Animated top beam */}
                   <motion.div
-                    className="absolute top-0 left-0 h-[2px]"
+                    className="absolute top-0 left-0 h-[1px]"
                     initial={{ scaleX: 0, originX: 0 }}
                     whileInView={{ scaleX: 1 }}
                     viewport={{ once: true }}
                     transition={{ duration: 1.2, delay: 0.3 + i * 0.15, ease: "easeOut" }}
                     style={{
                       width: "100%",
-                      background: `linear-gradient(90deg, transparent, ${item.accent}, transparent)`,
+                      background: item.accent,
                     }}
-                  />
-
-                  {/* Scan line on hover */}
-                  <motion.div
-                    className="absolute left-0 w-full h-[1px] pointer-events-none"
-                    style={{ background: `linear-gradient(90deg, transparent, ${item.accent}, transparent)`, opacity: 0 }}
-                    animate={{ top: ["0%", "100%"], opacity: [0, 0.6, 0] }}
-                    transition={{ duration: 2.8, repeat: Infinity, ease: "linear", delay: i * 0.9 }}
                   />
 
                   {/* Corner tag */}
@@ -507,7 +428,7 @@ export default function Home() {
                   {/* Number */}
                   <div
                     className="font-serif italic mb-6 leading-none"
-                    style={{ fontSize: "clamp(52px,6vw,80px)", color: item.accent, opacity: i === 2 ? 0.25 : 0.12, lineHeight: 1 }}
+                    style={{ fontSize: "clamp(52px,6vw,80px)", color: item.accent, opacity: 0.25, lineHeight: 1 }}
                   >
                     {item.num}
                   </div>
@@ -515,13 +436,13 @@ export default function Home() {
                   {/* Label */}
                   <h3
                     className="font-serif mb-4"
-                    style={{ fontSize: "clamp(22px,2.2vw,30px)", color: "#C9A84C", fontWeight: 400, lineHeight: 1.1 }}
+                    style={{ fontSize: "clamp(22px,2.2vw,30px)", color: "#C9A24A", fontWeight: 400, lineHeight: 1.1 }}
                   >
                     <em>{item.label}</em>
                   </h3>
 
                   {/* Desc */}
-                  <p style={{ fontSize: "clamp(13px,1.1vw,14.5px)", color: "var(--fg-3)", lineHeight: 1.7 }}>
+                  <p style={{ fontSize: "clamp(13px,1.1vw,14.5px)", color: "#B8BDCE", lineHeight: 1.7 }}>
                     {item.desc}
                   </p>
 
@@ -535,29 +456,18 @@ export default function Home() {
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                   />
-
-                  {/* Hover glow overlay */}
-                  <div
-                    className="absolute inset-0 rounded-[20px] pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                    style={{ background: `radial-gradient(ellipse at 50% 100%, ${item.glow} 0%, transparent 70%)` }}
-                  />
                 </motion.div>
               ))}
             </div>
-
             {/* Closing line */}
             <Reveal delay={0.6}>
-              <p className="font-serif italic text-[clamp(16px,1.5vw,20px)] text-[var(--fg-3)] max-w-[54ch] leading-relaxed border-t border-[var(--line)] pt-10">
+              <p className="font-serif italic text-[clamp(16px,1.5vw,20px)] text-[#B8BDCE] max-w-[54ch] leading-relaxed border-t border-[rgba(240,241,245,0.1)] pt-10">
                 This is the same arc we build for you — from what one person believes, to what the whole organisation runs on.
               </p>
             </Reveal>
           </div>
         </div>
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] aspect-square pointer-events-none"
-          style={{ background: "radial-gradient(circle, var(--accent-glow) 0%, transparent 70%)" }} />
       </section>
-
-
 
       {/* ══════════════════════════════════════════
           PRACTICES — Interactive Accordion
@@ -616,8 +526,8 @@ export default function Home() {
                   onMouseEnter={() => setActivePractice(i)}
                   className={`relative overflow-hidden cursor-pointer rounded-[28px] border transition-colors duration-500 ${
                     isActive
-                      ? "flex-[3] bg-[var(--bg-2)] border-[var(--line-gold)] shadow-[0_30px_60px_rgba(0,0,0,0.6),0_0_40px_var(--accent-glow)]"
-                      : "flex-1 bg-[rgba(12,14,20,0.5)] border-[var(--line)] hover:border-[rgba(201,168,76,0.3)]"
+                      ? "flex-[3] bg-[#0A0A0B] border-[rgba(201,162,74,0.2)]"
+                      : "flex-1 bg-[#0A0A0B] border-[rgba(240,241,245,0.1)] hover:border-[rgba(201,162,74,0.2)]"
                   }`}
                   layout
                   transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
@@ -625,14 +535,14 @@ export default function Home() {
                   {/* Collapsed state */}
                   {!isActive && (
                     <div className="absolute inset-0 flex flex-col items-center justify-between py-8 px-3">
-                      <span className="font-mono text-[12px] tracking-[0.3em] text-[var(--fg-5)]">[{practice.num}]</span>
+                      <span className="font-mono text-[12px] tracking-[0.3em] text-[#4A4F62]">[{practice.num}]</span>
                       <span
-                        className="font-serif text-[18px] text-[var(--fg)] tracking-wide whitespace-nowrap"
+                        className="font-serif text-[18px] text-[#F0F1F5] tracking-wide whitespace-nowrap"
                         style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}
                       >
                         {practice.name}
                       </span>
-                      <span className="text-[var(--accent)] opacity-40 text-[16px]">+</span>
+                      <span className="text-[#C9A24A] opacity-40 text-[16px]">+</span>
                     </div>
                   )}
 
@@ -644,32 +554,27 @@ export default function Home() {
                       transition={{ duration: 0.3 }}
                       className="absolute inset-0 p-8 flex flex-col"
                     >
-                      <span className="font-mono text-[13px] tracking-[0.3em] text-[var(--accent)] mb-5">[{practice.num}]</span>
-                      <h3 className="font-serif text-[clamp(30px,3.2vw,48px)] leading-[1.1] text-[var(--fg)] mb-5">
-                        {first}<br /><em className="text-[var(--accent)]">{rest}</em>
+                      <span className="font-mono text-[13px] tracking-[0.3em] text-[#C9A24A] mb-5">[{practice.num}]</span>
+                      <h3 className="font-serif text-[clamp(30px,3.2vw,48px)] leading-[1.1] text-[#F0F1F5] mb-5">
+                        {first}<br /><em className="text-[#C9A24A]">{rest}</em>
                       </h3>
                       <div className="mb-4">
-                        <span className="font-mono text-[11px] tracking-[0.2em] uppercase text-[var(--fg-4)] block mb-2">The Signal</span>
-                        <p className="text-[16px] text-[var(--fg-2)] leading-relaxed">{practice.condition}</p>
+                        <span className="font-mono text-[11px] tracking-[0.2em] uppercase text-[#8A8FA4] block mb-2">The Signal</span>
+                        <p className="text-[16px] text-[#D4D7E0] leading-relaxed">{practice.condition}</p>
                       </div>
                       <div className="mb-6">
-                        <span className="font-mono text-[11px] tracking-[0.2em] uppercase text-[var(--fg-4)] block mb-2">What We Build</span>
-                        <p className="text-[16px] text-[var(--fg-3)] leading-relaxed">{practice.promise}</p>
+                        <span className="font-mono text-[11px] tracking-[0.2em] uppercase text-[#8A8FA4] block mb-2">What We Build</span>
+                        <p className="text-[16px] text-[#B8BDCE] leading-relaxed">{practice.promise}</p>
                       </div>
-                      <div className="pt-5 border-t border-[var(--line)] mt-auto">
+                      <div className="pt-5 border-t border-[rgba(240,241,245,0.1)] mt-auto">
                         <Link
                           href={practice.href}
-                          className="inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.28em] uppercase text-[var(--accent)] hover:text-[var(--fg)] transition-colors group"
+                          className="inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.28em] uppercase text-[#C9A24A] hover:text-[#F0F1F5] transition-colors group"
                         >
                           Enter {practice.name} <ArrowRight size={11} className="group-hover:translate-x-1 transition-transform" />
                         </Link>
                       </div>
                     </motion.div>
-                  )}
-
-                  {isActive && (
-                    <div className="absolute bottom-[-10%] right-[-5%] w-[60%] aspect-square pointer-events-none"
-                      style={{ background: "radial-gradient(circle, var(--accent-glow) 0%, transparent 70%)" }} />
                   )}
                 </motion.div>
               );
@@ -711,20 +616,20 @@ export default function Home() {
               <Link
                 key={i}
                 href={practice.href}
-                className="group block p-6 rounded-[20px] border border-[var(--line)] hover:border-[var(--line-gold)] bg-[var(--bg-1)] transition-all duration-300"
+                className="group block p-6 rounded-[20px] border border-[rgba(240,241,245,0.1)] hover:border-[rgba(201,162,74,0.2)] bg-[#0A0A0B] transition-all duration-300"
               >
                 <div className="flex items-center justify-between mb-3">
-                  <span className="font-mono text-[12px] tracking-[0.3em] text-[var(--accent)]">[{practice.num}]</span>
-                  <ArrowRight size={13} className="text-[var(--accent)] opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
+                  <span className="font-mono text-[12px] tracking-[0.3em] text-[#C9A24A]">[{practice.num}]</span>
+                  <ArrowRight size={13} className="text-[#C9A24A] opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
                 </div>
-                <h3 className="font-serif text-[26px] text-[var(--fg)] mb-4">{practice.name}</h3>
+                <h3 className="font-serif text-[26px] text-[#F0F1F5] mb-4">{practice.name}</h3>
                 <div className="mb-3">
-                  <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[var(--fg-4)] block mb-1">The Signal</span>
-                  <p className="text-[15px] text-[var(--fg-2)] leading-relaxed">{practice.condition}</p>
+                  <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#8A8FA4] block mb-1">The Signal</span>
+                  <p className="text-[15px] text-[#D4D7E0] leading-relaxed">{practice.condition}</p>
                 </div>
                 <div>
-                  <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[var(--fg-4)] block mb-1">What We Build</span>
-                  <p className="text-[15px] text-[var(--fg-3)] leading-relaxed">{practice.promise}</p>
+                  <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#8A8FA4] block mb-1">What We Build</span>
+                  <p className="text-[15px] text-[#B8BDCE] leading-relaxed">{practice.promise}</p>
                 </div>
               </Link>
             ))}
@@ -732,19 +637,19 @@ export default function Home() {
 
           {/* Catch-all line */}
           <Reveal delay={0.2}>
-            <div className="mt-8 pt-6 border-t border-[var(--line)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+            <div className="mt-8 pt-6 border-t border-[rgba(240,241,245,0.1)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
               <div className="flex flex-col gap-3">
-                <p className="font-serif text-[clamp(18px,1.7vw,24px)] text-[var(--fg-3)] leading-relaxed">
-                  Four practices. <em style={{ color: "var(--accent)" }}>One method.</em>
+                <p className="font-serif text-[clamp(18px,1.7vw,24px)] text-[#B8BDCE] leading-relaxed">
+                  Four practices. <em style={{ color: "#C9A24A" }}>One method.</em>
                 </p>
-                <p className="font-serif text-[clamp(14px,1.2vw,17px)] text-[var(--fg-4)] max-w-[56ch] leading-relaxed">
+                <p className="font-serif text-[clamp(14px,1.2vw,17px)] text-[#8A8FA4] max-w-[56ch] leading-relaxed">
                   If what's breaking doesn't fit a category, that is still a signal — bring it, and we read the architecture wherever it lives.
                 </p>
               </div>
               <Link
                 href="/connect"
                 className="shrink-0 inline-flex items-center gap-2 px-6 py-3 font-mono text-[10px] tracking-[0.28em] uppercase rounded-full font-semibold"
-                style={{ background: "linear-gradient(135deg, #C9A84C 0%, #E8C97A 50%, #C9A84C 100%)", color: "#080A0F" }}
+                style={{ background: "#C9A24A", color: "#0A0A0B" }}
               >
                 Reach Us <ArrowRight size={11} />
               </Link>
@@ -767,12 +672,12 @@ export default function Home() {
                 </h2>
               </Reveal>
               <Reveal delay={0.15}>
-                <div className="w-16 h-[2px] bg-gradient-to-r from-[var(--accent)] to-transparent mb-4" />
+                <div className="w-16 h-[2px] bg-[#C9A24A] mb-4" />
               </Reveal>
               <Reveal delay={0.25}>
                 <Link
                   href="/connect"
-                  className="inline-flex items-center gap-3 px-6 py-2.5 bg-gradient-to-r from-[var(--accent)] via-[#E8C97A] to-[var(--accent)] text-[#080A0F] font-mono text-[10px] tracking-[0.28em] uppercase rounded-full font-semibold shadow-[0_0_30px_rgba(201,168,76,0.2)] hover:shadow-[0_0_40px_rgba(201,168,76,0.4)] transition-all duration-300 group"
+                  className="inline-flex items-center gap-3 px-6 py-2.5 bg-[#C9A24A] text-[#0A0A0B] font-mono text-[10px] tracking-[0.28em] uppercase rounded-full font-semibold transition-all duration-300 group"
                 >
                   Reach Us <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
                 </Link>
@@ -812,23 +717,20 @@ export default function Home() {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="relative h-full p-5 rounded-[24px] border-2 border-[var(--line)] hover:border-[var(--line-gold)] bg-gradient-to-br from-[rgba(12,14,20,0.95)] to-[rgba(8,10,15,0.98)] group hover:shadow-[0_30px_80px_rgba(0,0,0,0.7),0_0_0_1px_rgba(201,168,76,0.15)] transition-all duration-500 overflow-hidden"
+                    className="relative h-full p-5 rounded-[24px] border border-[rgba(240,241,245,0.1)] hover:border-[rgba(201,162,74,0.2)] bg-[#0A0A0B] group transition-all duration-500"
                   >
-                    {/* Accent corner */}
-                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--accent)] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    
                     <div className="flex items-start gap-4">
                       <div className="text-2xl flex-shrink-0 opacity-70 group-hover:opacity-100 transition-opacity duration-300">
                         {item.icon}
                       </div>
                       <div className="flex-1">
-                        <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-[var(--accent)] mb-2 block font-semibold">{item.role}</span>
-                        <p className="font-serif text-[clamp(14px,1.2vw,17px)] leading-snug text-[var(--fg-2)] group-hover:text-[var(--fg)] transition-colors mb-3 font-medium">
+                        <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-[#C9A24A] mb-2 block font-semibold">{item.role}</span>
+                        <p className="font-serif text-[clamp(14px,1.2vw,17px)] leading-snug text-[#D4D7E0] group-hover:text-[#F0F1F5] transition-colors mb-3 font-medium">
                           {item.pull}
                         </p>
                         <div className="flex items-start gap-1.5">
-                          <div className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] mt-1.5 flex-shrink-0" />
-                          <p className="font-mono text-[11px] tracking-[0.15em] text-[var(--fg-4)] group-hover:text-[var(--fg-3)] transition-colors leading-relaxed">
+                          <div className="w-1.5 h-1.5 rounded-full bg-[#C9A24A] mt-1.5 flex-shrink-0" />
+                          <p className="font-mono text-[11px] tracking-[0.15em] text-[#8A8FA4] group-hover:text-[#B8BDCE] transition-colors leading-relaxed">
                             {item.work}
                           </p>
                         </div>
@@ -850,7 +752,7 @@ export default function Home() {
         <div className="shell pt-20 pb-4">
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
             <Reveal>
-              <span className="eyebrow text-[var(--accent)]">The engagement</span>
+              <span className="eyebrow text-[#C9A24A]">The engagement</span>
             </Reveal>
             <Reveal delay={0.1}>
               <h2 className="h-section lg:text-right">
@@ -897,31 +799,16 @@ export default function Home() {
             key={i}
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
-            whileHover={{ scale: 1.04, y: -8, zIndex: 10 }}
             viewport={{ once: true, margin: "-10%" }}
             transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1], delay: i * 0.1 }}
-            className="group relative border-t border-[var(--line)] transition-all duration-500 cursor-default"
-            style={{ position: "relative" }}
+            className="group relative border-t border-[rgba(240,241,245,0.1)] transition-all duration-500 cursor-default"
           >
-            {/* Hover background glow */}
-            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-[4px]"
-              style={{ background: "linear-gradient(135deg, rgba(201,168,76,0.04) 0%, transparent 100%)", boxShadow: "0 30px 80px rgba(0,0,0,0.5), 0 0 40px rgba(201,168,76,0.06), inset 0 0 0 1px rgba(201,168,76,0.15)" }}
-            />
-
-            {/* Ghost number watermark — clipped to row, no overflow */}
-            <div
-              className={`absolute top-1/2 -translate-y-1/2 font-serif italic text-[22vw] leading-none text-white opacity-[0.018] pointer-events-none select-none transition-opacity duration-700 group-hover:opacity-[0.04] overflow-hidden ${item.align === "right" ? "right-8" : "left-0"}`}
-              style={{ maxWidth: "40%" }}
-            >
-              {item.num}
-            </div>
-
             <div className="shell py-12 lg:py-20 flex flex-col lg:flex-row items-start lg:items-center gap-8 lg:gap-0">
               {/* Step tag — always left on mobile */}
               <div className={`lg:w-1/4 flex flex-col gap-3 ${item.align === "right" ? "lg:items-end lg:text-right" : ""}`}>
-                <span className="font-mono text-[9px] tracking-[0.5em] uppercase text-[var(--fg-5)] opacity-50 group-hover:opacity-100 group-hover:text-[var(--accent)] transition-all duration-500">{item.label}</span>
+                <span className="font-mono text-[9px] tracking-[0.5em] uppercase text-[#4A4F62] opacity-50 group-hover:opacity-100 group-hover:text-[#C9A24A] transition-all duration-500">{item.label}</span>
                 <span
-                  className="font-serif italic text-[clamp(56px,8vw,96px)] leading-none group-hover:text-[var(--accent)] transition-colors duration-500"
+                  className="font-serif italic text-[clamp(56px,8vw,96px)] leading-none group-hover:text-[#C9A24A] transition-colors duration-500"
                   style={{ WebkitTextStroke: "1px currentColor", color: "transparent" }}
                 >
                   {item.num}
@@ -929,15 +816,15 @@ export default function Home() {
               </div>
 
               {/* Divider line — desktop */}
-              <div className="hidden lg:block lg:w-px lg:self-stretch mx-16 bg-gradient-to-b from-transparent via-[var(--line-strong)] to-transparent group-hover:via-[var(--accent)] transition-colors duration-500" />
+              <div className={`hidden lg:block lg:w-px lg:self-stretch mx-16 bg-[rgba(240,241,245,0.1)] group-hover:bg-[rgba(201,162,74,0.2)] transition-colors duration-500`} />
 
               {/* Content — always left on mobile */}
               <div className={`flex-1 ${item.align === "right" ? "lg:text-right" : ""}`}>
-                <h3 className="font-serif text-[clamp(28px,3.5vw,48px)] leading-[1.1] text-[var(--fg-2)] group-hover:text-[var(--fg)] transition-colors duration-500 mb-4">
+                <h3 className="font-serif text-[clamp(28px,3.5vw,48px)] leading-[1.1] text-[#D4D7E0] group-hover:text-[#F0F1F5] transition-colors duration-500 mb-4">
                   {item.title}
                 </h3>
                 <p
-                  className="font-mono text-[12px] tracking-[0.18em] text-[var(--fg-3)] group-hover:text-[var(--fg-2)] transition-colors duration-500 max-w-[40ch]"
+                  className="font-mono text-[12px] tracking-[0.18em] text-[#B8BDCE] group-hover:text-[#D4D7E0] transition-colors duration-500 max-w-[40ch]"
                   style={{ marginLeft: item.align === "right" ? "auto" : undefined }}
                 >
                   {item.sub}
@@ -946,17 +833,17 @@ export default function Home() {
             </div>
 
             {/* Bottom gold line — always visible faint, full on hover */}
-            <div className="absolute bottom-0 left-0 h-[1px] w-0 group-hover:w-full bg-gradient-to-r from-[var(--accent)] via-[var(--accent)] to-transparent transition-all duration-700" />
+            <div className="absolute bottom-0 left-0 h-[1px] w-0 group-hover:w-full bg-[#C9A24A] transition-all duration-700" />
           </motion.div>
         ))}
 
-        <div className="h-px bg-[var(--line)] opacity-30" />
+        <div className="h-px bg-[rgba(240,241,245,0.1)]" />
       </section>
 
       {/* ══════════════════════════════════════════
           FINAL CTA
       ══════════════════════════════════════════ */}
-      <section className="chapter py-40 overflow-hidden relative" style={{ background: "linear-gradient(180deg, var(--bg) 0%, #0C0E14 50%, var(--bg) 100%)" }}>
+      <section className="chapter py-40 overflow-hidden relative" style={{ background: "#0A0A0B" }}>
         <div className="shell text-center relative z-10">
           <Reveal>
             <span className="eyebrow eyebrow--center mb-10">Begin the diagnostic</span>
@@ -974,22 +861,19 @@ export default function Home() {
                 whileTap={{ scale: 0.97 }}
                 className="inline-flex items-center gap-3 px-10 py-5 font-mono text-[11px] tracking-[0.28em] uppercase rounded-full font-semibold"
                 style={{
-                  background: "linear-gradient(135deg, #C9A84C 0%, #E8C97A 50%, #C9A84C 100%)",
-                  color: "#080A0F",
-                  boxShadow: "0 0 40px rgba(201,168,76,0.2)",
+                  background: "#C9A24A",
+                  color: "#0A0A0B",
                 }}
               >
                 Start Diagnostic
                 <ArrowRight size={14} />
               </motion.button>
-              <p className="font-mono text-[10px] tracking-[0.15em] text-[var(--fg-4)] max-w-[44ch] text-center leading-relaxed">
+              <p className="font-mono text-[10px] tracking-[0.15em] text-[#8A8FA4] max-w-[44ch] text-center leading-relaxed">
                 A 30-minute architectural read. You bring the signal — we tell you what's structurally producing it. No fee, no pitch.
               </p>
             </div>
           </Reveal>
         </div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] pointer-events-none"
-          style={{ background: "radial-gradient(circle, rgba(201,168,76,0.05) 0%, transparent 70%)" }} />
       </section>
 
       <Footer />
@@ -1002,7 +886,7 @@ export default function Home() {
 ══════════════════════════════════════════ */
 function Footer() {
   return (
-    <footer className="relative overflow-hidden border-t border-[var(--line)]" style={{ background: "var(--bg)" }}>
+    <footer className="relative overflow-hidden border-t border-[rgba(240,241,245,0.1)]" style={{ background: "#0A0A0B" }}>
 
       {/* Ghost wordmark — deep background */}
       <div
@@ -1013,17 +897,10 @@ function Footer() {
         AXION
       </div>
 
-      {/* Subtle top glow */}
-      <div
-        aria-hidden="true"
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-[60%] h-[1px] pointer-events-none"
-        style={{ background: "linear-gradient(90deg, transparent, rgba(201,168,76,0.25), transparent)" }}
-      />
-
       <div className="shell relative z-10">
 
         {/* ── Main body ── */}
-        <div className="pt-20 pb-16 grid grid-cols-1 lg:grid-cols-[1.6fr_1fr_1fr_1fr] gap-14 lg:gap-8 border-b border-[var(--line)]">
+        <div className="pt-20 pb-16 grid grid-cols-1 lg:grid-cols-[1.6fr_1fr_1fr_1fr] gap-14 lg:gap-8 border-b border-[rgba(240,241,245,0.1)]">
 
           {/* Brand + tagline + follow capture */}
           <div className="flex flex-col gap-8">
