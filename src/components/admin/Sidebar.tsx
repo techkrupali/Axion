@@ -22,10 +22,10 @@ export function Sidebar() {
     <aside className="w-64 bg-[#0a0a0a] border-r border-[#2a2a2a] hidden md:flex flex-col">
       <div className="p-6">
         <div className="flex items-center gap-3 px-2">
-          <div className="p-2 bg-[#d4af37]/10 border border-[#d4af37]/20 rounded-lg">
-            <Shield className="w-5 h-5 text-[#d4af37]" />
+          <div className="p-2 bg-[#C9A24A]/10 border border-[#C9A24A]/20 rounded-lg">
+            <Shield className="w-5 h-5 text-[#C9A24A]" />
           </div>
-          <span className="text-xl font-bold tracking-tight text-[#e5e5e5]">Axion <span className="text-[#d4af37]">Admin</span></span>
+          <span className="text-xl font-bold tracking-tight text-[#e5e5e5]">Axion <span className="text-[#C9A24A]">Admin</span></span>
         </div>
       </div>
 
@@ -77,10 +77,10 @@ export function Sidebar() {
       <div className="p-4 border-t border-[#2a2a2a]">
         <button 
           onClick={() => signOut({ callbackUrl: "/admin/login" })}
-          className="flex items-center gap-3 w-full px-4 py-3 text-[#a3a3a3] hover:text-[#e5e5e5] hover:bg-[#d4af37]/5 hover:rounded-xl transition-all group"
+          className="flex items-center gap-3 w-full px-4 py-3 text-[#a3a3a3] hover:text-[#e5e5e5] hover:bg-[#C9A24A]/5 hover:rounded-xl transition-all group"
         >
-          <LogOut className="w-5 h-5 group-hover:text-[#d4af37]" />
-          <span className="font-medium group-hover:text-[#d4af37]">Sign Out</span>
+          <LogOut className="w-5 h-5 group-hover:text-[#C9A24A]" />
+          <span className="font-medium group-hover:text-[#C9A24A]">Sign Out</span>
         </button>
       </div>
     </aside>
@@ -93,11 +93,11 @@ function NavItem({ href, icon, label, active = false }: { href: string; icon: Re
       href={href}
       className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all group ${
         active 
-          ? "bg-[#d4af37]/10 text-[#d4af37] border border-[#d4af37]/20" 
+          ? "bg-[#C9A24A]/10 text-[#C9A24A] border border-[#C9A24A]/20" 
           : "text-[#a3a3a3] hover:text-[#e5e5e5] hover:bg-[#1a1a1a]"
       }`}
     >
-      <span className={active ? "text-[#d4af37]" : "text-[#737373] group-hover:text-[#e5e5e5]"}>
+      <span className={active ? "text-[#C9A24A]" : "text-[#737373] group-hover:text-[#e5e5e5]"}>
         {icon}
       </span>
       <span className="font-medium">{label}</span>

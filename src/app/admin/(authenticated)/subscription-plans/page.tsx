@@ -65,13 +65,13 @@ const tierIcons: Record<string, React.ReactNode> = {
 
 const tierColors: Record<string, string> = {
   free: 'from-gray-500/10 to-gray-600/5 border-gray-600/20',
-  growth: 'from-[#d4af37]/10 to-[#d4af37]/5 border-[#d4af37]/30',
+  growth: 'from-[#C9A24A]/10 to-[#C9A24A]/5 border-[#C9A24A]/30',
   enterprise: 'from-purple-500/10 to-purple-600/5 border-purple-500/30',
 };
 
 const tierAccent: Record<string, string> = {
   free: 'text-gray-400',
-  growth: 'text-[#d4af37]',
+  growth: 'text-[#C9A24A]',
   enterprise: 'text-purple-400',
 };
 
@@ -236,14 +236,14 @@ export default function SubscriptionPlansPage() {
           <button 
             onClick={handleSeed}
             disabled={seeding}
-            className="flex items-center justify-center gap-3 bg-[#111] border border-[#2a2a2a] hover:border-[#d4af37]/30 text-[#a3a3a3] hover:text-[#e5e5e5] px-6 py-3 rounded-xl text-[10px] font-bold uppercase tracking-[0.2em] transition-all"
+            className="flex items-center justify-center gap-3 bg-[#111] border border-[#2a2a2a] hover:border-[#C9A24A]/30 text-[#a3a3a3] hover:text-[#e5e5e5] px-6 py-3 rounded-xl text-[10px] font-bold uppercase tracking-[0.2em] transition-all"
           >
             {seeding ? <Loader2 className="w-4 h-4 animate-spin" /> : <Package className="w-4 h-4" />}
             Reset to Default
           </button>
           <button 
             onClick={openCreate}
-            className="flex items-center justify-center gap-3 bg-[#1a1a1a] border border-[#d4af37]/20 hover:border-[#d4af37]/50 text-[#d4af37] px-6 py-3 rounded-xl text-[10px] font-bold uppercase tracking-[0.2em] transition-all active:scale-[0.98]"
+            className="flex items-center justify-center gap-3 bg-[#1a1a1a] border border-[#C9A24A]/20 hover:border-[#C9A24A]/50 text-[#C9A24A] px-6 py-3 rounded-xl text-[10px] font-bold uppercase tracking-[0.2em] transition-all active:scale-[0.98]"
           >
             <Plus className="w-4 h-4" />
             Create Plan
@@ -253,16 +253,16 @@ export default function SubscriptionPlansPage() {
 
       {loading ? (
         <div className="p-20 flex justify-center">
-          <Loader2 className="w-8 h-8 text-[#d4af37] animate-spin" />
+          <Loader2 className="w-8 h-8 text-[#C9A24A] animate-spin" />
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {plans.map((plan) => (
-            <div key={plan._id} className={`bg-gradient-to-br ${tierColors[plan.tier] || tierColors.free} border rounded-2xl p-8 flex flex-col relative overflow-hidden group hover:border-[#d4af37]/40 transition-all`}>
+            <div key={plan._id} className={`bg-gradient-to-br ${tierColors[plan.tier] || tierColors.free} border rounded-2xl p-8 flex flex-col relative overflow-hidden group hover:border-[#C9A24A]/40 transition-all`}>
               <div className="absolute top-4 right-4 flex gap-2">
                 <button 
                   onClick={() => openEdit(plan)}
-                  className="p-2 bg-[#111] border border-[#2a2a2a] rounded-lg text-[#525252] hover:text-[#d4af37] transition-all"
+                  className="p-2 bg-[#111] border border-[#2a2a2a] rounded-lg text-[#525252] hover:text-[#C9A24A] transition-all"
                 >
                   <Edit2 className="w-4 h-4" />
                 </button>
@@ -309,7 +309,7 @@ export default function SubscriptionPlansPage() {
                 {plan.features.map((feature) => (
                   <div key={feature.featureId} className="flex items-center justify-between gap-2">
                     <span className="text-[11px] font-bold text-[#e5e5e5] truncate">{feature.name}</span>
-                    {feature.gated === 'unlocked' ? <Check className="w-3 h-3 text-green-500" /> : <Lock className="w-3 h-3 text-[#d4af37]" />}
+                    {feature.gated === 'unlocked' ? <Check className="w-3 h-3 text-green-500" /> : <Lock className="w-3 h-3 text-[#C9A24A]" />}
                   </div>
                 ))}
               </div>
@@ -348,7 +348,7 @@ export default function SubscriptionPlansPage() {
                     <input 
                       type="text" required value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full bg-[#111] border border-[#2a2a2a] rounded-xl px-5 py-4 text-sm text-[#e5e5e5] focus:outline-none focus:ring-1 focus:ring-[#d4af37]/30 transition-all" 
+                      className="w-full bg-[#111] border border-[#2a2a2a] rounded-xl px-5 py-4 text-sm text-[#e5e5e5] focus:outline-none focus:ring-1 focus:ring-[#C9A24A]/30 transition-all" 
                       placeholder="e.g., Growth Tier"
                     />
                   </div>
@@ -357,7 +357,7 @@ export default function SubscriptionPlansPage() {
                     <input 
                       type="text" required value={formData.tier}
                       onChange={(e) => setFormData({ ...formData, tier: e.target.value.toLowerCase().replace(/\s+/g, '_') })}
-                      className="w-full bg-[#111] border border-[#2a2a2a] rounded-xl px-5 py-4 text-sm text-[#a3a3a3] font-mono focus:outline-none focus:ring-1 focus:ring-[#d4af37]/30 transition-all" 
+                      className="w-full bg-[#111] border border-[#2a2a2a] rounded-xl px-5 py-4 text-sm text-[#a3a3a3] font-mono focus:outline-none focus:ring-1 focus:ring-[#C9A24A]/30 transition-all" 
                       placeholder="e.g., starter_pack"
                     />
                   </div>
@@ -367,7 +367,7 @@ export default function SubscriptionPlansPage() {
                   <textarea 
                     value={formData.description}
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                    className="w-full bg-[#111] border border-[#2a2a2a] rounded-xl px-5 py-4 text-sm text-[#e5e5e5] h-[132px] focus:outline-none focus:ring-1 focus:ring-[#d4af37]/30 transition-all resize-none"
+                    className="w-full bg-[#111] border border-[#2a2a2a] rounded-xl px-5 py-4 text-sm text-[#e5e5e5] h-[132px] focus:outline-none focus:ring-1 focus:ring-[#C9A24A]/30 transition-all resize-none"
                     placeholder="Describe the value proposition of this tier..."
                   />
                 </div>
@@ -380,7 +380,7 @@ export default function SubscriptionPlansPage() {
                   <input 
                     type="number" value={formData.monthlyPrice}
                     onChange={(e) => setFormData({ ...formData, monthlyPrice: Number(e.target.value) })}
-                    className="w-full bg-[#0a0a0a] border border-[#2a2a2a] rounded-xl px-5 py-4 text-sm font-mono text-[#d4af37] focus:outline-none focus:ring-1 focus:ring-[#d4af37]/30" 
+                    className="w-full bg-[#0a0a0a] border border-[#2a2a2a] rounded-xl px-5 py-4 text-sm font-mono text-[#C9A24A] focus:outline-none focus:ring-1 focus:ring-[#C9A24A]/30" 
                   />
                 </div>
                 <div className="space-y-2">
@@ -388,7 +388,7 @@ export default function SubscriptionPlansPage() {
                   <input 
                     type="number" value={formData.annualPrice}
                     onChange={(e) => setFormData({ ...formData, annualPrice: Number(e.target.value) })}
-                    className="w-full bg-[#0a0a0a] border border-[#2a2a2a] rounded-xl px-5 py-4 text-sm font-mono text-[#d4af37] focus:outline-none focus:ring-1 focus:ring-[#d4af37]/30" 
+                    className="w-full bg-[#0a0a0a] border border-[#2a2a2a] rounded-xl px-5 py-4 text-sm font-mono text-[#C9A24A] focus:outline-none focus:ring-1 focus:ring-[#C9A24A]/30" 
                   />
                 </div>
                 <div className="flex items-center gap-6 pt-6">
@@ -396,7 +396,7 @@ export default function SubscriptionPlansPage() {
                     <input 
                       type="checkbox" checked={formData.isFeatured}
                       onChange={(e) => setFormData({ ...formData, isFeatured: e.target.checked })}
-                      className="w-5 h-5 accent-[#d4af37]"
+                      className="w-5 h-5 accent-[#C9A24A]"
                     />
                     <label className="text-[10px] font-bold uppercase tracking-widest text-[#a3a3a3]">Feature Plan</label>
                   </div>
@@ -404,7 +404,7 @@ export default function SubscriptionPlansPage() {
                     <input 
                       type="checkbox" checked={formData.isActive}
                       onChange={(e) => setFormData({ ...formData, isActive: e.target.checked })}
-                      className="w-5 h-5 accent-[#d4af37]"
+                      className="w-5 h-5 accent-[#C9A24A]"
                     />
                     <label className="text-[10px] font-bold uppercase tracking-widest text-[#a3a3a3]">Active</label>
                   </div>
@@ -413,7 +413,7 @@ export default function SubscriptionPlansPage() {
 
               {/* Quotas */}
               <div>
-                <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-[#d4af37] mb-6 flex items-center gap-3">
+                <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-[#C9A24A] mb-6 flex items-center gap-3">
                   <Package className="w-4 h-4" /> Hard Caps & Quotas
                 </h4>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -426,7 +426,7 @@ export default function SubscriptionPlansPage() {
                           ...formData, 
                           quotas: { ...formData.quotas, [q]: Number(e.target.value) } 
                         })}
-                        className="w-full bg-[#111] border border-[#2a2a2a] rounded-xl px-4 py-3 text-xs font-mono text-[#e5e5e5] focus:outline-none focus:ring-1 focus:ring-[#d4af37]/30" 
+                        className="w-full bg-[#111] border border-[#2a2a2a] rounded-xl px-4 py-3 text-xs font-mono text-[#e5e5e5] focus:outline-none focus:ring-1 focus:ring-[#C9A24A]/30" 
                       />
                     </div>
                   ))}
@@ -436,12 +436,12 @@ export default function SubscriptionPlansPage() {
               {/* Features Management */}
               <div>
                 <div className="flex items-center justify-between mb-6">
-                  <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-[#d4af37] flex items-center gap-3">
+                  <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-[#C9A24A] flex items-center gap-3">
                     <Unlock className="w-4 h-4" /> Feature Matrix
                   </h4>
                   <button 
                     type="button" onClick={addFeature}
-                    className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-[#a3a3a3] hover:text-[#d4af37] transition-colors"
+                    className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-[#a3a3a3] hover:text-[#C9A24A] transition-colors"
                   >
                     <PlusCircle className="w-4 h-4" /> Add Feature
                   </button>
@@ -462,7 +462,7 @@ export default function SubscriptionPlansPage() {
                           <input 
                             type="text" value={feature.name}
                             onChange={(e) => updateFeature(idx, 'name', e.target.value)}
-                            className="w-full bg-[#0a0a0a] border border-[#2a2a2a] rounded-lg px-3 py-2.5 text-xs text-[#e5e5e5] focus:ring-1 focus:ring-[#d4af37]/30 outline-none"
+                            className="w-full bg-[#0a0a0a] border border-[#2a2a2a] rounded-lg px-3 py-2.5 text-xs text-[#e5e5e5] focus:ring-1 focus:ring-[#C9A24A]/30 outline-none"
                             placeholder="e.g., Priority Support"
                           />
                         </div>
@@ -502,7 +502,7 @@ export default function SubscriptionPlansPage() {
                       ...formData, 
                       meta: { ...formData.meta, targetAudience: e.target.value } 
                     })}
-                    className="w-full bg-[#111] border border-[#2a2a2a] rounded-xl px-5 py-4 text-sm text-[#e5e5e5] focus:outline-none focus:ring-1 focus:ring-[#d4af37]/30" 
+                    className="w-full bg-[#111] border border-[#2a2a2a] rounded-xl px-5 py-4 text-sm text-[#e5e5e5] focus:outline-none focus:ring-1 focus:ring-[#C9A24A]/30" 
                     placeholder="Who is this plan for?"
                   />
                 </div>
@@ -514,7 +514,7 @@ export default function SubscriptionPlansPage() {
                       ...formData, 
                       meta: { ...formData.meta, popularFor: e.target.value } 
                     })}
-                    className="w-full bg-[#111] border border-[#2a2a2a] rounded-xl px-5 py-4 text-sm text-[#e5e5e5] focus:outline-none focus:ring-1 focus:ring-[#d4af37]/30" 
+                    className="w-full bg-[#111] border border-[#2a2a2a] rounded-xl px-5 py-4 text-sm text-[#e5e5e5] focus:outline-none focus:ring-1 focus:ring-[#C9A24A]/30" 
                     placeholder="Key selling point..."
                   />
                 </div>
@@ -530,7 +530,7 @@ export default function SubscriptionPlansPage() {
               </button>
               <button 
                 onClick={handleSubmit}
-                className="flex items-center gap-3 bg-[#1a1a1a] border border-[#d4af37]/20 hover:border-[#d4af37]/50 text-[#d4af37] px-10 py-4 rounded-xl text-[10px] font-bold uppercase tracking-[0.3em] transition-all shadow-xl active:scale-[0.98]"
+                className="flex items-center gap-3 bg-[#1a1a1a] border border-[#C9A24A]/20 hover:border-[#C9A24A]/50 text-[#C9A24A] px-10 py-4 rounded-xl text-[10px] font-bold uppercase tracking-[0.3em] transition-all shadow-xl active:scale-[0.98]"
               >
                 <Save className="w-4 h-4" />
                 {editingPlan ? "Update Plan" : "Initialize Plan"}
@@ -544,7 +544,7 @@ export default function SubscriptionPlansPage() {
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 10px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #d4af3733; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #C9A24A33; }
       `}</style>
     </div>
   );

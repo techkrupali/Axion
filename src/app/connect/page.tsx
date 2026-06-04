@@ -49,7 +49,7 @@ export default function Connect() {
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_50%,transparent_30%,var(--bg)_100%)]" />
         </div>
         <div className="absolute top-[20%] right-[20%] w-[500px] h-[500px] rounded-full opacity-[0.04] pointer-events-none"
-          style={{ background: "radial-gradient(circle, #C9A84C 0%, transparent 70%)", animation: "float 14s ease-in-out infinite" }} />
+          style={{ background: "radial-gradient(circle, #C9A24A 0%, transparent 70%)", animation: "float 14s ease-in-out infinite" }} />
 
         <div className="shell text-center relative z-10 pt-20">
           <Reveal>
@@ -169,8 +169,7 @@ export default function Connect() {
                     type="submit"
                     whileHover={{ scale: 1.03 }}
                     whileTap={{ scale: 0.97 }}
-                    className="inline-flex items-center gap-3 px-10 py-4 font-mono text-[11px] tracking-[0.28em] uppercase rounded-full font-semibold"
-                    style={{ background: "linear-gradient(135deg, #C9A84C 0%, #E8C97A 50%, #C9A84C 100%)", color: "#080A0F" }}
+                    className="inline-flex items-center gap-3 px-10 py-4 font-mono text-[11px] tracking-[0.28em] uppercase rounded-full font-semibold bg-[#C9A24A] text-[#0A0A0B]"
                   >
                     Send written intent
                     <ArrowRight size={13} />

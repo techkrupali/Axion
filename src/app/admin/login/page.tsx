@@ -37,18 +37,17 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-[#0a0a0a] font-sans selection:bg-[#d4af37]/30 selection:text-[#d4af37]">
-      <div className="w-full max-w-md p-10 space-y-10 bg-[#0a0a0a] rounded-3xl border border-[#2a2a2a] shadow-[0_0_50px_rgba(0,0,0,0.5)] relative overflow-hidden group">
-        {/* Subtle background glow */}
-        <div className="absolute -top-24 -right-24 w-48 h-48 bg-[#d4af37]/5 rounded-full blur-3xl group-hover:bg-[#d4af37]/10 transition-colors"></div>
+    <div className="flex items-center justify-center min-h-screen bg-[#0A0A0B] font-sans selection:bg-[#C9A24A]/30 selection:text-[#C9A24A]">
+      <div className="w-full max-w-md p-10 space-y-10 bg-[#0A0A0B] rounded-3xl border border-[rgba(240,241,245,0.1)] relative overflow-hidden group">
+        {/* Background removed — flat only */}
         
         <div className="text-center relative">
           <div className="flex justify-center mb-6">
-            <div className="p-4 bg-[#1a1a1a] border border-[#d4af37]/20 rounded-2xl shadow-[0_0_20px_rgba(212,175,55,0.05)] group-hover:border-[#d4af37]/40 transition-colors">
-              <Shield className="w-8 h-8 text-[#d4af37]" />
+            <div className="p-4 bg-[#1a1a1a] border border-[#C9A24A]/20 rounded-2xl group-hover:border-[#C9A24A]/40 transition-colors">
+              <Shield className="w-8 h-8 text-[#C9A24A]" />
             </div>
           </div>
-          <h1 className="text-3xl font-bold tracking-tight text-[#e5e5e5]">Axion <span className="text-[#d4af37]">Admin</span></h1>
+          <h1 className="text-3xl font-bold tracking-tight text-[#e5e5e5]">Axion <span className="text-[#C9A24A]">Admin</span></h1>
           <p className="mt-3 text-xs font-bold uppercase tracking-[0.2em] text-[#737373]">Authorized Personnel Only</p>
         </div>
 
@@ -58,14 +57,14 @@ export default function AdminLoginPage() {
               <label className="block text-[10px] font-bold uppercase tracking-widest text-[#737373] mb-2 px-1">Identity</label>
               <div className="relative group/input">
                 <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
-                  <Mail className="w-4 h-4 text-[#525252] group-focus-within/input:text-[#d4af37] transition-colors" />
+                  <Mail className="w-4 h-4 text-[#525252] group-focus-within/input:text-[#C9A24A] transition-colors" />
                 </div>
                 <input
                   type="email"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="block w-full pl-11 pr-4 py-4 bg-[#111] border border-[#2a2a2a] rounded-xl text-[#e5e5e5] text-sm placeholder-[#404040] focus:outline-none focus:ring-1 focus:ring-[#d4af37]/30 focus:border-[#d4af37]/30 transition-all"
+                  className="block w-full pl-11 pr-4 py-4 bg-[#111] border border-[rgba(240,241,245,0.1)] rounded-xl text-[#e5e5e5] text-sm placeholder-[#404040] focus:outline-none focus:ring-1 focus:ring-[#C9A24A]/30 focus:border-[#C9A24A]/30 transition-all"
                   placeholder="admin@axion.com"
                 />
               </div>
@@ -75,14 +74,14 @@ export default function AdminLoginPage() {
               <label className="block text-[10px] font-bold uppercase tracking-widest text-[#737373] mb-2 px-1">Access Key</label>
               <div className="relative group/input">
                 <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
-                  <Lock className="w-4 h-4 text-[#525252] group-focus-within/input:text-[#d4af37] transition-colors" />
+                  <Lock className="w-4 h-4 text-[#525252] group-focus-within/input:text-[#C9A24A] transition-colors" />
                 </div>
                 <input
                   type="password"
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="block w-full pl-11 pr-4 py-4 bg-[#111] border border-[#2a2a2a] rounded-xl text-[#e5e5e5] text-sm placeholder-[#404040] focus:outline-none focus:ring-1 focus:ring-[#d4af37]/30 focus:border-[#d4af37]/30 transition-all"
+                  className="block w-full pl-11 pr-4 py-4 bg-[#111] border border-[rgba(240,241,245,0.1)] rounded-xl text-[#e5e5e5] text-sm placeholder-[#404040] focus:outline-none focus:ring-1 focus:ring-[#C9A24A]/30 focus:border-[#C9A24A]/30 transition-all"
                   placeholder="••••••••"
                 />
               </div>
@@ -98,7 +97,7 @@ export default function AdminLoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full flex items-center justify-center py-4 px-4 border border-[#d4af37]/20 rounded-xl text-[10px] font-bold uppercase tracking-[0.3em] text-[#e5e5e5] bg-[#1a1a1a] hover:bg-[#d4af37]/10 hover:border-[#d4af37]/40 hover:text-[#d4af37] active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_4px_20px_rgba(0,0,0,0.3)]"
+            className="w-full flex items-center justify-center py-4 px-4 border border-[#C9A24A]/20 rounded-xl text-[10px] font-bold uppercase tracking-[0.3em] text-[#e5e5e5] bg-[#1a1a1a] hover:bg-[#C9A24A]/10 hover:border-[#C9A24A]/40 hover:text-[#C9A24A] active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? (
               <Loader2 className="w-5 h-5 animate-spin" />

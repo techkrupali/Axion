@@ -98,7 +98,7 @@ export default function SubscriptionsPage() {
         </div>
         <button 
           onClick={() => { setEditingSub(null); setIsModalOpen(true); }}
-          className="flex items-center justify-center gap-3 bg-[#1a1a1a] border border-[#d4af37]/20 hover:border-[#d4af37]/50 text-[#d4af37] px-6 py-3 rounded-xl text-[10px] font-bold uppercase tracking-[0.2em] transition-all active:scale-[0.98]"
+          className="flex items-center justify-center gap-3 bg-[#1a1a1a] border border-[#C9A24A]/20 hover:border-[#C9A24A]/50 text-[#C9A24A] px-6 py-3 rounded-xl text-[10px] font-bold uppercase tracking-[0.2em] transition-all active:scale-[0.98]"
         >
           <Plus className="w-4 h-4" />
           New Subscription
@@ -109,7 +109,7 @@ export default function SubscriptionsPage() {
       <div className="bg-[#0a0a0a] rounded-2xl border border-[#2a2a2a] overflow-hidden shadow-2xl">
         {loading ? (
           <div className="p-20 flex justify-center">
-            <Loader2 className="w-8 h-8 text-[#d4af37] animate-spin" />
+            <Loader2 className="w-8 h-8 text-[#C9A24A] animate-spin" />
           </div>
         ) : (
           <div className="overflow-x-auto">
@@ -128,7 +128,7 @@ export default function SubscriptionsPage() {
                   <tr key={sub._id} className="hover:bg-[#1a1a1a]/40 transition-colors group">
                     <td className="px-8 py-6">
                       <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 rounded-xl bg-[#1a1a1a] border border-[#2a2a2a] flex items-center justify-center text-[#d4af37]">
+                        <div className="w-10 h-10 rounded-xl bg-[#1a1a1a] border border-[#2a2a2a] flex items-center justify-center text-[#C9A24A]">
                           <CreditCard className="w-5 h-5" />
                         </div>
                         <span className="font-bold text-[#e5e5e5] text-sm">{sub.email}</span>
@@ -153,7 +153,7 @@ export default function SubscriptionsPage() {
                       <div className="flex items-center justify-end gap-2">
                         <button 
                           onClick={() => openEdit(sub)}
-                          className="p-2 hover:bg-[#2a2a2a] rounded-lg text-[#525252] hover:text-[#d4af37] transition-all"
+                          className="p-2 hover:bg-[#2a2a2a] rounded-lg text-[#525252] hover:text-[#C9A24A] transition-all"
                         >
                           <Edit2 className="w-4 h-4" />
                         </button>
@@ -195,7 +195,7 @@ export default function SubscriptionsPage() {
                   disabled={!!editingSub}
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full bg-[#111] border border-[#2a2a2a] rounded-xl px-4 py-3.5 text-sm text-[#e5e5e5] focus:outline-none focus:ring-1 focus:ring-[#d4af37]/30 transition-all disabled:opacity-50" 
+                  className="w-full bg-[#111] border border-[#2a2a2a] rounded-xl px-4 py-3.5 text-sm text-[#e5e5e5] focus:outline-none focus:ring-1 focus:ring-[#C9A24A]/30 transition-all disabled:opacity-50" 
                   placeholder="subscriber@example.com"
                 />
               </div>
@@ -206,7 +206,7 @@ export default function SubscriptionsPage() {
                   <select 
                     value={formData.plan}
                     onChange={(e) => setFormData({ ...formData, plan: e.target.value })}
-                    className="w-full bg-[#111] border border-[#2a2a2a] rounded-xl px-4 py-3.5 text-xs font-bold uppercase tracking-widest text-[#a3a3a3] focus:outline-none focus:ring-1 focus:ring-[#d4af37]/30"
+                    className="w-full bg-[#111] border border-[#2a2a2a] rounded-xl px-4 py-3.5 text-xs font-bold uppercase tracking-widest text-[#a3a3a3] focus:outline-none focus:ring-1 focus:ring-[#C9A24A]/30"
                   >
                     <option value="free">Free</option>
                     <option value="premium">Premium</option>
@@ -218,7 +218,7 @@ export default function SubscriptionsPage() {
                   <select 
                     value={formData.status}
                     onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-                    className="w-full bg-[#111] border border-[#2a2a2a] rounded-xl px-4 py-3.5 text-xs font-bold uppercase tracking-widest text-[#a3a3a3] focus:outline-none focus:ring-1 focus:ring-[#d4af37]/30"
+                    className="w-full bg-[#111] border border-[#2a2a2a] rounded-xl px-4 py-3.5 text-xs font-bold uppercase tracking-widest text-[#a3a3a3] focus:outline-none focus:ring-1 focus:ring-[#C9A24A]/30"
                   >
                     <option value="active">Active</option>
                     <option value="unsubscribed">Unsubscribed</option>
@@ -230,7 +230,7 @@ export default function SubscriptionsPage() {
               <div className="pt-4">
                 <button 
                   type="submit"
-                  className="w-full flex items-center justify-center gap-3 bg-[#1a1a1a] border border-[#d4af37]/20 hover:border-[#d4af37]/50 text-[#d4af37] py-4 rounded-xl text-[10px] font-bold uppercase tracking-[0.3em] transition-all shadow-lg"
+                  className="w-full flex items-center justify-center gap-3 bg-[#1a1a1a] border border-[#C9A24A]/20 hover:border-[#C9A24A]/50 text-[#C9A24A] py-4 rounded-xl text-[10px] font-bold uppercase tracking-[0.3em] transition-all shadow-lg"
                 >
                   <Check className="w-4 h-4" />
                   {editingSub ? "Update Record" : "Create Record"}

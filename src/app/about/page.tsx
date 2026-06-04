@@ -81,7 +81,7 @@ function GridBg({ id = "g1", opacity = 0.025 }: { id?: string; opacity?: number 
 /* Floating orb */
 function Orb({
   size = 500,
-  color = "#C9A84C",
+  color = "#C9A24A",
   opacity = 0.06,
   top = "10%",
   left = "60%",
@@ -111,14 +111,11 @@ function Orb({
   );
 }
 
-/* Eyebrow label */
+/* Eyebrow label — mirrors global .eyebrow class */
 function Eyebrow({ children, center = false }: { children: React.ReactNode; center?: boolean }) {
   return (
-    <div className={`flex items-center gap-3 mb-6 ${center ? "justify-center" : ""}`}>
-      {!center && <span className="w-6 h-[1px] bg-[var(--accent)] opacity-60 shrink-0" />}
-      <span className="font-mono text-[10.5px] tracking-[0.38em] uppercase text-[var(--fg-4)]">
-        {children}
-      </span>
+    <div className={`eyebrow mb-6 ${center ? "eyebrow--center" : ""}`}>
+      {children}
     </div>
   );
 }
@@ -138,12 +135,7 @@ function GoldBtn({
       {href ? (
         <Link
           href={href}
-          className="inline-flex items-center gap-3 px-10 py-4 font-mono text-[11px] tracking-[0.28em] uppercase rounded-full font-semibold"
-          style={{
-            background: "linear-gradient(135deg,#C9A84C 0%,#E8C97A 50%,#C9A84C 100%)",
-            color: "#080A0F",
-            boxShadow: "0 0 40px rgba(201,168,76,0.18)",
-          }}
+          className="inline-flex items-center gap-3 px-10 py-4 font-mono text-[11px] tracking-[0.28em] uppercase rounded-full font-semibold bg-[#C9A24A] text-[#0A0A0B]"
         >
           {children}
           <ArrowRight size={13} />
@@ -151,14 +143,8 @@ function GoldBtn({
       ) : (
         <button
           onClick={onClick}
-          className="inline-flex items-center gap-3 px-10 py-4 font-mono text-[11px] tracking-[0.28em] uppercase rounded-full font-semibold"
-          style={{
-            background: "linear-gradient(135deg,#C9A84C 0%,#E8C97A 50%,#C9A84C 100%)",
-            color: "#080A0F",
-            boxShadow: "0 0 40px rgba(201,168,76,0.18)",
-            cursor: "pointer",
-            border: "none",
-          }}
+          className="inline-flex items-center gap-3 px-10 py-4 font-mono text-[11px] tracking-[0.28em] uppercase rounded-full font-semibold bg-[#C9A24A] text-[#0A0A0B]"
+          style={{ cursor: "pointer", border: "none" }}
         >
           {children}
           <ArrowRight size={13} />
@@ -302,7 +288,7 @@ function HeroSection() {
   return (
     <header ref={ref} className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <GridBg id="hero-grid" opacity={0.028} />
-      <Orb size={700} color="#C9A84C" opacity={0.055} top="20%" left="70%" duration={16} />
+      <Orb size={700} color="#C9A24A" opacity={0.055} top="20%" left="70%" duration={16} />
       <Orb size={400} color="#4A9EFF" opacity={0.035} top="65%" left="15%" duration={20} />
 
       {/* Scan line */}
@@ -333,11 +319,7 @@ function HeroSection() {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.1, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-          className="font-serif font-normal leading-[0.95] tracking-[-0.025em] text-[var(--fg)] mb-10"
-          style={{
-            fontSize: "clamp(64px, 10vw, 140px)",
-            textShadow: "0 0 80px rgba(201,168,76,0.1), 0 0 200px rgba(201,168,76,0.04)",
-          }}
+          className="h-display mb-10"
         >
           AXION<br />
           <em className="text-[var(--accent)] italic">INDEX</em>
@@ -423,8 +405,7 @@ function WhatWeDoSection() {
             </FadeUp>
             <FadeUp delay={0.1}>
               <h2
-                className="font-serif font-normal leading-[1.06] tracking-[-0.015em] text-[var(--fg)] mb-8"
-                style={{ fontSize: "clamp(36px,4.2vw,58px)" }}
+                className="h-section mb-8"
               >
                 Is your organisation<br />
                 structurally built for<br />
@@ -524,10 +505,9 @@ function StatementSection() {
           The operating thesis
         </p>
         <h2
-          className="font-serif font-normal leading-[1.0] tracking-[-0.02em] text-[var(--fg)]"
+          className="h-display"
           style={{
             fontSize: "clamp(42px, 7vw, 100px)",
-            textShadow: "0 0 60px rgba(201,168,76,0.08)",
           }}
         >
           We are Rewriting<br />
@@ -546,7 +526,7 @@ function WhySection() {
   return (
     <section className="relative py-[clamp(100px,14vh,180px)] bg-[var(--bg)]" id="why">
       <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[var(--line)] to-transparent" />
-      <Orb size={600} color="#C9A84C" opacity={0.04} top="50%" left="90%" duration={18} />
+      <Orb size={600} color="#C9A24A" opacity={0.04} top="50%" left="90%" duration={18} />
 
       {/* Watermark */}
       <div className="absolute right-[-8%] top-[15%] font-serif italic pointer-events-none select-none"
@@ -561,8 +541,7 @@ function WhySection() {
           </FadeUp>
           <FadeUp delay={0.1}>
             <h2
-              className="font-serif font-normal leading-[1.06] tracking-[-0.015em] text-[var(--fg)] mb-16"
-              style={{ fontSize: "clamp(36px,4.2vw,58px)" }}
+              className="h-section mb-16"
             >
               For years, organisations optimised for<br />
               <em className="italic text-[var(--accent)]">speed, flexibility, and scale.</em>
@@ -656,8 +635,7 @@ function ApproachSection() {
           </FadeUp>
           <FadeUp delay={0.1}>
             <h2
-              className="font-serif font-normal leading-[1.06] tracking-[-0.015em] text-[var(--fg)] mb-6"
-              style={{ fontSize: "clamp(36px,4.2vw,58px)" }}
+              className="h-section mb-6"
             >
               We don&apos;t explore the<br />
               <em className="italic text-[var(--accent)]">problem.</em>
@@ -866,7 +844,7 @@ function DifferentSection() {
   return (
     <section className="relative py-[clamp(100px,14vh,180px)] bg-[var(--bg)]" id="different">
       <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[var(--line)] to-transparent" />
-      <Orb size={500} color="#C9A84C" opacity={0.04} top="60%" left="5%" duration={20} />
+      <Orb size={500} color="#C9A24A" opacity={0.04} top="60%" left="5%" duration={20} />
 
       <div className="shell">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.3fr] gap-20 items-start">
@@ -878,8 +856,7 @@ function DifferentSection() {
             </FadeUp>
             <FadeUp delay={0.1}>
               <h2
-                className="font-serif font-normal leading-[1.06] tracking-[-0.015em] text-[var(--fg)] mb-8"
-                style={{ fontSize: "clamp(36px,4.2vw,58px)" }}
+                className="h-section mb-8"
               >
                 A new category of<br />
                 <em className="italic text-[var(--accent)]">operating intelligence.</em>
@@ -951,7 +928,7 @@ function WhoSection() {
     <section className="relative py-[clamp(100px,14vh,180px)]" style={{ background: "#050609" }} id="who">
       <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[var(--line-gold)] to-transparent opacity-50" />
       <GridBg id="who-grid" opacity={0.016} />
-      <Orb size={600} color="#C9A84C" opacity={0.04} top="50%" left="50%" duration={24} />
+      <Orb size={600} color="#C9A24A" opacity={0.04} top="50%" left="50%" duration={24} />
 
       <div className="shell">
         <div className="mb-20">
@@ -960,8 +937,7 @@ function WhoSection() {
           </FadeUp>
           <FadeUp delay={0.1}>
             <h2
-              className="font-serif font-normal leading-[1.06] tracking-[-0.015em] text-[var(--fg)]"
-              style={{ fontSize: "clamp(36px,4.2vw,58px)" }}
+              className="h-section"
             >
               Who we engage with{" "}
               <em className="italic text-[var(--accent)]">depending on where you sit.</em>
@@ -1100,10 +1076,9 @@ function EndSection({ onStartDiagnostic }: { onStartDiagnostic: () => void }) {
         {/* Main heading */}
         <FadeUp delay={0.1}>
           <h2
-            className="font-serif font-normal leading-[1.0] tracking-[-0.02em] text-[var(--fg)] mb-10"
+            className="h-display mb-10"
             style={{
               fontSize: "clamp(48px,8vw,110px)",
-              textShadow: "0 0 80px rgba(201,168,76,0.08)",
             }}
           >
             From <s className="opacity-25 line-through">ambiguity</s><br />

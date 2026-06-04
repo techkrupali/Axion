@@ -117,7 +117,7 @@ export function SubscriptionPlans({ onComplete }: { onComplete: () => void }) {
           email: "",
         },
         theme: {
-          color: "#d4af37",
+          color: "#C9A24A",
         },
       };
 
@@ -133,7 +133,7 @@ export function SubscriptionPlans({ onComplete }: { onComplete: () => void }) {
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[400px] gap-4">
-        <Loader2 className="w-8 h-8 animate-spin text-[#d4af37]" />
+        <Loader2 className="w-8 h-8 animate-spin text-[#C9A24A]" />
         <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#737373]">Loading Architecture...</p>
       </div>
     );
@@ -153,10 +153,10 @@ export function SubscriptionPlans({ onComplete }: { onComplete: () => void }) {
             onClick={() => setBillingCycle(billingCycle === 'monthly' ? 'annual' : 'monthly')}
             className="w-12 h-6 bg-[#1a1a1a] border border-[#2a2a2a] rounded-full p-1 transition-all relative"
           >
-            <div className={`w-4 h-4 bg-[#d4af37] rounded-full transition-all ${billingCycle === 'annual' ? 'translate-x-6' : 'translate-x-0'}`} />
+            <div className={`w-4 h-4 bg-[#C9A24A] rounded-full transition-all ${billingCycle === 'annual' ? 'translate-x-6' : 'translate-x-0'}`} />
           </button>
           <span className={`text-[10px] font-bold uppercase tracking-widest ${billingCycle === 'annual' ? 'text-[#e5e5e5]' : 'text-[#525252]'}`}>
-            Annual <span className="text-[#d4af37] ml-1">(10% OFF)</span>
+            Annual <span className="text-[#C9A24A] ml-1">(10% OFF)</span>
           </span>
         </div>
       </div>
@@ -166,11 +166,11 @@ export function SubscriptionPlans({ onComplete }: { onComplete: () => void }) {
           <div 
             key={plan._id}
             className={`relative group bg-[#111] border rounded-3xl p-8 transition-all hover:scale-[1.02] ${
-              plan.isFeatured ? 'border-[#d4af37]/50 shadow-[0_0_40px_rgba(212,175,55,0.1)]' : 'border-[#2a2a2a] hover:border-[#404040]'
+              plan.isFeatured ? 'border-[#C9A24A]/50' : 'border-[rgba(240,241,245,0.1)] hover:border-[rgba(240,241,245,0.2)]'
             }`}
           >
             {plan.isFeatured && (
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#d4af37] text-black text-[10px] font-bold uppercase tracking-widest px-4 py-1.5 rounded-full">
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#C9A24A] text-[#0A0A0B] text-[10px] font-bold uppercase tracking-widest px-4 py-1.5 rounded-full">
                 Recommended
               </div>
             )}
@@ -179,10 +179,10 @@ export function SubscriptionPlans({ onComplete }: { onComplete: () => void }) {
               <div className="flex items-center justify-between">
                 <div className={`p-3 rounded-2xl bg-[#1a1a1a] border ${
                   plan.tier === 'free' ? 'border-gray-800' : 
-                  plan.tier === 'growth' ? 'border-[#d4af37]/20' : 'border-purple-900/30'
+                  plan.tier === 'growth' ? 'border-[#C9A24A]/20' : 'border-purple-900/30'
                 }`}>
                   {plan.tier === 'free' ? <Shield className="w-5 h-5 text-gray-500" /> : 
-                   plan.tier === 'growth' ? <Zap className="w-5 h-5 text-[#d4af37]" /> : <Crown className="w-5 h-5 text-purple-400" />}
+                   plan.tier === 'growth' ? <Zap className="w-5 h-5 text-[#C9A24A]" /> : <Crown className="w-5 h-5 text-purple-400" />}
                 </div>
                 <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#525252]">{plan.tier}</span>
               </div>
@@ -210,7 +210,7 @@ export function SubscriptionPlans({ onComplete }: { onComplete: () => void }) {
                 disabled={!!processing}
                 className={`w-full py-4 rounded-xl text-[10px] font-bold uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-3 ${
                   plan.isFeatured 
-                    ? 'bg-[#d4af37] hover:bg-[#c4a137] text-black' 
+                    ? 'bg-[#C9A24A] hover:bg-[#8A7338] text-[#0A0A0B]' 
                     : 'bg-[#1a1a1a] border border-[#2a2a2a] hover:border-[#404040] text-[#e5e5e5]'
                 }`}
               >
@@ -229,7 +229,7 @@ export function SubscriptionPlans({ onComplete }: { onComplete: () => void }) {
                 <div className="space-y-3">
                   {plan.features.slice(0, 6).map((feature, idx) => (
                     <div key={idx} className="flex items-start gap-3">
-                      <div className={`mt-0.5 ${feature.gated === 'unlocked' ? 'text-[#d4af37]' : 'text-[#525252]'}`}>
+                      <div className={`mt-0.5 ${feature.gated === 'unlocked' ? 'text-[#C9A24A]' : 'text-[#525252]'}`}>
                         {feature.gated === 'unlocked' ? <Check className="w-3.5 h-3.5" /> : <Info className="w-3.5 h-3.5" />}
                       </div>
                       <span className={`text-[11px] ${feature.gated === 'unlocked' ? 'text-[#a3a3a3]' : 'text-[#525252]'}`}>

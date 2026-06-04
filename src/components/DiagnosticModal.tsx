@@ -129,7 +129,7 @@ function CustomSelect({
                 onMouseDown={() => { onChange(opt); setOpen(false); }}
                 className="w-full text-left px-4 py-3 text-[13.5px] transition-colors"
                 style={{
-                  color: value === opt ? "#C9A84C" : "rgba(237,235,227,0.75)",
+                  color: value === opt ? "#C9A24A" : "rgba(237,235,227,0.75)",
                   background: value === opt ? "rgba(201,168,76,0.08)" : "transparent",
                   borderBottom: i < options.length - 1 ? "1px solid rgba(255,255,255,0.04)" : "none",
                 }}
@@ -139,7 +139,7 @@ function CustomSelect({
                 }}
                 onMouseLeave={e => {
                   (e.currentTarget as HTMLElement).style.background = value === opt ? "rgba(201,168,76,0.08)" : "transparent";
-                  (e.currentTarget as HTMLElement).style.color = value === opt ? "#C9A84C" : "rgba(237,235,227,0.75)";
+                  (e.currentTarget as HTMLElement).style.color = value === opt ? "#C9A24A" : "rgba(237,235,227,0.75)";
                 }}
               >
                 {opt}
@@ -401,7 +401,7 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
                     <div
                       key={n}
                       className="h-[2px] flex-1 rounded-full transition-all duration-500"
-                      style={{ background: n <= step ? "#C9A84C" : "rgba(201,168,76,0.15)" }}
+                      style={{ background: n <= step ? "#C9A24A" : "rgba(201,168,76,0.15)" }}
                     />
                   ))}
                   <span className="font-mono text-[9px] tracking-[0.3em] text-[var(--fg-5)] ml-2 shrink-0">{step} OF 3</span>
@@ -445,8 +445,8 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
                             <span
                               className="mt-[2px] shrink-0 w-[16px] h-[16px] rounded-[4px] flex items-center justify-center transition-all duration-200"
                               style={{
-                                background: selected ? "#C9A84C" : "transparent",
-                                border: `1.5px solid ${selected ? "#C9A84C" : "rgba(255,255,255,0.2)"}`,
+                                background: selected ? "#C9A24A" : "transparent",
+                                border: `1.5px solid ${selected ? "#C9A24A" : "rgba(255,255,255,0.2)"}`,
                               }}
                             >
                               {selected && (
@@ -681,7 +681,7 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
                   onClick={() => setStep(2)}
                   disabled={!canNext1}
                   className="w-full py-4 rounded-full font-mono text-[11px] tracking-[0.28em] uppercase font-semibold flex items-center justify-center gap-2 transition-opacity disabled:opacity-30"
-                  style={{ background: "linear-gradient(135deg, #C9A84C 0%, #E8C97A 50%, #C9A84C 100%)", color: "#080A0F" }}
+                  style={{ background: "#C9A24A", color: "#080A0F" }}
                 >
                   Continue <ArrowRight size={12} />
                 </button>
@@ -697,7 +697,7 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
                     onClick={() => setStep(3)}
                     disabled={!canNext2}
                     className="flex-[2] py-4 rounded-full font-mono text-[11px] tracking-[0.28em] uppercase font-semibold flex items-center justify-center gap-2 transition-opacity disabled:opacity-30"
-                    style={{ background: "linear-gradient(135deg, #C9A84C 0%, #E8C97A 50%, #C9A84C 100%)", color: "#080A0F" }}
+                    style={{ background: "#C9A24A", color: "#080A0F" }}
                   >
                     Continue <ArrowRight size={12} />
                   </button>
@@ -714,7 +714,7 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
                     onClick={submit}
                     disabled={!canSubmit || loading}
                     className="flex-[2] py-4 rounded-full font-mono text-[11px] tracking-[0.28em] uppercase font-semibold flex items-center justify-center gap-2 transition-opacity disabled:opacity-30"
-                    style={{ background: "linear-gradient(135deg, #C9A84C 0%, #E8C97A 50%, #C9A84C 100%)", color: "#080A0F" }}
+                    style={{ background: "#C9A24A", color: "#080A0F" }}
                   >
                     {loading ? "Sending…" : <><span>Send Signal</span> <ArrowRight size={12} /></>}
                   </button>

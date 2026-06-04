@@ -28,7 +28,7 @@ export default function AuthenticatedLayout({
                 <p className="text-xs font-bold text-[#e5e5e5]">Admin Account</p>
                 <p className="text-[10px] text-[#737373] uppercase tracking-wider">Superuser</p>
               </div>
-              <div className="w-9 h-9 rounded-full border border-[#d4af37]/30 bg-[#1a1a1a] flex items-center justify-center text-[10px] font-bold text-[#d4af37] shadow-[0_0_10px_rgba(212,175,55,0.1)]">
+              <div className="w-9 h-9 rounded-full border border-[#C9A24A]/30 bg-[#1a1a1a] flex items-center justify-center text-[10px] font-bold text-[#C9A24A]">
                 AX
               </div>
             </div>

@@ -44,7 +44,7 @@ export default function AdminSignalsPage() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "new": return "bg-[#d4af37]/10 text-[#d4af37] border-[#d4af37]/20";
+      case "new": return "bg-[#C9A24A]/10 text-[#C9A24A] border-[#C9A24A]/20";
       case "read": return "bg-blue-500/10 text-blue-400 border-blue-500/20";
       case "contacted": return "bg-green-500/10 text-green-400 border-green-500/20";
       default: return "bg-gray-500/10 text-gray-400 border-gray-500/20";
@@ -61,7 +61,7 @@ export default function AdminSignalsPage() {
 
       {loading ? (
         <div className="flex justify-center py-20">
-          <Loader2 className="w-8 h-8 text-[#d4af37] animate-spin" />
+          <Loader2 className="w-8 h-8 text-[#C9A24A] animate-spin" />
         </div>
       ) : (
         <div className="space-y-4">
@@ -162,7 +162,7 @@ export default function AdminSignalsPage() {
                     <ul className="space-y-2">
                       {signal.signals.map((s, idx) => (
                         <li key={idx} className="flex items-center gap-2 text-[13px] leading-[1.65] text-[#e5e5e5]">
-                          <span className="w-1.5 h-1.5 rounded-full bg-[#d4af37] shrink-0"></span>
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#C9A24A] shrink-0"></span>
                           {s}
                         </li>
                       ))}

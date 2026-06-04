@@ -28,7 +28,7 @@ export function DashboardContent({ user }: { user: any }) {
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
-        <Loader2 className="w-8 h-8 animate-spin text-[#d4af37]" />
+        <Loader2 className="w-8 h-8 animate-spin text-[#C9A24A]" />
         <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#737373]">Verifying Entitlements...</p>
       </div>
     );
@@ -41,10 +41,10 @@ export function DashboardContent({ user }: { user: any }) {
     <div className="space-y-12">
       {/* Unsubscribed Warning */}
       {!isSubscribed && (
-        <div className="bg-[#111] border border-[#d4af37]/20 p-8 rounded-[32px] flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="bg-[#111] border border-[#C9A24A]/20 p-8 rounded-[32px] flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-6">
-            <div className="w-14 h-14 bg-[#d4af37]/10 border border-[#d4af37]/20 rounded-2xl flex items-center justify-center">
-              <ShieldAlert className="w-7 h-7 text-[#d4af37]" />
+            <div className="w-14 h-14 bg-[#C9A24A]/10 border border-[#C9A24A]/20 rounded-2xl flex items-center justify-center">
+              <ShieldAlert className="w-7 h-7 text-[#C9A24A]" />
             </div>
             <div>
               <h3 className="text-xl font-bold text-[#e5e5e5]">Plan Activation Required</h3>
@@ -55,7 +55,7 @@ export function DashboardContent({ user }: { user: any }) {
           </div>
           <Link 
             href="/user/billing"
-            className="flex items-center gap-3 bg-[#d4af37] hover:bg-[#c4a137] text-black px-8 py-4 rounded-xl text-[10px] font-bold uppercase tracking-[0.2em] transition-all active:scale-[0.98] whitespace-nowrap"
+            className="flex items-center gap-3 bg-[#C9A24A] hover:bg-[#8A7338] text-black px-8 py-4 rounded-xl text-[10px] font-bold uppercase tracking-[0.2em] transition-all active:scale-[0.98] whitespace-nowrap"
           >
             <Zap className="w-4 h-4" />
             Select Plan
@@ -72,7 +72,7 @@ export function DashboardContent({ user }: { user: any }) {
           </p>
         </div>
         <div className="flex gap-4">
-          <button className="px-6 py-3 bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl text-[10px] font-bold uppercase tracking-widest hover:border-[#d4af37]/30 transition-all">
+          <button className="px-6 py-3 bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl text-[10px] font-bold uppercase tracking-widest hover:border-[#C9A24A]/30 transition-all">
             Edit Profile
           </button>
         </div>
@@ -88,7 +88,7 @@ export function DashboardContent({ user }: { user: any }) {
           <h3 className="text-2xl font-bold text-[#e5e5e5] uppercase tracking-wider">
             {isSubscribed ? subscriber?.status : "Inactive"}
           </h3>
-          <div className={`mt-4 h-1 w-12 ${isSubscribed ? "bg-[#d4af37]" : "bg-[#2a2a2a]"}`}></div>
+          <div className={`mt-4 h-1 w-12 ${isSubscribed ? "bg-[#C9A24A]" : "bg-[#2a2a2a]"}`}></div>
         </div>
 
         <div className="bg-[#111] border border-[#2a2a2a] p-8 rounded-3xl relative overflow-hidden group">
@@ -99,7 +99,7 @@ export function DashboardContent({ user }: { user: any }) {
           <h3 className="text-2xl font-bold text-[#e5e5e5] uppercase tracking-wider">
             {isSubscribed ? subscriber?.planTier : "None"}
           </h3>
-          <div className={`mt-4 h-1 w-12 ${isSubscribed ? "bg-[#d4af37]" : "bg-[#2a2a2a]"}`}></div>
+          <div className={`mt-4 h-1 w-12 ${isSubscribed ? "bg-[#C9A24A]" : "bg-[#2a2a2a]"}`}></div>
         </div>
 
         <div className="bg-[#111] border border-[#2a2a2a] p-8 rounded-3xl relative overflow-hidden group">
@@ -110,7 +110,7 @@ export function DashboardContent({ user }: { user: any }) {
           <h3 className="text-2xl font-bold text-[#e5e5e5]">
             {isSubscribed && subscriber?.currentPeriodEnd ? new Date(subscriber.currentPeriodEnd).toLocaleDateString() : 'N/A'}
           </h3>
-          <div className={`mt-4 h-1 w-12 ${isSubscribed ? "bg-[#d4af37]" : "bg-[#2a2a2a]"}`}></div>
+          <div className={`mt-4 h-1 w-12 ${isSubscribed ? "bg-[#C9A24A]" : "bg-[#2a2a2a]"}`}></div>
         </div>
       </div>
 
@@ -125,7 +125,7 @@ export function DashboardContent({ user }: { user: any }) {
               </div>
               <div className="h-1.5 w-full bg-[#1a1a1a] rounded-full overflow-hidden">
                 <div 
-                  className="h-full bg-[#d4af37] transition-all" 
+                  className="h-full bg-[#C9A24A] transition-all" 
                   style={{ width: `${Math.min((quota.current / quota.limit) * 100, 100)}%` }}
                 />
               </div>
@@ -151,14 +151,14 @@ export function DashboardContent({ user }: { user: any }) {
               { icon: <Settings className="w-4 h-4" />, label: "Privacy & Security", href: "/user/settings" },
               { icon: <CreditCard className="w-4 h-4" />, label: "Billing & Subscription", href: "/user/billing" },
             ].map((item, idx) => (
-              <Link key={idx} href={item.href} className="w-full flex items-center justify-between p-6 bg-[#111] border border-[#2a2a2a] rounded-2xl hover:bg-[#161616] hover:border-[#d4af37]/20 transition-all group">
+              <Link key={idx} href={item.href} className="w-full flex items-center justify-between p-6 bg-[#111] border border-[#2a2a2a] rounded-2xl hover:bg-[#161616] hover:border-[#C9A24A]/20 transition-all group">
                 <div className="flex items-center gap-4">
-                  <div className="text-[#737373] group-hover:text-[#d4af37] transition-colors">
+                  <div className="text-[#737373] group-hover:text-[#C9A24A] transition-colors">
                     {item.icon}
                   </div>
                   <span className="text-xs font-bold uppercase tracking-widest">{item.label}</span>
                 </div>
-                <span className="text-[#404040] group-hover:text-[#d4af37] transition-all transform group-hover:translate-x-1">→</span>
+                <span className="text-[#404040] group-hover:text-[#C9A24A] transition-all transform group-hover:translate-x-1">→</span>
               </Link>
             ))}
           </div>

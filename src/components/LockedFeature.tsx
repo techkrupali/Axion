@@ -24,8 +24,8 @@ export function LockedFeature({ featureId, name, description, children, isLocked
 
       {/* Paywall Overlay */}
       <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center bg-[#0a0a0a]/40 backdrop-blur-[2px]">
-        <div className="w-12 h-12 bg-[#1a1a1a] border border-[#d4af37]/30 rounded-2xl flex items-center justify-center mb-6 shadow-[0_0_20px_rgba(212,175,55,0.1)]">
-          <Lock className="w-5 h-5 text-[#d4af37]" />
+        <div className="w-12 h-12 bg-[#1a1a1a] border border-[#C9A24A]/30 rounded-2xl flex items-center justify-center mb-6 shadow-[0_0_20px_rgba(212,175,55,0.1)]">
+          <Lock className="w-5 h-5 text-[#C9A24A]" />
         </div>
         
         <h3 className="text-xl font-bold tracking-tight text-[#e5e5e5] mb-2">{name}</h3>
@@ -35,7 +35,7 @@ export function LockedFeature({ featureId, name, description, children, isLocked
 
         <Link 
           href="/user/billing"
-          className="flex items-center gap-3 bg-[#d4af37] hover:bg-[#c4a137] text-black px-8 py-3.5 rounded-xl text-[10px] font-bold uppercase tracking-[0.2em] transition-all active:scale-[0.98]"
+          className="flex items-center gap-3 bg-[#C9A24A] hover:bg-[#8A7338] text-black px-8 py-3.5 rounded-xl text-[10px] font-bold uppercase tracking-[0.2em] transition-all active:scale-[0.98]"
         >
           <Zap className="w-3.5 h-3.5" />
           View Upgrade Options

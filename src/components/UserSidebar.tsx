@@ -70,7 +70,7 @@ export function UserSidebar() {
       <div className="p-8 border-b border-[#2a2a2a]">
         <Link href="/" className="flex items-center gap-2">
           <span className="text-sm font-bold tracking-[0.4em] uppercase">
-            Axion <span className="text-[#d4af37]">User</span>
+            Axion <span className="text-[#C9A24A]">User</span>
           </span>
         </Link>
       </div>
@@ -90,18 +90,18 @@ export function UserSidebar() {
                     href={item.href}
                     className={`flex items-center justify-between px-4 py-3 rounded-xl transition-all group ${
                       isActive 
-                        ? "bg-[#1a1a1a] text-[#d4af37] border border-[#d4af37]/20" 
+                        ? "bg-[#1a1a1a] text-[#C9A24A] border border-[#C9A24A]/20" 
                         : "text-[#a3a3a3] hover:bg-[#111] hover:text-[#e5e5e5]"
                     }`}
                   >
                     <div className="flex items-center gap-3">
                       {React.createElement(item.icon as React.ComponentType<{className?: string}>, { 
-                        className: `w-4 h-4 ${isActive ? "text-[#d4af37]" : "text-[#525252] group-hover:text-[#a3a3a3]"}` 
+                        className: `w-4 h-4 ${isActive ? "text-[#C9A24A]" : "text-[#525252] group-hover:text-[#a3a3a3]"}` 
                       })}
                       <span className="text-[11px] font-bold uppercase tracking-widest">{item.name}</span>
                     </div>
                     {item.gated && !isActive && (
-                      <Lock className="w-3 h-3 text-[#d4af37]/40" />
+                      <Lock className="w-3 h-3 text-[#C9A24A]/40" />
                     )}
                   </Link>
                 );

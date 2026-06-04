@@ -431,18 +431,16 @@ export default function FounderPage() {
         .fn-nl a.on::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; background: #C9A24A; }
         .fn-nl .fn-btn { 
           color: #080A0F; 
-          background: linear-gradient(135deg, #C9A84C 0%, #E8C97A 50%, #C9A84C 100%);
+          background: #C9A24A;
           border: none;
           border-radius: 100px; 
           padding: 8px 20px; 
           font-weight: 600;
-          box-shadow: 0 0 20px rgba(201,168,76,0.2);
-          transition: all 0.3s var(--ease);
+          transition: opacity 0.3s var(--ease);
         }
         .fn-nl .fn-btn:hover { 
-          background: linear-gradient(135deg, #E8C97A 0%, #C9A84C 50%, #E8C97A 100%);
+          opacity: 0.88;
           transform: translateY(-1px);
-          box-shadow: 0 0 30px rgba(201,168,76,0.4);
         }
         .fn-hamb { display: none; background: none; border: 1px solid rgba(237,235,227,.08); color: #EDEBE3; width: 42px; height: 38px; border-radius: 4px; cursor: pointer; align-items: center; justify-content: center; }
 
@@ -908,9 +906,8 @@ export default function FounderPage() {
                          style={{ background: "radial-gradient(circle, rgba(201,162,74,0.3) 0%, transparent 70%)" }} />
                     <div className="relative w-16 h-16 rounded-full flex items-center justify-center"
                          style={{ 
-                           background: activeTab === i ? "linear-gradient(135deg, #C9A24A 0%, #E2C078 100%)" : "var(--bg)",
+                           background: activeTab === i ? "#C9A24A" : "var(--bg)",
                            border: `2px solid ${activeTab === i ? "#C9A24A" : "rgba(201,162,74,0.3)"}`,
-                           boxShadow: activeTab === i ? "0 0 40px rgba(201,162,74,0.4)" : "none",
                            transition: "all 0.4s ease"
                          }}>
                       <span className="font-serif italic text-xl" 
@@ -1083,9 +1080,8 @@ export default function FounderPage() {
                                 <div className="mt-auto flex justify-end">
                                   <span className="inline-flex items-center font-mono text-[10px] tracking-[0.15em] uppercase px-4 py-2 rounded-full"
                                         style={{ 
-                                          background: "linear-gradient(135deg, #C9A24A 0%, #E2C078 100%)", 
+                                          background: "#C9A24A", 
                                           color: "#000",
-                                          boxShadow: "0 4px 16px rgba(201,162,74,0.25)"
                                         }}>
                                     {t.tag}
                                   </span>
@@ -1419,7 +1415,7 @@ export default function FounderPage() {
             </Reveal>
             <Reveal delay={0.08}>
               <p className="font-serif" style={{ fontSize: "clamp(19px,2vw,24px)", lineHeight: 1.38, color: "#CCCAC2", maxWidth: "80ch" }}>
-                <span style={{ color: "#FFFFFF", textShadow: "0 0 20px rgba(255,255,255,0.4)" }}>What does an organisation actually run on — beneath the strategy, beneath the talent?</span>
+                <span style={{ color: "#FFFFFF" }}>What does an organisation actually run on — beneath the strategy, beneath the talent?</span>
                 <br />
                 <span style={{ color: "#C9A24A" }}>Eight patterns. Two tiers. The difference between a system that holds and one that doesn't.</span>
               </p>
@@ -2158,10 +2154,9 @@ export default function FounderPage() {
                     style={{
                       fontSize: "11px", fontWeight: 600, letterSpacing: ".18em", textTransform: "uppercase",
                       color: "#000",
-                      background: "linear-gradient(135deg, #C9A24A 0%, #E2C078 50%, #C9A24A 100%)",
+                      background: "#C9A24A",
                       borderRadius: 40, padding: "16px 36px",
                       textDecoration: "none",
-                      boxShadow: "0 0 32px rgba(201,162,74,0.35)",
                     }}
                   >
                     Start the conversation ↗

@@ -83,7 +83,7 @@ export default function LabourCodes() {
       <header className="relative min-h-screen flex items-center justify-center bg-transparent pt-20 overflow-hidden">
         <div className="shell text-center relative z-10">
           <Reveal>
-            <div className="eyebrow eyebrow--center mb-8 text-[var(--accent)]">Decision Architecture · 2026</div>
+            <div className="eyebrow eyebrow--center mb-8 text-[var(--accent)]">AXION&nbsp;&nbsp;·&nbsp;&nbsp;LABOUR CODES</div>
           </Reveal>
           <Reveal delay={0.1}>
             <h1 className="hero-glow mb-8 drop-shadow-2xl">

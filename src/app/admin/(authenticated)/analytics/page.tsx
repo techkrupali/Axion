@@ -24,11 +24,11 @@ export default function AnalyticsPage() {
 
       {loading ? (
         <div className="flex justify-center py-20">
-          <Loader2 className="w-8 h-8 text-[#d4af37] animate-spin" />
+          <Loader2 className="w-8 h-8 text-[#C9A24A] animate-spin" />
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <StatCard title="Total Users" value={stats?.totalUsers ?? 0} icon={<Users className="w-5 h-5 text-[#d4af37]" />} />
+          <StatCard title="Total Users" value={stats?.totalUsers ?? 0} icon={<Users className="w-5 h-5 text-[#C9A24A]" />} />
           <StatCard title="Active Subscribers" value={stats?.activeSubscribers ?? 0} icon={<Activity className="w-5 h-5 text-green-500" />} />
           <StatCard title="Total Subscribers" value={stats?.totalSubscribers ?? 0} icon={<CreditCard className="w-5 h-5 text-[#a3a3a3]" />} />
         </div>
@@ -48,7 +48,7 @@ export default function AnalyticsPage() {
 
 function StatCard({ title, value, icon }: { title: string; value: number; icon: React.ReactNode }) {
   return (
-    <div className="bg-[#0a0a0a] border border-[#2a2a2a] rounded-2xl p-6 hover:border-[#d4af37]/20 transition-colors">
+    <div className="bg-[#0a0a0a] border border-[#2a2a2a] rounded-2xl p-6 hover:border-[#C9A24A]/20 transition-colors">
       <div className="flex items-center justify-between mb-4">
         <span className="text-[#737373] text-[10px] font-bold uppercase tracking-[0.2em]">{title}</span>
         {icon}

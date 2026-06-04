@@ -40,20 +40,20 @@ export default function UsersPage() {
       </div>
 
       <div className="relative group">
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#525252] group-focus-within:text-[#d4af37] transition-colors" />
+        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#525252] group-focus-within:text-[#C9A24A] transition-colors" />
         <input
           type="text"
           placeholder="Search records..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full bg-[#0a0a0a] border border-[#2a2a2a] rounded-xl pl-12 pr-4 py-3.5 text-xs text-[#e5e5e5] placeholder-[#404040] focus:outline-none focus:ring-1 focus:ring-[#d4af37]/30 focus:border-[#d4af37]/30 transition-all"
+          className="w-full bg-[#0a0a0a] border border-[#2a2a2a] rounded-xl pl-12 pr-4 py-3.5 text-xs text-[#e5e5e5] placeholder-[#404040] focus:outline-none focus:ring-1 focus:ring-[#C9A24A]/30 focus:border-[#C9A24A]/30 transition-all"
         />
       </div>
 
       <div className="bg-[#0a0a0a] rounded-2xl border border-[#2a2a2a] overflow-hidden shadow-2xl">
         {loading ? (
           <div className="p-20 flex justify-center">
-            <Loader2 className="w-8 h-8 text-[#d4af37] animate-spin" />
+            <Loader2 className="w-8 h-8 text-[#C9A24A] animate-spin" />
           </div>
         ) : filtered.length === 0 ? (
           <div className="p-20 text-center">
@@ -75,7 +75,7 @@ export default function UsersPage() {
                   <tr key={user._id} className="hover:bg-[#1a1a1a]/40 transition-colors group">
                     <td className="px-8 py-6">
                       <div className="flex items-center gap-4">
-                        <div className="w-11 h-11 rounded-xl bg-[#1a1a1a] border border-[#2a2a2a] flex items-center justify-center text-[#d4af37] font-bold text-sm group-hover:border-[#d4af37]/30 transition-colors">
+                        <div className="w-11 h-11 rounded-xl bg-[#1a1a1a] border border-[#2a2a2a] flex items-center justify-center text-[#C9A24A] font-bold text-sm group-hover:border-[#C9A24A]/30 transition-colors">
                           {user.name.charAt(0).toUpperCase()}
                         </div>
                         <div>

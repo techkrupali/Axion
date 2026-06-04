@@ -39,7 +39,7 @@ const emptySplit = (qid: string) =>
 // ─── Band colours ─────────────────────────────────────────────────────────────
 const BAND_COLOR: Record<string, string> = {
   "Edge Thinning": "#E05252",
-  "Edge Holding": "#C9A84C",
+  "Edge Holding": "#C9A24A",
   "Edge Accelerating": "#52C8A8",
 };
 
@@ -279,7 +279,7 @@ function SplitQuestion({ question, value, onChange }: { question: Question; valu
                   <span className="font-sans font-medium text-[var(--fg)]" style={{ fontSize: "14px" }}>{o.label}</span>
                   {o.badge && (
                     <span className="font-jetbrains text-[8px] tracking-[0.2em] px-2 py-0.5"
-                      style={{ color: o.badge === "AI-PROOF" ? "#52C8A8" : o.badge === "AI-ASSISTED" ? "#C9A84C" : "#E05252", border: `1px solid currentColor`, opacity: 0.8 }}>
+                      style={{ color: o.badge === "AI-PROOF" ? "#52C8A8" : o.badge === "AI-ASSISTED" ? "#C9A24A" : "#E05252", border: `1px solid currentColor`, opacity: 0.8 }}>
                       {o.badge}
                     </span>
                   )}
@@ -416,7 +416,7 @@ function ResultView({ result, indexType, answers, profile, onRestart }: {
           <div className="flex flex-col gap-4">
             {keyComponents.map((c, i) => {
               const pct = Math.min(100, Math.max(0, c.value));
-              const col = pct >= 65 ? "#52C8A8" : pct >= 40 ? "#C9A84C" : "#E05252";
+              const col = pct >= 65 ? "#52C8A8" : pct >= 40 ? "#C9A24A" : "#E05252";
               return (
                 <div key={i}>
                   <div className="flex items-center justify-between mb-1.5">
