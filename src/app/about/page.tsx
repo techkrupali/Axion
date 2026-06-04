@@ -111,17 +111,7 @@ function Orb({
   );
 }
 
-/* Eyebrow label */
-function Eyebrow({ children, center = false }: { children: React.ReactNode; center?: boolean }) {
-  return (
-    <div className={`flex items-center gap-3 mb-6 ${center ? "justify-center" : ""}`}>
-      {!center && <span className="w-6 h-[1px] bg-[var(--accent)] opacity-60 shrink-0" />}
-      <span className="font-mono text-[10.5px] tracking-[0.38em] uppercase text-[var(--fg-4)]">
-        {children}
-      </span>
-    </div>
-  );
-}
+
 
 /* Gold CTA button */
 function GoldBtn({
@@ -406,7 +396,7 @@ function WhatWeDoSection() {
           {/* LEFT — sticky context */}
           <div className="lg:sticky lg:top-32 h-fit">
             <FadeUp>
-              <Eyebrow>What We Do</Eyebrow>
+              <div className="eyebrow">What We Do</div>
             </FadeUp>
             <FadeUp delay={0.1}>
               <h2
@@ -531,7 +521,7 @@ function WhySection() {
       <div className="shell">
         <div className="max-w-[860px]">
           <FadeUp>
-            <Eyebrow>Why Axion Index Exists</Eyebrow>
+            <div className="eyebrow">Why Axion Index Exists</div>
           </FadeUp>
           <FadeUp delay={0.1}>
             <h2
@@ -625,7 +615,7 @@ function ApproachSection() {
         {/* Header */}
         <div className="mb-20">
           <FadeUp>
-            <Eyebrow>Our Approach</Eyebrow>
+            <div className="eyebrow">Our Approach</div>
           </FadeUp>
           <FadeUp delay={0.1}>
             <h2
@@ -765,7 +755,7 @@ function PhilosophySection() {
 
       <div className="shell relative z-10 flex flex-col items-center justify-center py-40 text-center">
         <FadeUp>
-          <Eyebrow center>Founding Philosophy</Eyebrow>
+          <div className="eyebrow eyebrow--center">Founding Philosophy</div>
         </FadeUp>
 
         {/* BCR flow */}
@@ -835,7 +825,7 @@ function DifferentSection() {
           {/* LEFT — sticky */}
           <div className="lg:sticky lg:top-32 h-fit">
             <FadeUp>
-              <Eyebrow>What Makes Us Different</Eyebrow>
+              <div className="eyebrow">What Makes Us Different</div>
             </FadeUp>
             <FadeUp delay={0.1}>
               <h2
@@ -917,7 +907,7 @@ function WhoSection() {
       <div className="shell">
         <div className="mb-20">
           <FadeUp>
-            <Eyebrow>Who We Work With</Eyebrow>
+            <div className="eyebrow">Who We Work With</div>
           </FadeUp>
           <FadeUp delay={0.1}>
             <h2

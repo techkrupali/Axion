@@ -180,7 +180,7 @@ function SignalsSection() {
             {/* Left — static */}
             <div>
               <Reveal>
-                <span className="eyebrow mb-6">If this feels familiar</span>
+                <div className="eyebrow">If this feels familiar</div>
               </Reveal>
               <Reveal delay={0.1}>
                 <h2 className="h-section mb-8">
@@ -252,7 +252,7 @@ export default function Home() {
         <motion.div style={{ y: heroY, opacity: heroOpacity }} className="shell text-center relative z-10 pt-20">
           <Reveal>
             {/* Fix 3 — classification eyebrow, corner strips merged in */}
-            <div className="eyebrow eyebrow--center mb-10 text-[#B8BDCE]">
+            <div className="eyebrow eyebrow--center mb-10">
               OPERATING ARCHITECTURE PRACTICE
             </div>
           </Reveal>
@@ -302,7 +302,7 @@ export default function Home() {
             <div className="lg:sticky lg:top-0 h-fit flex flex-col justify-start pt-40 pb-40 lg:pr-10 z-30 pointer-events-none">
               <div className="pointer-events-auto">
                 <Reveal>
-                  <span className="eyebrow mb-8 text-[#C9A24A]">How We Do It</span>
+                  <div className="eyebrow">How We Do It</div>
                 </Reveal>
                 <Reveal delay={0.1}>
                   <h2 className="h-display text-[clamp(32px,4.5vw,56px)] leading-[0.95] mb-6">
@@ -451,7 +451,7 @@ export default function Home() {
       <section className="chapter section-deep overflow-hidden pb-10" id="practices">
         <div className="shell">
           <div className="text-center mb-6 -mt-4">
-            <Reveal><span className="eyebrow eyebrow--center mb-4">Where the work happens</span></Reveal>
+            <Reveal><div className="eyebrow eyebrow--center mb-4">Where the work happens</div></Reveal>
             <Reveal delay={0.1}>
               <h2 className="h-section mx-auto max-w-[20ch]">
                 One Operating Logic.<br />
@@ -636,7 +636,7 @@ export default function Home() {
         <div className="shell pt-20 pb-4">
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
             <Reveal>
-              <span className="eyebrow text-[#C9A24A]">The engagement</span>
+              <div className="eyebrow">The engagement</div>
             </Reveal>
             <Reveal delay={0.1}>
               <h2 className="h-section lg:text-right">
@@ -730,7 +730,7 @@ export default function Home() {
       <section className="chapter py-40 overflow-hidden relative" style={{ background: "#0A0A0B" }}>
         <div className="shell text-center relative z-10">
           <Reveal>
-            <span className="eyebrow eyebrow--center mb-10">Begin the diagnostic</span>
+            <div className="eyebrow eyebrow--center mb-10">Begin the diagnostic</div>
           </Reveal>
           <Reveal delay={0.1}>
             <h2 className="h-display mb-14">
