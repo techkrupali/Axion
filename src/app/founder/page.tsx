@@ -704,7 +704,7 @@ export default function FounderPage() {
                     marginBottom: 10,
                   }}
                 >
-                  Wipro&nbsp;<span style={{ color: "#3A3A40", fontWeight: 400 }}>|</span>&nbsp;Standard Chartered&nbsp;<span style={{ color: "#3A3A40", fontWeight: 400 }}>|</span>&nbsp;HSBC&nbsp;<span style={{ color: "#3A3A40", fontWeight: 400 }}>|</span>&nbsp;Tata&nbsp;<span style={{ color: "#3A3A40", fontWeight: 400 }}>|</span>&nbsp;Udaan&nbsp;<span style={{ color: "#3A3A40", fontWeight: 400 }}>|</span>&nbsp;Gameskraft
+                  Wipro&nbsp;<span style={{ color: "#3A3A40", fontWeight: 400 }}>|</span>&nbsp;Standard Chartered&nbsp;<span style={{ color: "#3A3A40", fontWeight: 400 }}>|</span>&nbsp;HSBC&nbsp;<span style={{ color: "#3A3A40", fontWeight: 400 }}>|</span>&nbsp;Tata&nbsp;<span style={{ color: "#3A3A40", fontWeight: 400 }}>|</span>&nbsp;Lodha&nbsp;<span style={{ color: "#3A3A40", fontWeight: 400 }}>|</span>&nbsp;Marico&nbsp;<span style={{ color: "#3A3A40", fontWeight: 400 }}>|</span>&nbsp;Udaan&nbsp;<span style={{ color: "#3A3A40", fontWeight: 400 }}>|</span>&nbsp;Gameskraft
                 </div>
                 {/* Tier 2 — Sectors */}
                 <div
