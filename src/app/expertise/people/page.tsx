@@ -4,6 +4,8 @@ import Link from "next/link";
 import { Reveal } from "@/components/Reveal";
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
+import Footer from "@/components/Footer";
+import Button from "@/components/Button";
 
 const PeopleThreeScene = dynamic(() => import("@/components/PeopleThreeScene"), { ssr: false });
 
@@ -245,6 +247,7 @@ export default function PeopleArchitecture() {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(160,160,160,0.04)_0%,transparent_70%)] pointer-events-none" />
       </section>
 
+      <Footer />
     </div>
   );
 }

@@ -5,6 +5,8 @@ import { Reveal } from "@/components/Reveal";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
+import Footer from "@/components/Footer";
+import Button from "@/components/Button";
 
 const LabourThreeScene = dynamic(() => import("@/components/LabourThreeScene"), { ssr: false });
 
@@ -402,7 +404,7 @@ export default function LabourCodes() {
       </section>
 
       {/* SOURCES */}
-      <footer className="chapter section-deep border-t border-[rgba(255,255,255,0.05)] pb-20">
+      <section className="chapter section-deep border-t border-[rgba(255,255,255,0.05)] pb-20">
         <div className="shell">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-20">
             <div>
@@ -424,13 +426,12 @@ export default function LabourCodes() {
               <Link href="/connect?practice=labour-codes" className="nav-cta scale-110 px-10 py-4 bg-[var(--fg)] text-[var(--bg)] border-none hover:bg-[var(--accent)] transition-all duration-500">
                 Begin a diagnostic
               </Link>
-              <div className="font-mono text-[11px] tracking-widest uppercase text-[var(--fg-5)]">
-                © 2026 Axion Index · Bengaluru
-              </div>
             </div>
           </div>
         </div>
-      </footer>
+      </section>
+
+      <Footer />
     </div>
   );
 }

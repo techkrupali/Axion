@@ -4,6 +4,8 @@ import { Reveal } from "@/components/Reveal";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { ArrowRight } from "lucide-react";
+import Footer from "@/components/Footer";
+import Button from "@/components/Button";
 
 const practices = ["People Architecture", "Labour Codes", "AI Edge Lab", "Family Business", "Not sure yet"];
 
@@ -202,6 +204,8 @@ export default function Connect() {
           </div>
         </div>
       </section>
+
+      <Footer />
     </div>
   );
 }
