@@ -120,7 +120,7 @@ export default function LabourCodes() {
         <div className="shell">
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-16 items-center">
             <motion.div initial={{ opacity: 0, x: -60 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: "-10% 0px" }} transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}>
-              <Reveal><span className="eyebrow mb-6 text-[var(--accent)]">§LC · 01 · The diagnostic question</span></Reveal>
+              <Reveal><span className="eyebrow mb-6 text-[var(--accent)]">The diagnostic question</span></Reveal>
               <h2 className="h-statement mb-8">Most organisations are still asking<br /><em className="text-[var(--accent)]">"when does this apply?"</em></h2>
               <p className="body-text text-[var(--fg-3)]">
                 The better question: where does it hit first — cost · classification · credibility · control?
@@ -146,7 +146,7 @@ export default function LabourCodes() {
             <Reveal>
               <div className="font-serif italic text-[120px] leading-none text-[var(--accent)] opacity-10 mb-4">29</div>
             </Reveal>
-            <Reveal><span className="eyebrow mb-6 text-[var(--accent)]">§LC · 02 · Worker classification grid</span></Reveal>
+            <Reveal><span className="eyebrow mb-6 text-[var(--accent)]">Worker classification grid</span></Reveal>
             <Reveal delay={0.1}><h2 className="h-statement">Six categories. <em className="text-[var(--accent)]">Each with its own architecture.</em></h2></Reveal>
             <Reveal delay={0.2}><p className="lead text-[var(--fg-3)] mt-6 max-w-[52ch]">Six categories. Each with its own architecture. Classification drives everything downstream — comp, social security, OSH, governance. The codes do not merely consolidate language; they redraw the boundaries of who counts as what.</p></Reveal>
           </div>
