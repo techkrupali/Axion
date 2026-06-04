@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, ChevronDown, Menu, X } from "lucide-react";
+import AxionWordmark from "@/components/AxionWordmark";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -58,10 +59,7 @@ const Navbar = () => {
         className={`nav ${isScrolled ? "is-scrolled" : ""}`}
       >
         {/* Brand */}
-        <Link href="/" className="brand group">
-          Ax<em>ion</em>
-          <span className="domain">INDEX</span>
-        </Link>
+        <AxionWordmark />
 
         {/* Desktop Nav Links */}
         <div className="hidden lg:flex items-center gap-6 xl:gap-8">

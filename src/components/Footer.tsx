@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import Button from "./Button";
+import AxionWordmark from "./AxionWordmark";
 
 export default function Footer() {
   return (
@@ -24,9 +25,7 @@ export default function Footer() {
           {/* Brand + tagline + follow capture */}
           <div className="flex flex-col gap-8 sm:col-span-2 lg:col-span-1">
             <div>
-              <Link className="brand text-[clamp(22px,5vw,34px)] block mb-3 leading-none" href="/">
-                Ax<em>ion</em><span className="domain">INDEX</span>
-              </Link>
+              <AxionWordmark className="mb-3" />
               <p className="font-serif italic text-[clamp(16px,2vw,17px)] text-[#B8BDCE] leading-relaxed max-w-[32ch]">
                 Codifying the operating patterns of the unfinished organisation.
               </p>

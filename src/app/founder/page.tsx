@@ -6,6 +6,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Reveal } from "@/components/Reveal";
 import DiagnosticModal from "@/components/DiagnosticModal";
+import AxionWordmark from "@/components/AxionWordmark";
 
 /* ─── DATA ─────────────────────────────────────────────────────────────────── */
 
@@ -309,7 +310,7 @@ function BedrockRows() {
               }}>
                 {card.v}
               </p>
-              <p className="font-sans" style={{ fontSize: "15px", color: "#5A5A64", lineHeight: 1.6, maxWidth: "52ch" }}>
+              <p className="font-sans" style={{ fontSize: "16px", color: "#5A5A64", lineHeight: 1.6, maxWidth: "52ch" }}>
                 {card.sub}
               </p>
             </div>
@@ -669,7 +670,7 @@ export default function FounderPage() {
                 className="font-serif"
                 style={{
                   fontStyle: "italic",
-                  fontSize: "clamp(13px,1.4vw,15.5px)",
+                  fontSize: "clamp(14px,1.4vw,15.5px)",
                   lineHeight: 1.68,
                   color: "#8A7338",
                   maxWidth: "min(44ch, 100%)",
@@ -1167,7 +1168,7 @@ export default function FounderPage() {
               {/* Recalibration line */}
               <p
                 className="font-serif italic text-center mx-auto"
-                style={{ fontSize: "14px", lineHeight: 1.65, color: "#7A7A82", maxWidth: "52ch", marginBottom: 28 }}
+                style={{ fontSize: "16px", lineHeight: 1.65, color: "#7A7A82", maxWidth: "52ch", marginBottom: 28 }}
               >
                 Recognising when the professional timeline and the personal timeline need realignment is not weakness — it is the same first-principles thinking, applied to your own life.
               </p>
@@ -1231,7 +1232,7 @@ export default function FounderPage() {
                     </h4>
                     
                     {/* Body */}
-                    <p style={{ color: "#7A7A82", fontSize: "14px", fontWeight: 300, marginBottom: 14, lineHeight: 1.6 }}>
+                    <p style={{ color: "#7A7A82", fontSize: "16px", fontWeight: 300, marginBottom: 14, lineHeight: 1.6 }}>
                       {c.body}
                     </p>
                     
@@ -1324,7 +1325,7 @@ export default function FounderPage() {
                         boxShadow: "0 0 0 1px rgba(201,162,74,0.1), 0 8px 32px rgba(201,162,74,0.12), 0 4px 16px rgba(0,0,0,0.4)",
                       }}>
                         <p style={{ fontSize: "10px", fontWeight: 600, letterSpacing: "0.18em", color: "#C9A24A", textTransform: "uppercase", margin: "0 0 6px", opacity: 0.85 }}>{item.source}</p>
-                        <p className="font-serif" style={{ fontSize: "14px", lineHeight: 1.5, color: "#C8C5BC", margin: 0, fontStyle: "italic" }}>{item.quote}</p>
+                        <p className="font-serif" style={{ fontSize: "16px", lineHeight: 1.6, color: "#C8C5BC", margin: 0, fontStyle: "italic" }}>{item.quote}</p>
                       </div>
                     )}
                   </div>
@@ -1354,7 +1355,7 @@ export default function FounderPage() {
                         boxShadow: "0 0 0 1px rgba(201,162,74,0.1), 0 8px 32px rgba(201,162,74,0.12), 0 4px 16px rgba(0,0,0,0.4)",
                       }}>
                         <p style={{ fontSize: "10px", fontWeight: 600, letterSpacing: "0.18em", color: "#C9A24A", textTransform: "uppercase", margin: "0 0 6px", opacity: 0.85 }}>{item.source}</p>
-                        <p className="font-serif" style={{ fontSize: "14px", lineHeight: 1.5, color: "#C8C5BC", margin: 0, fontStyle: "italic" }}>{item.quote}</p>
+                        <p className="font-serif" style={{ fontSize: "16px", lineHeight: 1.6, color: "#C8C5BC", margin: 0, fontStyle: "italic" }}>{item.quote}</p>
                       </div>
                     )}
                   </div>
@@ -1423,7 +1424,7 @@ export default function FounderPage() {
               </p>
             </Reveal>
             <Reveal delay={0.14}>
-              <p style={{ marginTop: 14, fontSize: "15px", color: "#8A8A96", maxWidth: "90ch", lineHeight: 1.68 }}>
+              <p style={{ marginTop: 14, fontSize: "16px", color: "#8A8A96", maxWidth: "90ch", lineHeight: 1.68 }}>
                 The startup, the scaling company, the family business — the{" "}
                 <em style={{ color: "#C9A24A", fontStyle: "italic" }}>unfinished organisation</em>{" "}
                 — is still writing its operating system. These patterns are for them.
@@ -1477,8 +1478,8 @@ export default function FounderPage() {
                     >
                       <div className="font-serif italic mb-2" style={{ fontSize: 17, color: "rgba(201,162,74,.55)" }}>{p.num}</div>
                       <div className="font-serif mb-2" style={{ fontWeight: 400, fontSize: 21, color: "#CCCAC2", lineHeight: 1.14 }}>{p.name}</div>
-                      <div className="font-serif italic mb-3" style={{ fontSize: "15px", lineHeight: 1.42, color: "rgba(201,162,74,.65)" }}>{p.signal}</div>
-                      <div style={{ fontSize: "14px", color: "#5A5A62", lineHeight: 1.54 }}>{p.desc}</div>
+                      <div className="font-serif italic mb-3" style={{ fontSize: "16px", lineHeight: 1.55, color: "rgba(201,162,74,.65)" }}>{p.signal}</div>
+                      <div style={{ fontSize: "16px", color: "#5A5A62", lineHeight: 1.6 }}>{p.desc}</div>
                     </motion.div>
                   ))}
                 </div>
@@ -1530,8 +1531,8 @@ export default function FounderPage() {
                     >
                       <div className="font-serif italic mb-2" style={{ fontSize: 17, color: "rgba(201,162,74,.7)" }}>{p.num}</div>
                       <div className="font-serif mb-2" style={{ fontWeight: 400, fontSize: 21, color: "#EDEBE3", lineHeight: 1.14 }}>{p.name}</div>
-                      <div className="font-serif italic mb-3" style={{ fontSize: "15px", lineHeight: 1.42, color: "rgba(201,162,74,.75)" }}>{p.signal}</div>
-                      <div style={{ fontSize: "14px", color: "#8A8A96", lineHeight: 1.54 }}>{p.desc}</div>
+                      <div className="font-serif italic mb-3" style={{ fontSize: "16px", lineHeight: 1.55, color: "rgba(201,162,74,.75)" }}>{p.signal}</div>
+                      <div style={{ fontSize: "16px", color: "#8A8A96", lineHeight: 1.6 }}>{p.desc}</div>
                     </motion.div>
                   ))}
                 </div>
@@ -2203,9 +2204,7 @@ export default function FounderPage() {
             {/* Left — tagline + follow capture */}
             <div className="flex flex-col gap-10">
               <div>
-                <Link className="brand text-[clamp(20px,2.4vw,30px)] block mb-4 leading-none" href="/">
-                  Ax<em>ion</em><span className="domain">INDEX</span>
-                </Link>
+                <AxionWordmark className="mb-4" />
                 <p className="font-serif italic leading-relaxed" style={{ fontSize: "clamp(16px,1.4vw,18px)", color: "var(--fg-3)", maxWidth: "32ch" }}>
                   Codifying the operating patterns of the unfinished organisation.
                 </p>

@@ -118,7 +118,7 @@ export default function LabourCodes() {
         <div className="shell">
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-16 items-center">
             <motion.div initial={{ opacity: 0, x: -60 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: "-10% 0px" }} transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}>
-              <Reveal><span className="eyebrow mb-6 text-[var(--accent)]">The diagnostic question</span></Reveal>
+            <Reveal><span className="eyebrow mb-6 text-[var(--accent)]">The diagnostic question</span></Reveal>
               <h2 className="h-statement mb-8">Most organisations are still asking<br /><em className="text-[var(--accent)]">"when does this apply?"</em></h2>
               <p className="body-text text-[var(--fg-3)]">
                 The better question: where does it hit first — cost · classification · credibility · control?
@@ -238,7 +238,7 @@ export default function LabourCodes() {
       <section className="chapter section-dark relative" id="codes">
         <div className="shell">
           <div className="mb-20">
-            <Reveal><span className="eyebrow mb-6 text-[var(--accent)]">§LC · 03 · The four codes</span></Reveal>
+            <Reveal><span className="eyebrow mb-6 text-[var(--accent)]">The four codes</span></Reveal>
             <Reveal delay={0.1}><h2 className="h-statement">Four codes. <em className="text-[var(--accent)]">One regulatory architecture.</em></h2></Reveal>
             <Reveal delay={0.2}><p className="lead text-[var(--fg-3)] mt-6">Wages · Industrial Relations · Social Security · Occupational Safety, Health and Working Conditions. The Centre defines; states draft; you operate.</p></Reveal>
           </div>
@@ -266,7 +266,7 @@ export default function LabourCodes() {
       <section className="chapter section-dark relative border-t border-[rgba(255,255,255,0.05)]" id="questions">
         <div className="shell">
           <div className="mb-16">
-            <Reveal><span className="eyebrow mb-6 text-[var(--accent)]">§LC · 04 · 75 questions</span></Reveal>
+            <Reveal><span className="eyebrow mb-6 text-[var(--accent)]">75 questions</span></Reveal>
             <Reveal delay={0.1}><h2 className="h-statement">The 75 questions <em className="text-[var(--accent)]">we hear.</em></h2></Reveal>
             <Reveal delay={0.2}><p className="lead text-[var(--fg-3)] mt-6 max-w-[52ch]">Cost · Classification · Operations · Benefits · Structure · State · Overtime · Contract. Sample below; full set available to engagement clients.</p></Reveal>
           </div>
@@ -299,7 +299,7 @@ export default function LabourCodes() {
       <section className="chapter section-deep relative" id="calc">
         <div className="shell">
           <div className="mb-16">
-            <Reveal><span className="eyebrow mb-6 text-[var(--accent)]">§LC · 05 · Live calculator</span></Reveal>
+            <Reveal><span className="eyebrow mb-6 text-[var(--accent)]">Live calculator</span></Reveal>
             <Reveal delay={0.1}><h2 className="h-statement">Where will it <em className="text-[var(--accent)]">hit first?</em></h2></Reveal>
             <Reveal delay={0.2}><p className="lead text-[var(--fg-3)] mt-6 max-w-[52ch]">A first-pass cost-impact estimate against current statutory positions. Inputs stay on your device. The full diagnostic — by code, by state, by cost line — is the engagement deliverable.</p></Reveal>
           </div>
@@ -385,7 +385,7 @@ export default function LabourCodes() {
       <section className="chapter section-dark relative overflow-hidden">
         <div className="shell">
           <div className="max-w-[720px] mx-auto text-center">
-            <Reveal><span className="eyebrow eyebrow--center mb-6 text-[var(--accent)]">§LC · 06 · The 3i engagement model</span></Reveal>
+            <Reveal><span className="eyebrow eyebrow--center mb-6 text-[var(--accent)]">The 3i engagement model</span></Reveal>
             <Reveal delay={0.1}><h2 className="h-statement mb-8">Interpret. Integrate.<br /><em className="text-[var(--accent)]">Institutionalise.</em></h2></Reveal>
             <Reveal delay={0.2}><p className="lead text-[var(--fg-3)] mb-12 mx-auto">Three stages. Sequenced. Each one earns the next. The page is organised by user journey; the engagement is organised by 3i.</p></Reveal>
             <Reveal delay={0.3}>

@@ -419,7 +419,7 @@ export default function Home() {
                   </h3>
 
                   {/* Desc */}
-                  <p style={{ fontSize: "clamp(13px,1.1vw,14.5px)", color: "#B8BDCE", lineHeight: 1.7 }}>
+                  <p style={{ fontSize: "clamp(14px,1.1vw,16px)", color: "#B8BDCE", lineHeight: 1.7 }}>
                     {item.desc}
                   </p>
 

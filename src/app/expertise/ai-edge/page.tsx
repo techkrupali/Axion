@@ -130,7 +130,7 @@ function PersonaModal({ open, onClose, initialKey }: { open: boolean; onClose: (
     white: "#F7F6F3", white2: "#EEECEA", ink: "#0D0D0B", ink2: "#1A1A18",
     mid: "#7A7870", dim: "#B0AEA8", gold: "#A07830", gold2: "#C49848",
     rule: "rgba(13,13,11,0.1)", rule2: "rgba(13,13,11,0.18)",
-    mono: "'DM Mono','Courier New',monospace", display: "'Bebas Neue',sans-serif",
+    mono: "var(--font-geist-mono),'JetBrains Mono',ui-monospace,monospace", display: "var(--font-cormorant-garamond),'Cormorant Garamond',serif",
   };
 
   return (
@@ -257,7 +257,7 @@ function MicroDiagnostic({ S, onOpenModal }: { S: Record<string, string>; onOpen
       <div style={{ width: "100%", maxWidth: "none", margin: "0 0 48px 0" }}>
         <div style={{ fontFamily: S.mono, fontSize: "13px", letterSpacing: "0.24em", textTransform: "uppercase", color: S.gold, marginBottom: "18px" }}>30-Second Structural Read · Free</div>
         <h2 style={{ fontFamily: S.display, fontSize: "clamp(40px,6vw,72px)", lineHeight: 0.96, letterSpacing: "0.005em", color: S.ink, textTransform: "uppercase", marginBottom: "22px", textAlign: "left" }}>Take a <span style={{ color: S.gold }}>5-question</span> read on where your edge sits.</h2>
-        <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "21px", fontStyle: "italic", lineHeight: 1.7, color: "#2E2E2C", maxWidth: "100%", paddingLeft: "18px", borderLeft: `3px solid ${S.gold}` }}>Five questions. Each maps to a canonical doctrine concept. Score lands you in one of three structural bands — Edge Accelerating, Edge Holding, or Edge Thinning.</p>
+        <p style={{ fontFamily: "var(--font-cormorant-garamond),'Cormorant Garamond',Georgia,serif", fontSize: "21px", fontStyle: "italic", lineHeight: 1.7, color: "#2E2E2C", maxWidth: "100%", paddingLeft: "18px", borderLeft: `3px solid ${S.gold}` }}>Five questions. Each maps to a canonical doctrine concept. Score lands you in one of three structural bands — Edge Accelerating, Edge Holding, or Edge Thinning.</p>
         <div style={{ display: "flex", flexWrap: "wrap", gap: "18px", marginTop: "24px", paddingTop: "20px", borderTop: `1px solid ${S.rule}` }}>
           {["Q1 · Role Composition Map","Q2 · Judgment Ownership","Q3 · Thinking Ownership","Q4 · Personal Dividend","Q5 · Work Redesign"].map(p => (
             <span key={p} style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.16em", textTransform: "uppercase", color: "#2E2E2C", padding: "7px 14px", background: "rgba(160,120,48,0.08)", border: "1px solid rgba(160,120,48,0.18)" }}>{p}</span>
@@ -294,7 +294,7 @@ function MicroDiagnostic({ S, onOpenModal }: { S: Record<string, string>; onOpen
                   }}>
                   <div style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.22em", color: S.gold, transition: "color .25s ease" }}>{c.num}</div>
                   <div style={{ fontFamily: S.display, fontSize: "36px", lineHeight: 1, color: S.ink, textTransform: "uppercase", letterSpacing: "0.005em", transition: "color .25s ease" }}>{c.name}</div>
-                  <div style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "16px", fontStyle: "italic", color: "#2E2E2C", lineHeight: 1.5, minHeight: "64px", transition: "color .25s ease" }}>{c.desc}</div>
+                  <div style={{ fontFamily: "var(--font-cormorant-garamond),'Cormorant Garamond',Georgia,serif", fontSize: "16px", fontStyle: "italic", color: "#2E2E2C", lineHeight: 1.5, minHeight: "64px", transition: "color .25s ease" }}>{c.desc}</div>
                   <div style={{ fontFamily: S.mono, fontSize: "11px", letterSpacing: "0.12em", textTransform: "uppercase", color: S.mid, paddingTop: "18px", borderTop: `1px solid ${S.rule}`, transition: "color .25s ease" }}>{c.inst}</div>
                   <div style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.18em", textTransform: "uppercase", color: S.gold, transition: "color .25s ease" }}>Begin →</div>
                 </button>
@@ -320,7 +320,7 @@ function MicroDiagnostic({ S, onOpenModal }: { S: Record<string, string>; onOpen
             <div style={{ display: "flex", flexDirection: "column", gap: "1px", background: S.rule, border: `1px solid ${S.rule}` }}>
               {ARCH_QUIZ[arch].questions[qIdx].opts.map((o, i) => (
                 <button key={i} onClick={() => answer(o.s)}
-                  style={{ background: S.white, border: "none", padding: "22px 28px", textAlign: "left", cursor: "pointer", fontFamily: "'DM Sans',system-ui,sans-serif", fontSize: "14px", color: "#1A1A18", lineHeight: 1.55, transition: "background .2s ease,padding-left .2s ease", borderLeft: "3px solid transparent", display: "flex", alignItems: "flex-start", gap: "18px" }}
+                  style={{ background: S.white, border: "none", padding: "22px 28px", textAlign: "left", cursor: "pointer", fontFamily: "var(--font-geist-sans),system-ui,sans-serif", fontSize: "16px", color: "#1A1A18", lineHeight: 1.6, transition: "background .2s ease,padding-left .2s ease", borderLeft: "3px solid transparent", display: "flex", alignItems: "flex-start", gap: "18px" }}
                   onMouseEnter={e => { e.currentTarget.style.background = S.ink; e.currentTarget.style.color = S.white; e.currentTarget.style.paddingLeft = "36px"; e.currentTarget.style.borderLeftColor = S.gold; }}
                   onMouseLeave={e => { e.currentTarget.style.background = S.white; e.currentTarget.style.color = "#1A1A18"; e.currentTarget.style.paddingLeft = "28px"; e.currentTarget.style.borderLeftColor = "transparent"; }}>
                   <span style={{ fontFamily: S.mono, fontSize: "10px", letterSpacing: "0.18em", color: S.gold, textTransform: "uppercase", flexShrink: 0, width: "16px", paddingTop: "2px" }}>{["A","B","C","D"][i]}</span>
@@ -342,7 +342,7 @@ function MicroDiagnostic({ S, onOpenModal }: { S: Record<string, string>; onOpen
               </div>
             </div>
             <div style={{ height: "1px", background: "rgba(160,120,48,0.4)", margin: "28px 0" }} />
-            <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "17px", lineHeight: 1.65, color: "rgba(247,246,243,0.85)", marginBottom: "34px", maxWidth: "100%" }}>{bandNarrative(arch)}</p>
+            <p style={{ fontFamily: "var(--font-cormorant-garamond),'Cormorant Garamond',Georgia,serif", fontSize: "17px", lineHeight: 1.65, color: "rgba(247,246,243,0.85)", marginBottom: "34px", maxWidth: "100%" }}>{bandNarrative(arch)}</p>
             <div style={{ display: "flex", alignItems: "center", gap: "24px", flexWrap: "wrap", marginBottom: "28px" }}>
               <button onClick={() => onOpenModal(arch)} style={{ display: "inline-block", padding: "16px 30px", background: S.gold, color: S.ink, fontFamily: S.mono, fontSize: "11px", letterSpacing: "0.2em", textTransform: "uppercase", fontWeight: 500, cursor: "pointer", border: "none" }}>
                 {ARCH_QUIZ[arch].price === "Enquire" ? "Enquire about " : "Take the full "}{ARCH_QUIZ[arch].instrument} →
@@ -351,7 +351,7 @@ function MicroDiagnostic({ S, onOpenModal }: { S: Record<string, string>; onOpen
             </div>
             <div style={{ paddingTop: "32px", marginTop: "32px", borderTop: "1px solid rgba(160,120,48,0.18)" }}>
               <div style={{ fontFamily: S.mono, fontSize: "10px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.gold, marginBottom: "10px" }}>Or get a structural read in your inbox monthly</div>
-              <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "14px", lineHeight: 1.6, color: "rgba(247,246,243,0.65)", marginBottom: "18px", maxWidth: "100%", fontStyle: "italic" }}>Subscribe to One Structural Read A Month — published when there is something to say.</p>
+              <p style={{ fontFamily: "var(--font-cormorant-garamond),'Cormorant Garamond',Georgia,serif", fontSize: "16px", lineHeight: 1.6, color: "rgba(247,246,243,0.65)", marginBottom: "18px", maxWidth: "100%", fontStyle: "italic" }}>Subscribe to One Structural Read A Month — published when there is something to say.</p>
               <form onSubmit={handleSubscribe} style={{ display: "flex", gap: "1px", background: "rgba(255,255,255,0.08)", maxWidth: "100%", border: "1px solid rgba(160,120,48,0.3)" }}>
                 <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="your email" required style={{ flex: 1, background: "transparent", border: "none", padding: "14px 18px", fontFamily: S.mono, fontSize: "13px", color: S.white, outline: "none", letterSpacing: "0.04em" }} />
                 <button type="submit" style={{ background: S.gold, color: S.ink, border: "none", padding: "14px 22px", fontFamily: S.mono, fontSize: "10px", letterSpacing: "0.16em", textTransform: "uppercase", cursor: "pointer", fontWeight: 500 }}>Subscribe →</button>
@@ -379,7 +379,7 @@ function DiagCards({ cur, tiers, S }: {
           <div style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.18em", textTransform: "uppercase", color: t.dark ? S.gold2 : S.mid, marginBottom: "14px" }}>{t.tier}</div>
           <div style={{ fontFamily: S.display, fontSize: "30px", letterSpacing: "0.02em", color: t.dark ? S.white : S.ink, lineHeight: 1, marginBottom: "10px" }}>{t.name}</div>
           <div style={{ fontFamily: S.display, fontSize: "40px", color: t.dark ? S.white : S.ink, lineHeight: 1, marginBottom: "5px" }}>{cur === "inr" ? t.inr : t.usd}</div>
-          <div style={{ fontFamily: "'EB Garamond',Georgia,serif", fontStyle: "italic", fontSize: "12px", color: S.gold, marginBottom: "14px", letterSpacing: "0.01em" }}>Priced to filter, not to fund.</div>
+          <div style={{ fontFamily: "var(--font-cormorant-garamond),'Cormorant Garamond',Georgia,serif", fontStyle: "italic", fontSize: "14px", color: S.gold, marginBottom: "14px", letterSpacing: "0.01em" }}>Priced to filter, not to fund.</div>
           <div style={{ fontSize: "14px", color: t.dark ? S.dim : S.mid, lineHeight: 1.6, marginBottom: "16px", minHeight: "34px" }}>{t.time}</div>
           <div style={{ marginBottom: "26px", flex: 1 }}>
             {t.feats.map((f, j) => (
@@ -449,16 +449,15 @@ export default function AIEdgeLab() {
     ink: "#0D0D0B", ink2: "#1A1A18", ink3: "#2E2E2C",
     mid: "#7A7870", dim: "#B0AEA8", gold: "#A07830", gold2: "#C49848",
     rule: "rgba(13,13,11,0.1)", rule2: "rgba(13,13,11,0.18)",
-    mono: "'DM Mono','Courier New',monospace",
-    display: "'Bebas Neue',sans-serif",
-    sans: "'DM Sans',system-ui,sans-serif",
-    serif: "'EB Garamond',Georgia,serif",
+    mono: "var(--font-geist-mono),'JetBrains Mono',ui-monospace,monospace",
+    display: "var(--font-cormorant-garamond),'Cormorant Garamond',serif",
+    sans: "var(--font-geist-sans),system-ui,sans-serif",
+    serif: "var(--font-cormorant-garamond),'Cormorant Garamond',Georgia,serif",
   };
 
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,200;0,300;0,400;0,500;1,300&family=DM+Mono:wght@300;400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap');
         @keyframes prUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
         @keyframes edgeRuleDraw { from { transform:scaleX(0); } to { transform:scaleX(1); } }
         .law-row:hover { background:${S.white2}; padding-left:62px; }
