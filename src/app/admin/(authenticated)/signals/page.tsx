@@ -54,9 +54,9 @@ export default function AdminSignalsPage() {
   return (
     <div className="space-y-8">
       <div>
-        <p className="text-[10px] font-mono tracking-[0.35em] uppercase text-[#737373] mb-2">Admin · Signals</p>
-        <h1 className="text-[28px] font-bold leading-tight tracking-tight text-[#e5e5e5]">Signals</h1>
-        <p className="text-[15px] text-[#737373] mt-1.5 leading-[1.6]">Manage incoming diagnostic signals.</p>
+        <p className="text-[12px] font-mono tracking-[0.35em] uppercase text-[#737373] mb-2">Admin · Signals</p>
+        <h1 className="text-[32px] font-bold leading-tight tracking-tight text-[#e5e5e5]">Signals</h1>
+        <p className="text-[17px] text-[#737373] mt-1.5 leading-[1.6]">Manage incoming diagnostic signals.</p>
       </div>
 
       {loading ? (
@@ -77,20 +77,20 @@ export default function AdminSignalsPage() {
                 <div className="flex items-center gap-4">
                   <div className="flex flex-col">
                     <div className="flex items-center gap-2">
-                      <span className="font-semibold text-[15px] leading-snug text-[#e5e5e5]">{signal.name}</span>
-                      <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-widest border ${getStatusColor(signal.status)}`}>
+                      <span className="font-semibold text-[17px] leading-snug text-[#e5e5e5]">{signal.name}</span>
+                      <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-widest border ${getStatusColor(signal.status)}`}>
                         {signal.status}
                       </span>
                     </div>
-                    <span className="text-[#737373] text-[13px] leading-[1.6]">{signal.email}</span>
-                    <span className="text-[#525252] text-[11px] mt-1 font-mono">{new Date(signal.createdAt).toLocaleString()}</span>
+                    <span className="text-[#737373] text-[15px] leading-[1.6]">{signal.email}</span>
+                    <span className="text-[#525252] text-[12px] mt-1 font-mono">{new Date(signal.createdAt).toLocaleString()}</span>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-2">
                   <div className="flex gap-1">
                     {signal.practices.map((p, idx) => (
-                      <span key={idx} className="px-2 py-1 bg-[#1a1a1a] border border-[#2a2a2a] rounded-md text-[10px] font-bold uppercase tracking-widest text-[#a3a3a3]">
+                      <span key={idx} className="px-2 py-1 bg-[#1a1a1a] border border-[#2a2a2a] rounded-md text-[11px] font-bold uppercase tracking-widest text-[#a3a3a3]">
                         {p}
                       </span>
                     ))}
@@ -129,16 +129,16 @@ export default function AdminSignalsPage() {
                 <div className="border-t border-[#2a2a2a] p-6 space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div>
-                      <h4 className="text-[10px] font-mono font-bold uppercase tracking-[0.25em] text-[#737373] mb-2">Contact</h4>
-                      <div className="space-y-1.5 text-[13px] leading-[1.65]">
+                      <h4 className="text-[11px] font-mono font-bold uppercase tracking-[0.25em] text-[#737373] mb-2">Contact</h4>
+                      <div className="space-y-1.5 text-[14px] leading-[1.65]">
                         <p><span className="text-[#a3a3a3]">Phone:</span> {signal.phone || "-"}</p>
                         <p><span className="text-[#a3a3a3]">Callback:</span> {signal.callback || "-"}</p>
                       </div>
                     </div>
 
                     <div>
-                      <h4 className="text-[10px] font-mono font-bold uppercase tracking-[0.25em] text-[#737373] mb-2">Context</h4>
-                      <div className="space-y-1.5 text-[13px] leading-[1.65]">
+                      <h4 className="text-[11px] font-mono font-bold uppercase tracking-[0.25em] text-[#737373] mb-2">Context</h4>
+                      <div className="space-y-1.5 text-[14px] leading-[1.65]">
                         <p><span className="text-[#a3a3a3]">Role:</span> {signal.role || "-"}</p>
                         <p><span className="text-[#a3a3a3]">Company:</span> {signal.company || "-"}</p>
                         <p><span className="text-[#a3a3a3]">Size:</span> {signal.size || "-"}</p>
@@ -146,10 +146,10 @@ export default function AdminSignalsPage() {
                     </div>
 
                     <div>
-                      <h4 className="text-[10px] font-mono font-bold uppercase tracking-[0.25em] text-[#737373] mb-2">Practices</h4>
+                      <h4 className="text-[11px] font-mono font-bold uppercase tracking-[0.25em] text-[#737373] mb-2">Practices</h4>
                       <div className="flex flex-wrap gap-2">
                         {signal.practices.map((p, idx) => (
-                          <span key={idx} className="px-2 py-1 bg-[#1a1a1a] border border-[#2a2a2a] rounded-md text-[10px] font-bold uppercase tracking-widest text-[#a3a3a3]">
+                          <span key={idx} className="px-2 py-1 bg-[#1a1a1a] border border-[#2a2a2a] rounded-md text-[11px] font-bold uppercase tracking-widest text-[#a3a3a3]">
                             {p}
                           </span>
                         ))}
@@ -158,10 +158,10 @@ export default function AdminSignalsPage() {
                   </div>
 
                   <div>
-                    <h4 className="text-[10px] font-mono font-bold uppercase tracking-[0.25em] text-[#737373] mb-3">Signals</h4>
+                    <h4 className="text-[11px] font-mono font-bold uppercase tracking-[0.25em] text-[#737373] mb-3">Signals</h4>
                     <ul className="space-y-2">
                       {signal.signals.map((s, idx) => (
-                        <li key={idx} className="flex items-center gap-2 text-[13px] leading-[1.65] text-[#e5e5e5]">
+                        <li key={idx} className="flex items-center gap-2 text-[14px] leading-[1.65] text-[#e5e5e5]">
                           <span className="w-1.5 h-1.5 rounded-full bg-[#C9A24A] shrink-0"></span>
                           {s}
                         </li>
@@ -169,10 +169,10 @@ export default function AdminSignalsPage() {
                     </ul>
                     {signal.rankedSignals && signal.rankedSignals.length > 0 && (
                       <div className="mt-4">
-                        <h4 className="text-[10px] font-mono font-bold uppercase tracking-[0.25em] text-[#737373] mb-3">Ranked Signals</h4>
+                        <h4 className="text-[11px] font-mono font-bold uppercase tracking-[0.25em] text-[#737373] mb-3">Ranked Signals</h4>
                         <ol className="list-decimal list-inside space-y-2">
                           {signal.rankedSignals.map((s, idx) => (
-                            <li key={idx} className="text-[13px] leading-[1.65] text-[#e5e5e5]">{s}</li>
+                            <li key={idx} className="text-[14px] leading-[1.65] text-[#e5e5e5]">{s}</li>
                           ))}
                         </ol>
                       </div>
@@ -181,8 +181,8 @@ export default function AdminSignalsPage() {
 
                   {signal.whyNow && (
                     <div>
-                      <h4 className="text-[10px] font-mono font-bold uppercase tracking-[0.25em] text-[#737373] mb-3">Why Now</h4>
-                      <p className="text-[13px] leading-[1.65] text-[#e5e5e5] bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-4">
+                      <h4 className="text-[11px] font-mono font-bold uppercase tracking-[0.25em] text-[#737373] mb-3">Why Now</h4>
+                      <p className="text-[14px] leading-[1.65] text-[#e5e5e5] bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-4">
                         {signal.whyNow}
                       </p>
                     </div>
@@ -190,8 +190,8 @@ export default function AdminSignalsPage() {
 
                   {signal.catchAllDetail && (
                     <div>
-                      <h4 className="text-[10px] font-mono font-bold uppercase tracking-[0.25em] text-[#737373] mb-3">Additional Details</h4>
-                      <p className="text-[13px] leading-[1.65] text-[#e5e5e5] bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-4">
+                      <h4 className="text-[11px] font-mono font-bold uppercase tracking-[0.25em] text-[#737373] mb-3">Additional Details</h4>
+                      <p className="text-[14px] leading-[1.65] text-[#e5e5e5] bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-4">
                         {signal.catchAllDetail}
                       </p>
                     </div>
