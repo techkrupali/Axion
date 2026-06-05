@@ -139,20 +139,20 @@ function PersonaModal({ open, onClose, initialKey }: { open: boolean; onClose: (
       style={{ position: "fixed", inset: 0, zIndex: 1000, background: "rgba(13,13,11,0.55)", backdropFilter: "blur(6px)", display: "flex", alignItems: "flex-start", justifyContent: "center", padding: "40px 20px", overflowY: "auto" }}>
       <div style={{ background: S.white, width: "100%", maxWidth: "680px", border: `1px solid ${S.rule2}`, animation: "prUp .5s cubic-bezier(.2,.7,.2,1)" }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 28px", borderBottom: `1px solid ${S.rule}`, background: S.white2 }}>
-          <span style={{ fontFamily: S.mono, fontSize: "8.8px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.mid }}>AI Edge Diagnostic · Find where your edge is measured</span>
+          <span style={{ fontFamily: S.mono, fontSize: "10px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.mid }}>AI Edge Diagnostic · Find where your edge is measured</span>
           <button onClick={onClose} style={{ fontFamily: S.mono, fontSize: "11.200000000000001px", color: S.mid, cursor: "pointer", background: "none", border: "none" }}>✕ Close</button>
         </div>
         <div style={{ padding: "44px 40px 40px" }}>
           {view === "gate" && (
             <>
-              <div style={{ fontFamily: S.mono, fontSize: "8.8px", letterSpacing: "0.24em", textTransform: "uppercase", color: S.gold, marginBottom: "16px" }}>Step 01 · Who are you in the AI economy?</div>
+              <div style={{ fontFamily: S.mono, fontSize: "10px", letterSpacing: "0.24em", textTransform: "uppercase", color: S.gold, marginBottom: "16px" }}>Step 01 · Who are you in the AI economy?</div>
               <div style={{ fontFamily: S.display, fontSize: "clamp(18px,3vw,30px)", lineHeight: 1, color: S.ink, marginBottom: "10px" }}>Where is your edge?</div>
-              <p style={{ fontSize: "10.4px", color: S.mid, lineHeight: 1.7, marginBottom: "34px" }}>Each actor in the AI workplace faces a different structural challenge — and a different instrument. Choose where you stand.</p>
+              <p style={{ fontSize: "12px", color: S.mid, lineHeight: 1.7, marginBottom: "34px" }}>Each actor in the AI workplace faces a different structural challenge — and a different instrument. Choose where you stand.</p>
               <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
                 {(["aspiring","working","leader","org"] as ArchKey[]).map((p, i) => (
                   <button key={p} onClick={() => { setKey(p); setView("detail"); }}
                     style={{ textAlign: "left", width: "100%", border: `1px solid ${S.rule2}`, background: S.white, padding: "22px 24px", cursor: "pointer", display: "flex", alignItems: "center", gap: "22px" }}>
-                    <span style={{ fontFamily: S.mono, fontSize: "8px", color: S.gold, letterSpacing: "0.1em", flexShrink: 0, width: "22px" }}>0{i+1}</span>
+                    <span style={{ fontFamily: S.mono, fontSize: "10px", color: S.gold, letterSpacing: "0.1em", flexShrink: 0, width: "22px" }}>0{i+1}</span>
                     <span style={{ flex: 1 }}>
                       <span style={{ display: "block", fontFamily: S.display, fontSize: "14px", color: S.ink, lineHeight: 1, marginBottom: "7px" }}>
                         {["Aspiring Professional","Working Professional","Leader / CXO","Organisation"][i]}
@@ -161,7 +161,7 @@ function PersonaModal({ open, onClose, initialKey }: { open: boolean; onClose: (
                         {['"Am I building the right foundations — or skills AI has already absorbed?"','"Am I structurally positioned — or in the compression zone without knowing it?"','"My advantage was informational. AI eliminated it. What is my new structural role?"','"We invest in AI at scale. Why don\'t outcomes match — and what are we measuring wrong?"'][i]}
                       </span>
                     </span>
-                    <span style={{ fontFamily: S.mono, fontSize: "7.2px", letterSpacing: "0.14em", textTransform: "uppercase", color: S.dim, textAlign: "right", lineHeight: 1.5, flexShrink: 0 }}>
+                    <span style={{ fontFamily: S.mono, fontSize: "9px", letterSpacing: "0.14em", textTransform: "uppercase", color: S.dim, textAlign: "right", lineHeight: 1.5, flexShrink: 0 }}>
                       {["AAI©\nAlignment Index","ARI©\nReplaceability Index","BDI©\nBrainpower Density","ORG AI DARS©\nEnterprise"][i]}
                     </span>
                   </button>
@@ -171,37 +171,37 @@ function PersonaModal({ open, onClose, initialKey }: { open: boolean; onClose: (
           )}
           {view === "detail" && I && (
             <>
-              <button onClick={() => setView("gate")} style={{ fontFamily: S.mono, fontSize: "8.8px", letterSpacing: "0.18em", textTransform: "uppercase", color: S.mid, cursor: "pointer", background: "none", border: "none", marginBottom: "24px" }}>← All actors</button>
-              <div style={{ fontFamily: S.mono, fontSize: "8.8px", letterSpacing: "0.2em", textTransform: "uppercase", color: S.gold, marginBottom: "12px" }}>{I.tag}</div>
+              <button onClick={() => setView("gate")} style={{ fontFamily: S.mono, fontSize: "10px", letterSpacing: "0.18em", textTransform: "uppercase", color: S.mid, cursor: "pointer", background: "none", border: "none", marginBottom: "24px" }}>← All actors</button>
+              <div style={{ fontFamily: S.mono, fontSize: "10px", letterSpacing: "0.2em", textTransform: "uppercase", color: S.gold, marginBottom: "12px" }}>{I.tag}</div>
               <div style={{ fontFamily: S.display, fontSize: "clamp(20px,3.5vw,34px)", lineHeight: 0.95, color: S.ink, marginBottom: "14px" }}>{I.name}</div>
-              <p style={{ fontSize: "10.8px", color: S.ink2, lineHeight: 1.7, marginBottom: "26px", maxWidth: "560px" }}>{I.body}</p>
+              <p style={{ fontSize: "12px", color: S.ink2, lineHeight: 1.7, marginBottom: "26px", maxWidth: "560px" }}>{I.body}</p>
               <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginBottom: "24px" }}>
                 {["01 · Choose tier","02 · Secure payment","03 · Complete diagnostic","04 · Report within 48h"].map((s, i) => (
-                  <span key={i} style={{ fontFamily: S.mono, fontSize: "7.2px", letterSpacing: "0.1em", textTransform: "uppercase", color: i === 0 ? S.gold : S.mid, border: `1px solid ${i === 0 ? S.gold : S.rule}`, padding: "6px 10px" }}>{s}</span>
+                  <span key={i} style={{ fontFamily: S.mono, fontSize: "9px", letterSpacing: "0.1em", textTransform: "uppercase", color: i === 0 ? S.gold : S.mid, border: `1px solid ${i === 0 ? S.gold : S.rule}`, padding: "6px 10px" }}>{s}</span>
                 ))}
               </div>
               <div style={{ display: "flex", flexDirection: "column", gap: "1px", background: S.rule, border: `1px solid ${S.rule}`, marginBottom: "24px" }}>
                 {I.tiers.map((t, i) => (
                   <div key={i} style={{ background: S.white, padding: "18px 22px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "16px", flexWrap: "wrap" }}>
                     <span style={{ flex: 1, minWidth: "180px" }}>
-                      <span style={{ display: "block", fontSize: "9.5px", color: S.ink, marginBottom: "4px" }}>{t.n}</span>
-                      <span style={{ display: "block", fontSize: "9.200000000000001px", color: S.mid, lineHeight: 1.5 }}>{t.d}</span>
+                      <span style={{ display: "block", fontSize: "11px", color: S.ink, marginBottom: "4px" }}>{t.n}</span>
+                      <span style={{ display: "block", fontSize: "11px", color: S.mid, lineHeight: 1.5 }}>{t.d}</span>
                     </span>
                     <span style={{ fontFamily: S.display, fontSize: "14px", color: S.ink, lineHeight: 1 }}>{cur === "inr" ? t.p : (t.u || t.p)}</span>
                     {t.enq ? (
-                      <button onClick={() => handleCta(t)} style={{ fontFamily: S.mono, fontSize: "8.8px", letterSpacing: "0.18em", textTransform: "uppercase", padding: "13px 22px", background: S.ink, color: S.white, border: `1px solid ${S.ink}`, cursor: "pointer" }}>Enquire →</button>
+                      <button onClick={() => handleCta(t)} style={{ fontFamily: S.mono, fontSize: "10px", letterSpacing: "0.18em", textTransform: "uppercase", padding: "13px 22px", background: S.ink, color: S.white, border: `1px solid ${S.ink}`, cursor: "pointer" }}>Enquire →</button>
                     ) : t.wait ? (
-                      <button disabled style={{ fontFamily: S.mono, fontSize: "8.8px", letterSpacing: "0.18em", textTransform: "uppercase", padding: "13px 22px", background: "none", color: S.ink, border: `1px solid ${S.rule2}`, cursor: "default" }}>Waitlist</button>
+                      <button disabled style={{ fontFamily: S.mono, fontSize: "10px", letterSpacing: "0.18em", textTransform: "uppercase", padding: "13px 22px", background: "none", color: S.ink, border: `1px solid ${S.rule2}`, cursor: "default" }}>Waitlist</button>
                     ) : (
-                      <button onClick={() => handleCta(t)} style={{ fontFamily: S.mono, fontSize: "8.8px", letterSpacing: "0.18em", textTransform: "uppercase", padding: "13px 22px", background: S.ink, color: S.white, border: `1px solid ${S.ink}`, cursor: "pointer" }}>Begin · {cur === "inr" ? t.p : t.u} →</button>
+                      <button onClick={() => handleCta(t)} style={{ fontFamily: S.mono, fontSize: "10px", letterSpacing: "0.18em", textTransform: "uppercase", padding: "13px 22px", background: S.ink, color: S.white, border: `1px solid ${S.ink}`, cursor: "pointer" }}>Begin · {cur === "inr" ? t.p : t.u} →</button>
                     )}
                   </div>
                 ))}
               </div>
-              <div style={{ fontFamily: S.mono, fontSize: "8.8px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.gold, padding: "14px 0", borderTop: `1px solid ${S.rule}`, borderBottom: `1px solid ${S.rule}`, textAlign: "center" }}>
+              <div style={{ fontFamily: S.mono, fontSize: "10px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.gold, padding: "14px 0", borderTop: `1px solid ${S.rule}`, borderBottom: `1px solid ${S.rule}`, textAlign: "center" }}>
                 Private · Confidential · Not shared with your employer
               </div>
-              <p style={{ fontFamily: S.mono, fontSize: "8.8px", color: S.dim, letterSpacing: "0.06em", marginTop: "20px", lineHeight: 1.8 }}>{I.note}</p>
+              <p style={{ fontFamily: S.mono, fontSize: "10px", color: S.dim, letterSpacing: "0.06em", marginTop: "20px", lineHeight: 1.8 }}>{I.note}</p>
             </>
           )}
         </div>
@@ -256,12 +256,12 @@ function MicroDiagnostic({ S, onOpenModal }: { S: Record<string, string>; onOpen
   return (
     <section id="micro-diagnostic" style={{ padding: "80px 24px", background: "#EFEEEA", borderTop: `1px solid ${S.rule}`, borderBottom: `1px solid ${S.rule}` }}>
       <div style={{ width: "100%", maxWidth: "none", margin: "0 0 48px 0" }}>
-        <div style={{ fontFamily: S.mono, fontSize: "10.4px", letterSpacing: "0.24em", textTransform: "uppercase", color: S.gold, marginBottom: "18px" }}>30-Second Structural Read · Free</div>
+        <div style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.24em", textTransform: "uppercase", color: S.gold, marginBottom: "18px" }}>30-Second Structural Read · Free</div>
         <h2 style={{ fontFamily: S.display, fontSize: "clamp(24px,4vw,44px)", lineHeight: 0.96, letterSpacing: "0.005em", color: S.ink, textTransform: "uppercase", marginBottom: "22px", textAlign: "left" }}>Take a <span style={{ color: S.gold }}>5-question</span> read on where your edge sits.</h2>
         <p style={{ fontFamily: "var(--font-cormorant-garamond),'Cormorant Garamond',Georgia,serif", fontSize: "13px", fontStyle: "italic", lineHeight: 1.7, color: "#2E2E2C", maxWidth: "100%", paddingLeft: "18px", borderLeft: `3px solid ${S.gold}` }}>Five questions. Each maps to a canonical doctrine concept. Score lands you in one of three structural bands — Edge Accelerating, Edge Holding, or Edge Thinning.</p>
         <div style={{ display: "flex", flexWrap: "wrap", gap: "18px", marginTop: "24px", paddingTop: "20px", borderTop: `1px solid ${S.rule}` }}>
           {["Q1 · Role Composition Map","Q2 · Judgment Ownership","Q3 · Thinking Ownership","Q4 · Personal Dividend","Q5 · Work Redesign"].map(p => (
-            <span key={p} style={{ fontFamily: S.mono, fontSize: "9.600000000000001px", letterSpacing: "0.16em", textTransform: "uppercase", color: "#2E2E2C", padding: "7px 14px", background: "rgba(160,120,48,0.08)", border: "1px solid rgba(160,120,48,0.18)" }}>{p}</span>
+            <span key={p} style={{ fontFamily: S.mono, fontSize: "11px", letterSpacing: "0.16em", textTransform: "uppercase", color: "#2E2E2C", padding: "7px 14px", background: "rgba(160,120,48,0.08)", border: "1px solid rgba(160,120,48,0.18)" }}>{p}</span>
           ))}
         </div>
       </div>
@@ -507,14 +507,14 @@ export default function AIEdgeLab() {
 
         {/* ── HEADER ── */}
         <header style={{ position: "sticky", top: 0, zIndex: 200, height: "56px", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 52px", background: "rgba(247,246,243,0.94)", backdropFilter: "blur(12px)", borderBottom: `1px solid ${S.rule}` }}>
-          <div style={{ fontFamily: S.mono, fontSize: "10.4px", letterSpacing: "0.24em", textTransform: "uppercase" }}>AI Edge Lab · <Link href="/" style={{ color: "inherit", textDecoration: "none" }}>Axion Index</Link></div>
+          <div style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.24em", textTransform: "uppercase" }}>AI Edge Lab · <Link href="/" style={{ color: "inherit", textDecoration: "none" }}>Axion Index</Link></div>
           <nav className="hidden md:flex" style={{ alignItems: "center", gap: "28px" }}>
             {[["the-evidence-wall","The Evidence Wall"],["#actors","Workplace Framework"],["doctrine","Doctrine"],["#research","Research"],["methodology","Methodology"],["#micro-diagnostic","Diagnostic"],["#about","About"]].map(([href, label]) => (
-              <a key={href as string} href={href as string} className="hdr-link" style={{ fontFamily: S.mono, fontSize: "8.8px", letterSpacing: "0.18em", textTransform: "uppercase", color: S.mid, textDecoration: "none", transition: "color .2s" }}>{label as string}</a>
+              <a key={href as string} href={href as string} className="hdr-link" style={{ fontFamily: S.mono, fontSize: "10px", letterSpacing: "0.18em", textTransform: "uppercase", color: S.mid, textDecoration: "none", transition: "color .2s" }}>{label as string}</a>
             ))}
-            <button onClick={() => openModal("working")} style={{ fontFamily: S.mono, fontSize: "8.8px", letterSpacing: "0.18em", textTransform: "uppercase", background: S.ink, color: S.white, padding: "9px 20px", border: "none", cursor: "pointer" }}>Find My AI Edge</button>
+            <button onClick={() => openModal("working")} style={{ fontFamily: S.mono, fontSize: "10px", letterSpacing: "0.18em", textTransform: "uppercase", background: S.ink, color: S.white, padding: "9px 20px", border: "none", cursor: "pointer" }}>Find My AI Edge</button>
           </nav>
-          <div className="hidden md:block" style={{ fontFamily: S.mono, fontSize: "8.8px", color: S.dim, letterSpacing: "0.08em" }}>axionindex.org · 2026</div>
+          <div className="hidden md:block" style={{ fontFamily: S.mono, fontSize: "10px", color: S.dim, letterSpacing: "0.08em" }}>axionindex.org · 2026</div>
           <button className="flex md:hidden" onClick={() => setMobileOpen(!mobileOpen)} style={{ background: "none", border: "none", cursor: "pointer", fontSize: "14.4px", color: S.ink }}>
             {mobileOpen ? "✕" : "☰"}
           </button>
@@ -522,7 +522,7 @@ export default function AIEdgeLab() {
         {mobileOpen && (
           <div style={{ background: "rgba(247,246,243,0.98)", borderBottom: `1px solid ${S.rule}`, zIndex: 199, position: "sticky", top: "56px" }}>
             {[["#actors","Workplace"],["#framework","Framework"],["#micro-diagnostic","Diagnostic"],["#research","Research"],["#about","About"]].map(([href, label]) => (
-              <a key={href as string} href={href as string} onClick={() => setMobileOpen(false)} style={{ display: "block", fontFamily: S.mono, fontSize: "8.8px", letterSpacing: "0.18em", textTransform: "uppercase", color: S.mid, textDecoration: "none", padding: "12px 32px", borderBottom: `1px solid ${S.rule}` }}>{label as string}</a>
+              <a key={href as string} href={href as string} onClick={() => setMobileOpen(false)} style={{ display: "block", fontFamily: S.mono, fontSize: "10px", letterSpacing: "0.18em", textTransform: "uppercase", color: S.mid, textDecoration: "none", padding: "12px 32px", borderBottom: `1px solid ${S.rule}` }}>{label as string}</a>
             ))}
           </div>
         )}
@@ -538,27 +538,27 @@ export default function AIEdgeLab() {
           {/* Hero two-col */}
           <div className="grid grid-cols-1 md:grid-cols-2" style={{ borderBottom: `1px solid ${S.rule}` }}>
             <div style={{ padding: "52px", borderRight: `1px solid ${S.rule}` }}>
-              <div style={{ fontFamily: S.mono, fontSize: "10.4px", letterSpacing: "0.24em", textTransform: "uppercase", color: S.mid, marginBottom: "20px" }}>AI Edge Lab · Four Actors · One Transformation</div>
+              <div style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.24em", textTransform: "uppercase", color: S.mid, marginBottom: "20px" }}>AI Edge Lab · Four Actors · One Transformation</div>
               <h1 style={{ fontFamily: S.display, fontSize: "clamp(36px,5vw,64px)", lineHeight: 0.95, letterSpacing: "0.01em", color: S.ink }}>THE<br />WORK<br /><span style={{ color: S.gold }}>SHIFT.</span></h1>
               <p style={{ fontFamily: S.display, fontSize: "clamp(14px,1.6vw,20px)", color: S.ink, lineHeight: 1.15, letterSpacing: "0.015em", textTransform: "uppercase", marginTop: "28px", maxWidth: "520px" }}>
                 Measure where you stand in the AI Era — and how long your <span style={{ color: S.gold }}>edge will hold.</span>
               </p>
-              <button onClick={() => openModal("working")} className="explore-link" style={{ display: "inline-flex", alignItems: "center", gap: "12px", fontFamily: S.mono, fontSize: "9.600000000000001px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.ink, paddingBottom: "10px", transition: "gap .25s ease,color .25s ease,border-color .25s ease", marginTop: "36px", background: "none", border: "none", borderBottom: `1px solid ${S.ink}`, cursor: "pointer" }}>
+              <button onClick={() => openModal("working")} className="explore-link" style={{ display: "inline-flex", alignItems: "center", gap: "12px", fontFamily: S.mono, fontSize: "11px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.ink, paddingBottom: "10px", transition: "gap .25s ease,color .25s ease,border-color .25s ease", marginTop: "36px", background: "none", border: "none", borderBottom: `1px solid ${S.ink}`, cursor: "pointer" }}>
                 Find My AI Edge <span style={{ fontSize: "14.4px", fontFamily: S.display }}>→</span>
               </button>
-              <div style={{ fontFamily: S.mono, fontSize: "8.8px", letterSpacing: "0.14em", textTransform: "uppercase", color: S.mid, marginTop: "16px" }}>Private · Confidential · Not shared with your employer</div>
+              <div style={{ fontFamily: S.mono, fontSize: "10px", letterSpacing: "0.14em", textTransform: "uppercase", color: S.mid, marginTop: "16px" }}>Private · Confidential · Not shared with your employer</div>
             </div>
             <div style={{ padding: "52px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-              <p style={{ fontSize: "12px", color: S.mid, lineHeight: 1.9, fontWeight: 300, marginBottom: "32px", maxWidth: "400px" }}>The workplace now has four actors: the Employee, the CXO, the Organisation — and AI. Each is being reshaped by a different kind of pressure. AI Edge Lab maps that pressure, measures your exposure, and shows where judgment still creates advantage.</p>
+              <p style={{ fontSize: "14px", color: S.mid, lineHeight: 1.9, fontWeight: 300, marginBottom: "32px", maxWidth: "400px" }}>The workplace now has four actors: the Employee, the CXO, the Organisation — and AI. Each is being reshaped by a different kind of pressure. AI Edge Lab maps that pressure, measures your exposure, and shows where judgment still creates advantage.</p>
               <div style={{ display: "flex", gap: "32px", marginBottom: "32px", flexWrap: "wrap" }}>
                 {[{ n: "39%", l: "Skills change by 2030 · WEF", href: "https://www.weforum.org/publications/the-future-of-jobs-report-2025/" },{ n: "23%", l: "Scaled AI · McKinsey", href: "https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai" },{ n: "95%", l: "No P&L impact · MIT NANDA", href: "https://mlq.ai/media/quarterly_decks/v0.1_State_of_AI_in_Business_2025_Report.pdf" }].map((s, i) => (
                   <a key={i} href={s.href} target="_blank" rel="noopener" style={{ borderLeft: `1px solid ${S.rule2}`, paddingLeft: "16px", textDecoration: "none" }}>
-                    <div style={{ fontFamily: S.display, fontSize: "18px", color: S.ink, lineHeight: 1 }}>{s.n}</div>
-                    <div style={{ fontFamily: S.mono, fontSize: "8.8px", letterSpacing: "0.14em", textTransform: "uppercase", color: S.mid, marginTop: "4px" }}>{s.l}</div>
+                    <div style={{ fontFamily: S.display, fontSize: "22px", color: S.ink, lineHeight: 1 }}>{s.n}</div>
+                    <div style={{ fontFamily: S.mono, fontSize: "10px", letterSpacing: "0.14em", textTransform: "uppercase", color: S.mid, marginTop: "4px" }}>{s.l}</div>
                   </a>
                 ))}
               </div>
-              <button onClick={() => openModal()} className="framework-link" style={{ display: "inline-flex", alignItems: "center", gap: "12px", fontFamily: S.mono, fontSize: "9.5px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.ink, paddingBottom: "10px", transition: "gap .25s ease,color .25s ease,border-color .25s ease", background: "none", border: "none", borderBottom: `1px solid ${S.ink}`, cursor: "pointer" }}>
+              <button onClick={() => openModal()} className="framework-link" style={{ display: "inline-flex", alignItems: "center", gap: "12px", fontFamily: S.mono, fontSize: "11px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.ink, paddingBottom: "10px", transition: "gap .25s ease,color .25s ease,border-color .25s ease", background: "none", border: "none", borderBottom: `1px solid ${S.ink}`, cursor: "pointer" }}>
                 Explore the Framework <span style={{ fontSize: "13px", fontFamily: S.display }}>→</span>
               </button>
             </div>
@@ -574,10 +574,10 @@ export default function AIEdgeLab() {
               <a key={i} href={c.href} style={{ padding: "36px 32px 28px", display: "flex", flexDirection: "column", gap: "14px", transition: "transform .25s ease,box-shadow .25s ease", borderRight: i < 3 ? `1px solid ${S.rule}` : "none", textDecoration: "none", background: c.bg }}
                 onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; }}
                 onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; }}>
-                <div style={{ fontFamily: S.mono, fontSize: "9.600000000000001px", letterSpacing: "0.18em", textTransform: "uppercase", color: c.color, opacity: 0.65 }}>{c.num}</div>
-                <div style={{ fontFamily: S.display, fontSize: "14px", lineHeight: 1, letterSpacing: "0.01em", textTransform: "uppercase", color: c.color, whiteSpace: "pre-line" }}>{c.who}</div>
-                <div style={{ fontFamily: S.mono, fontSize: "9.600000000000001px", letterSpacing: "0.14em", textTransform: "uppercase", color: c.color, opacity: 0.55, marginTop: "auto" }}>{c.inst}</div>
-                <div style={{ fontFamily: S.mono, fontSize: "9.600000000000001px", letterSpacing: "0.16em", textTransform: "uppercase", color: c.goldColor, display: "inline-flex", alignItems: "center", gap: "6px" }}>Read →</div>
+                <div style={{ fontFamily: S.mono, fontSize: "11px", letterSpacing: "0.18em", textTransform: "uppercase", color: c.color, opacity: 0.65 }}>{c.num}</div>
+                <div style={{ fontFamily: S.display, fontSize: "16px", lineHeight: 1, letterSpacing: "0.01em", textTransform: "uppercase", color: c.color, whiteSpace: "pre-line" }}>{c.who}</div>
+                <div style={{ fontFamily: S.mono, fontSize: "11px", letterSpacing: "0.14em", textTransform: "uppercase", color: c.color, opacity: 0.55, marginTop: "auto" }}>{c.inst}</div>
+                <div style={{ fontFamily: S.mono, fontSize: "11px", letterSpacing: "0.16em", textTransform: "uppercase", color: c.goldColor, display: "inline-flex", alignItems: "center", gap: "6px" }}>Read →</div>
               </a>
             ))}
           </div>
@@ -587,22 +587,22 @@ export default function AIEdgeLab() {
         <section style={{ padding: "80px 24px", background: S.ink, color: S.white, borderTop: "1px solid rgba(160,120,48,0.22)", borderBottom: "1px solid rgba(160,120,48,0.22)" }}>
           <div style={{ width: "100%", maxWidth: "none", margin: "0 auto", textAlign: "center" }}>
             <div style={{ display: "flex", alignItems: "baseline", justifyContent: "center", gap: "18px", paddingBottom: "18px", marginBottom: "32px", borderBottom: "1px solid rgba(213,210,201,0.18)" }}>
-              <div style={{ fontFamily: S.mono, fontSize: "10.4px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.gold }}>The Evidence Wall · Why This Doctrine Was Built</div>
-              <div style={{ fontFamily: S.mono, fontSize: "10.4px", letterSpacing: "0.14em", color: "#9C978C" }}>01.5 / 06</div>
+              <div style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.22em", textTransform: "uppercase", color: S.gold }}>The Evidence Wall · Why This Doctrine Was Built</div>
+              <div style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.14em", color: "#9C978C" }}>01.5 / 06</div>
             </div>
             <h2 style={{ fontFamily: S.display, fontSize: "clamp(40px,5.4vw,72px)", lineHeight: 0.96, textTransform: "uppercase", color: S.white, letterSpacing: "0.005em", marginBottom: "18px", marginLeft: "auto", marginRight: "auto" }}>12 Reports.<br />One <span style={{ color: S.gold }}>Structural Diagnosis</span>.</h2>
-            <p style={{ fontFamily: S.serif, fontStyle: "italic", fontSize: "14.4px", lineHeight: 1.6, color: "#9C978C", maxWidth: "780px", marginBottom: "36px", marginLeft: "auto", marginRight: "auto" }}>Six months of synthesis across every major AI transformation report — MIT NANDA, McKinsey, Gartner, RAND, BCG, IBM, S&P Global, WEF, and others. The findings converge with unusual clarity.</p>
+            <p style={{ fontFamily: S.serif, fontStyle: "italic", fontSize: "16px", lineHeight: 1.6, color: "#9C978C", maxWidth: "780px", marginBottom: "36px", marginLeft: "auto", marginRight: "auto" }}>Six months of synthesis across every major AI transformation report — MIT NANDA, McKinsey, Gartner, RAND, BCG, IBM, S&P Global, WEF, and others. The findings converge with unusual clarity.</p>
             <div className="grid grid-cols-2 md:grid-cols-5" style={{ gap: "12px", marginBottom: "36px" }}>
               {[["12","Reports analysed"],["7","Institutions"],["15K+","Executives surveyed"],["$665B","Invested in AI"],["95%","Zero P&L impact"]].map(([v, l]) => (
                 <div key={l} style={{ background: S.ink, padding: "24px 22px", textAlign: "center", border: "1px solid rgba(201,168,76,0.35)", borderRadius: "8px", boxShadow: "0 0 20px rgba(201,168,76,0.15), inset 0 0 20px rgba(201,168,76,0.05)" }}>
-                  <div style={{ fontFamily: S.display, fontSize: "22px", lineHeight: 1, color: S.gold, letterSpacing: "0.005em", marginBottom: "6px" }}>{v}</div>
-                  <div style={{ fontFamily: S.mono, fontSize: "8px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#9C978C" }}>{l}</div>
+                  <div style={{ fontFamily: S.display, fontSize: "26px", lineHeight: 1, color: S.gold, letterSpacing: "0.005em", marginBottom: "6px" }}>{v}</div>
+                  <div style={{ fontFamily: S.mono, fontSize: "10px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#9C978C" }}>{l}</div>
                 </div>
               ))}
             </div>
             <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexWrap: "wrap", gap: "18px" }}>
-              <p style={{ fontFamily: S.serif, fontStyle: "italic", fontSize: "11.5px", color: "#E8E6E0", maxWidth: "640px", lineHeight: 1.55 }}><strong style={{ color: S.white, fontStyle: "normal", fontWeight: 500 }}>The technology works. The architecture does not.</strong> Naming the new problem is the precondition for solving it.</p>
-              <a href="#research" style={{ fontFamily: S.mono, fontSize: "8.8px", letterSpacing: "0.2em", textTransform: "uppercase", color: S.gold, border: `1px solid ${S.gold}`, padding: "14px 22px", textDecoration: "none", transition: "all .2s ease", whiteSpace: "nowrap" }}
+              <p style={{ fontFamily: S.serif, fontStyle: "italic", fontSize: "13px", color: "#E8E6E0", maxWidth: "640px", lineHeight: 1.55 }}><strong style={{ color: S.white, fontStyle: "normal", fontWeight: 500 }}>The technology works. The architecture does not.</strong> Naming the new problem is the precondition for solving it.</p>
+              <a href="#research" style={{ fontFamily: S.mono, fontSize: "10px", letterSpacing: "0.2em", textTransform: "uppercase", color: S.gold, border: `1px solid ${S.gold}`, padding: "14px 22px", textDecoration: "none", transition: "all .2s ease", whiteSpace: "nowrap" }}
                 onMouseEnter={e => { e.currentTarget.style.background = S.gold; e.currentTarget.style.color = S.white; }}
                 onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = S.gold; }}>
                 Read The Evidence Wall →
@@ -640,11 +640,11 @@ export default function AIEdgeLab() {
               <div key={i} className="actor" style={{ background: S.white, padding: "36px 28px", display: "flex", flexDirection: "column", gap: "14px", transition: "background .25s" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
                   <div style={{ fontFamily: S.display, fontSize: "24px", lineHeight: 0.9, color: "rgba(13,13,11,0.07)" }}>{a.num}</div>
-                  <div style={{ fontFamily: S.mono, fontSize: "8px", letterSpacing: "0.2em", textTransform: "uppercase", color: S.gold, border: `1px solid ${S.gold}`, padding: "4px 10px" }}>{a.badge}</div>
+                  <div style={{ fontFamily: S.mono, fontSize: "10px", letterSpacing: "0.2em", textTransform: "uppercase", color: S.gold, border: `1px solid ${S.gold}`, padding: "4px 10px" }}>{a.badge}</div>
                 </div>
                 <div style={{ fontFamily: S.display, fontSize: "clamp(17px,2.2vw,26px)", letterSpacing: "0.02em", color: S.ink, lineHeight: 1 }}>{a.name}<span style={{ color: S.gold }}>{a.accent}</span></div>
-                <div style={{ fontSize: "9.5px", fontStyle: "italic", color: S.mid, lineHeight: 1.75, borderLeft: `2px solid ${S.rule2}`, paddingLeft: "14px", fontWeight: 300 }}>{a.q}</div>
-                <a href={a.href} style={{ fontFamily: S.mono, fontSize: "8.8px", letterSpacing: "0.16em", textTransform: "uppercase", color: S.gold, textDecoration: "none", marginTop: "auto" }}>{a.arrow}</a>
+                <div style={{ fontSize: "11px", fontStyle: "italic", color: S.mid, lineHeight: 1.75, borderLeft: `2px solid ${S.rule2}`, paddingLeft: "14px", fontWeight: 300 }}>{a.q}</div>
+                <a href={a.href} style={{ fontFamily: S.mono, fontSize: "10px", letterSpacing: "0.16em", textTransform: "uppercase", color: S.gold, textDecoration: "none", marginTop: "auto" }}>{a.arrow}</a>
               </div>
             ))}
           </div>
@@ -653,9 +653,9 @@ export default function AIEdgeLab() {
         {/* ── AUDIENCE JOURNEY ── */}
         <section id="start" style={{ borderTop: `1px solid ${S.rule}`, borderBottom: `1px solid ${S.rule}`, background: S.white2 }}>
           <div style={{ padding: "56px 52px 0" }}>
-            <div style={{ fontFamily: S.mono, fontSize: "9.5px", letterSpacing: "0.24em", textTransform: "uppercase", color: S.gold, marginBottom: "16px" }}>START HERE · WHERE DO YOU STAND?</div>
+            <div style={{ fontFamily: S.mono, fontSize: "11px", letterSpacing: "0.24em", textTransform: "uppercase", color: S.gold, marginBottom: "16px" }}>START HERE · WHERE DO YOU STAND?</div>
             <h2 style={{ fontFamily: S.display, fontSize: "clamp(32px,5vw,60px)", letterSpacing: "0.01em", color: S.ink, lineHeight: 0.95, marginBottom: "14px", textTransform: "uppercase" }}>FIND YOUR <span style={{ color: S.gold }}>EDGE.</span></h2>
-            <p style={{ fontSize: "13px", color: S.mid, lineHeight: 1.65, maxWidth: "100%" }}>Four actors, four instruments. Choose where you stand — your assessment is built for it, and your report lands within 48 hours.</p>
+            <p style={{ fontSize: "14px", color: S.mid, lineHeight: 1.65, maxWidth: "100%" }}>Four actors, four instruments. Choose where you stand — your assessment is built for it, and your report lands within 48 hours.</p>
             <p style={{ fontFamily: S.mono, fontSize: "12px", letterSpacing: "0.16em", textTransform: "uppercase", color: S.mid, maxWidth: "100%", marginTop: "14px" }}>Calibrated against the four E.D.G.E. dimensions <span style={{ color: S.gold }}>·</span> Exposure <span style={{ color: S.gold }}>·</span> Decision Density <span style={{ color: S.gold }}>·</span> Growth of Boundary <span style={{ color: S.gold }}>·</span> Economic Anchoring</p>
           </div>
           <div style={{ margin: "56px 52px 0" }}>
@@ -671,14 +671,14 @@ export default function AIEdgeLab() {
             ].map((c) => (
               <button key={c.key} onClick={() => openModal(c.key)} className="jcard"
                 style={{ background: S.white, padding: "32px 26px", display: "flex", flexDirection: "column", cursor: "pointer", transition: "background .25s ease, transform .25s ease, box-shadow .25s ease", border: "none", textAlign: "left" }}>
-                <div className="jcard-n" style={{ fontFamily: S.mono, fontSize: "8.8px", letterSpacing: "0.18em", textTransform: "uppercase", color: S.gold, marginBottom: "18px", transition: "color .25s" }}>{c.n}</div>
+                <div className="jcard-n" style={{ fontFamily: S.mono, fontSize: "10px", letterSpacing: "0.18em", textTransform: "uppercase", color: S.gold, marginBottom: "18px", transition: "color .25s" }}>{c.n}</div>
                 <div className="jcard-who" style={{ fontFamily: S.display, fontSize: "clamp(15px,1.6vw,20px)", letterSpacing: "0.02em", color: S.ink, lineHeight: 1.04, marginBottom: "10px", transition: "color .25s" }}>{c.who}</div>
-                <div className="jcard-inst" style={{ fontFamily: S.mono, fontSize: "8.8px", letterSpacing: "0.1em", textTransform: "uppercase", color: S.mid, marginBottom: "18px", lineHeight: 1.5, transition: "color .25s" }}>{c.inst}</div>
+                <div className="jcard-inst" style={{ fontFamily: S.mono, fontSize: "10px", letterSpacing: "0.1em", textTransform: "uppercase", color: S.mid, marginBottom: "18px", lineHeight: 1.5, transition: "color .25s" }}>{c.inst}</div>
                 <div className="jcard-price" style={{ fontFamily: S.display, fontSize: "21px", color: S.ink, lineHeight: 1, marginTop: "auto", transition: "color .25s" }}>
-                  {c.inr !== "Invite" && <span className="jcard-from" style={{ fontFamily: S.mono, fontSize: "9.600000000000001px", color: S.mid, letterSpacing: "0.06em", display: "block", marginBottom: "4px", transition: "color .25s" }}>From</span>}
+                  {c.inr !== "Invite" && <span className="jcard-from" style={{ fontFamily: S.mono, fontSize: "11px", color: S.mid, letterSpacing: "0.06em", display: "block", marginBottom: "4px", transition: "color .25s" }}>From</span>}
                   {price(c.inr, c.usd)}
                 </div>
-                <div className="jcard-go" style={{ fontFamily: S.mono, fontSize: "8.8px", letterSpacing: "0.16em", textTransform: "uppercase", color: S.gold, marginTop: "16px", display: "flex", alignItems: "center", gap: "6px", transition: "gap .25s ease,color .25s" }}>{c.go}</div>
+                <div className="jcard-go" style={{ fontFamily: S.mono, fontSize: "10px", letterSpacing: "0.16em", textTransform: "uppercase", color: S.gold, marginTop: "16px", display: "flex", alignItems: "center", gap: "6px", transition: "gap .25s ease,color .25s" }}>{c.go}</div>
               </button>
             ))}
           </div>
