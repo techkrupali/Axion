@@ -230,7 +230,7 @@ function HeroBody({ onDiagnosticOpen }: { onDiagnosticOpen: () => void }) {
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              className="font-mono text-[9px] uppercase mb-7"
+              className="font-mono text-[17px] uppercase mb-7"
               style={{ letterSpacing: "0.24em", color: T.mid }}
             >
               Operating Architecture Practice
