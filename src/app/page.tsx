@@ -221,7 +221,7 @@ function HeroBody({ onDiagnosticOpen }: { onDiagnosticOpen: () => void }) {
       style={{ borderBottom: `1px solid ${T.rule}` }}
     >
       <motion.div style={{ y }} className="max-w-[1280px] mx-auto px-4 sm:px-8 py-20 md:py-24">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-20 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-20 items-center">
           {/* Left */}
           <div>
             <motion.p
@@ -478,6 +478,7 @@ function LogicSection() {
               stage: "Tested", n: "02", title: "Conviction",
               desc: "Belief that has survived collision with reality. Tested against data, cost, and consequence. Not opinion.",
               dark: false,
+              bg: "#D8D5CF",
             },
             {
               stage: "Codified", n: "03", title: "Rhythm",
@@ -488,7 +489,7 @@ function LogicSection() {
             <Reveal key={i} delay={i * 0.12}>
               <div
                 className="relative p-11 h-full"
-                style={{ background: step.dark ? T.ink : T.white }}
+                style={{ background: step.dark ? T.ink : (step.bg ?? T.white) }}
               >
                 {step.dark && (
                   <div className="absolute top-0 left-0 right-0 h-0.5" style={{ background: `linear-gradient(90deg, ${T.gold}, transparent)` }} />
