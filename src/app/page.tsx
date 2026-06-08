@@ -591,14 +591,18 @@ function PracticesSection() {
 
         {/* Practice rows */}
         <div>
-          {PRACTICES.map((p, i) => (
+          {PRACTICES.map((p, i) => {
+            const isDarkRow = false;
+            const bodyTxt = T.ink3;
+            const labelTxt = T.gold;
+            return (
             <Reveal key={i} delay={i * 0.08}>
               <Link
                 href={p.href}
                 className="block group"
-                style={{ borderTop: `1px solid ${T.rule2}`, transition: "background 0.3s" }}
-                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = T.white2; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "transparent"; }}
+                style={{ borderTop: `1px solid ${T.rule2}`, borderLeft: `3px solid ${T.gold}`, transition: "all 0.3s", background: "transparent" }}
+                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = T.white2; (e.currentTarget as HTMLElement).style.borderLeftColor = T.gold2; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "transparent"; (e.currentTarget as HTMLElement).style.borderLeftColor = T.gold; }}
               >
                 {/* Desktop layout */}
                 <div
@@ -610,81 +614,81 @@ function PracticesSection() {
                     <>
                       {/* Enter — left */}
                       <span className="font-mono text-[10px] uppercase self-center inline-flex items-center gap-2.5"
-                        style={{ letterSpacing: "0.14em", color: T.gold }}>
+                        style={{ letterSpacing: "0.14em", color: labelTxt }}>
                         <span className="inline-block h-px group-hover:w-7 transition-all duration-300" style={{ width: 16, background: "currentColor" }} /> Enter
                       </span>
                       {/* Signal + Build */}
                       <div className="grid grid-cols-2 gap-9">
                         <div>
-                          <div className="font-mono text-[11px] uppercase mb-3" style={{ letterSpacing: "0.16em", color: T.gold }}>The Signal</div>
-                          <p style={{ fontFamily: T.display, fontSize: 16, lineHeight: 1.65, color: T.ink3 }}>{p.signal}</p>
+                          <div className="font-mono text-[11px] uppercase mb-3" style={{ letterSpacing: "0.16em", color: labelTxt }}>The Signal</div>
+                          <p style={{ fontFamily: T.display, fontSize: 16, lineHeight: 1.65, color: bodyTxt }}>{p.signal}</p>
                         </div>
                         <div>
                           <div className="font-mono text-[11px] uppercase mb-3" style={{ letterSpacing: "0.16em", color: T.gold }}>What We Build</div>
-                          <p style={{ fontFamily: T.display, fontSize: 16, lineHeight: 1.65, color: T.ink3 }}>{p.build}</p>
+                          <p style={{ fontFamily: T.display, fontSize: 16, lineHeight: 1.65, color: bodyTxt }}>{p.build}</p>
                         </div>
                       </div>
                       {/* Title + Hook — right aligned */}
                       <div className="text-right">
-                        <span className="font-serif font-medium uppercase block" style={{ fontFamily: T.display, fontSize: 36, lineHeight: 1, color: T.gold }}>
+                        <span className="font-serif font-medium uppercase block" style={{ fontFamily: T.display, fontSize: 36, lineHeight: 1, color: labelTxt }}>
                           {p.titleMain}{" "}
                           <em style={{ fontStyle: "italic", display: "block" }}>{p.titleEm}</em>
                         </span>
                         <p className="font-serif italic mt-5 transition-colors duration-300 group-hover:text-[#A07830]"
-                          style={{ fontSize: 24, lineHeight: 1.25, color: T.ink3 }}>
+                          style={{ fontSize: 24, lineHeight: 1.25, color: bodyTxt }}>
                           {p.hook}
                         </p>
                         <span
                           className="inline-flex items-center gap-2 mt-4 px-3 py-1.5"
-                          style={{ fontFamily: T.mono, fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: T.mid, border: `1px solid ${T.rule2}` }}
+                          style={{ fontFamily: T.mono, fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: isDarkRow ? "rgba(247,246,243,0.5)" : T.mid, border: `1px solid ${isDarkRow ? "rgba(247,246,243,0.15)" : T.rule2}` }}
                         >
-                          <b style={{ color: T.ink, fontWeight: 500, fontSize: 12 }}>{p.chip.split(" ").slice(0, 2).join(" ")}</b>{" "}
+                          <b style={{ color: isDarkRow ? T.white : T.ink, fontWeight: 500, fontSize: 12 }}>{p.chip.split(" ").slice(0, 2).join(" ")}</b>{" "}
                           {p.chip.split(" ").slice(2).join(" ")}
                         </span>
                       </div>
                       {/* Num — far right */}
-                      <span className="font-mono self-center justify-self-end" style={{ fontSize: 13, color: T.gold, letterSpacing: "0.12em" }}>
+                      <span className="font-mono self-center justify-self-end" style={{ fontSize: 13, color: labelTxt, letterSpacing: "0.12em" }}>
                         {p.num}
                       </span>
                     </>
                   ) : (
                     <>
                       {/* Num — far left */}
-                      <span className="font-mono" style={{ fontSize: 13, color: T.gold, letterSpacing: "0.12em" }}>
+                      <span className="font-mono" style={{ fontSize: 13, color: labelTxt, letterSpacing: "0.12em" }}>
                         {p.num}
                       </span>
                       {/* Title + Hook */}
                       <div>
-                        <span className="font-serif font-medium uppercase block" style={{ fontFamily: T.display, fontSize: 36, lineHeight: 1, color: T.gold }}>
+                        <span className="font-serif font-medium uppercase block" style={{ fontFamily: T.display, fontSize: 36, lineHeight: 1, color: labelTxt }}>
                           {p.titleMain}{" "}
                           <em style={{ fontStyle: "italic", display: "block" }}>{p.titleEm}</em>
                         </span>
                         <p className="font-serif italic mt-5 transition-colors duration-300 group-hover:text-[#A07830]"
-                          style={{ fontSize: 24, lineHeight: 1.25, color: T.ink3 }}>
+                          style={{ fontSize: 24, lineHeight: 1.25, color: bodyTxt }}>
                           {p.hook}
                         </p>
                         <span
                           className="inline-flex items-center gap-2 mt-4 px-3 py-1.5"
-                          style={{ fontFamily: T.mono, fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: T.mid, border: `1px solid ${T.rule2}` }}
+                          style={{ fontFamily: T.mono, fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: isDarkRow ? "rgba(247,246,243,0.5)" : T.mid, border: `1px solid ${isDarkRow ? "rgba(247,246,243,0.15)" : T.rule2}` }}
                         >
-                          <b style={{ color: T.ink, fontWeight: 500, fontSize: 12 }}>{p.chip.split(" ").slice(0, 2).join(" ")}</b>{" "}
+                          <b style={{ color: isDarkRow ? T.white : T.ink, fontWeight: 500, fontSize: 12 }}>{p.chip.split(" ").slice(0, 2).join(" ")}</b>{" "}
                           {p.chip.split(" ").slice(2).join(" ")}
                         </span>
                       </div>
                       {/* Signal + Build */}
                       <div className="grid grid-cols-2 gap-9">
                         <div>
-                          <div className="font-mono text-[11px] uppercase mb-3" style={{ letterSpacing: "0.16em", color: T.gold }}>The Signal</div>
-                          <p style={{ fontFamily: T.display, fontSize: 16, lineHeight: 1.65, color: T.ink3 }}>{p.signal}</p>
+                          <div className="font-mono text-[11px] uppercase mb-3" style={{ letterSpacing: "0.16em", color: labelTxt }}>The Signal</div>
+                          <p style={{ fontFamily: T.display, fontSize: 16, lineHeight: 1.65, color: bodyTxt }}>{p.signal}</p>
                         </div>
                         <div>
-                          <div className="font-mono text-[11px] uppercase mb-3" style={{ letterSpacing: "0.16em", color: T.gold }}>What We Build</div>
-                          <p style={{ fontFamily: T.display, fontSize: 16, lineHeight: 1.65, color: T.ink3 }}>{p.build}</p>
+                          <div className="font-mono text-[11px] uppercase mb-3" style={{ letterSpacing: "0.16em", color: labelTxt }}>What We Build</div>
+                          <p style={{ fontFamily: T.display, fontSize: 16, lineHeight: 1.65, color: bodyTxt }}>{p.build}</p>
                         </div>
                       </div>
                       {/* Enter — far right */}
                       <span className="font-mono text-[10px] uppercase self-center justify-self-end inline-flex items-center gap-2.5"
-                        style={{ letterSpacing: "0.14em", color: T.gold }}>
+                        style={{ letterSpacing: "0.14em", color: labelTxt }}>
                         Enter <span className="inline-block h-px group-hover:w-7 transition-all duration-300" style={{ width: 16, background: "currentColor" }} />
                       </span>
                     </>
@@ -694,21 +698,22 @@ function PracticesSection() {
                 {/* Mobile layout */}
                 <div className="md:hidden flex flex-col gap-4 py-8 px-2">
                   <div className="flex items-center justify-between">
-                    <span className="font-mono text-[13px]" style={{ color: T.gold, letterSpacing: "0.12em" }}>{p.num}</span>
-                    <span className="font-mono text-[11px] uppercase" style={{ letterSpacing: "0.14em", color: T.gold }}>Enter →</span>
+                    <span className="font-mono text-[13px]" style={{ color: labelTxt, letterSpacing: "0.12em" }}>{p.num}</span>
+                    <span className="font-mono text-[11px] uppercase" style={{ letterSpacing: "0.14em", color: labelTxt }}>Enter →</span>
                   </div>
-                  <span className="font-serif font-medium uppercase" style={{ fontFamily: T.display, fontSize: 30, lineHeight: 1.05, color: T.gold }}>
+                  <span className="font-serif font-medium uppercase" style={{ fontFamily: T.display, fontSize: 30, lineHeight: 1.05, color: labelTxt }}>
                     {p.titleMain} <em style={{ fontStyle: "italic" }}>{p.titleEm}</em>
                   </span>
-                  <p className="font-serif italic" style={{ fontSize: 20, lineHeight: 1.3, color: T.ink3 }}>{p.hook}</p>
+                  <p className="font-serif italic" style={{ fontSize: 20, lineHeight: 1.3, color: bodyTxt }}>{p.hook}</p>
                   <div>
-                    <div className="font-mono text-[11px] uppercase mb-2" style={{ letterSpacing: "0.16em", color: T.gold }}>The Signal</div>
-                    <p style={{ fontFamily: T.display, fontSize: 16, lineHeight: 1.65, color: T.ink3 }}>{p.signal}</p>
+                    <div className="font-mono text-[11px] uppercase mb-2" style={{ letterSpacing: "0.16em", color: labelTxt }}>The Signal</div>
+                    <p style={{ fontFamily: T.display, fontSize: 16, lineHeight: 1.65, color: bodyTxt }}>{p.signal}</p>
                   </div>
                 </div>
               </Link>
             </Reveal>
-          ))}
+            );
+          })}
           {/* Last bottom border */}
           <div style={{ borderBottom: `1px solid ${T.rule2}` }} />
         </div>
