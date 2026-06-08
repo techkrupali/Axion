@@ -78,7 +78,7 @@ const Navbar = () => {
 
             {/* Desktop links */}
             <nav className="hidden lg:flex items-center gap-8 xl:gap-10">
-              <HomeNavLink href="/about" label="About" active={pathname === "/about"} />
+              <HomeNavLink href="/about" label="About" active={false} />
               {/* Practice Areas Dropdown */}
               <div
                 className="relative"
@@ -154,9 +154,9 @@ const Navbar = () => {
                 </AnimatePresence>
               </div>
 
-              <HomeNavLink href="/founder" label="Founder" active={pathname === "/founder"} />
-              <HomeNavLink href="/research" label="Research & Journals" active={pathname === "/research"} />
-              <HomeNavLink href="/connect" label="Reach Us" active={pathname === "/connect"} />
+              <HomeNavLink href="/founder" label="Founder" active={false} />
+              <HomeNavLink href="/research" label="Research & Journals" active={false} />
+              <HomeNavLink href="/connect" label="Reach Us" active={false} />
             </nav>
 
             {/* Mobile hamburger */}
