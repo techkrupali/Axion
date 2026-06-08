@@ -86,7 +86,7 @@ const Navbar = () => {
                 onMouseLeave={() => setIsExpertiseOpen(false)}
               >
                 <button
-                  className="font-mono text-[9px] uppercase flex items-center gap-1.5 outline-none transition-colors duration-300 min-h-[44px]"
+                  className="font-mono text-[11px] uppercase flex items-center gap-1.5 outline-none transition-colors duration-300 min-h-[44px]"
                   style={{
                     letterSpacing: "0.18em",
                     color: pathname.startsWith("/expertise") ? "#A07830" : isScrolled ? "#F7F6F3" : "#7A7870",
@@ -129,7 +129,7 @@ const Navbar = () => {
                           <Link
                             href={link.href}
                             onClick={() => setIsExpertiseOpen(false)}
-                            className="flex items-center justify-between px-4 py-3 font-mono text-[9px] uppercase transition-colors duration-150 rounded-sm min-h-[40px]"
+                            className="flex items-center justify-between px-4 py-3 font-mono text-[11px] uppercase transition-colors duration-150 rounded-sm min-h-[40px]"
                             style={{
                               letterSpacing: "0.18em",
                               color: pathname === link.href ? "#A07830" : "#7A7870",
@@ -173,7 +173,7 @@ const Navbar = () => {
           {/* ── Black right CTA block ── */}
           <Link
             href="/connect"
-            className="hidden lg:flex items-center justify-center px-8 xl:px-10 font-mono text-[9px] uppercase whitespace-nowrap transition-colors duration-300"
+            className="hidden lg:flex items-center justify-center px-8 xl:px-10 font-mono text-[11px] uppercase whitespace-nowrap transition-colors duration-300"
             style={{
               letterSpacing: "0.22em",
               background: "#0D0D0B",
@@ -214,7 +214,7 @@ const Navbar = () => {
                   >
                     <Link
                       href={link.href}
-                      className="block py-4 font-mono text-[10px] uppercase border-b transition-colors duration-150 min-h-[48px]"
+                      className="block py-4 font-mono text-[12px] uppercase border-b transition-colors duration-150 min-h-[48px]"
                       style={{
                         letterSpacing: "0.2em",
                         color: pathname === link.href ? "#A07830" : "#7A7870",
@@ -228,7 +228,7 @@ const Navbar = () => {
                 <div className="pt-5 pb-2">
                   <Link
                     href="/connect"
-                    className="block w-full text-center py-4 font-mono text-[10px] uppercase min-h-[48px] transition-colors duration-200"
+                    className="block w-full text-center py-4 font-mono text-[12px] uppercase min-h-[48px] transition-colors duration-200"
                     style={{
                       letterSpacing: "0.2em",
                       background: "#0D0D0B",
@@ -273,7 +273,7 @@ const Navbar = () => {
             onMouseLeave={() => setIsExpertiseOpen(false)}
           >
             <button
-              className={`text-[11px] font-mono tracking-[0.24em] uppercase flex items-center gap-2 outline-none transition-colors duration-300 min-h-[44px] ${
+              className={`text-[13px] font-mono tracking-[0.24em] uppercase flex items-center gap-2 outline-none transition-colors duration-300 min-h-[44px] ${
                 pathname.startsWith("/expertise")
                   ? "text-[#C9A24A]"
                   : "text-[var(--fg-3)] hover:text-[var(--fg)]"
@@ -419,7 +419,7 @@ function HomeNavLink({ href, label, active, scrolled }: { href: string; label: s
   return (
     <Link
       href={href}
-      className="font-mono text-[9px] uppercase transition-colors duration-300 whitespace-nowrap min-h-[44px] inline-flex items-center relative group"
+      className="font-mono text-[11px] uppercase transition-colors duration-300 whitespace-nowrap min-h-[44px] inline-flex items-center relative group"
       style={{
         letterSpacing: "0.18em",
         color: active ? "#A07830" : scrolled ? "#F7F6F3" : "#7A7870",
@@ -436,7 +436,7 @@ function NavLink({ href, label, active }: { href: string; label: string; active:
   return (
     <Link
       href={href}
-      className={`text-[11px] font-mono tracking-[0.24em] uppercase transition-colors duration-300 relative group whitespace-nowrap min-h-[44px] inline-flex items-center ${
+      className={`text-[13px] font-mono tracking-[0.24em] uppercase transition-colors duration-300 relative group whitespace-nowrap min-h-[44px] inline-flex items-center ${
         active ? "text-[#C9A24A]" : "text-[var(--fg-3)] hover:text-[var(--fg)]"
       }`}
     >

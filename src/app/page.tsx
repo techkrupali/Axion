@@ -98,7 +98,7 @@ function HeroBand() {
       style={{
         background: "radial-gradient(120% 140% at 70% 10%, #232320 0%, #15150f 45%, #0D0D0B 100%)",
         borderBottom: `1px solid ${T.ink}`,
-        minHeight: 360,
+        minHeight: "clamp(280px, 40vw, 360px)",
       }}
     >
       {/* Grid overlay */}
@@ -315,7 +315,7 @@ function HeroBody({ onDiagnosticOpen }: { onDiagnosticOpen: () => void }) {
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.85, delay: 0.22, ease: [0.22, 1, 0.36, 1] }}
-              style={{ fontFamily: T.display, fontSize: 20, lineHeight: 1.75, color: T.ink3, fontWeight: 300, maxWidth: "46ch", marginBottom: 46 }}
+              style={{ fontFamily: T.display, fontSize: "clamp(17px,2vw,20px)", lineHeight: 1.75, color: T.ink3, fontWeight: 300, maxWidth: "46ch", marginBottom: "clamp(28px,4vw,46px)" }}
             >
               Most organisations don't fail when strategy breaks. They fail when their internal architecture cannot carry what they are becoming.
             </motion.p>
@@ -325,7 +325,7 @@ function HeroBody({ onDiagnosticOpen }: { onDiagnosticOpen: () => void }) {
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.85, delay: 0.36, ease: [0.22, 1, 0.36, 1] }}
-              className="flex"
+              className="grid grid-cols-3 sm:flex"
             >
               {[
                 { val: "70%", key: "Transformations fail to sustain gains", src: "McKinsey" },
@@ -338,8 +338,8 @@ function HeroBody({ onDiagnosticOpen }: { onDiagnosticOpen: () => void }) {
                   className="flex-1 group block"
                   style={{
                     borderLeft: i > 0 ? `1px solid ${T.rule2}` : "none",
-                    paddingLeft: i > 0 ? 22 : 0,
-                    paddingRight: 22,
+                    paddingLeft: i > 0 ? "clamp(10px, 3vw, 22px)" : 0,
+                    paddingRight: "clamp(10px, 3vw, 22px)",
                     paddingBottom: 4,
                     transition: "border-color 0.25s",
                     textDecoration: "none",
@@ -348,18 +348,18 @@ function HeroBody({ onDiagnosticOpen }: { onDiagnosticOpen: () => void }) {
                 >
                   <div
                     className="font-serif font-medium"
-                    style={{ fontFamily: T.display, fontSize: 52, lineHeight: 1, color: T.ink }}
+                    style={{ fontFamily: T.display, fontSize: "clamp(32px,5vw,52px)", lineHeight: 1, color: T.ink }}
                   >
                     {stat.val}
                   </div>
                   <div
-                    className="font-mono text-[11px] uppercase mt-2"
+                    className="font-mono text-[10px] sm:text-[11px] uppercase mt-2"
                     style={{ letterSpacing: "0.1em", color: T.mid, lineHeight: 1.5 }}
                   >
                     {stat.key}
                   </div>
                   <span
-                    className="font-mono text-[11px] uppercase mt-1.5 inline-block opacity-0 group-hover:opacity-100 transition-opacity"
+                    className="font-mono text-[10px] uppercase mt-1.5 inline-block opacity-0 group-hover:opacity-100 transition-opacity"
                     style={{ letterSpacing: "0.14em", color: T.gold, transform: "translateY(-2px)" }}
                   >
                     {stat.src} · See evidence
@@ -492,7 +492,7 @@ function LogicSection() {
           ].map((step, i) => (
             <Reveal key={i} delay={i * 0.12}>
               <div
-                className="relative p-11 h-full"
+                className="relative p-6 sm:p-8 lg:p-11 h-full"
                 style={{ background: step.dark ? T.ink : (step.bg ?? T.white) }}
               >
                 {step.dark && (
@@ -745,7 +745,7 @@ function RolesSection() {
                 style={{
                   borderBottom: i < ROLES_DATA.length - 1 ? `1px solid ${T.rule2}` : "none",
                   background: active === i ? T.ink : "transparent",
-                  padding: "28px 32px",
+                  padding: "20px 20px",
                 }}
                 onMouseEnter={e => { if (active !== i) (e.currentTarget as HTMLElement).style.background = T.white2; }}
                 onMouseLeave={e => { if (active !== i) (e.currentTarget as HTMLElement).style.background = "transparent"; }}
@@ -785,10 +785,10 @@ function RolesSection() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -12 }}
                 transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                className="p-10 xl:p-14 h-full flex flex-col justify-between"
+                className="p-6 sm:p-10 xl:p-14 h-full flex flex-col justify-between"
               >
                 {/* Big ghost number */}
-                <div className="flex items-start justify-between mb-8">
+                <div className="flex items-start justify-between gap-3 mb-6 flex-wrap">
                   <span
                     className="font-serif font-medium select-none"
                     style={{ fontFamily: T.display, fontSize: "clamp(80px,10vw,130px)", lineHeight: 1, color: T.white3, letterSpacing: "-0.02em" }}
@@ -1037,7 +1037,7 @@ function FinalSection({ onDiagnosticOpen }: { onDiagnosticOpen: () => void }) {
 // ─────────────────────────────────────────────
 function SiteFooter() {
   return (
-    <footer style={{ background: T.ink, color: T.dim, paddingTop: 80, paddingBottom: 40 }}>
+    <footer style={{ background: T.ink, color: T.dim, paddingTop: "clamp(40px,8vw,80px)", paddingBottom: 40 }}>
       <div className="max-w-[1280px] mx-auto px-6 sm:px-12">
         {/* Grid */}
         <div
@@ -1052,7 +1052,7 @@ function SiteFooter() {
             <img
               src="/axion-index-lockup-gold-on-black.svg"
               alt="Axion Index"
-              style={{ width: 200, height: "auto", display: "block" }}
+              style={{ width: "clamp(140px, 30vw, 200px)", maxWidth: "100%", height: "auto", display: "block" }}
             />
             <p className="mt-4" style={{ fontSize: 13, color: T.mid, maxWidth: "34ch", lineHeight: 1.6 }}>
               Architecture is read, not pitched.
