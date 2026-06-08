@@ -66,11 +66,11 @@ const Navbar = () => {
         >
           {/* ── Cream left section ── */}
           <div
-            className="flex items-center justify-between flex-1 px-6 lg:px-12"
+            className="flex items-center justify-between flex-1 px-6 lg:px-12 transition-colors duration-300"
             style={{
-              background: "rgba(247,246,243,0.94)",
+              background: isScrolled ? "rgba(13,13,11,0.96)" : "rgba(247,246,243,0.94)",
               backdropFilter: "blur(14px)",
-              borderBottom: "1px solid rgba(13,13,11,0.10)",
+              borderBottom: isScrolled ? "1px solid rgba(247,246,243,0.08)" : "1px solid rgba(13,13,11,0.10)",
             }}
           >
             {/* Brand */}
@@ -78,7 +78,7 @@ const Navbar = () => {
 
             {/* Desktop links */}
             <nav className="hidden lg:flex items-center gap-8 xl:gap-10">
-              <HomeNavLink href="/about" label="About" active={false} />
+              <HomeNavLink href="/about" label="About" active={false} scrolled={isScrolled} />
               {/* Practice Areas Dropdown */}
               <div
                 className="relative"
@@ -86,13 +86,13 @@ const Navbar = () => {
                 onMouseLeave={() => setIsExpertiseOpen(false)}
               >
                 <button
-                  className="font-mono text-[9px] uppercase flex items-center gap-1.5 outline-none transition-colors duration-200 min-h-[44px]"
+                  className="font-mono text-[9px] uppercase flex items-center gap-1.5 outline-none transition-colors duration-300 min-h-[44px]"
                   style={{
                     letterSpacing: "0.18em",
-                    color: pathname.startsWith("/expertise") ? "#A07830" : "#7A7870",
+                    color: pathname.startsWith("/expertise") ? "#A07830" : isScrolled ? "#F7F6F3" : "#7A7870",
                   }}
-                  onMouseEnter={e => { if (!pathname.startsWith("/expertise")) (e.currentTarget as HTMLElement).style.color = "#0D0D0B"; }}
-                  onMouseLeave={e => { if (!pathname.startsWith("/expertise")) (e.currentTarget as HTMLElement).style.color = "#7A7870"; }}
+                  onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = isScrolled ? "#A07830" : "#0D0D0B"; }}
+                  onMouseLeave={e => { if (!pathname.startsWith("/expertise")) (e.currentTarget as HTMLElement).style.color = isScrolled ? "#F7F6F3" : "#7A7870"; }}
                 >
                   Practice Areas
                   <motion.span
@@ -154,16 +154,16 @@ const Navbar = () => {
                 </AnimatePresence>
               </div>
 
-              <HomeNavLink href="/founder" label="Founder" active={false} />
-              <HomeNavLink href="/research" label="Research & Journals" active={false} />
-              <HomeNavLink href="/connect" label="Reach Us" active={false} />
+              <HomeNavLink href="/founder" label="Founder" active={false} scrolled={isScrolled} />
+              <HomeNavLink href="/research" label="Research & Journals" active={false} scrolled={isScrolled} />
+              <HomeNavLink href="/connect" label="Reach Us" active={false} scrolled={isScrolled} />
             </nav>
 
             {/* Mobile hamburger */}
             <button
               onClick={() => setIsMobileOpen(!isMobileOpen)}
               className="flex lg:hidden p-3 transition-colors min-h-[44px] min-w-[44px]"
-              style={{ color: "#7A7870" }}
+              style={{ color: isScrolled ? "#F7F6F3" : "#7A7870" }}
               aria-label="Toggle menu"
             >
               {isMobileOpen ? <X size={20} /> : <Menu size={20} />}
@@ -173,16 +173,16 @@ const Navbar = () => {
           {/* ── Black right CTA block ── */}
           <Link
             href="/connect"
-            className="hidden lg:flex items-center justify-center px-8 xl:px-10 font-mono text-[9px] uppercase whitespace-nowrap transition-colors duration-250"
+            className="hidden lg:flex items-center justify-center px-8 xl:px-10 font-mono text-[9px] uppercase whitespace-nowrap transition-colors duration-300"
             style={{
               letterSpacing: "0.22em",
               background: "#0D0D0B",
-              color: "#F7F6F3",
+              color: isScrolled ? "#FFFFFF" : "#F7F6F3",
               minWidth: 180,
               borderBottom: "1px solid #0D0D0B",
             }}
-            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "#A07830"; }}
-            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "#0D0D0B"; }}
+            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "#F7F6F3"; (e.currentTarget as HTMLElement).style.color = "#0D0D0B"; }}
+            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "#0D0D0B"; (e.currentTarget as HTMLElement).style.color = isScrolled ? "#FFFFFF" : "#F7F6F3"; }}
           >
             Start Diagnostic
           </Link>
@@ -415,17 +415,17 @@ const Navbar = () => {
   );
 };
 
-function HomeNavLink({ href, label, active }: { href: string; label: string; active: boolean }) {
+function HomeNavLink({ href, label, active, scrolled }: { href: string; label: string; active: boolean; scrolled?: boolean }) {
   return (
     <Link
       href={href}
-      className="font-mono text-[9px] uppercase transition-colors duration-200 whitespace-nowrap min-h-[44px] inline-flex items-center relative group"
+      className="font-mono text-[9px] uppercase transition-colors duration-300 whitespace-nowrap min-h-[44px] inline-flex items-center relative group"
       style={{
         letterSpacing: "0.18em",
-        color: active ? "#A07830" : "#7A7870",
+        color: active ? "#A07830" : scrolled ? "#F7F6F3" : "#7A7870",
       }}
-      onMouseEnter={e => { if (!active) (e.currentTarget as HTMLElement).style.color = "#0D0D0B"; }}
-      onMouseLeave={e => { if (!active) (e.currentTarget as HTMLElement).style.color = "#7A7870"; }}
+      onMouseEnter={e => { if (!active) (e.currentTarget as HTMLElement).style.color = scrolled ? "#A07830" : "#0D0D0B"; }}
+      onMouseLeave={e => { if (!active) (e.currentTarget as HTMLElement).style.color = scrolled ? "#F7F6F3" : "#7A7870"; }}
     >
       {label}
     </Link>

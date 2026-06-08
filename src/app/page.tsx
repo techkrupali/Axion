@@ -685,32 +685,44 @@ function PracticesSection() {
 const ROLES_DATA = [
   {
     role: "Founder / CEO",
+    num: "01",
     pull: "You can feel the company outgrowing the way you run it. You just can't see where it cracks first.",
     work: "Map the failure points before they fail, and build the architecture that removes you as the single point of dependency.",
+    tag: "Dependency Architecture",
   },
   {
     role: "CFO",
+    num: "02",
     pull: "Cost is climbing, and headcount explains some of it. Not the part that keeps you up.",
     work: "Read the workforce as cost, risk, and control architecture, then install the structure that makes the number governable, not just reported.",
+    tag: "Workforce Cost Architecture",
   },
   {
     role: "CHRO",
+    num: "03",
     pull: "You're running more programs than ever, and the organisation is no more durable for it.",
     work: "Build the operating system underneath HR, so capability is designed into structure, not dependent on who's running the program.",
+    tag: "Operating System Design",
   },
   {
     role: "Investor / Board",
+    num: "04",
     pull: "The thesis is sound. The question is whether the organisation can carry it.",
     work: "Diligence the organisation's operating architecture: what survives the founder, and what is quietly held by individuals who can leave.",
+    tag: "Institutional Durability",
   },
 ];
 
 function RolesSection() {
+  const [active, setActive] = useState(0);
+  const r = ROLES_DATA[active];
+
   return (
     <section style={{ borderBottom: `1px solid ${T.rule}` }}>
       <div className="max-w-[1280px] mx-auto px-6 sm:px-12 py-24">
+        {/* Header */}
         <div className="flex items-baseline justify-between mb-14 gap-6">
-          <span className="font-mono text-[9px] uppercase" style={{ letterSpacing: "0.24em", color: T.mid }}>Where you sit</span>
+          <span className="font-mono text-[17px] uppercase" style={{ letterSpacing: "0.24em", color: T.mid }}>Where you sit</span>
           <span className="font-mono text-[10px]" style={{ letterSpacing: "0.14em", color: T.dim }}>04 / 05</span>
         </div>
 
@@ -720,31 +732,105 @@ function RolesSection() {
           </h2>
         </Reveal>
 
-        <div
-          className="grid grid-cols-1 sm:grid-cols-2"
-          style={{ gap: 1, background: T.rule, border: `1px solid ${T.rule}` }}
-        >
-          {ROLES_DATA.map((r, i) => (
-            <Reveal key={i} delay={i * 0.1}>
-              <div className="p-9 md:p-10 h-full" style={{ background: T.white }}>
-                <span className="font-mono text-[10px] uppercase block mb-6" style={{ letterSpacing: "0.16em", color: T.gold }}>
-                  {r.role}
-                </span>
-                <span className="font-mono text-[9px] uppercase block mb-2" style={{ letterSpacing: "0.14em", color: T.mid }}>
-                  The pull
-                </span>
-                <p className="font-serif font-medium mb-6" style={{ fontFamily: T.display, fontSize: 21, lineHeight: 1.3, color: T.ink }}>
-                  {r.pull}
-                </p>
-                <span className="font-mono text-[9px] uppercase block mb-2" style={{ letterSpacing: "0.14em", color: T.mid }}>
-                  What we do
-                </span>
-                <p style={{ fontFamily: T.display, fontSize: 14, lineHeight: 1.7, color: T.ink3 }}>{r.work}</p>
-              </div>
-            </Reveal>
-          ))}
+        {/* Main layout: role tabs left + content right */}
+        <div className="flex flex-col lg:flex-row gap-0" style={{ border: `1px solid ${T.rule2}` }}>
+
+          {/* Left: role selector */}
+          <div className="lg:w-[300px] xl:w-[340px] flex-shrink-0 flex flex-col" style={{ borderRight: `1px solid ${T.rule2}`, background: T.white }}>
+            {ROLES_DATA.map((item, i) => (
+              <button
+                key={i}
+                onClick={() => setActive(i)}
+                className="w-full text-left group relative overflow-hidden transition-colors duration-200 flex-1"
+                style={{
+                  borderBottom: i < ROLES_DATA.length - 1 ? `1px solid ${T.rule2}` : "none",
+                  background: active === i ? T.ink : "transparent",
+                  padding: "28px 32px",
+                }}
+                onMouseEnter={e => { if (active !== i) (e.currentTarget as HTMLElement).style.background = T.white2; }}
+                onMouseLeave={e => { if (active !== i) (e.currentTarget as HTMLElement).style.background = "transparent"; }}
+              >
+                <div className="flex items-center justify-between">
+                  <div>
+                    <span
+                      className="font-mono text-[9px] uppercase block mb-2 transition-colors duration-200"
+                      style={{ letterSpacing: "0.16em", color: active === i ? T.gold2 : T.dim }}
+                    >
+                      {item.num}
+                    </span>
+                    <span
+                      className="font-serif font-medium block transition-colors duration-200"
+                      style={{ fontFamily: T.display, fontSize: 22, lineHeight: 1.1, color: active === i ? T.white : T.ink }}
+                    >
+                      {item.role}
+                    </span>
+                  </div>
+                  <span
+                    className="font-mono text-[18px] transition-all duration-300"
+                    style={{ color: active === i ? T.gold2 : "transparent", transform: active === i ? "translateX(0)" : "translateX(-6px)" }}
+                  >
+                    →
+                  </span>
+                </div>
+              </button>
+            ))}
+          </div>
+
+          {/* Right: animated content panel */}
+          <div className="flex-1 relative overflow-hidden" style={{ minHeight: 320, background: T.white }}>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={active}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                className="p-10 xl:p-14 h-full flex flex-col justify-between"
+              >
+                {/* Big ghost number */}
+                <div className="flex items-start justify-between mb-8">
+                  <span
+                    className="font-serif font-medium select-none"
+                    style={{ fontFamily: T.display, fontSize: "clamp(80px,10vw,130px)", lineHeight: 1, color: T.white3, letterSpacing: "-0.02em" }}
+                  >
+                    {r.num}
+                  </span>
+                  <span
+                    className="font-mono text-[9px] uppercase mt-3"
+                    style={{ letterSpacing: "0.18em", color: T.gold, border: `1px solid ${T.rule2}`, padding: "6px 12px" }}
+                  >
+                    {r.tag}
+                  </span>
+                </div>
+
+                {/* Pull */}
+                <div className="mb-8">
+                  <span className="font-mono text-[11px] uppercase block mb-3" style={{ letterSpacing: "0.18em", color: T.gold }}>
+                    The pull
+                  </span>
+                  <p className="font-serif font-medium" style={{ fontFamily: T.display, fontSize: "clamp(22px,2.5vw,32px)", lineHeight: 1.3, color: T.ink }}>
+                    {r.pull}
+                  </p>
+                </div>
+
+                {/* Divider */}
+                <div style={{ height: 1, background: T.rule2, marginBottom: 28 }} />
+
+                {/* What we do */}
+                <div>
+                  <span className="font-mono text-[11px] uppercase block mb-3" style={{ letterSpacing: "0.18em", color: T.gold }}>
+                    What we do
+                  </span>
+                  <p style={{ fontFamily: T.display, fontSize: 18, lineHeight: 1.75, color: T.ink3 }}>
+                    {r.work}
+                  </p>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
         </div>
 
+        {/* Bottom closing line */}
         <Reveal delay={0.3}>
           <p className="font-serif italic mt-12" style={{ fontSize: 21, color: T.ink3, maxWidth: "64ch" }}>
             We don't advise from the outside. We install architecture into how the organisation actually runs, and stay until it holds without us.
