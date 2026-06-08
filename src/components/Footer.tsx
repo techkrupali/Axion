@@ -28,7 +28,7 @@ export default function Footer() {
               {/* Full lockup: mark + AXION INDEX + 2-line tagline */}
               <Link href="/" aria-label="Axion Index — home" className="inline-block">
                 <img
-                  src="/axion-index-lockup-gold-on-black.svg"
+                  src="/axion-index-lockup-gold-transparent.svg"
                   alt="Axion Index"
                   className="object-contain"
                   style={{ width: "clamp(200px, 26vw, 320px)", height: "auto" }}
@@ -36,12 +36,12 @@ export default function Footer() {
               </Link>
               {/* Follow capture */}
               <div>
-                <p className="font-mono text-[11px] tracking-[0.45em] uppercase mb-4" style={{ color: "#EDEBE3" }}>Follow the work</p>
+                <p className="font-mono text-[13px] tracking-[0.45em] uppercase mb-4" style={{ color: "#EDEBE3" }}>Follow the work</p>
                 <a
                   href="https://linkedin.com/company/axionindex"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group inline-flex items-center gap-3 font-mono text-[12px] tracking-[0.22em] uppercase hover:text-[#C9A24A] transition-colors duration-300 min-h-[44px]"
+                  className="group inline-flex items-center gap-3 font-mono text-[14px] tracking-[0.22em] uppercase hover:text-[#C9A24A] transition-colors duration-300 min-h-[44px]"
                   style={{ color: "#EDEBE3" }}
                 >
                   <span
@@ -60,7 +60,7 @@ export default function Footer() {
 
           {/* Practices */}
           <div>
-            <p className="font-mono text-[11px] tracking-[0.5em] uppercase text-[#C9A24A] opacity-50 mb-6">Practices</p>
+            <p className="font-mono text-[13px] tracking-[0.5em] uppercase text-[#C9A24A] opacity-50 mb-6">Practices</p>
               <ul className="flex flex-col gap-3">
                 {[
                   { href: "/expertise/people", label: "People Architecture" },
@@ -71,7 +71,7 @@ export default function Footer() {
                   <li key={l.href}>
                     <Link
                       href={l.href}
-                      className="font-mono text-[12px] tracking-[0.18em] uppercase hover:text-[#C9A24A] transition-colors duration-300 inline-flex min-h-[40px] items-center"
+                      className="font-mono text-[14px] tracking-[0.18em] uppercase hover:text-[#C9A24A] transition-colors duration-300 inline-flex min-h-[40px] items-center"
                       style={{ color: "#EDEBE3" }}
                     >
                       {l.label}
@@ -83,7 +83,7 @@ export default function Footer() {
 
             {/* Index */}
             <div>
-              <p className="font-mono text-[11px] tracking-[0.5em] uppercase text-[#C9A24A] opacity-50 mb-6">Index</p>
+              <p className="font-mono text-[13px] tracking-[0.5em] uppercase text-[#C9A24A] opacity-50 mb-6">Index</p>
               <ul className="flex flex-col gap-3">
                 {[
                   { href: "/", label: "Axion Index" },
@@ -94,7 +94,7 @@ export default function Footer() {
                   <li key={l.href}>
                     <Link
                       href={l.href}
-                      className="font-mono text-[12px] tracking-[0.18em] uppercase hover:text-[#C9A24A] transition-colors duration-300 inline-flex min-h-[40px] items-center"
+                      className="font-mono text-[14px] tracking-[0.18em] uppercase hover:text-[#C9A24A] transition-colors duration-300 inline-flex min-h-[40px] items-center"
                       style={{ color: "#EDEBE3" }}
                     >
                       {l.label}
@@ -106,12 +106,12 @@ export default function Footer() {
 
             {/* Contact */}
             <div>
-              <p className="font-mono text-[11px] tracking-[0.5em] uppercase text-[#C9A24A] opacity-50 mb-6">Contact</p>
+              <p className="font-mono text-[13px] tracking-[0.5em] uppercase text-[#C9A24A] opacity-50 mb-6">Contact</p>
               <div className="flex flex-col gap-4">
-                <span className="font-mono text-[12px] tracking-[0.18em] uppercase" style={{ color: "#EDEBE3" }}>Bengaluru, India</span>
+                <span className="font-mono text-[14px] tracking-[0.18em] uppercase" style={{ color: "#EDEBE3" }}>Bengaluru, India</span>
                 <a
                   href="mailto:office@axionindex.org"
-                  className="font-mono text-[13px] tracking-[0.1em] hover:text-[#C9A24A] transition-colors duration-300 normal-case break-words"
+                  className="font-mono text-[15px] tracking-[0.1em] hover:text-[#C9A24A] transition-colors duration-300 normal-case break-words"
                   style={{ color: "#EDEBE3" }}
                 >
                   office@axionindex.org
@@ -124,7 +124,7 @@ export default function Footer() {
 
         {/* ── Bottom bar ── */}
         <div className="py-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <span className="font-mono text-[11px] tracking-[0.4em] uppercase" style={{ color: "#9DA3B6" }}>
+          <span className="font-mono text-[13px] tracking-[0.4em] uppercase" style={{ color: "#9DA3B6" }}>
             &copy; 2026 Axion Index. All rights reserved.
           </span>
           <div className="flex flex-wrap items-center gap-4 sm:gap-6">
@@ -139,7 +139,7 @@ export default function Footer() {
                 href={l.href}
                 target={l.external ? "_blank" : undefined}
                 rel={l.external ? "noopener noreferrer" : undefined}
-                className="font-mono text-[11px] tracking-[0.3em] uppercase hover:text-[#C9A24A] transition-colors duration-300 min-h-[40px] inline-flex items-center"
+                className="font-mono text-[13px] tracking-[0.3em] uppercase hover:text-[#C9A24A] transition-colors duration-300 min-h-[40px] inline-flex items-center"
                 style={{ color: "#9DA3B6" }}
               >
                 {l.label}

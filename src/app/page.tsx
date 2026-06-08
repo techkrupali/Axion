@@ -856,7 +856,7 @@ function MovesSection() {
     <section style={{ borderBottom: `1px solid ${T.rule}` }}>
       <div className="max-w-[1280px] mx-auto px-6 sm:px-12 py-24">
         <div className="flex items-baseline justify-between mb-6 gap-6">
-          <span className="font-mono text-[9px] uppercase" style={{ letterSpacing: "0.24em", color: T.mid }}>The engagement</span>
+          <span className="font-mono text-[17px] uppercase" style={{ letterSpacing: "0.24em", color: T.mid }}>The engagement</span>
           <span className="font-mono text-[10px]" style={{ letterSpacing: "0.14em", color: T.dim }}>05 / 05</span>
         </div>
 
@@ -867,28 +867,31 @@ function MovesSection() {
         </Reveal>
       </div>
 
-      {/* Full-bleed move rows */}
+      {/* Staggered full-width rows — same layout as founder SOIL section */}
       <div>
         {MOVES.map((move, i) => (
           <motion.div
             key={i}
-            initial={{ opacity: 0, y: 32 }}
+            initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
+            whileHover={{ scale: move.resolve ? 1 : 1.015, y: move.resolve ? 0 : -4, zIndex: 10 }}
             viewport={{ once: true, margin: "-10%" }}
-            transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
-            className="relative"
-            style={
-              move.resolve
-                ? {
-                    background: T.ink,
-                    borderTop: `1px solid ${T.ink}`,
-                    margin: "0",
-                  }
-                : {
-                    borderTop: `1px solid ${T.rule}`,
-                  }
-            }
+            transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1], delay: i * 0.08 }}
+            className="group relative border-t cursor-default overflow-hidden"
+            style={{
+              borderColor: move.resolve ? T.rule : T.rule,
+              background: "transparent",
+              position: "relative",
+            }}
           >
+            {/* Hover background glow — only non-resolve rows */}
+            {!move.resolve && (
+              <div
+                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                style={{ background: `linear-gradient(135deg, rgba(160,120,48,0.04) 0%, transparent 100%)`, boxShadow: `inset 0 0 0 1px rgba(160,120,48,0.10)` }}
+              />
+            )}
+
             {/* Gold accent top line on resolve */}
             {move.resolve && (
               <div
@@ -897,72 +900,85 @@ function MovesSection() {
               />
             )}
 
+            {/* Ghost number watermark */}
             <div
-              className="relative max-w-[1280px] mx-auto px-6 sm:px-12 flex flex-col justify-center"
-              style={{ minHeight: 240, paddingTop: 60, paddingBottom: 60 }}
+              className={`absolute top-1/2 -translate-y-1/2 font-serif italic leading-none pointer-events-none select-none transition-opacity duration-700 overflow-hidden ${i % 2 === 1 ? "right-8" : "left-0"}`}
+              style={{
+                fontSize: "22vw",
+                color: T.ink,
+                opacity: 0.08,
+                maxWidth: "40%",
+              }}
             >
-              {/* Side label */}
-              <span
-                className="absolute font-mono text-[10px] uppercase mb-3"
-                style={{
-                  letterSpacing: "0.22em",
-                  color: move.resolve ? "rgba(247,246,243,0.4)" : T.dim,
-                  left: i % 2 === 0 ? undefined : "auto",
-                  right: i % 2 === 0 ? undefined : 48,
-                  top: 60,
-                }}
-              >
-                {move.label}
-              </span>
+              {i + 1}
+            </div>
 
-              {/* Vertical rule */}
+            <div className="relative max-w-[1280px] mx-auto px-6 sm:px-12 py-12 lg:py-16 flex flex-col lg:flex-row items-start lg:items-center gap-6 lg:gap-0">
+
+              {/* Step label — alternates side */}
+              <div className={`lg:w-1/4 flex flex-col gap-3 ${i % 2 === 1 ? "lg:items-end lg:text-right" : ""}`}>
+                <span
+                  className="font-mono text-[12px] uppercase tracking-[0.4em] transition-all duration-500 group-hover:opacity-100"
+                  style={{ color: T.ink, opacity: 0.7 }}
+                >
+                  {move.label}
+                </span>
+                <span
+                  className="font-serif italic leading-none transition-colors duration-500 group-hover:text-[#A07830]"
+                  style={{
+                    fontSize: "clamp(52px,7vw,88px)",
+                    WebkitTextStroke: `1px ${T.ink}`,
+                    color: "transparent",
+                  }}
+                >
+                  {i + 1}.
+                </span>
+              </div>
+
+              {/* Vertical divider — desktop */}
               <div
-                className="absolute top-15 bottom-15 w-px hidden lg:block"
+                className="hidden lg:block w-px self-stretch mx-12 transition-colors duration-500 group-hover:opacity-100"
                 style={{
-                  left: i % 2 === 0 ? 300 : "auto",
-                  right: i % 2 !== 0 ? 300 : "auto",
-                  top: 60,
-                  bottom: 60,
-                  background: move.resolve ? "rgba(247,246,243,0.14)" : T.rule,
+                  background: `linear-gradient(to bottom, transparent, ${move.resolve ? "rgba(247,246,243,0.14)" : T.rule2}, transparent)`,
+                  opacity: 0.6,
                 }}
               />
 
-              {/* Content block */}
-              <div
-                className="w-full"
-                style={{
-                  maxWidth: 760,
-                  paddingLeft: i % 2 === 0 ? "clamp(0px, 30vw, 340px)" : 0,
-                  marginLeft: i % 2 !== 0 ? "auto" : 0,
-                  textAlign: i % 2 !== 0 ? "right" : "left",
-                }}
-              >
+              {/* Content */}
+              <div className={`flex-1 ${i % 2 === 1 ? "lg:text-right" : ""}`}>
                 <h3
-                  className="font-serif font-medium"
+                  className="font-serif font-medium transition-colors duration-500"
                   style={{
                     fontFamily: T.display,
-                    fontSize: "clamp(40px,5.5vw,76px)",
-                    lineHeight: 0.98,
-                    color: move.resolve ? T.gold2 : T.ink,
+                    fontSize: "clamp(32px,4.5vw,64px)",
+                    lineHeight: 1.0,
+                    color: T.gold,
                   }}
                 >
                   {move.title}
                 </h3>
                 <p
+                  className="font-serif italic mt-4 transition-colors duration-500"
                   style={{
                     fontFamily: T.display,
-                    fontSize: 15,
-                    color: move.resolve ? T.dim : T.ink3,
+                    fontSize: 20,
+                    color: T.ink,
                     lineHeight: 1.7,
-                    maxWidth: "42ch",
-                    marginTop: 22,
-                    marginLeft: i % 2 !== 0 ? "auto" : 0,
+                    maxWidth: "46ch",
+                    marginLeft: i % 2 === 1 ? "auto" : 0,
                   }}
                 >
                   {move.sub}
                 </p>
               </div>
             </div>
+
+            {/* Gold bottom slide line on hover */}
+            {!move.resolve && (
+              <div className="absolute bottom-0 left-0 h-[1px] w-0 group-hover:w-full transition-all duration-700"
+                style={{ background: `linear-gradient(90deg, ${T.gold}, transparent)` }}
+              />
+            )}
           </motion.div>
         ))}
       </div>
@@ -981,7 +997,7 @@ function FinalSection({ onDiagnosticOpen }: { onDiagnosticOpen: () => void }) {
     >
       <div className="max-w-[1280px] mx-auto px-6 sm:px-12 py-24">
         <Reveal>
-          <span className="font-mono text-[9px] uppercase block mb-6" style={{ letterSpacing: "0.24em", color: T.gold2 }}>
+          <span className="font-mono text-[17px] uppercase block mb-6" style={{ letterSpacing: "0.24em", color: T.gold2 }}>
             Begin the diagnostic
           </span>
         </Reveal>
@@ -991,7 +1007,7 @@ function FinalSection({ onDiagnosticOpen }: { onDiagnosticOpen: () => void }) {
           </h2>
         </Reveal>
         <Reveal delay={0.2}>
-          <p className="mb-11" style={{ fontFamily: T.display, fontSize: 15, color: T.dim, maxWidth: "56ch", lineHeight: 1.7 }}>
+          <p className="mb-11" style={{ fontFamily: T.display, fontSize: 19, color: T.dim, maxWidth: "56ch", lineHeight: 1.7 }}>
             A 30-minute architectural read. You bring the signal. We tell you what's structurally producing it. No fee, no pitch.
           </p>
         </Reveal>
