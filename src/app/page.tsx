@@ -603,42 +603,92 @@ function PracticesSection() {
                 {/* Desktop layout */}
                 <div
                   className="hidden md:grid gap-9 items-start py-10 px-2"
-                  style={{ gridTemplateColumns: "90px 1.2fr 1.4fr 130px" }}
+                  style={{ gridTemplateColumns: i % 2 === 1 ? "130px 1.4fr 1.2fr 90px" : "90px 1.2fr 1.4fr 130px" }}
                 >
-                  <span className="font-mono" style={{ fontSize: 13, color: T.gold, letterSpacing: "0.12em" }}>
-                    {p.num}
-                  </span>
-                  <div>
-                    <span className="font-serif font-medium uppercase block" style={{ fontFamily: T.display, fontSize: 36, lineHeight: 1, color: T.ink }}>
-                      {p.titleMain}{" "}
-                      <em style={{ fontStyle: "italic", display: "block" }}>{p.titleEm}</em>
-                    </span>
-                    <p className="font-serif italic mt-5 transition-colors duration-300 group-hover:text-[#A07830]"
-                      style={{ fontSize: 24, lineHeight: 1.25, color: T.ink3 }}>
-                      {p.hook}
-                    </p>
-                    <span
-                      className="inline-flex items-center gap-2 mt-4 px-3 py-1.5"
-                      style={{ fontFamily: T.mono, fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: T.mid, border: `1px solid ${T.rule2}` }}
-                    >
-                      <b style={{ color: T.ink, fontWeight: 500, fontSize: 12 }}>{p.chip.split(" ").slice(0, 2).join(" ")}</b>{" "}
-                      {p.chip.split(" ").slice(2).join(" ")}
-                    </span>
-                  </div>
-                  <div className="grid grid-cols-2 gap-9">
-                    <div>
-                      <div className="font-mono text-[11px] uppercase mb-3" style={{ letterSpacing: "0.16em", color: T.gold }}>The Signal</div>
-                      <p style={{ fontFamily: T.display, fontSize: 16, lineHeight: 1.65, color: T.ink3 }}>{p.signal}</p>
-                    </div>
-                    <div>
-                      <div className="font-mono text-[11px] uppercase mb-3" style={{ letterSpacing: "0.16em", color: T.gold }}>What We Build</div>
-                      <p style={{ fontFamily: T.display, fontSize: 16, lineHeight: 1.65, color: T.ink3 }}>{p.build}</p>
-                    </div>
-                  </div>
-                  <span className="font-mono text-[10px] uppercase self-center justify-self-end inline-flex items-center gap-2.5"
-                    style={{ letterSpacing: "0.14em", color: T.gold }}>
-                    Enter <span className="inline-block h-px group-hover:w-7 transition-all duration-300" style={{ width: 16, background: "currentColor" }} />
-                  </span>
+                  {/* Column order flips for even rows (zigzag) */}
+                  {i % 2 === 1 ? (
+                    <>
+                      {/* Enter — left */}
+                      <span className="font-mono text-[10px] uppercase self-center inline-flex items-center gap-2.5"
+                        style={{ letterSpacing: "0.14em", color: T.gold }}>
+                        <span className="inline-block h-px group-hover:w-7 transition-all duration-300" style={{ width: 16, background: "currentColor" }} /> Enter
+                      </span>
+                      {/* Signal + Build */}
+                      <div className="grid grid-cols-2 gap-9">
+                        <div>
+                          <div className="font-mono text-[11px] uppercase mb-3" style={{ letterSpacing: "0.16em", color: T.gold }}>The Signal</div>
+                          <p style={{ fontFamily: T.display, fontSize: 16, lineHeight: 1.65, color: T.ink3 }}>{p.signal}</p>
+                        </div>
+                        <div>
+                          <div className="font-mono text-[11px] uppercase mb-3" style={{ letterSpacing: "0.16em", color: T.gold }}>What We Build</div>
+                          <p style={{ fontFamily: T.display, fontSize: 16, lineHeight: 1.65, color: T.ink3 }}>{p.build}</p>
+                        </div>
+                      </div>
+                      {/* Title + Hook — right aligned */}
+                      <div className="text-right">
+                        <span className="font-serif font-medium uppercase block" style={{ fontFamily: T.display, fontSize: 36, lineHeight: 1, color: T.gold }}>
+                          {p.titleMain}{" "}
+                          <em style={{ fontStyle: "italic", display: "block" }}>{p.titleEm}</em>
+                        </span>
+                        <p className="font-serif italic mt-5 transition-colors duration-300 group-hover:text-[#A07830]"
+                          style={{ fontSize: 24, lineHeight: 1.25, color: T.ink3 }}>
+                          {p.hook}
+                        </p>
+                        <span
+                          className="inline-flex items-center gap-2 mt-4 px-3 py-1.5"
+                          style={{ fontFamily: T.mono, fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: T.mid, border: `1px solid ${T.rule2}` }}
+                        >
+                          <b style={{ color: T.ink, fontWeight: 500, fontSize: 12 }}>{p.chip.split(" ").slice(0, 2).join(" ")}</b>{" "}
+                          {p.chip.split(" ").slice(2).join(" ")}
+                        </span>
+                      </div>
+                      {/* Num — far right */}
+                      <span className="font-mono self-center justify-self-end" style={{ fontSize: 13, color: T.gold, letterSpacing: "0.12em" }}>
+                        {p.num}
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      {/* Num — far left */}
+                      <span className="font-mono" style={{ fontSize: 13, color: T.gold, letterSpacing: "0.12em" }}>
+                        {p.num}
+                      </span>
+                      {/* Title + Hook */}
+                      <div>
+                        <span className="font-serif font-medium uppercase block" style={{ fontFamily: T.display, fontSize: 36, lineHeight: 1, color: T.gold }}>
+                          {p.titleMain}{" "}
+                          <em style={{ fontStyle: "italic", display: "block" }}>{p.titleEm}</em>
+                        </span>
+                        <p className="font-serif italic mt-5 transition-colors duration-300 group-hover:text-[#A07830]"
+                          style={{ fontSize: 24, lineHeight: 1.25, color: T.ink3 }}>
+                          {p.hook}
+                        </p>
+                        <span
+                          className="inline-flex items-center gap-2 mt-4 px-3 py-1.5"
+                          style={{ fontFamily: T.mono, fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: T.mid, border: `1px solid ${T.rule2}` }}
+                        >
+                          <b style={{ color: T.ink, fontWeight: 500, fontSize: 12 }}>{p.chip.split(" ").slice(0, 2).join(" ")}</b>{" "}
+                          {p.chip.split(" ").slice(2).join(" ")}
+                        </span>
+                      </div>
+                      {/* Signal + Build */}
+                      <div className="grid grid-cols-2 gap-9">
+                        <div>
+                          <div className="font-mono text-[11px] uppercase mb-3" style={{ letterSpacing: "0.16em", color: T.gold }}>The Signal</div>
+                          <p style={{ fontFamily: T.display, fontSize: 16, lineHeight: 1.65, color: T.ink3 }}>{p.signal}</p>
+                        </div>
+                        <div>
+                          <div className="font-mono text-[11px] uppercase mb-3" style={{ letterSpacing: "0.16em", color: T.gold }}>What We Build</div>
+                          <p style={{ fontFamily: T.display, fontSize: 16, lineHeight: 1.65, color: T.ink3 }}>{p.build}</p>
+                        </div>
+                      </div>
+                      {/* Enter — far right */}
+                      <span className="font-mono text-[10px] uppercase self-center justify-self-end inline-flex items-center gap-2.5"
+                        style={{ letterSpacing: "0.14em", color: T.gold }}>
+                        Enter <span className="inline-block h-px group-hover:w-7 transition-all duration-300" style={{ width: 16, background: "currentColor" }} />
+                      </span>
+                    </>
+                  )}
                 </div>
 
                 {/* Mobile layout */}
@@ -647,7 +697,7 @@ function PracticesSection() {
                     <span className="font-mono text-[13px]" style={{ color: T.gold, letterSpacing: "0.12em" }}>{p.num}</span>
                     <span className="font-mono text-[11px] uppercase" style={{ letterSpacing: "0.14em", color: T.gold }}>Enter →</span>
                   </div>
-                  <span className="font-serif font-medium uppercase" style={{ fontFamily: T.display, fontSize: 30, lineHeight: 1.05, color: T.ink }}>
+                  <span className="font-serif font-medium uppercase" style={{ fontFamily: T.display, fontSize: 30, lineHeight: 1.05, color: T.gold }}>
                     {p.titleMain} <em style={{ fontStyle: "italic" }}>{p.titleEm}</em>
                   </span>
                   <p className="font-serif italic" style={{ fontSize: 20, lineHeight: 1.3, color: T.ink3 }}>{p.hook}</p>
