@@ -307,7 +307,7 @@ function HeroBody({ onDiagnosticOpen }: { onDiagnosticOpen: () => void }) {
           </div>
 
           {/* Right */}
-          <div className="pt-3 md:pt-4">
+          <div className="pt-3 md:pt-4 md:pl-10 lg:pl-16">
             <motion.p
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
