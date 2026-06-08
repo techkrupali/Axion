@@ -2,754 +2,1112 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { Reveal } from "@/components/Reveal";
-import DiagnosticModal from "@/components/DiagnosticModal";
-import { motion, useScroll, useTransform } from "framer-motion";
+import Image from "next/image";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import Footer from "@/components/Footer";
-import Button from "@/components/Button";
+import DiagnosticModal from "@/components/DiagnosticModal";
+import { Reveal } from "@/components/Reveal";
 
-/* ── Animated grid background ── */
-function GridBackground() {
+// ─────────────────────────────────────────────
+// CSS TOKENS (cream / light theme — mirrors the HTML)
+// ─────────────────────────────────────────────
+const T = {
+  white:  "#F7F6F3",
+  white2: "#EEECEA",
+  white3: "#E2E0DC",
+  ink:    "#0D0D0B",
+  ink2:   "#1A1A18",
+  ink3:   "#2E2E2C",
+  mid:    "#7A7870",
+  dim:    "#B0AEA8",
+  gold:   "#A07830",
+  gold2:  "#C49848",
+  rule:   "rgba(13,13,11,0.10)",
+  rule2:  "rgba(13,13,11,0.18)",
+};
+
+// ─────────────────────────────────────────────
+// TICKER — seamless marquee helper
+// ─────────────────────────────────────────────
+function Ticker({
+  items,
+  duration = 72,
+  dark = false,
+}: {
+  items: { tag: string; line: string }[];
+  duration?: number;
+  dark?: boolean;
+}) {
+  const track = [...items, ...items]; // duplicate for seamless loop
   return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden">
-      <svg className="absolute inset-0 w-full h-full opacity-[0.025]" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse">
-            <path d="M 80 0 L 0 0 0 80" fill="none" stroke="#C9A24A" strokeWidth="0.5"/>
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#grid)" />
-      </svg>
+    <div
+      className="overflow-hidden relative"
+      style={{
+        borderTop: `1px solid ${dark ? "rgba(247,246,243,0.12)" : T.rule}`,
+        borderBottom: `1px solid ${dark ? "rgba(247,246,243,0.12)" : T.rule}`,
+        padding: "16px 0",
+        background: dark ? T.ink : T.white2,
+        WebkitMaskImage: "linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)",
+        maskImage: "linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)",
+      }}
+      aria-hidden="true"
+    >
+      <motion.div
+        className="flex whitespace-nowrap"
+        animate={{ x: ["0%", "-50%"] }}
+        transition={{ repeat: Infinity, duration, ease: "linear" }}
+        style={{ width: "max-content" }}
+      >
+        {track.map((item, i) => (
+          <span key={i} className="inline-flex items-baseline gap-3 px-7">
+            <span
+              className="font-serif italic"
+              style={{ fontSize: 20, color: dark ? "rgba(247,246,243,0.78)" : T.ink, lineHeight: 1 }}
+            >
+              {item.line}
+            </span>
+            <span
+              className="self-center w-[5px] h-[5px] rotate-45 mx-2"
+              style={{ background: T.gold, opacity: 0.5, display: "inline-block" }}
+            />
+          </span>
+        ))}
+      </motion.div>
     </div>
   );
 }
 
-/* ── Floating orbs ── */
-function Orbs() {
-  return null;
-}
+const STRUCTURAL_SIGNALS = [
+  { tag: "Structural Signal", line: "Growth is accelerating. Stability is not." },
+  { tag: "Structural Signal", line: "Cost is rising. The cause is unclear." },
+  { tag: "Structural Signal", line: "AI is increasing output. Judgment is not improving." },
+  { tag: "Structural Signal", line: "The organisation changes depending on who is in the room." },
+  { tag: "Structural Signal", line: "Succession is visible. Authority is not." },
+  { tag: "Structural Signal", line: "The business is stable. The future is not." },
+];
 
-function StatementCard({ item, i }: { item: { num: string; title: string; desc: string }; i: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [hovered, setHovered] = useState(false);
-
+// ─────────────────────────────────────────────
+// HERO BAND
+// ─────────────────────────────────────────────
+function HeroBand() {
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-10%" }}
-      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: i * 0.12 }}
-      className="group relative p-8 border rounded-[24px] bg-[#0A0A0B] cursor-default"
+    <div
+      className="relative overflow-hidden"
       style={{
-        borderColor: hovered ? "rgba(201,162,74,0.2)" : "rgba(240,241,245,0.1)",
-        transition: "border-color 0.4s",
+        background: "radial-gradient(120% 140% at 70% 10%, #232320 0%, #15150f 45%, #0D0D0B 100%)",
+        borderBottom: `1px solid ${T.ink}`,
+        minHeight: 360,
       }}
     >
-      {/* Animated top border beam */}
-      <motion.div
-        className="absolute top-0 left-0 h-[1px]"
-        initial={{ scaleX: 0, originX: 0 }}
-        whileInView={{ scaleX: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1, delay: 0.3 + i * 0.12, ease: "easeOut" }}
-        style={{ width: "100%", background: "#C9A24A" }}
+      {/* Grid overlay */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px)",
+          backgroundSize: "52px 52px",
+          WebkitMaskImage: "linear-gradient(180deg,rgba(0,0,0,.95),transparent 88%)",
+          maskImage: "linear-gradient(180deg,rgba(0,0,0,.95),transparent 88%)",
+        }}
       />
 
-      {/* Number tag */}
-      <div className="font-mono text-[10px] tracking-[0.4em] text-[#C9A24A] mb-6" style={{ opacity: hovered ? 1 : 0.5, transition: "opacity 0.3s" }}>
-        [ {item.num} ]
-      </div>
-
-      {/* Title */}
-      <motion.h3
-        className="font-serif text-[28px] mb-4"
-        animate={{ color: hovered ? "#C9A24A" : "#F0F1F5" }}
-        transition={{ duration: 0.35 }}
-      >
-        {item.title}
-      </motion.h3>
-
-      {/* Desc — slides up on hover */}
-      <motion.p
-        className="text-[14px] text-[#B8BDCE] leading-relaxed max-w-[20ch]"
-        animate={{ y: hovered ? -2 : 0, opacity: hovered ? 1 : 0.7 }}
-        transition={{ duration: 0.35 }}
-      >
-        {item.desc}
-      </motion.p>
-
-      {/* Expanding gold line */}
-      <motion.div
-        className="mt-8 h-[1px] bg-[#C9A24A]"
-        animate={{ width: hovered ? "100%" : "40px" }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      />
-    </motion.div>
-  );
-}
-
-const BRIDGE_ITEMS = [
-  { title: "Where the system is breaking", step: "01", bg: "#0A0A0B" },
-  { title: "What's holding it together artificially", step: "02", bg: "#0A0A0B" },
-  { title: "What will fail next", step: "03", bg: "#0A0A0B" },
-  { title: "Then we redesign it so it holds", step: "04", bg: "#0A0A0B" },
-];
-
-function BridgeCards() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end end"],
-  });
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  useEffect(() => {
-    return scrollYProgress.on("change", (v) => {
-      const idx = Math.min(BRIDGE_ITEMS.length - 1, Math.floor(v * BRIDGE_ITEMS.length));
-      setActiveIndex(idx);
-    });
-  }, [scrollYProgress]);
-
-  return (
-    <div ref={sectionRef} style={{ height: `${BRIDGE_ITEMS.length * 50}vh` }}>
-      <div className="sticky top-[20vh]">
-        <div className="relative border-l border-[rgba(240,241,245,0.1)] pl-10 md:pl-20 flex flex-col gap-6 pt-20 pb-20">
-          {BRIDGE_ITEMS.map((item, i) => (
-            <div
-              key={i}
-              className="relative group transition-all duration-500"
-              style={{
-                opacity: i <= activeIndex ? 1 : 0,
-                transform: i <= activeIndex ? "translateY(0)" : "translateY(32px)",
-              }}
-            >
-              <div className="absolute left-[-41px] md:left-[-81px] top-1/2 -translate-y-1/2 flex flex-col items-center gap-3">
-                <div className="w-3 h-3 rounded-full bg-[#0A0A0B] border-2 border-[#C9A24A] z-20 group-hover:scale-[1.8] transition-transform duration-500" />
-                <span className="font-serif italic text-[28px] text-[#4A4F62] group-hover:text-[#C9A24A] transition-colors duration-500">{item.step}</span>
-              </div>
-              <div
-                className="p-6 md:p-8 rounded-[28px] border border-[rgba(240,241,245,0.1)] transition-all duration-700 group-hover:border-[rgba(201,162,74,0.2)]"
-                style={{ background: item.bg }}
+      {/* Content */}
+      <div className="relative z-10 max-w-[1280px] mx-auto px-6 sm:px-12 pt-10 pb-28">
+        {/* Practice line */}
+        <div className="flex flex-wrap items-baseline gap-0">
+          {["People Architecture", "Labour Codes", "AI Edge Lab", "Family Business"].map((p, i, arr) => (
+            <span key={p} className="inline-flex items-baseline">
+              <Link
+                href="#practices"
+                className="font-mono text-[11px] uppercase transition-colors duration-200"
+                style={{ letterSpacing: "0.2em", color: "rgba(247,246,243,0.62)" }}
               >
-                <h3 className="font-serif text-[clamp(16px,1.6vw,22px)] leading-[1.2] text-[#F0F1F5]">{item.title}</h3>
-              </div>
-            </div>
+                {p}
+              </Link>
+              {i < arr.length - 1 && (
+                <span className="mx-4" style={{ color: T.gold, opacity: 0.6, fontSize: 11 }}>/</span>
+              )}
+            </span>
           ))}
         </div>
+
+        {/* Thesis */}
+        <motion.p
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.15, ease: [0.22, 0.61, 0.36, 1] }}
+          className="font-serif italic mt-7"
+          style={{
+            fontSize: "clamp(22px,2.6vw,32px)",
+            lineHeight: 1.1,
+            color: "rgba(247,246,243,0.92)",
+            maxWidth: "30ch",
+          }}
+        >
+          You don't need a service. You need to read{" "}
+          <em style={{ color: T.gold2 }}>what is breaking.</em>
+        </motion.p>
       </div>
+
+      {/* Signal strip at bottom */}
+      <div className="absolute left-0 right-0 bottom-12 z-10 overflow-hidden"
+        style={{
+          WebkitMaskImage: "linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)",
+          maskImage: "linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)",
+        }}
+        aria-hidden="true"
+      >
+        <motion.div
+          className="flex whitespace-nowrap"
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{ repeat: Infinity, duration: 80, ease: "linear" }}
+          style={{ width: "max-content" }}
+        >
+          {[...STRUCTURAL_SIGNALS, ...STRUCTURAL_SIGNALS].map((s, i) => (
+            <span key={i} className="inline-flex items-baseline gap-3 px-8">
+              <span className="font-serif italic" style={{ fontSize: 18, color: "rgba(247,246,243,0.78)", lineHeight: 1 }}>
+                {s.line}
+              </span>
+              <span className="self-center w-[4px] h-[4px] rotate-45 mx-1.5 inline-block" style={{ background: T.gold, opacity: 0.5 }} />
+            </span>
+          ))}
+        </motion.div>
+      </div>
+
+      {/* Band label */}
+      <span
+        className="absolute left-6 sm:left-12 bottom-2 z-10 font-mono text-[10px] uppercase"
+        style={{ letterSpacing: "0.22em", color: "rgba(247,246,243,0.45)" }}
+      >
+        Operating Architecture Practice / Bengaluru / 2026
+      </span>
+
+      {/* Vertical wordmark */}
+      <span
+        className="absolute right-10 top-1/2 -translate-y-1/2 font-serif font-medium uppercase hidden lg:block"
+        style={{
+          writingMode: "vertical-rl",
+          transform: "translateY(-50%) rotate(180deg)",
+          fontSize: 30,
+          letterSpacing: "0.18em",
+          color: "rgba(247,246,243,0.85)",
+          zIndex: 2,
+        }}
+      >
+        Axion Index
+      </span>
+
+      {/* Gold edge rule */}
+      <div
+        className="absolute top-0 right-0 w-1 h-full"
+        style={{ background: `linear-gradient(${T.gold},transparent)`, zIndex: 2 }}
+      />
     </div>
   );
 }
 
-const SIGNALS = [
-  { num: "01", text: "Growth is <em>accelerating.</em><br>Stability is not.", href: "/expertise/people", dest: "People Architecture" },
-  { num: "02", text: "The organisation behaves differently<br><em>depending on who is in the room.</em>", href: "/expertise/people", dest: "People Architecture" },
-  { num: "03", text: "AI is increasing <em>output.</em><br>Decision quality is dropping.", href: "/expertise/ai-edge", dest: "AI Edge Lab" },
-  { num: "04", text: "Cost is rising.<br><em>You don't know why.</em>", href: "/expertise/labour", dest: "Labour Codes" },
-  { num: "05", text: "The business is stable.<br><em>The future is not.</em>", href: "/expertise/family", dest: "Family Business" },
-  { num: "06", text: "You have <em>strong people.</em><br>You do not have a strong system.", href: "/expertise/people", dest: "People Architecture" },
-];
-
-function SignalsSection() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end end"],
-  });
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  useEffect(() => {
-    return scrollYProgress.on("change", (v) => {
-      const idx = Math.min(SIGNALS.length - 1, Math.floor(v * SIGNALS.length));
-      setActiveIndex(idx);
-    });
-  }, [scrollYProgress]);
+// ─────────────────────────────────────────────
+// HERO BODY
+// ─────────────────────────────────────────────
+function HeroBody({ onDiagnosticOpen }: { onDiagnosticOpen: () => void }) {
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
 
   return (
     <section
-      ref={sectionRef}
-      id="signals"
-      className="section-dark relative"
-      style={{ height: `${100 + SIGNALS.length * 50}vh` }}
+      ref={ref}
+      className="relative overflow-hidden"
+      style={{ borderBottom: `1px solid ${T.rule}` }}
     >
-      <div className="sticky top-0 h-screen flex items-center overflow-hidden">
-        <div className="shell w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-20 items-center">
-            {/* Left — static */}
-            <div>
-              <Reveal>
-                <span className="eyebrow mb-6">If this feels familiar</span>
-              </Reveal>
-              <Reveal delay={0.1}>
-                <h2 className="h-section mb-8">
-                  You don't need a service.<br />
-                  You need to read <em>what is breaking.</em>
-                </h2>
-              </Reveal>
-              <Reveal delay={0.2}>
-                <div className="gold-line" />
-              </Reveal>
-            </div>
+      <motion.div style={{ y }} className="max-w-[1280px] mx-auto px-4 sm:px-8 py-20 md:py-24">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-20 items-start">
+          {/* Left */}
+          <div>
+            <motion.p
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              className="font-mono text-[9px] uppercase mb-7"
+              style={{ letterSpacing: "0.24em", color: T.mid }}
+            >
+              Operating Architecture Practice
+            </motion.p>
 
-            {/* Right — stacking cards, contained */}
-            <div className="relative" style={{ height: `${SIGNALS.length * 56 + 80}px` }}>
-              {SIGNALS.map((signal, i) => (
-                <div
-                  key={i}
-                  className="absolute left-0 right-0 transition-all duration-500"
+            <motion.h1
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.85, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
+              className="font-serif font-medium"
+              style={{
+                fontSize: "clamp(62px,9vw,116px)",
+                lineHeight: 0.96,
+                letterSpacing: "0.005em",
+                color: T.ink,
+              }}
+            >
+              <span className="block">
+                From{" "}
+                <span
                   style={{
-                    top: i <= activeIndex ? `${i * 56}px` : `${SIGNALS.length * 56 + 40}px`,
-                    zIndex: 10 + i,
-                    opacity: i <= activeIndex ? 1 : 0,
-                    transform: i <= activeIndex ? "translateY(0)" : "translateY(24px)",
+                    textDecoration: "line-through",
+                    textDecorationColor: T.gold,
+                    textDecorationThickness: 2,
+                    color: T.mid,
                   }}
                 >
-                  <Link
-                    href={signal.href}
-                    className="group block bg-[#0A0A0B] border border-[rgba(240,241,245,0.1)] hover:border-[rgba(201,162,74,0.2)] transition-all duration-400 rounded-[24px] px-6 py-5"
-                  >
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="font-mono text-[10px] text-[#C9A24A] tracking-[0.35em] font-semibold">SIGNAL {signal.num}</span>
-                      <span className="font-mono text-[9px] tracking-[0.2em] uppercase text-[#4A4F62] group-hover:text-[#C9A24A] transition-colors duration-300 flex items-center gap-1">
-                        → {signal.dest}
-                      </span>
-                    </div>
-                    <h3
-                      className="text-[clamp(18px,2.2vw,26px)] font-serif leading-[1.35] text-[#D4D7E0] group-hover:text-[#F0F1F5] transition-colors duration-400"
-                      dangerouslySetInnerHTML={{ __html: signal.text }}
-                    />
-                  </Link>
-                </div>
-              ))}
-            </div>
+                  ambiguity
+                </span>
+              </span>
+              <span className="block">
+                to{" "}
+                <em style={{ fontStyle: "italic", color: T.gold, fontWeight: 500 }}>architecture.</em>
+              </span>
+            </motion.h1>
+
+            <motion.div
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.32, ease: [0.22, 1, 0.36, 1] }}
+              className="flex flex-wrap gap-4 mt-10"
+            >
+              <Link
+                href="/connect"
+                className="inline-flex items-center gap-3 font-mono text-[10px] uppercase px-7 py-4 transition-all duration-250"
+                style={{
+                  letterSpacing: "0.18em",
+                  background: T.ink,
+                  color: T.white,
+                }}
+                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = T.gold; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = T.ink; }}
+              >
+                Reach Us <span style={{ display: "inline-block", width: 16, height: 1, background: "currentColor" }} />
+              </Link>
+              <a
+                href="#signals"
+                className="inline-flex items-center gap-3 font-mono text-[10px] uppercase px-7 py-4 transition-all duration-250"
+                style={{
+                  letterSpacing: "0.18em",
+                  border: `1px solid ${T.rule2}`,
+                  color: T.ink3,
+                }}
+                onMouseEnter={e => {
+                  (e.currentTarget as HTMLElement).style.borderColor = T.gold;
+                  (e.currentTarget as HTMLElement).style.color = T.gold;
+                }}
+                onMouseLeave={e => {
+                  (e.currentTarget as HTMLElement).style.borderColor = T.rule2;
+                  (e.currentTarget as HTMLElement).style.color = T.ink3;
+                }}
+              >
+                Read the signals <span style={{ display: "inline-block", width: 16, height: 1, background: "currentColor" }} />
+              </a>
+            </motion.div>
           </div>
+
+          {/* Right */}
+          <div className="pt-3 md:pt-4">
+            <motion.p
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.85, delay: 0.22, ease: [0.22, 1, 0.36, 1] }}
+              style={{ fontSize: 17, lineHeight: 1.75, color: T.ink3, fontWeight: 300, maxWidth: "46ch", marginBottom: 46 }}
+            >
+              Most organisations don't fail when strategy breaks. They fail when their internal architecture cannot carry what they are becoming.
+            </motion.p>
+
+            {/* Stats */}
+            <motion.div
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.85, delay: 0.36, ease: [0.22, 1, 0.36, 1] }}
+              className="flex"
+            >
+              {[
+                { val: "70%", key: "Transformations fail to sustain gains", src: "McKinsey" },
+                { val: "95%", key: "GenAI pilots show no P&L impact", src: "MIT NANDA" },
+                { val: "39%", key: "Core skills change by 2030", src: "WEF" },
+              ].map((stat, i) => (
+                <a
+                  key={i}
+                  href="#research"
+                  className="flex-1 group block"
+                  style={{
+                    borderLeft: i > 0 ? `1px solid ${T.rule2}` : "none",
+                    paddingLeft: i > 0 ? 22 : 0,
+                    paddingRight: 22,
+                    paddingBottom: 4,
+                    transition: "border-color 0.25s",
+                    textDecoration: "none",
+                    color: "inherit",
+                  }}
+                >
+                  <div
+                    className="font-serif font-medium"
+                    style={{ fontSize: 40, lineHeight: 1, color: T.ink }}
+                  >
+                    {stat.val}
+                  </div>
+                  <div
+                    className="font-mono text-[9px] uppercase mt-2"
+                    style={{ letterSpacing: "0.1em", color: T.mid, lineHeight: 1.5 }}
+                  >
+                    {stat.key}
+                  </div>
+                  <span
+                    className="font-mono text-[8px] uppercase mt-1.5 inline-block opacity-0 group-hover:opacity-100 transition-opacity"
+                    style={{ letterSpacing: "0.14em", color: T.gold, transform: "translateY(-2px)" }}
+                  >
+                    {stat.src} · See evidence
+                  </span>
+                </a>
+              ))}
+            </motion.div>
+          </div>
+        </div>
+      </motion.div>
+    </section>
+  );
+}
+
+// ─────────────────────────────────────────────
+// METHOD
+// ─────────────────────────────────────────────
+function MethodSection() {
+  return (
+    <section style={{ borderBottom: `1px solid ${T.rule}` }}>
+      <div className="max-w-[1280px] mx-auto px-6 sm:px-12 py-24">
+        {/* Section head */}
+        <div className="flex items-baseline justify-between mb-14 gap-6">
+          <span className="font-mono text-[9px] uppercase" style={{ letterSpacing: "0.24em", color: T.mid }}>How we do it</span>
+          <span className="font-mono text-[10px]" style={{ letterSpacing: "0.14em", color: T.dim }}>01 / 05</span>
+        </div>
+
+        <Reveal>
+          <h2
+            className="font-serif font-medium mb-14"
+            style={{
+              fontSize: "clamp(30px,4.4vw,56px)",
+              lineHeight: 1.04,
+              color: T.ink,
+            }}
+          >
+            We don't start with the symptom. We map the architecture carrying{" "}
+            <em style={{ color: T.gold, fontStyle: "italic" }}>the consequence.</em>
+          </h2>
+        </Reveal>
+
+        {/* 4-cell grid */}
+        <div
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
+          style={{ gap: 1, background: T.rule, border: `1px solid ${T.rule}` }}
+        >
+          {[
+            { n: "01", title: "Where the system is breaking", bg: T.white },
+            { n: "02", title: "What's holding it together artificially", bg: "#E7E3DA" },
+            { n: "03", title: "What will fail next", bg: "#6E695E", dark: true },
+            { n: "04", title: "Then we redesign it so it holds", bg: T.ink, dark: true },
+          ].map((cell, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-8%" }}
+              transition={{ duration: 0.7, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] }}
+              className="relative p-8 pb-10"
+              style={{ background: cell.bg }}
+            >
+              {/* Gold top rule */}
+              <div className="absolute top-0 left-0 w-10 h-0.5" style={{ background: T.gold }} />
+              <span
+                className="font-mono block mb-8"
+                style={{ fontSize: 11, color: T.gold, letterSpacing: "0.14em" }}
+              >
+                {cell.n}
+              </span>
+              <h3
+                className="font-serif font-medium"
+                style={{ fontSize: 23, lineHeight: 1.18, color: cell.dark ? T.white : T.ink }}
+              >
+                {cell.title}
+              </h3>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>
   );
 }
 
-export default function Home() {
-  const [diagOpen, setDiagOpen] = useState(false);
-  const heroRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
-  const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
-
+// ─────────────────────────────────────────────
+// LOGIC (Operating Logic)
+// ─────────────────────────────────────────────
+function LogicSection() {
   return (
-    <div className="min-h-screen">
+    <section id="about" style={{ borderBottom: `1px solid ${T.rule}` }}>
+      <div className="max-w-[1280px] mx-auto px-6 sm:px-12 py-24">
+        <div className="flex items-baseline justify-between mb-14 gap-6">
+          <span className="font-mono text-[9px] uppercase" style={{ letterSpacing: "0.24em", color: T.mid }}>Our operating logic</span>
+          <span className="font-mono text-[10px]" style={{ letterSpacing: "0.14em", color: T.dim }}>02 / 05</span>
+        </div>
 
-      {diagOpen && <DiagnosticModal onClose={() => setDiagOpen(false)} />}
+        <Reveal>
+          <h2 className="font-serif font-medium mb-5" style={{ fontSize: "clamp(34px,5vw,62px)", lineHeight: 1, color: T.ink }}>
+            Our Operating <em style={{ color: T.gold, fontStyle: "italic" }}>Logic.</em>
+          </h2>
+        </Reveal>
+        <Reveal delay={0.1}>
+          <p className="mb-16" style={{ fontSize: 16, color: T.ink3, maxWidth: "60ch" }}>
+            Not designed in a deck. Forged in the field, then interpreted across labour, AI, people, and ownership.
+          </p>
+        </Reveal>
 
-      {/* ══════════════════════════════════════════
-          HERO — Cinematic full-screen
-      ══════════════════════════════════════════ */}
-      <header ref={heroRef} className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        <GridBackground />
+        {/* 3-step arc */}
+        <div
+          className="grid grid-cols-1 md:grid-cols-3 mb-10"
+          style={{ gap: 1, background: T.rule, border: `1px solid ${T.rule}` }}
+        >
+          {[
+            {
+              stage: "Origin", n: "01", title: "Belief",
+              desc: "Where every operating logic begins. A conviction about how an organisation should hold, formed before the pressure arrives.",
+              dark: false,
+            },
+            {
+              stage: "Tested", n: "02", title: "Conviction",
+              desc: "Belief that has survived collision with reality. Tested against data, cost, and consequence. Not opinion.",
+              dark: false,
+            },
+            {
+              stage: "Codified", n: "03", title: "Rhythm",
+              desc: "When conviction stops depending on the person. Codified into repeatable behaviour the organisation keeps on its own.",
+              dark: true,
+            },
+          ].map((step, i) => (
+            <Reveal key={i} delay={i * 0.12}>
+              <div
+                className="relative p-11 h-full"
+                style={{ background: step.dark ? T.ink : T.white }}
+              >
+                {step.dark && (
+                  <div className="absolute top-0 left-0 right-0 h-0.5" style={{ background: `linear-gradient(90deg, ${T.gold}, transparent)` }} />
+                )}
+                <span className="font-mono text-[9px] uppercase block mb-4" style={{ letterSpacing: "0.2em", color: step.dark ? "rgba(247,246,243,0.5)" : T.mid }}>
+                  {step.stage}
+                </span>
+                <span className="font-mono block mt-4 mb-3" style={{ fontSize: 11, color: step.dark ? T.gold2 : T.gold, letterSpacing: "0.14em" }}>
+                  {step.n}
+                </span>
+                <h3
+                  className="font-serif italic font-medium mb-5"
+                  style={{ fontSize: 38, color: step.dark ? T.white : T.ink }}
+                >
+                  {step.title}
+                </h3>
+                <p style={{ fontSize: 14, lineHeight: 1.65, color: step.dark ? T.dim : T.ink3 }}>
+                  {step.desc}
+                </p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
 
-        <motion.div style={{ y: heroY, opacity: heroOpacity }} className="shell text-center relative z-10 pt-20">
-          <Reveal>
-            {/* Fix 3 — classification eyebrow, corner strips merged in */}
-            <div className="eyebrow eyebrow--center mb-10 text-[#B8BDCE]">
-              OPERATING ARCHITECTURE PRACTICE
-            </div>
-          </Reveal>
+        <Reveal delay={0.3}>
+          <p className="font-serif italic" style={{ fontSize: 21, color: T.ink3, maxWidth: "60ch" }}>
+            This is the same arc we build for you: from what one person believes, to what the whole organisation runs on.
+          </p>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
 
-          <Reveal delay={0.1}>
-            <h1 className="h-display hero-glow mb-8">
-              {/* Fix 6 — strikethrough contrast raised */}
-              From <s className="opacity-80 decoration-[#C9A24A] decoration-2">ambiguity</s><br />
-              to <em>architecture.</em>
-            </h1>
-          </Reveal>
+// ─────────────────────────────────────────────
+// PRACTICES
+// ─────────────────────────────────────────────
+const PRACTICES = [
+  {
+    num: "[01]",
+    titleMain: "People",
+    titleEm: "Architecture",
+    hook: "When your best people leave, the system leaves with them.",
+    chip: "Judgment, decision rights & succession codified into structure",
+    signal: "When the organisation depends on who is in the room, not on how it is built.",
+    build: "We codify judgment, decision rights, and succession into structure the company keeps after people leave.",
+    href: "/expertise/people",
+  },
+  {
+    num: "[02]",
+    titleMain: "Labour",
+    titleEm: "Codes",
+    hook: "Your workforce is a compliance exposure no one has mapped.",
+    chip: "Headcount turned into auditable control architecture",
+    signal: "When cost, classification, and compliance stop aligning, and you can't see why.",
+    build: "We turn your workforce from headcount into auditable control architecture that holds when rules change.",
+    href: "/expertise/labour",
+  },
+  {
+    num: "[03]",
+    titleMain: "AI",
+    titleEm: "Edge Lab",
+    hook: "Speed without architecture just scales bad judgment.",
+    chip: "The decision layer around the model, not the model",
+    signal: "When AI is making you faster, but not wiser. Speed without architecture scales bad judgment.",
+    build: "We build the decision layer where AI accelerates, and where a human must still hold the call.",
+    href: "/expertise/ai-edge",
+  },
+  {
+    num: "[04]",
+    titleMain: "Family",
+    titleEm: "Business",
+    hook: "What holds when the founder is no longer the system?",
+    chip: "Ownership & authority built to survive the handover",
+    signal: "When continuity depends on individuals, not structure, and succession is the risk no one says out loud.",
+    build: "We codify ownership, authority, and decision rights into architecture that survives the generational handover.",
+    href: "/expertise/family",
+  },
+];
 
-          <Reveal delay={0.2}>
-            <p className="lead mx-auto mb-14 text-[#D4D7E0] max-w-[48ch]">
-              Most organisations don't fail when strategy breaks.<br />
-              They fail when their internal architecture cannot carry<br />what they are becoming.
+function PracticesSection() {
+  return (
+    <section id="practices" style={{ borderBottom: `1px solid ${T.rule}` }}>
+      <div className="max-w-[1280px] mx-auto px-6 sm:px-12 py-24">
+        <div className="flex items-baseline justify-between mb-14 gap-6">
+          <span className="font-mono text-[9px] uppercase" style={{ letterSpacing: "0.24em", color: T.mid }}>Where the work happens</span>
+          <span className="font-mono text-[10px]" style={{ letterSpacing: "0.14em", color: T.dim }}>03 / 05</span>
+        </div>
+
+        <Reveal>
+          <h2 className="font-serif font-medium mb-12" style={{ fontSize: "clamp(30px,4.4vw,56px)", lineHeight: 1.04, color: T.ink }}>
+            One Operating Logic. <em style={{ color: T.gold, fontStyle: "italic" }}>Four Practices.</em>
+          </h2>
+        </Reveal>
+
+        {/* Practice rows */}
+        <div>
+          {PRACTICES.map((p, i) => (
+            <Reveal key={i} delay={i * 0.08}>
+              <Link
+                href={p.href}
+                className="block group"
+                style={{ borderTop: `1px solid ${T.rule2}`, transition: "background 0.3s" }}
+                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = T.white2; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "transparent"; }}
+              >
+                {/* Desktop layout */}
+                <div
+                  className="hidden md:grid gap-9 items-start py-10 px-2"
+                  style={{ gridTemplateColumns: "90px 1.2fr 1.4fr 130px" }}
+                >
+                  <span className="font-mono" style={{ fontSize: 11, color: T.gold, letterSpacing: "0.12em" }}>
+                    {p.num}
+                  </span>
+                  <div>
+                    <span className="font-serif font-medium uppercase block" style={{ fontSize: 32, lineHeight: 1, color: T.ink }}>
+                      {p.titleMain}{" "}
+                      <em style={{ fontStyle: "italic", display: "block" }}>{p.titleEm}</em>
+                    </span>
+                    <p className="font-serif italic mt-5 transition-colors duration-300 group-hover:text-[#A07830]"
+                      style={{ fontSize: 21, lineHeight: 1.25, color: T.ink3 }}>
+                      {p.hook}
+                    </p>
+                    <span
+                      className="inline-flex items-center gap-2 mt-4 px-3 py-1.5"
+                      style={{ fontFamily: "monospace", fontSize: 9, letterSpacing: "0.12em", textTransform: "uppercase", color: T.mid, border: `1px solid ${T.rule2}` }}
+                    >
+                      <b style={{ color: T.ink, fontWeight: 500, fontSize: 11 }}>{p.chip.split(" ").slice(0, 2).join(" ")}</b>{" "}
+                      {p.chip.split(" ").slice(2).join(" ")}
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-9">
+                    <div>
+                      <div className="font-mono text-[9px] uppercase mb-3" style={{ letterSpacing: "0.16em", color: T.mid }}>The Signal</div>
+                      <p style={{ fontSize: 14, lineHeight: 1.65, color: T.ink3 }}>{p.signal}</p>
+                    </div>
+                    <div>
+                      <div className="font-mono text-[9px] uppercase mb-3" style={{ letterSpacing: "0.16em", color: T.mid }}>What We Build</div>
+                      <p style={{ fontSize: 14, lineHeight: 1.65, color: T.ink3 }}>{p.build}</p>
+                    </div>
+                  </div>
+                  <span className="font-mono text-[10px] uppercase self-center justify-self-end inline-flex items-center gap-2.5"
+                    style={{ letterSpacing: "0.14em", color: T.gold }}>
+                    Enter <span className="inline-block h-px group-hover:w-7 transition-all duration-300" style={{ width: 16, background: "currentColor" }} />
+                  </span>
+                </div>
+
+                {/* Mobile layout */}
+                <div className="md:hidden flex flex-col gap-4 py-8 px-2">
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-[11px]" style={{ color: T.gold, letterSpacing: "0.12em" }}>{p.num}</span>
+                    <span className="font-mono text-[10px] uppercase" style={{ letterSpacing: "0.14em", color: T.gold }}>Enter →</span>
+                  </div>
+                  <span className="font-serif font-medium uppercase" style={{ fontSize: 26, lineHeight: 1.05, color: T.ink }}>
+                    {p.titleMain} <em style={{ fontStyle: "italic" }}>{p.titleEm}</em>
+                  </span>
+                  <p className="font-serif italic" style={{ fontSize: 18, lineHeight: 1.3, color: T.ink3 }}>{p.hook}</p>
+                  <div>
+                    <div className="font-mono text-[9px] uppercase mb-2" style={{ letterSpacing: "0.16em", color: T.mid }}>The Signal</div>
+                    <p style={{ fontSize: 14, lineHeight: 1.65, color: T.ink3 }}>{p.signal}</p>
+                  </div>
+                </div>
+              </Link>
+            </Reveal>
+          ))}
+          {/* Last bottom border */}
+          <div style={{ borderBottom: `1px solid ${T.rule2}` }} />
+        </div>
+
+        {/* Catch-all */}
+        <Reveal delay={0.2}>
+          <div className="mt-14 flex flex-wrap gap-16 items-baseline">
+            <span className="font-serif font-medium" style={{ fontSize: 30, color: T.ink, whiteSpace: "nowrap" }}>
+              Four practices. <em style={{ color: T.gold, fontStyle: "italic" }}>One method.</em>
+            </span>
+            <p style={{ fontSize: 15, color: T.ink3, maxWidth: "54ch", lineHeight: 1.7 }}>
+              If what is breaking does not fit a category, that is still a signal. Bring us the pressure; we will read the architecture behind it.
             </p>
-          </Reveal>
-
-          <Reveal delay={0.3}>
-            {/* Fix 2 — primary gold CTA + secondary outline; Fix 5 — "signals" plural; Fix 7 — one scroll prompt */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Button href="/connect" variant="primary" showArrow={true}>Reach Us</Button>
-              <Button href="#signals" variant="secondary" showArrow={true}>Read the signals</Button>
-            </div>
-          </Reveal>
-
-          {/* Single scroll prompt */}
-          <Reveal delay={0.45}>
-            <div className="mt-16 flex justify-center">
-              <span className="kbd-arrow">Scroll to explore</span>
-            </div>
-          </Reveal>
-        </motion.div>
-      </header>
-
-      {/* ══════════════════════════════════════════
-          SIGNALS — Stacking Cards
-      ══════════════════════════════════════════ */}
-      <SignalsSection />
-
-      {/* ══════════════════════════════════════════
-          BRIDGE — How We Do It
-      ══════════════════════════════════════════ */}
-      <section className="chapter section-deep relative py-0" id="bridge">
-        <div className="shell">
-          <div className="grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-0 items-start">
-            <div className="lg:sticky lg:top-0 h-fit flex flex-col justify-start pt-40 pb-40 lg:pr-10 z-30 pointer-events-none">
-              <div className="pointer-events-auto">
-                <Reveal>
-                  <span className="eyebrow mb-8 text-[#C9A24A]">How We Do It</span>
-                </Reveal>
-                <Reveal delay={0.1}>
-                  <h2 className="h-display text-[clamp(32px,4.5vw,56px)] leading-[0.95] mb-6">
-                    We don't start with the symptom. We map the<br />
-                    architecture carrying the consequence.
-                  </h2>
-                </Reveal>
-                <Reveal delay={0.3}>
-                  <div className="pt-10 border-t border-[rgba(240,241,245,0.1)]">
-                    <span className="font-mono text-[10px] tracking-[0.5em] uppercase text-[#C9A24A] opacity-80">We map:</span>
-                  </div>
-                </Reveal>
-              </div>
-            </div>
-
-            <BridgeCards />
           </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+// ─────────────────────────────────────────────
+// ROLES
+// ─────────────────────────────────────────────
+const ROLES_DATA = [
+  {
+    role: "Founder / CEO",
+    pull: "You can feel the company outgrowing the way you run it. You just can't see where it cracks first.",
+    work: "Map the failure points before they fail, and build the architecture that removes you as the single point of dependency.",
+  },
+  {
+    role: "CFO",
+    pull: "Cost is climbing, and headcount explains some of it. Not the part that keeps you up.",
+    work: "Read the workforce as cost, risk, and control architecture, then install the structure that makes the number governable, not just reported.",
+  },
+  {
+    role: "CHRO",
+    pull: "You're running more programs than ever, and the organisation is no more durable for it.",
+    work: "Build the operating system underneath HR, so capability is designed into structure, not dependent on who's running the program.",
+  },
+  {
+    role: "Investor / Board",
+    pull: "The thesis is sound. The question is whether the organisation can carry it.",
+    work: "Diligence the organisation's operating architecture: what survives the founder, and what is quietly held by individuals who can leave.",
+  },
+];
+
+function RolesSection() {
+  return (
+    <section style={{ borderBottom: `1px solid ${T.rule}` }}>
+      <div className="max-w-[1280px] mx-auto px-6 sm:px-12 py-24">
+        <div className="flex items-baseline justify-between mb-14 gap-6">
+          <span className="font-mono text-[9px] uppercase" style={{ letterSpacing: "0.24em", color: T.mid }}>Where you sit</span>
+          <span className="font-mono text-[10px]" style={{ letterSpacing: "0.14em", color: T.dim }}>04 / 05</span>
         </div>
 
-      </section>
+        <Reveal>
+          <h2 className="font-serif font-medium mb-14" style={{ fontSize: "clamp(30px,4.4vw,56px)", lineHeight: 1.04, color: T.ink }}>
+            What changes, depending on <em style={{ color: T.gold, fontStyle: "italic" }}>where you sit.</em>
+          </h2>
+        </Reveal>
 
-      {/* ══════════════════════════════════════════
-          METHOD — Our Operating Logic
-      ══════════════════════════════════════════ */}
-      <section className="section-tint relative overflow-hidden py-24" id="method">
-        <div className="shell">
-          <div className="max-w-[860px] mx-auto text-center flex flex-col items-center">
-
-            <Reveal delay={0.1}>
-              <h2 className="h-section mb-6 -mt-8">
-                Our Operating <em>Logic.</em>
-              </h2>
-            </Reveal>
-            <Reveal delay={0.2}>
-              <p className="text-[clamp(16px,1.4vw,19px)] text-[#D4D7E0] mb-16 max-w-[52ch] leading-relaxed">
-                Not designed in a deck. Forged in the field — then interpreted across labour, AI, people, and ownership.
-              </p>
-            </Reveal>
-
-            {/* ── Three-panel architectural cards ── */}
-            <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-4 mb-16">
-              {[
-                {
-                  num: "01",
-                  label: "Belief",
-                  desc: "Where every operating logic begins. A conviction about how an organisation should hold — before the pressure arrives.",
-                  accent: "#C9A24A",
-                  tag: "ORIGIN",
-                },
-                {
-                  num: "02",
-                  label: "Conviction",
-                  desc: "Belief that has survived collision with reality. Tested against data, cost, and consequence — not opinion.",
-                  accent: "#C9A24A",
-                  tag: "TESTED",
-                },
-                {
-                  num: "03",
-                  label: "Rhythm",
-                  desc: "When conviction stops depending on the person. Codified into repeatable behaviour the organisation keeps on its own.",
-                  accent: "#C9A24A",
-                  tag: "CODIFIED",
-                },
-              ].map((item, i) => (
-                <motion.div
-                  key={item.num}
-                  initial={{ opacity: 0, y: 32 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-8%" }}
-                  transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: i * 0.15 }}
-                  className="group relative cursor-default text-left"
-                  style={{
-                    background: "#0A0A0B",
-                    border: "1px solid rgba(240,241,245,0.1)",
-                    borderRadius: 20,
-                    padding: "36px 32px 32px",
-                    transition: "border-color 0.5s",
-                  }}
-                  whileHover={{ borderColor: "rgba(201,162,74,0.2)" }}
-                >
-                  {/* Animated top beam */}
-                  <motion.div
-                    className="absolute top-0 left-0 h-[1px]"
-                    initial={{ scaleX: 0, originX: 0 }}
-                    whileInView={{ scaleX: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 1.2, delay: 0.3 + i * 0.15, ease: "easeOut" }}
-                    style={{
-                      width: "100%",
-                      background: item.accent,
-                    }}
-                  />
-
-                  {/* Corner tag */}
-                  <div className="absolute top-5 right-5 font-mono text-[8px] tracking-[0.4em]" style={{ color: item.accent, opacity: 0.7 }}>
-                    {item.tag}
-                  </div>
-
-                  {/* Number */}
-                  <div
-                    className="font-serif italic mb-6 leading-none"
-                    style={{ fontSize: "clamp(52px,6vw,80px)", color: item.accent, opacity: 0.25, lineHeight: 1 }}
-                  >
-                    {item.num}
-                  </div>
-
-                  {/* Label */}
-                  <h3
-                    className="font-serif mb-4"
-                    style={{ fontSize: "clamp(22px,2.2vw,30px)", color: "#C9A24A", fontWeight: 400, lineHeight: 1.1 }}
-                  >
-                    <em>{item.label}</em>
-                  </h3>
-
-                  {/* Desc */}
-                  <p style={{ fontSize: "clamp(14px,1.1vw,16px)", color: "#B8BDCE", lineHeight: 1.7 }}>
-                    {item.desc}
-                  </p>
-
-                  {/* Bottom expanding line */}
-                  <motion.div
-                    className="mt-8 h-[1px]"
-                    style={{ background: item.accent }}
-                    initial={{ width: "28px" }}
-                    whileInView={{ width: "48px" }}
-                    whileHover={{ width: "100%" }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                  />
-                </motion.div>
-              ))}
-            </div>
-            {/* Closing line */}
-            <Reveal delay={0.6}>
-              <p className="font-serif italic text-[clamp(16px,1.5vw,20px)] text-[#B8BDCE] max-w-[54ch] leading-relaxed border-t border-[rgba(240,241,245,0.1)] pt-10">
-                This is the same arc we build for you — from what one person believes, to what the whole organisation runs on.
-              </p>
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
-      {/* ══════════════════════════════════════════
-          PRACTICES — Equal Cards Grid
-      ══════════════════════════════════════════ */}
-      <section className="chapter section-deep overflow-hidden pb-10" id="practices">
-        <div className="shell">
-          <div className="text-center mb-6 -mt-4">
-            <Reveal><span className="eyebrow eyebrow--center mb-4">Where the work happens</span></Reveal>
-            <Reveal delay={0.1}>
-              <h2 className="h-section mx-auto max-w-[20ch]">
-                One Operating Logic.<br />
-                <em>Four Practices.</em>
-              </h2>
-            </Reveal>
-          </div>
-
-          {/* Desktop & Tablet grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {[
-              { 
-                num: "01", 
-                name: "People Architecture", 
-                href: "/expertise/people", 
-                condition: "When the organisation depends on who is in the room — not on how it is built.",
-                promise: "We codify judgment, decision rights, and succession into structure the company keeps after people leave.",
-              },
-              { 
-                num: "02", 
-                name: "Labour Codes", 
-                href: "/expertise/labour", 
-                condition: "When cost, classification, and compliance stop aligning — and you can't see why.",
-                promise: "We turn your workforce from headcount into auditable control architecture that holds when rules change.",
-              },
-              { 
-                num: "03", 
-                name: "AI Edge Lab", 
-                href: "/expertise/ai-edge", 
-                condition: "When AI is making you faster, but not wiser — speed without architecture scales bad judgment.",
-                promise: "We build the decision layer where AI accelerates, and where a human must still hold the call.",
-              },
-              { 
-                num: "04", 
-                name: "Family Business", 
-                href: "/expertise/family", 
-                condition: "When continuity depends on individuals, not structure — and succession is the risk no one says out loud.",
-                promise: "We codify ownership, authority, and decision rights into architecture that survives the generational handover.",
-              },
-            ].map((practice, i) => {
-              const words = practice.name.split(' ');
-              const first = words[0];
-              const rest = words.slice(1).join(' ');
-              return (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-8%" }}
-                  transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: i * 0.1 }}
-                >
-                  <Link
-                    href={practice.href}
-                    className="group block h-full p-6 rounded-[24px] border border-[rgba(240,241,245,0.1)] hover:border-[rgba(201,162,74,0.2)] bg-[#0A0A0B] transition-all duration-400"
-                  >
-                    <span className="font-mono text-[12px] tracking-[0.3em] text-[#C9A24A] mb-4 block">[{practice.num}]</span>
-                    <h3 className="font-serif text-[28px] leading-[1.1] text-[#F0F1F5] mb-5 group-hover:text-[#C9A24A] transition-colors">
-                      {first}<br /><em className="text-[#C9A24A]">{rest}</em>
-                    </h3>
-                    <div className="mb-4">
-                      <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#8A8FA4] block mb-2">The Signal</span>
-                      <p className="text-[15px] text-[#D4D7E0] leading-relaxed">{practice.condition}</p>
-                    </div>
-                    <div className="mb-5">
-                      <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#8A8FA4] block mb-2">What We Build</span>
-                      <p className="text-[15px] text-[#B8BDCE] leading-relaxed">{practice.promise}</p>
-                    </div>
-                    <div className="pt-4 border-t border-[rgba(240,241,245,0.1)]">
-                      <span className="inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.28em] uppercase text-[#C9A24A] group-hover:text-[#F0F1F5] transition-colors">
-                        Enter {practice.name} <ArrowRight size={11} className="group-hover:translate-x-1 transition-transform" />
-                      </span>
-                    </div>
-                  </Link>
-                </motion.div>
-              );
-            })}
-          </div>
-
-          {/* Catch-all line */}
-          <Reveal delay={0.2}>
-            <div className="mt-8 pt-6 border-t border-[rgba(240,241,245,0.1)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-              <div className="flex flex-col gap-3">
-                <p className="font-serif text-[clamp(18px,1.7vw,24px)] text-[#B8BDCE] leading-relaxed">
-                  Four practices. <em style={{ color: "#C9A24A" }}>One method.</em>
+        <div
+          className="grid grid-cols-1 sm:grid-cols-2"
+          style={{ gap: 1, background: T.rule, border: `1px solid ${T.rule}` }}
+        >
+          {ROLES_DATA.map((r, i) => (
+            <Reveal key={i} delay={i * 0.1}>
+              <div className="p-9 md:p-10 h-full" style={{ background: T.white }}>
+                <span className="font-mono text-[10px] uppercase block mb-6" style={{ letterSpacing: "0.16em", color: T.gold }}>
+                  {r.role}
+                </span>
+                <span className="font-mono text-[9px] uppercase block mb-2" style={{ letterSpacing: "0.14em", color: T.mid }}>
+                  The pull
+                </span>
+                <p className="font-serif font-medium mb-6" style={{ fontSize: 21, lineHeight: 1.3, color: T.ink }}>
+                  {r.pull}
                 </p>
-                <p className="font-serif text-[clamp(14px,1.2vw,17px)] text-[#8A8FA4] max-w-[56ch] leading-relaxed">
-                  If what is breaking does not fit a category, that is still a signal. Bring us the pressure; we will read the architecture behind it.
-                </p>
+                <span className="font-mono text-[9px] uppercase block mb-2" style={{ letterSpacing: "0.14em", color: T.mid }}>
+                  What we do
+                </span>
+                <p style={{ fontSize: 14, lineHeight: 1.7, color: T.ink3 }}>{r.work}</p>
               </div>
-              <Button href="/connect" variant="primary" showArrow={true} size="sm">Reach Us</Button>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ══════════════════════════════════════════
-          ROLES — Where You Sit
-      ══════════════════════════════════════════ */}
-      <section className="chapter--tight section-dark py-12" id="roles">
-        <div className="shell">
-          <div className="grid grid-cols-1 lg:grid-cols-[0.8fr_3fr] gap-10 items-center">
-            {/* Left col */}
-            <div className="lg:sticky lg:top-[15vh] h-fit flex flex-col gap-4">
-              <Reveal>
-                <h2 className="h-statement">
-                  What changes — depending on <em>where you sit.</em>
-                </h2>
-              </Reveal>
-              <Reveal delay={0.15}>
-                <div className="w-16 h-[2px] bg-[#C9A24A] mb-4" />
-              </Reveal>
-              <Reveal delay={0.25}>
-                <Button href="/connect" variant="primary" showArrow={true} size="sm">Reach Us</Button>
-              </Reveal>
-            </div>
-
-            {/* Right col — grid of interactive cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {[
-                {
-                  role: "Founder / CEO",
-                  pull: "You can feel the company outgrowing the way you run it — you just can't see where it cracks first.",
-                  work: "Map the failure points before they fail, and build the architecture that removes you as the single point of dependency.",
-                  icon: "👨‍💼"
-                },
-                {
-                  role: "CFO",
-                  pull: "Cost is climbing, and headcount explains some of it — not the part that keeps you up.",
-                  work: "Read the workforce as cost, risk, and control architecture, then install the structure that makes the number governable — not just reported.",
-                  icon: "💰"
-                },
-                {
-                  role: "CHRO",
-                  pull: "You're running more programs than ever, and the organisation is no more durable for it.",
-                  work: "Build the operating system underneath HR — so capability is designed into structure, not dependent on who's running the program.",
-                  icon: "👥"
-                },
-                {
-                  role: "Investor / Board",
-                  pull: "The thesis is sound. The question is whether the organisation can carry it.",
-                  work: "Diligence the organisation's operating architecture — what survives the founder, and what is quietly held by individuals who can leave.",
-                  icon: "📊"
-                },
-              ].map((item, i) => (
-                <Reveal key={i} delay={i * 0.12} className="h-full">
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="relative h-full p-5 rounded-[24px] border border-[rgba(240,241,245,0.1)] hover:border-[rgba(201,162,74,0.2)] bg-[#0A0A0B] group transition-all duration-500"
-                  >
-                    <div className="flex items-start gap-4">
-                      <div className="text-2xl flex-shrink-0 opacity-70 group-hover:opacity-100 transition-opacity duration-300">
-                        {item.icon}
-                      </div>
-                      <div className="flex-1">
-                        <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-[#C9A24A] mb-2 block font-semibold">{item.role}</span>
-                        <p className="font-serif text-[clamp(14px,1.2vw,17px)] leading-snug text-[#D4D7E0] group-hover:text-[#F0F1F5] transition-colors mb-3 font-medium">
-                          {item.pull}
-                        </p>
-                        <div className="flex items-start gap-1.5">
-                          <div className="w-1.5 h-1.5 rounded-full bg-[#C9A24A] mt-1.5 flex-shrink-0" />
-                          <p className="font-mono text-[11px] tracking-[0.15em] text-[#8A8FA4] group-hover:text-[#B8BDCE] transition-colors leading-relaxed">
-                            {item.work}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ══════════════════════════════════════════
-          MAKE IT REAL — What happens next
-      ══════════════════════════════════════════ */}
-      <section className="section-deep overflow-hidden" id="real">
-        {/* Header */}
-        <div className="shell pt-20 pb-4">
-          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
-            <Reveal>
-              <span className="eyebrow text-[#C9A24A]">The engagement</span>
             </Reveal>
-            <Reveal delay={0.1}>
-              <h2 className="h-section lg:text-right">
-                Four moves.<br />
-                <em>One outcome.</em>
-              </h2>
-            </Reveal>
-          </div>
-
+          ))}
         </div>
 
-        {/* Steps — full-width staggered rows */}
-        {[
-          {
-            num: "01",
-            label: "SIGNAL",
-            title: "You bring the signal.",
-            sub: "A pattern. A pressure. A question you can't quite name yet.",
-            align: "left",
-          },
-          {
-            num: "02",
-            label: "READ",
-            title: "We read the architecture.",
-            sub: "Not the symptom — the structural condition producing it.",
-            align: "right",
-          },
-          {
-            num: "03",
-            label: "DEFINE",
-            title: "We define the intervention.",
-            sub: "Precise. Sequenced. Built for your operating reality.",
-            align: "left",
-          },
-          {
-            num: "04",
-            label: "HOLD",
-            title: "We make it hold.",
-            sub: "Installed into the system. Not dependent on who is in the room.",
-            align: "right",
-          },
-        ].map((item, i) => (
+        <Reveal delay={0.3}>
+          <p className="font-serif italic mt-12" style={{ fontSize: 21, color: T.ink3, maxWidth: "64ch" }}>
+            We don't advise from the outside. We install architecture into how the organisation actually runs, and stay until it holds without us.
+          </p>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+// ─────────────────────────────────────────────
+// FOUR MOVES
+// ─────────────────────────────────────────────
+const MOVES = [
+  { label: "Signal", title: "You bring the signal.", sub: "A pattern. A pressure. A question you can't quite name yet.", resolve: false },
+  { label: "Read",   title: "We read the architecture.", sub: "Not the symptom. The structural condition producing it.", resolve: false },
+  { label: "Define", title: "We define the intervention.", sub: "Precise. Sequenced. Built for your operating reality.", resolve: false },
+  { label: "Hold",   title: "We make it hold.", sub: "Installed into the system. Not dependent on who is in the room.", resolve: true },
+];
+
+function MovesSection() {
+  return (
+    <section style={{ borderBottom: `1px solid ${T.rule}` }}>
+      <div className="max-w-[1280px] mx-auto px-6 sm:px-12 py-24">
+        <div className="flex items-baseline justify-between mb-6 gap-6">
+          <span className="font-mono text-[9px] uppercase" style={{ letterSpacing: "0.24em", color: T.mid }}>The engagement</span>
+          <span className="font-mono text-[10px]" style={{ letterSpacing: "0.14em", color: T.dim }}>05 / 05</span>
+        </div>
+
+        <Reveal>
+          <h2 className="font-serif font-medium mb-2" style={{ fontSize: "clamp(30px,4.4vw,56px)", lineHeight: 1.04, color: T.ink }}>
+            Four moves. <em style={{ color: T.gold, fontStyle: "italic" }}>One outcome.</em>
+          </h2>
+        </Reveal>
+      </div>
+
+      {/* Full-bleed move rows */}
+      <div>
+        {MOVES.map((move, i) => (
           <motion.div
             key={i}
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 32 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-10%" }}
-            transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1], delay: i * 0.1 }}
-            className="group relative border-t border-[rgba(240,241,245,0.1)] transition-all duration-500 cursor-default"
+            transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+            className="relative"
+            style={
+              move.resolve
+                ? {
+                    background: T.ink,
+                    borderTop: `1px solid ${T.ink}`,
+                    margin: "0",
+                  }
+                : {
+                    borderTop: `1px solid ${T.rule}`,
+                  }
+            }
           >
-            <div className="shell py-12 lg:py-20 flex flex-col lg:flex-row items-start lg:items-center gap-8 lg:gap-0">
-              {/* Step tag — always left on mobile */}
-              <div className={`lg:w-1/4 flex flex-col gap-3 ${item.align === "right" ? "lg:items-end lg:text-right" : ""}`}>
-                <span className="font-mono text-[9px] tracking-[0.5em] uppercase text-[#4A4F62] opacity-50 group-hover:opacity-100 group-hover:text-[#C9A24A] transition-all duration-500">{item.label}</span>
-                <span
-                  className="font-serif italic text-[clamp(56px,8vw,96px)] leading-none group-hover:text-[#C9A24A] transition-colors duration-500"
-                  style={{ WebkitTextStroke: "1px currentColor", color: "transparent" }}
+            {/* Gold accent top line on resolve */}
+            {move.resolve && (
+              <div
+                className="absolute top-0 left-0 right-0 h-0.5"
+                style={{ background: `linear-gradient(90deg, ${T.gold}, transparent 60%)` }}
+              />
+            )}
+
+            <div
+              className="relative max-w-[1280px] mx-auto px-6 sm:px-12 flex flex-col justify-center"
+              style={{ minHeight: 240, paddingTop: 60, paddingBottom: 60 }}
+            >
+              {/* Side label */}
+              <span
+                className="absolute font-mono text-[10px] uppercase mb-3"
+                style={{
+                  letterSpacing: "0.22em",
+                  color: move.resolve ? "rgba(247,246,243,0.4)" : T.dim,
+                  left: i % 2 === 0 ? undefined : "auto",
+                  right: i % 2 === 0 ? undefined : 48,
+                  top: 60,
+                }}
+              >
+                {move.label}
+              </span>
+
+              {/* Vertical rule */}
+              <div
+                className="absolute top-15 bottom-15 w-px hidden lg:block"
+                style={{
+                  left: i % 2 === 0 ? 300 : "auto",
+                  right: i % 2 !== 0 ? 300 : "auto",
+                  top: 60,
+                  bottom: 60,
+                  background: move.resolve ? "rgba(247,246,243,0.14)" : T.rule,
+                }}
+              />
+
+              {/* Content block */}
+              <div
+                className="w-full"
+                style={{
+                  maxWidth: 760,
+                  paddingLeft: i % 2 === 0 ? "clamp(0px, 30vw, 340px)" : 0,
+                  marginLeft: i % 2 !== 0 ? "auto" : 0,
+                  textAlign: i % 2 !== 0 ? "right" : "left",
+                }}
+              >
+                <h3
+                  className="font-serif font-medium"
+                  style={{
+                    fontSize: "clamp(40px,5.5vw,76px)",
+                    lineHeight: 0.98,
+                    color: move.resolve ? T.gold2 : T.ink,
+                  }}
                 >
-                  {item.num}
-                </span>
-              </div>
-
-              {/* Divider line — desktop */}
-              <div className={`hidden lg:block lg:w-px lg:self-stretch mx-16 bg-[rgba(240,241,245,0.1)] group-hover:bg-[rgba(201,162,74,0.2)] transition-colors duration-500`} />
-
-              {/* Content — always left on mobile */}
-              <div className={`flex-1 ${item.align === "right" ? "lg:text-right" : ""}`}>
-                <h3 className="font-serif text-[clamp(28px,3.5vw,48px)] leading-[1.1] text-[#D4D7E0] group-hover:text-[#F0F1F5] transition-colors duration-500 mb-4">
-                  {item.title}
+                  {move.title}
                 </h3>
                 <p
-                  className="font-mono text-[12px] tracking-[0.18em] text-[#B8BDCE] group-hover:text-[#D4D7E0] transition-colors duration-500 max-w-[40ch]"
-                  style={{ marginLeft: item.align === "right" ? "auto" : undefined }}
+                  style={{
+                    fontSize: 15,
+                    color: move.resolve ? T.dim : T.ink3,
+                    lineHeight: 1.7,
+                    maxWidth: "42ch",
+                    marginTop: 22,
+                    marginLeft: i % 2 !== 0 ? "auto" : 0,
+                  }}
                 >
-                  {item.sub}
+                  {move.sub}
                 </p>
               </div>
             </div>
-
-            {/* Bottom gold line — always visible faint, full on hover */}
-            <div className="absolute bottom-0 left-0 h-[1px] w-0 group-hover:w-full bg-[#C9A24A] transition-all duration-700" />
           </motion.div>
         ))}
+      </div>
+    </section>
+  );
+}
 
-        <div className="h-px bg-[rgba(240,241,245,0.1)]" />
-      </section>
+// ─────────────────────────────────────────────
+// FINAL CTA
+// ─────────────────────────────────────────────
+function FinalSection({ onDiagnosticOpen }: { onDiagnosticOpen: () => void }) {
+  return (
+    <section
+      id="final"
+      style={{ background: T.ink, borderBottom: "none", color: T.white }}
+    >
+      <div className="max-w-[1280px] mx-auto px-6 sm:px-12 py-24">
+        <Reveal>
+          <span className="font-mono text-[9px] uppercase block mb-6" style={{ letterSpacing: "0.24em", color: T.gold2 }}>
+            Begin the diagnostic
+          </span>
+        </Reveal>
+        <Reveal delay={0.1}>
+          <h2 className="font-serif font-medium mb-8" style={{ fontSize: "clamp(40px,6vw,84px)", lineHeight: 1.0, color: T.white }}>
+            Start where the signal is <em style={{ color: T.gold2, fontStyle: "italic" }}>strongest.</em>
+          </h2>
+        </Reveal>
+        <Reveal delay={0.2}>
+          <p className="mb-11" style={{ fontSize: 15, color: T.dim, maxWidth: "56ch", lineHeight: 1.7 }}>
+            A 30-minute architectural read. You bring the signal. We tell you what's structurally producing it. No fee, no pitch.
+          </p>
+        </Reveal>
+        <Reveal delay={0.3}>
+          <button
+            onClick={onDiagnosticOpen}
+            className="inline-flex items-center gap-3 font-mono text-[10px] uppercase px-7 py-4 transition-all duration-250"
+            style={{
+              letterSpacing: "0.18em",
+              background: T.gold,
+              color: T.ink,
+            }}
+            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = T.gold2; }}
+            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = T.gold; }}
+          >
+            Start Diagnostic{" "}
+            <span style={{ display: "inline-block", width: 16, height: 1, background: "currentColor" }} />
+          </button>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
 
-      {/* ══════════════════════════════════════════
-          FINAL CTA
-      ══════════════════════════════════════════ */}
-      <section className="chapter py-40 overflow-hidden relative" style={{ background: "#0A0A0B" }}>
-        <div className="shell text-center relative z-10">
-          <Reveal>
-            <span className="eyebrow eyebrow--center mb-10">Begin the diagnostic</span>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <h2 className="h-display mb-14">
-              Start where the signal is <em>strongest.</em>
-            </h2>
-          </Reveal>
-          <Reveal delay={0.2}>
-            <div className="flex flex-col items-center gap-4">
-              <Button onClick={() => setDiagOpen(true)} variant="primary" showArrow={true}>Start Diagnostic</Button>
-              <p className="font-mono text-[10px] tracking-[0.15em] text-[#8A8FA4] max-w-[44ch] text-center leading-relaxed">
-                A 30-minute architectural read. You bring the signal — we tell you what's structurally producing it. No fee, no pitch.
-              </p>
-            </div>
-          </Reveal>
+// ─────────────────────────────────────────────
+// FOOTER (light theme version)
+// ─────────────────────────────────────────────
+function SiteFooter() {
+  return (
+    <footer style={{ background: T.ink, color: T.dim, paddingTop: 80, paddingBottom: 40 }}>
+      <div className="max-w-[1280px] mx-auto px-6 sm:px-12">
+        {/* Grid */}
+        <div
+          className="grid gap-12 pb-14"
+          style={{
+            gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))",
+            borderBottom: "1px solid rgba(247,246,243,0.14)",
+          }}
+        >
+          {/* Brand */}
+          <div className="col-span-full lg:col-span-1">
+            <img
+              src="/axion-index-lockup-gold-on-black.svg"
+              alt="Axion Index"
+              style={{ width: 200, height: "auto", display: "block" }}
+            />
+            <p className="mt-4" style={{ fontSize: 13, color: T.mid, maxWidth: "34ch", lineHeight: 1.6 }}>
+              Architecture is read, not pitched.
+            </p>
+          </div>
+
+          {/* Practices */}
+          <div>
+            <h4
+              className="font-mono text-[9px] uppercase mb-5 pb-3"
+              style={{ letterSpacing: "0.22em", color: T.gold2, borderBottom: "1px solid rgba(196,152,72,0.25)" }}
+            >
+              Practices
+            </h4>
+            {[
+              ["People Architecture", "/expertise/people"],
+              ["Labour Codes", "/expertise/labour"],
+              ["AI Edge Lab", "/expertise/ai-edge"],
+              ["Family Business", "/expertise/family"],
+            ].map(([label, href]) => (
+              <Link
+                key={href}
+                href={href}
+                className="block transition-all duration-200 py-1.5"
+                style={{ fontSize: 13, color: T.dim }}
+                onMouseEnter={e => {
+                  (e.currentTarget as HTMLElement).style.color = T.white;
+                  (e.currentTarget as HTMLElement).style.paddingLeft = "5px";
+                }}
+                onMouseLeave={e => {
+                  (e.currentTarget as HTMLElement).style.color = T.dim;
+                  (e.currentTarget as HTMLElement).style.paddingLeft = "0px";
+                }}
+              >
+                {label}
+              </Link>
+            ))}
+          </div>
+
+          {/* Index */}
+          <div>
+            <h4
+              className="font-mono text-[9px] uppercase mb-5 pb-3"
+              style={{ letterSpacing: "0.22em", color: T.gold2, borderBottom: "1px solid rgba(196,152,72,0.25)" }}
+            >
+              Index
+            </h4>
+            {[
+              ["Operating Patterns", "#about"],
+              ["Story", "/founder"],
+              ["Research & Journals", "/research"],
+              ["About", "/about"],
+            ].map(([label, href]) => (
+              <Link
+                key={href}
+                href={href}
+                className="block transition-all duration-200 py-1.5"
+                style={{ fontSize: 13, color: T.dim }}
+                onMouseEnter={e => {
+                  (e.currentTarget as HTMLElement).style.color = T.white;
+                  (e.currentTarget as HTMLElement).style.paddingLeft = "5px";
+                }}
+                onMouseLeave={e => {
+                  (e.currentTarget as HTMLElement).style.color = T.dim;
+                  (e.currentTarget as HTMLElement).style.paddingLeft = "0px";
+                }}
+              >
+                {label}
+              </Link>
+            ))}
+          </div>
+
+          {/* Contact */}
+          <div>
+            <h4
+              className="font-mono text-[9px] uppercase mb-5 pb-3"
+              style={{ letterSpacing: "0.22em", color: T.gold2, borderBottom: "1px solid rgba(196,152,72,0.25)" }}
+            >
+              Contact
+            </h4>
+            <span className="block py-1.5" style={{ fontSize: 13, color: T.dim }}>Bengaluru, India</span>
+            <a
+              href="mailto:office@axionindex.org"
+              className="block py-1.5 transition-colors duration-200 hover:text-white"
+              style={{ fontSize: 13, color: T.dim }}
+            >
+              office@axionindex.org
+            </a>
+            <a
+              href="https://linkedin.com/company/axionindex"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block py-1.5 transition-colors duration-200 hover:text-white"
+              style={{ fontSize: 13, color: T.dim }}
+            >
+              LinkedIn
+            </a>
+          </div>
         </div>
-      </section>
 
-      <Footer />
-    </div>
+        {/* Bottom bar */}
+        <div
+          className="flex flex-wrap justify-between items-center gap-4 pt-8 font-mono text-[10px] uppercase"
+          style={{ letterSpacing: "0.12em", color: T.mid }}
+        >
+          <span>© 2026 Axion Index / Operating Architecture Practice</span>
+          <span>Architecture is read, not pitched.</span>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+// ─────────────────────────────────────────────
+// PAGE
+// ─────────────────────────────────────────────
+export default function Home() {
+  const [diagOpen, setDiagOpen] = useState(false);
+
+  return (
+    <>
+      {/* Cream grid background — whole page */}
+      <div
+        className="min-h-screen"
+        style={{
+          background: T.white,
+          backgroundImage:
+            "linear-gradient(rgba(13,13,11,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(13,13,11,.045) 1px,transparent 1px)",
+          backgroundSize: "52px 52px",
+          paddingTop: 74, // offset for fixed navbar
+        }}
+      >
+        {diagOpen && <DiagnosticModal onClose={() => setDiagOpen(false)} />}
+
+        {/* 1 — Hero Band */}
+        <HeroBand />
+
+        {/* 2 — Hero Body */}
+        <HeroBody onDiagnosticOpen={() => setDiagOpen(true)} />
+
+        {/* 3 — Method */}
+        <MethodSection />
+
+        {/* 4 — Operating Logic */}
+        <LogicSection />
+
+        {/* 5 — Ticker (dark) */}
+        <Ticker items={STRUCTURAL_SIGNALS} dark duration={72} />
+
+        {/* 6 — Practices */}
+        <PracticesSection />
+
+        {/* 7 — Roles */}
+        <RolesSection />
+
+        {/* 8 — Four Moves */}
+        <MovesSection />
+
+        {/* 9 — Final CTA */}
+        <FinalSection onDiagnosticOpen={() => setDiagOpen(true)} />
+
+        {/* 10 — Footer */}
+        <SiteFooter />
+      </div>
+    </>
   );
 }
