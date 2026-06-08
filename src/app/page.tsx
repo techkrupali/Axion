@@ -663,17 +663,7 @@ function PracticesSection() {
           <div style={{ borderBottom: `1px solid ${T.rule2}` }} />
         </div>
 
-        {/* Catch-all */}
-        <Reveal delay={0.2}>
-          <div className="mt-14 flex flex-wrap gap-16 items-baseline">
-            <span className="font-serif font-medium" style={{ fontFamily: T.display, fontSize: 34, color: T.ink, whiteSpace: "nowrap" }}>
-              Four practices. <em style={{ color: T.gold, fontStyle: "italic" }}>One method.</em>
-            </span>
-            <p style={{ fontFamily: T.display, fontSize: 17, color: T.ink3, maxWidth: "54ch", lineHeight: 1.7 }}>
-              If what is breaking does not fit a category, that is still a signal. Bring us the pressure; we will read the architecture behind it.
-            </p>
-          </div>
-        </Reveal>
+
       </div>
     </section>
   );
@@ -736,31 +726,36 @@ function RolesSection() {
         <div className="flex flex-col lg:flex-row gap-0" style={{ border: `1px solid ${T.rule2}` }}>
 
           {/* Left: role selector */}
-          <div className="lg:w-[300px] xl:w-[340px] flex-shrink-0 flex flex-col" style={{ borderRight: `1px solid ${T.rule2}`, background: T.white }}>
-            {ROLES_DATA.map((item, i) => (
+          <div className="lg:w-[300px] xl:w-[340px] flex-shrink-0 flex flex-col" style={{ borderRight: `1px solid ${T.rule2}` }}>
+            {ROLES_DATA.map((item, i) => {
+              const BOX_BG = ["#F7F6F3", "#E7E3DA", "#6E695E", "#0D0D0B"];
+              const isDark = i >= 2;
+              const boxBg = BOX_BG[i];
+              return (
               <button
                 key={i}
                 onClick={() => setActive(i)}
-                className="w-full text-left group relative overflow-hidden transition-colors duration-200 flex-1"
+                className="w-full text-left group relative overflow-hidden transition-all duration-200 flex-1"
                 style={{
                   borderBottom: i < ROLES_DATA.length - 1 ? `1px solid ${T.rule2}` : "none",
-                  background: active === i ? T.ink : "transparent",
+                  background: boxBg,
                   padding: "20px 20px",
+                  borderLeft: active === i ? `3px solid ${T.gold}` : "3px solid transparent",
                 }}
-                onMouseEnter={e => { if (active !== i) (e.currentTarget as HTMLElement).style.background = T.white2; }}
-                onMouseLeave={e => { if (active !== i) (e.currentTarget as HTMLElement).style.background = "transparent"; }}
+                onMouseEnter={e => { if (active !== i) (e.currentTarget as HTMLElement).style.opacity = "0.85"; }}
+                onMouseLeave={e => { if (active !== i) (e.currentTarget as HTMLElement).style.opacity = "1"; }}
               >
                 <div className="flex items-center justify-between">
                   <div>
                     <span
                       className="font-mono text-[9px] uppercase block mb-2 transition-colors duration-200"
-                      style={{ letterSpacing: "0.16em", color: active === i ? T.gold2 : T.dim }}
+                      style={{ letterSpacing: "0.16em", color: isDark ? T.white : T.ink }}
                     >
                       {item.num}
                     </span>
                     <span
                       className="font-serif font-medium block transition-colors duration-200"
-                      style={{ fontFamily: T.display, fontSize: 22, lineHeight: 1.1, color: active === i ? T.white : T.ink }}
+                      style={{ fontFamily: T.display, fontSize: 22, lineHeight: 1.1, color: isDark ? T.white : T.ink }}
                     >
                       {item.role}
                     </span>
@@ -773,7 +768,8 @@ function RolesSection() {
                   </span>
                 </div>
               </button>
-            ))}
+              );
+            })}
           </div>
 
           {/* Right: animated content panel */}
@@ -879,8 +875,8 @@ function MovesSection() {
             transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1], delay: i * 0.08 }}
             className="group relative border-t cursor-default overflow-hidden"
             style={{
-              borderColor: move.resolve ? T.rule : T.rule,
-              background: "transparent",
+              borderColor: move.resolve ? T.gold : T.rule,
+              background: move.resolve ? `linear-gradient(135deg, #C49848 0%, #A07830 100%)` : "transparent",
               position: "relative",
             }}
           >
@@ -919,7 +915,7 @@ function MovesSection() {
               <div className={`lg:w-1/4 flex flex-col gap-3 ${i % 2 === 1 ? "lg:items-end lg:text-right" : ""}`}>
                 <span
                   className="font-mono text-[12px] uppercase tracking-[0.4em] transition-all duration-500 group-hover:opacity-100"
-                  style={{ color: T.ink, opacity: 0.7 }}
+                  style={{ color: move.resolve ? T.ink : T.ink, opacity: 0.7 }}
                 >
                   {move.label}
                 </span>
@@ -927,7 +923,7 @@ function MovesSection() {
                   className="font-serif italic leading-none transition-colors duration-500 group-hover:text-[#A07830]"
                   style={{
                     fontSize: "clamp(52px,7vw,88px)",
-                    WebkitTextStroke: `1px ${T.ink}`,
+                    WebkitTextStroke: `1px ${move.resolve ? T.ink : T.ink}`,
                     color: "transparent",
                   }}
                 >
@@ -952,7 +948,7 @@ function MovesSection() {
                     fontFamily: T.display,
                     fontSize: "clamp(32px,4.5vw,64px)",
                     lineHeight: 1.0,
-                    color: T.gold,
+                    color: move.resolve ? T.ink : T.gold,
                   }}
                 >
                   {move.title}
@@ -962,7 +958,7 @@ function MovesSection() {
                   style={{
                     fontFamily: T.display,
                     fontSize: 20,
-                    color: T.ink,
+                    color: move.resolve ? "rgba(13,13,11,0.75)" : T.ink,
                     lineHeight: 1.7,
                     maxWidth: "46ch",
                     marginLeft: i % 2 === 1 ? "auto" : 0,
