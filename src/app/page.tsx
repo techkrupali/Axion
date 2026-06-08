@@ -24,6 +24,8 @@ const T = {
   gold2:  "#C49848",
   rule:   "rgba(13,13,11,0.10)",
   rule2:  "rgba(13,13,11,0.18)",
+  display: "var(--font-cormorant-garamond),'Cormorant Garamond',serif",
+  mono:    "var(--font-geist-mono),'JetBrains Mono',ui-monospace,monospace",
 };
 
 // ─────────────────────────────────────────────
@@ -240,6 +242,7 @@ function HeroBody({ onDiagnosticOpen }: { onDiagnosticOpen: () => void }) {
               transition={{ duration: 0.85, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
               className="font-serif font-medium"
               style={{
+                fontFamily: T.display,
                 fontSize: "clamp(62px,9vw,116px)",
                 lineHeight: 0.96,
                 letterSpacing: "0.005em",
@@ -312,7 +315,7 @@ function HeroBody({ onDiagnosticOpen }: { onDiagnosticOpen: () => void }) {
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.85, delay: 0.22, ease: [0.22, 1, 0.36, 1] }}
-              style={{ fontSize: 17, lineHeight: 1.75, color: T.ink3, fontWeight: 300, maxWidth: "46ch", marginBottom: 46 }}
+              style={{ fontFamily: T.display, fontSize: 20, lineHeight: 1.75, color: T.ink3, fontWeight: 300, maxWidth: "46ch", marginBottom: 46 }}
             >
               Most organisations don't fail when strategy breaks. They fail when their internal architecture cannot carry what they are becoming.
             </motion.p>
@@ -345,18 +348,18 @@ function HeroBody({ onDiagnosticOpen }: { onDiagnosticOpen: () => void }) {
                 >
                   <div
                     className="font-serif font-medium"
-                    style={{ fontSize: 40, lineHeight: 1, color: T.ink }}
+                    style={{ fontFamily: T.display, fontSize: 52, lineHeight: 1, color: T.ink }}
                   >
                     {stat.val}
                   </div>
                   <div
-                    className="font-mono text-[9px] uppercase mt-2"
+                    className="font-mono text-[11px] uppercase mt-2"
                     style={{ letterSpacing: "0.1em", color: T.mid, lineHeight: 1.5 }}
                   >
                     {stat.key}
                   </div>
                   <span
-                    className="font-mono text-[8px] uppercase mt-1.5 inline-block opacity-0 group-hover:opacity-100 transition-opacity"
+                    className="font-mono text-[11px] uppercase mt-1.5 inline-block opacity-0 group-hover:opacity-100 transition-opacity"
                     style={{ letterSpacing: "0.14em", color: T.gold, transform: "translateY(-2px)" }}
                   >
                     {stat.src} · See evidence
@@ -380,7 +383,7 @@ function MethodSection() {
       <div className="max-w-[1280px] mx-auto px-6 sm:px-12 py-24">
         {/* Section head */}
         <div className="flex items-baseline justify-between mb-14 gap-6">
-          <span className="font-mono text-[9px] uppercase" style={{ letterSpacing: "0.24em", color: T.mid }}>How we do it</span>
+          <span className="font-mono text-[17px] uppercase" style={{ letterSpacing: "0.24em", color: T.mid }}>How we do it</span>
           <span className="font-mono text-[10px]" style={{ letterSpacing: "0.14em", color: T.dim }}>01 / 05</span>
         </div>
 
@@ -388,7 +391,8 @@ function MethodSection() {
           <h2
             className="font-serif font-medium mb-14"
             style={{
-              fontSize: "clamp(30px,4.4vw,56px)",
+              fontFamily: T.display,
+              fontSize: "clamp(34px,4.8vw,62px)",
               lineHeight: 1.04,
               color: T.ink,
             }}
@@ -422,13 +426,13 @@ function MethodSection() {
               <div className="absolute top-0 left-0 w-10 h-0.5" style={{ background: T.gold }} />
               <span
                 className="font-mono block mb-8"
-                style={{ fontSize: 11, color: T.gold, letterSpacing: "0.14em" }}
+                style={{ fontSize: 16, color: T.gold, letterSpacing: "0.14em" }}
               >
                 {cell.n}
               </span>
               <h3
                 className="font-serif font-medium"
-                style={{ fontSize: 23, lineHeight: 1.18, color: cell.dark ? T.white : T.ink }}
+                style={{ fontFamily: T.display, fontSize: 26, lineHeight: 1.18, color: cell.dark ? T.white : T.ink }}
               >
                 {cell.title}
               </h3>
@@ -448,17 +452,17 @@ function LogicSection() {
     <section id="about" style={{ borderBottom: `1px solid ${T.rule}` }}>
       <div className="max-w-[1280px] mx-auto px-6 sm:px-12 py-24">
         <div className="flex items-baseline justify-between mb-14 gap-6">
-          <span className="font-mono text-[9px] uppercase" style={{ letterSpacing: "0.24em", color: T.mid }}>Our operating logic</span>
+          <span className="font-mono text-[17px] uppercase" style={{ letterSpacing: "0.24em", color: T.mid }}>Our operating logic</span>
           <span className="font-mono text-[10px]" style={{ letterSpacing: "0.14em", color: T.dim }}>02 / 05</span>
         </div>
 
         <Reveal>
-          <h2 className="font-serif font-medium mb-5" style={{ fontSize: "clamp(34px,5vw,62px)", lineHeight: 1, color: T.ink }}>
+          <h2 className="font-serif font-medium mb-5" style={{ fontFamily: T.display, fontSize: "clamp(34px,5vw,62px)", lineHeight: 1, color: T.ink }}>
             Our Operating <em style={{ color: T.gold, fontStyle: "italic" }}>Logic.</em>
           </h2>
         </Reveal>
         <Reveal delay={0.1}>
-          <p className="mb-16" style={{ fontSize: 16, color: T.ink3, maxWidth: "60ch" }}>
+          <p className="mb-16" style={{ fontFamily: T.display, fontSize: 20, color: T.ink3, maxWidth: "60ch" }}>
             Not designed in a deck. Forged in the field, then interpreted across labour, AI, people, and ownership.
           </p>
         </Reveal>
@@ -494,19 +498,19 @@ function LogicSection() {
                 {step.dark && (
                   <div className="absolute top-0 left-0 right-0 h-0.5" style={{ background: `linear-gradient(90deg, ${T.gold}, transparent)` }} />
                 )}
-                <span className="font-mono text-[9px] uppercase block mb-4" style={{ letterSpacing: "0.2em", color: step.dark ? "rgba(247,246,243,0.5)" : T.mid }}>
+                <span className="font-mono text-[13px] uppercase block mb-4" style={{ letterSpacing: "0.2em", color: step.dark ? "rgba(247,246,243,0.5)" : T.mid }}>
                   {step.stage}
                 </span>
-                <span className="font-mono block mt-4 mb-3" style={{ fontSize: 11, color: step.dark ? T.gold2 : T.gold, letterSpacing: "0.14em" }}>
+                <span className="font-mono block mt-4 mb-3" style={{ fontSize: 16, color: step.dark ? T.gold2 : T.gold, letterSpacing: "0.14em" }}>
                   {step.n}
                 </span>
                 <h3
                   className="font-serif italic font-medium mb-5"
-                  style={{ fontSize: 38, color: step.dark ? T.white : T.ink }}
+                  style={{ fontFamily: T.display, fontSize: 46, color: step.dark ? T.white : T.ink }}
                 >
                   {step.title}
                 </h3>
-                <p style={{ fontSize: 14, lineHeight: 1.65, color: step.dark ? T.dim : T.ink3 }}>
+                <p style={{ fontFamily: T.display, fontSize: 17, lineHeight: 1.65, color: step.dark ? T.dim : T.ink3 }}>
                   {step.desc}
                 </p>
               </div>
@@ -580,7 +584,7 @@ function PracticesSection() {
         </div>
 
         <Reveal>
-          <h2 className="font-serif font-medium mb-12" style={{ fontSize: "clamp(30px,4.4vw,56px)", lineHeight: 1.04, color: T.ink }}>
+          <h2 className="font-serif font-medium mb-12" style={{ fontFamily: T.display, fontSize: "clamp(30px,4.4vw,56px)", lineHeight: 1.04, color: T.ink }}>
             One Operating Logic. <em style={{ color: T.gold, fontStyle: "italic" }}>Four Practices.</em>
           </h2>
         </Reveal>
@@ -605,7 +609,7 @@ function PracticesSection() {
                     {p.num}
                   </span>
                   <div>
-                    <span className="font-serif font-medium uppercase block" style={{ fontSize: 32, lineHeight: 1, color: T.ink }}>
+                    <span className="font-serif font-medium uppercase block" style={{ fontFamily: T.display, fontSize: 32, lineHeight: 1, color: T.ink }}>
                       {p.titleMain}{" "}
                       <em style={{ fontStyle: "italic", display: "block" }}>{p.titleEm}</em>
                     </span>
@@ -615,7 +619,7 @@ function PracticesSection() {
                     </p>
                     <span
                       className="inline-flex items-center gap-2 mt-4 px-3 py-1.5"
-                      style={{ fontFamily: "monospace", fontSize: 9, letterSpacing: "0.12em", textTransform: "uppercase", color: T.mid, border: `1px solid ${T.rule2}` }}
+                      style={{ fontFamily: T.mono, fontSize: 9, letterSpacing: "0.12em", textTransform: "uppercase", color: T.mid, border: `1px solid ${T.rule2}` }}
                     >
                       <b style={{ color: T.ink, fontWeight: 500, fontSize: 11 }}>{p.chip.split(" ").slice(0, 2).join(" ")}</b>{" "}
                       {p.chip.split(" ").slice(2).join(" ")}
@@ -624,11 +628,11 @@ function PracticesSection() {
                   <div className="grid grid-cols-2 gap-9">
                     <div>
                       <div className="font-mono text-[9px] uppercase mb-3" style={{ letterSpacing: "0.16em", color: T.mid }}>The Signal</div>
-                      <p style={{ fontSize: 14, lineHeight: 1.65, color: T.ink3 }}>{p.signal}</p>
+                      <p style={{ fontFamily: T.display, fontSize: 14, lineHeight: 1.65, color: T.ink3 }}>{p.signal}</p>
                     </div>
                     <div>
                       <div className="font-mono text-[9px] uppercase mb-3" style={{ letterSpacing: "0.16em", color: T.mid }}>What We Build</div>
-                      <p style={{ fontSize: 14, lineHeight: 1.65, color: T.ink3 }}>{p.build}</p>
+                      <p style={{ fontFamily: T.display, fontSize: 14, lineHeight: 1.65, color: T.ink3 }}>{p.build}</p>
                     </div>
                   </div>
                   <span className="font-mono text-[10px] uppercase self-center justify-self-end inline-flex items-center gap-2.5"
@@ -643,13 +647,13 @@ function PracticesSection() {
                     <span className="font-mono text-[11px]" style={{ color: T.gold, letterSpacing: "0.12em" }}>{p.num}</span>
                     <span className="font-mono text-[10px] uppercase" style={{ letterSpacing: "0.14em", color: T.gold }}>Enter →</span>
                   </div>
-                  <span className="font-serif font-medium uppercase" style={{ fontSize: 26, lineHeight: 1.05, color: T.ink }}>
+                  <span className="font-serif font-medium uppercase" style={{ fontFamily: T.display, fontSize: 26, lineHeight: 1.05, color: T.ink }}>
                     {p.titleMain} <em style={{ fontStyle: "italic" }}>{p.titleEm}</em>
                   </span>
                   <p className="font-serif italic" style={{ fontSize: 18, lineHeight: 1.3, color: T.ink3 }}>{p.hook}</p>
                   <div>
                     <div className="font-mono text-[9px] uppercase mb-2" style={{ letterSpacing: "0.16em", color: T.mid }}>The Signal</div>
-                    <p style={{ fontSize: 14, lineHeight: 1.65, color: T.ink3 }}>{p.signal}</p>
+                    <p style={{ fontFamily: T.display, fontSize: 14, lineHeight: 1.65, color: T.ink3 }}>{p.signal}</p>
                   </div>
                 </div>
               </Link>
@@ -662,10 +666,10 @@ function PracticesSection() {
         {/* Catch-all */}
         <Reveal delay={0.2}>
           <div className="mt-14 flex flex-wrap gap-16 items-baseline">
-            <span className="font-serif font-medium" style={{ fontSize: 30, color: T.ink, whiteSpace: "nowrap" }}>
+            <span className="font-serif font-medium" style={{ fontFamily: T.display, fontSize: 30, color: T.ink, whiteSpace: "nowrap" }}>
               Four practices. <em style={{ color: T.gold, fontStyle: "italic" }}>One method.</em>
             </span>
-            <p style={{ fontSize: 15, color: T.ink3, maxWidth: "54ch", lineHeight: 1.7 }}>
+            <p style={{ fontFamily: T.display, fontSize: 15, color: T.ink3, maxWidth: "54ch", lineHeight: 1.7 }}>
               If what is breaking does not fit a category, that is still a signal. Bring us the pressure; we will read the architecture behind it.
             </p>
           </div>
@@ -711,7 +715,7 @@ function RolesSection() {
         </div>
 
         <Reveal>
-          <h2 className="font-serif font-medium mb-14" style={{ fontSize: "clamp(30px,4.4vw,56px)", lineHeight: 1.04, color: T.ink }}>
+          <h2 className="font-serif font-medium mb-14" style={{ fontFamily: T.display, fontSize: "clamp(30px,4.4vw,56px)", lineHeight: 1.04, color: T.ink }}>
             What changes, depending on <em style={{ color: T.gold, fontStyle: "italic" }}>where you sit.</em>
           </h2>
         </Reveal>
@@ -729,13 +733,13 @@ function RolesSection() {
                 <span className="font-mono text-[9px] uppercase block mb-2" style={{ letterSpacing: "0.14em", color: T.mid }}>
                   The pull
                 </span>
-                <p className="font-serif font-medium mb-6" style={{ fontSize: 21, lineHeight: 1.3, color: T.ink }}>
+                <p className="font-serif font-medium mb-6" style={{ fontFamily: T.display, fontSize: 21, lineHeight: 1.3, color: T.ink }}>
                   {r.pull}
                 </p>
                 <span className="font-mono text-[9px] uppercase block mb-2" style={{ letterSpacing: "0.14em", color: T.mid }}>
                   What we do
                 </span>
-                <p style={{ fontSize: 14, lineHeight: 1.7, color: T.ink3 }}>{r.work}</p>
+                <p style={{ fontFamily: T.display, fontSize: 14, lineHeight: 1.7, color: T.ink3 }}>{r.work}</p>
               </div>
             </Reveal>
           ))}
@@ -771,7 +775,7 @@ function MovesSection() {
         </div>
 
         <Reveal>
-          <h2 className="font-serif font-medium mb-2" style={{ fontSize: "clamp(30px,4.4vw,56px)", lineHeight: 1.04, color: T.ink }}>
+          <h2 className="font-serif font-medium mb-2" style={{ fontFamily: T.display, fontSize: "clamp(30px,4.4vw,56px)", lineHeight: 1.04, color: T.ink }}>
             Four moves. <em style={{ color: T.gold, fontStyle: "italic" }}>One outcome.</em>
           </h2>
         </Reveal>
@@ -850,6 +854,7 @@ function MovesSection() {
                 <h3
                   className="font-serif font-medium"
                   style={{
+                    fontFamily: T.display,
                     fontSize: "clamp(40px,5.5vw,76px)",
                     lineHeight: 0.98,
                     color: move.resolve ? T.gold2 : T.ink,
@@ -859,6 +864,7 @@ function MovesSection() {
                 </h3>
                 <p
                   style={{
+                    fontFamily: T.display,
                     fontSize: 15,
                     color: move.resolve ? T.dim : T.ink3,
                     lineHeight: 1.7,
@@ -894,12 +900,12 @@ function FinalSection({ onDiagnosticOpen }: { onDiagnosticOpen: () => void }) {
           </span>
         </Reveal>
         <Reveal delay={0.1}>
-          <h2 className="font-serif font-medium mb-8" style={{ fontSize: "clamp(40px,6vw,84px)", lineHeight: 1.0, color: T.white }}>
+          <h2 className="font-serif font-medium mb-8" style={{ fontFamily: T.display, fontSize: "clamp(40px,6vw,84px)", lineHeight: 1.0, color: T.white }}>
             Start where the signal is <em style={{ color: T.gold2, fontStyle: "italic" }}>strongest.</em>
           </h2>
         </Reveal>
         <Reveal delay={0.2}>
-          <p className="mb-11" style={{ fontSize: 15, color: T.dim, maxWidth: "56ch", lineHeight: 1.7 }}>
+          <p className="mb-11" style={{ fontFamily: T.display, fontSize: 15, color: T.dim, maxWidth: "56ch", lineHeight: 1.7 }}>
             A 30-minute architectural read. You bring the signal. We tell you what's structurally producing it. No fee, no pitch.
           </p>
         </Reveal>
@@ -1090,9 +1096,6 @@ export default function Home() {
 
         {/* 4 — Operating Logic */}
         <LogicSection />
-
-        {/* 5 — Ticker (dark) */}
-        <Ticker items={STRUCTURAL_SIGNALS} dark duration={72} />
 
         {/* 6 — Practices */}
         <PracticesSection />
