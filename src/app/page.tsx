@@ -149,6 +149,15 @@ function HeroBand() {
           You don't need a service. You need to read{" "}
           <em style={{ color: T.gold2 }}>what is breaking.</em>
         </motion.p>
+        <motion.span
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.35, ease: [0.22, 0.61, 0.36, 1] }}
+          className="font-mono uppercase block mt-4"
+          style={{ fontSize: 10, letterSpacing: "0.24em", color: T.gold, opacity: 0.75 }}
+        >
+          Structural Signal
+        </motion.span>
       </div>
 
       {/* Signal strip at bottom */}
@@ -597,12 +606,13 @@ function PracticesSection() {
             const labelTxt = T.gold;
             return (
             <Reveal key={i} delay={i * 0.08}>
+              <div style={{ marginBottom: "12px" }}>
               <Link
                 href={p.href}
                 className="block group"
-                style={{ borderTop: `1px solid ${T.rule2}`, borderLeft: `3px solid ${T.gold}`, transition: "all 0.3s", background: "transparent" }}
-                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = T.white2; (e.currentTarget as HTMLElement).style.borderLeftColor = T.gold2; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "transparent"; (e.currentTarget as HTMLElement).style.borderLeftColor = T.gold; }}
+                style={{ border: `1px solid ${T.gold}`, transition: "background 0.3s, border-color 0.3s", background: "transparent" }}
+                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = T.white2; (e.currentTarget as HTMLElement).style.borderColor = T.gold2; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "transparent"; (e.currentTarget as HTMLElement).style.borderColor = T.gold; }}
               >
                 {/* Desktop layout */}
                 <div
@@ -711,11 +721,12 @@ function PracticesSection() {
                   </div>
                 </div>
               </Link>
+              </div>
             </Reveal>
             );
           })}
-          {/* Last bottom border */}
-          <div style={{ borderBottom: `1px solid ${T.rule2}` }} />
+          {/* spacing after last box */}
+          <div style={{ height: 4 }} />
         </div>
 
 
