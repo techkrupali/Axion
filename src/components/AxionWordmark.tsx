@@ -21,7 +21,7 @@ export default function AxionWordmark({
         alt="Axion Index"
         className="object-contain"
         style={{
-          width: "clamp(105px, 12vw, 155px)", /* mobile: 105px, desktop: 130–155px */
+          width: "clamp(130px, 15vw, 190px)",
           height: "auto",
           display: "block",
         }}
