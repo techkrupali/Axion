@@ -149,12 +149,16 @@ function HeroBand() {
           You don't need a service. You need to read{" "}
           <em style={{ color: T.gold2 }}>what is breaking.</em>
         </motion.p>
+      </div>
+
+      {/* Structural Signal Title above ticker */}
+      <div className="absolute left-0 right-0 bottom-[88px] z-10 px-6 sm:px-12 max-w-[1280px] mx-auto">
         <motion.span
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.35, ease: [0.22, 0.61, 0.36, 1] }}
-          className="font-mono uppercase block mt-4"
-          style={{ fontSize: 10, letterSpacing: "0.24em", color: T.gold, opacity: 0.75 }}
+          className="font-mono uppercase block"
+          style={{ fontSize: 14, letterSpacing: "0.24em", color: T.gold, opacity: 0.75 }}
         >
           Structural Signal
         </motion.span>
