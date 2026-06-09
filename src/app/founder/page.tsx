@@ -143,6 +143,245 @@ function SectionHead({ label, index, total }: { label: string; index: number; to
   );
 }
 
+/* ─── CHAPTER ACCORDION ─────────────────────────────────────────────────────── */
+function ChapterAccordion() {
+  const [open, setOpen] = useState<number | null>(null);
+
+  return (
+    <div style={{ borderTop:`1px solid ${T.rule}` }}>
+      {CHAPTERS.map((ch, i) => {
+        const isOpen = open === i;
+        const isLast = i === CHAPTERS.length - 1;
+
+        return (
+          <motion.div
+            key={i}
+            initial={{ opacity:0, y:20 }}
+            whileInView={{ opacity:1, y:0 }}
+            viewport={{ once:true, margin:"-6%" }}
+            transition={{ duration:0.55, ease:[0.22,1,0.36,1], delay:i*0.04 }}
+            style={{ borderBottom:`1px solid ${isOpen ? T.gold : T.rule}` }}
+          >
+            {/* ── STRIP HEADER — always visible, click to toggle ── */}
+            <button
+              onClick={() => setOpen(isOpen ? null : i)}
+              className="group w-full text-left relative overflow-hidden"
+              style={{
+                background: isOpen
+                  ? T.ink
+                  : "transparent",
+                padding:"0",
+                border:"none",
+                cursor:"pointer",
+                transition:"background 0.4s",
+              }}
+            >
+              {/* Hover tint — only when closed */}
+              {!isOpen && (
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                  style={{ background:`linear-gradient(90deg, rgba(160,120,48,0.04) 0%, transparent 60%)` }}
+                />
+              )}
+
+              {/* Gold left border — active state */}
+              <div
+                className="absolute left-0 top-0 bottom-0 w-[3px] transition-transform duration-400 origin-bottom"
+                style={{
+                  background:`linear-gradient(to bottom, ${T.gold}, ${T.gold2})`,
+                  transform: isOpen ? "scaleY(1)" : "scaleY(0)",
+                  transition:"transform 0.35s cubic-bezier(0.22,1,0.36,1)",
+                }}
+              />
+
+              <div className="max-w-[1280px] mx-auto px-6 sm:px-12 py-5 flex items-center gap-6 sm:gap-10">
+
+                {/* Index counter */}
+                <span
+                  className="font-mono shrink-0 tabular-nums"
+                  style={{
+                    fontSize:11,
+                    letterSpacing:".28em",
+                    color: isOpen ? T.gold : T.dim,
+                    minWidth:"2ch",
+                    transition:"color 0.3s",
+                  }}
+                >
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+
+                {/* Year */}
+                <span
+                  className="font-mono shrink-0 hidden sm:block"
+                  style={{
+                    fontSize:11,
+                    letterSpacing:".18em",
+                    color: isOpen ? "rgba(247,246,243,0.4)" : T.mid,
+                    minWidth:"9ch",
+                    transition:"color 0.3s",
+                  }}
+                >
+                  {ch.year}
+                </span>
+
+                {/* Company — grows to fill */}
+                <span
+                  className="font-serif font-medium flex-1 leading-none"
+                  style={{
+                    fontFamily:T.display,
+                    fontSize:"clamp(22px,3vw,40px)",
+                    color: isOpen ? T.white : T.ink,
+                    transition:"color 0.35s",
+                  }}
+                >
+                  {ch.company}
+                </span>
+
+                {/* Installed pill — right aligned, hidden when open */}
+                <span
+                  className="font-mono shrink-0 hidden lg:block transition-opacity duration-300"
+                  style={{
+                    fontSize:9,
+                    letterSpacing:".22em",
+                    textTransform:"uppercase",
+                    color: T.gold,
+                    opacity: isOpen ? 0 : 0.6,
+                    border:`1px solid rgba(160,120,48,0.3)`,
+                    padding:"4px 10px",
+                    whiteSpace:"nowrap",
+                  }}
+                >
+                  {ch.installed}
+                </span>
+
+                {/* Plus / minus toggle */}
+                <div
+                  className="shrink-0 w-7 h-7 flex items-center justify-center"
+                  style={{
+                    border:`1px solid ${isOpen ? T.gold : "rgba(13,13,11,0.15)"}`,
+                    borderRadius:"50%",
+                    transition:"border-color 0.3s",
+                  }}
+                >
+                  <motion.span
+                    animate={{ rotate: isOpen ? 45 : 0 }}
+                    transition={{ duration:0.3, ease:[0.22,1,0.36,1] }}
+                    style={{
+                      display:"block",
+                      fontSize:16,
+                      lineHeight:1,
+                      color: isOpen ? T.gold : T.mid,
+                      fontWeight:300,
+                      marginTop:"-1px",
+                    }}
+                  >
+                    +
+                  </motion.span>
+                </div>
+              </div>
+            </button>
+
+            {/* ── EXPANDED CONTENT ── */}
+            <AnimatePresence initial={false}>
+              {isOpen && (
+                <motion.div
+                  key="content"
+                  initial={{ height:0, opacity:0 }}
+                  animate={{ height:"auto", opacity:1 }}
+                  exit={{ height:0, opacity:0 }}
+                  transition={{ duration:0.5, ease:[0.22,1,0.36,1] }}
+                  style={{ overflow:"hidden", background:T.ink }}
+                >
+                  <div className="relative overflow-hidden">
+
+                    {/* Ghost company name flooding the background */}
+                    <div
+                      className="absolute inset-0 flex items-center pointer-events-none select-none overflow-hidden"
+                      aria-hidden
+                    >
+                      <span
+                        className="font-serif italic leading-none whitespace-nowrap"
+                        style={{
+                          fontSize:"clamp(80px,14vw,180px)",
+                          color:"rgba(247,246,243,0.03)",
+                          paddingLeft:"5%",
+                          letterSpacing:"-0.02em",
+                        }}
+                      >
+                        {ch.company}
+                      </span>
+                    </div>
+
+                    <div className="relative max-w-[1280px] mx-auto px-6 sm:px-12 py-12 grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-10 lg:gap-20">
+
+                      {/* Left — meta */}
+                      <div className="flex flex-col gap-6">
+                        {/* Year block */}
+                        <div>
+                          <span className="font-mono block mb-1" style={{ fontSize:12, letterSpacing:".38em", textTransform:"uppercase", color:"rgba(196,152,72,0.5)" }}>
+                            Period
+                          </span>
+                          <span className="font-serif italic" style={{ fontFamily:T.display, fontSize:"clamp(36px,4vw,56px)", color:T.gold2, lineHeight:1 }}>
+                            {ch.year}
+                          </span>
+                        </div>
+                        {/* Context */}
+                        <div>
+                          <span className="font-mono block mb-2" style={{ fontSize:12, letterSpacing:".38em", textTransform:"uppercase", color:"rgba(196,152,72,0.5)" }}>
+                            Context
+                          </span>
+                          <span className="font-mono" style={{ fontSize:14, letterSpacing:".12em", textTransform:"uppercase", color:"rgba(247,246,243,0.55)", lineHeight:1.7 }}>
+                            {ch.context}
+                          </span>
+                        </div>
+                        {/* Installed */}
+                        <div style={{ borderTop:`1px solid rgba(196,152,72,0.2)`, paddingTop:20 }}>
+                          <span className="font-mono block mb-2" style={{ fontSize:12, letterSpacing:".38em", textTransform:"uppercase", color:"rgba(196,152,72,0.5)" }}>
+                            Pattern installed
+                          </span>
+                          <span
+                            className="font-mono"
+                            style={{
+                              fontSize:13,
+                              letterSpacing:".2em",
+                              textTransform:"uppercase",
+                              color:T.gold,
+                              border:`1px solid rgba(160,120,48,0.35)`,
+                              display:"inline-block",
+                              padding:"8px 16px",
+                            }}
+                          >
+                            {ch.installed}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Right — story */}
+                      <div className="flex flex-col justify-center">
+                        <p
+                          className="font-serif italic"
+                          style={{
+                            fontFamily:T.display,
+                            fontSize:"clamp(24px,2.6vw,36px)",
+                            color:"rgba(247,246,243,0.88)",
+                            lineHeight:1.65,
+                          }}
+                        >
+                          {ch.body}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
+        );
+      })}
+    </div>
+  );
+}
+
 /* ─── PAGE ──────────────────────────────────────────────────────────────────── */
 export default function FounderPage() {
   const [navScrolled,   setNavScrolled]   = useState(false);
@@ -811,91 +1050,63 @@ export default function FounderPage() {
 
       {/* ══ S4 — TIMELINE / ROOTS ════════════════════════════════════════════════ */}
       <section id="timeline" style={{ borderBottom:`1px solid ${T.rule}` }}>
-        <div className="max-w-[1280px] mx-auto px-6 sm:px-12 py-24">
-          <SectionHead label="The roots · 2003 to present" index={2} total={5} />
+        <div className="max-w-[1280px] mx-auto px-6 sm:px-12 pt-14 pb-8">
+          <div className="flex items-baseline justify-between mb-5 gap-6">
+            <span className="font-mono text-[17px] uppercase" style={{ letterSpacing:"0.24em", color:T.mid }}>The roots · 2003 to present</span>
+            <span className="font-mono text-[10px]" style={{ letterSpacing:"0.14em", color:T.dim }}>02 / 05</span>
+          </div>
           <FadeUp delay={0.05}>
-            <h2 className="font-serif font-medium mb-6" style={{ fontFamily:T.display, fontSize:"clamp(34px,4.8vw,58px)", lineHeight:1.04, color:T.ink }}>
+            <h2 className="font-serif font-medium mb-3" style={{ fontFamily:T.display, fontSize:"clamp(34px,4.8vw,58px)", lineHeight:1.04, color:T.ink }}>
               Chapters that installed <em style={{ fontStyle:"italic", color:T.gold }}>patterns.</em>
             </h2>
           </FadeUp>
           <FadeUp delay={0.14}>
-            <p style={{ fontFamily:T.display, fontSize:18, color:T.ink3, maxWidth:"60ch", marginBottom:56, lineHeight:1.7, fontWeight:300 }}>
+            <p style={{ fontFamily:T.display, fontSize:18, color:T.ink3, maxWidth:"60ch", marginBottom:0, lineHeight:1.7, fontWeight:300 }}>
               Not a résumé. Each chapter shows the operating pattern it installed — from institutional discipline to startup physics and crisis architecture.
             </p>
           </FadeUp>
-
-          {/* Chapter rows */}
-          <div>
-            {CHAPTERS.map((ch,i) => (
-              <FadeUp key={i} delay={i*0.05}>
-                <div className="ch-row" style={{ display:"grid", gridTemplateColumns:"140px 1fr 180px", gap:"clamp(16px,3vw,40px)", alignItems:"start", borderTop:`1px solid ${T.rule}`, padding:"clamp(24px,3vw,36px) 0", cursor:"default" }}>
-                  {/* Year */}
-                  <div className="font-mono" style={{ fontSize:13, letterSpacing:".08em", color:T.mid, paddingTop:4 }}>
-                    {ch.year}
-                  </div>
-                  {/* Body */}
-                  <div>
-                    <div className="font-serif font-medium ch-company" style={{ fontFamily:T.display, fontSize:"clamp(22px,2.4vw,30px)", color:T.mid, marginBottom:5, lineHeight:1.1, transition:"color .3s" }}>
-                      {ch.company}
-                    </div>
-                    <div className="font-mono mb-3" style={{ fontSize:9.5, letterSpacing:".22em", textTransform:"uppercase", color:T.dim }}>
-                      {ch.context}
-                    </div>
-                    <p style={{ fontFamily:T.display, fontSize:16, color:T.ink3, lineHeight:1.7, maxWidth:"52ch" }}>
-                      {ch.body}
-                    </p>
-                  </div>
-                  {/* Badge */}
-                  <div style={{ paddingTop:4, textAlign:"right" }}>
-                    <span className="font-mono ch-badge" style={{ fontSize:9.5, letterSpacing:".2em", textTransform:"uppercase", color:T.gold, padding:"5px 12px", border:`1px solid rgba(160,120,48,.35)`, display:"inline-block", opacity:.5, transition:"opacity .3s", whiteSpace:"nowrap" }}>
-                      Installed → {ch.installed}
-                    </span>
-                  </div>
-                </div>
-              </FadeUp>
-            ))}
-          </div>
         </div>
+
+        <ChapterAccordion />
       </section>
 
       {/* ══ S5 — SYNTHESIS ═══════════════════════════════════════════════════════ */}
-      <section id="synthesis" style={{ background:T.ink, borderBottom:`1px solid ${T.ink}` }}>
-        <div className="max-w-[1280px] mx-auto px-6 sm:px-12 py-24">
+      <section id="synthesis" style={{ background:T.ink, borderBottom:`1px solid ${T.ink}`, minHeight:"100vh", display:"flex", alignItems:"center" }}>
+        <div className="w-full max-w-[1280px] mx-auto px-6 sm:px-12 py-16">
           {/* Top gold rule */}
-          <div style={{ height:1, background:`linear-gradient(90deg, ${T.gold}, transparent 60%)`, marginBottom:56 }} />
+          <div style={{ height:1, background:`linear-gradient(90deg, ${T.gold}, transparent 60%)`, marginBottom:40 }} />
 
-          <div className="synth-grid" style={{ display:"grid", gridTemplateColumns:"1fr 1.6fr", gap:"clamp(40px,6vw,96px)", alignItems:"start" }}>
-            {/* Left sticky */}
-            <div style={{ position:"sticky", top:90 }}>
+          <div className="synth-grid" style={{ display:"grid", gridTemplateColumns:"1fr 1.6fr", gap:"clamp(32px,5vw,80px)", alignItems:"start" }}>
+            {/* Left */}
+            <div>
               <FadeUp>
                 <span className="font-mono block mb-4" style={{ fontSize:10, letterSpacing:".38em", textTransform:"uppercase", color:T.gold2, opacity:.7 }}>
                   The synthesis
                 </span>
-                <h2 className="font-serif font-medium" style={{ fontFamily:T.display, fontSize:"clamp(32px,4.5vw,56px)", lineHeight:1.04, color:T.white }}>
+                <h2 className="font-serif font-medium" style={{ fontFamily:T.display, fontSize:"clamp(28px,3.8vw,50px)", lineHeight:1.04, color:T.white }}>
                   The chapters became a{" "}
                   <em style={{ fontStyle:"italic", color:T.gold2 }}>method.</em>
                 </h2>
               </FadeUp>
             </div>
 
-            {/* Right list */}
+            {/* Right list — all 7 quotes, no scroll */}
             <div>
               {SYNTHESIS.map((item,i) => (
-                <FadeUp key={i} delay={i*0.07}>
-                  <div className="syn-row" style={{ borderTop:`1px solid rgba(247,246,243,.08)`, padding:"22px 0", cursor:"default" }}>
-                    <div className="font-mono mb-2" style={{ fontSize:9, letterSpacing:".32em", textTransform:"uppercase", color:T.gold, opacity:.55 }}>
+                <FadeUp key={i} delay={i*0.05}>
+                  <div className="syn-row" style={{ borderTop:`1px solid rgba(247,246,243,.08)`, padding:"12px 0", cursor:"default" }}>
+                    <div className="font-mono mb-1" style={{ fontSize:9, letterSpacing:".32em", textTransform:"uppercase", color:T.gold, opacity:.55 }}>
                       {item.source}
                     </div>
-                    <p className="font-serif syn-q" style={{ fontFamily:T.display, fontSize:"clamp(17px,1.9vw,22px)", lineHeight:1.45, color:"rgba(247,246,243,.6)", transition:"color .3s" }}>
+                    <p className="font-serif syn-q" style={{ fontFamily:T.display, fontSize:"clamp(14px,1.4vw,18px)", lineHeight:1.4, color:"rgba(247,246,243,.6)", transition:"color .3s" }}>
                       {item.quote}
                     </p>
                   </div>
                 </FadeUp>
               ))}
+              <div style={{ height:1, background:`linear-gradient(90deg, transparent, ${T.gold}, transparent)`, marginTop:20 }} />
             </div>
           </div>
-
-          <div style={{ height:1, background:`linear-gradient(90deg, transparent, ${T.gold}, transparent)`, marginTop:56 }} />
         </div>
       </section>
 
