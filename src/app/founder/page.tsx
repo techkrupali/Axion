@@ -680,48 +680,132 @@ export default function FounderPage() {
         <div className="max-w-[1280px] mx-auto px-6 sm:px-12 py-24">
           <SectionHead label="The soil before 2003" index={1} total={5} />
           <FadeUp delay={0.05}>
-            <h2 className="font-serif font-medium mb-14"
+            <h2 className="font-serif font-medium mb-2"
               style={{ fontFamily:T.display, fontSize:"clamp(34px,4.8vw,58px)", lineHeight:1.04, color:T.ink }}>
               Where the operating system<br />
               <em style={{ fontStyle:"italic", color:T.gold }}>began writing itself.</em>
             </h2>
           </FadeUp>
+        </div>
 
-          {/* 4-cell grid — mirrors landing Method section grid */}
-          <div className="origin-grid" style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:1, background:T.rule, border:`1px solid ${T.rule}` }}>
-            {ORIGINS.map((item,i) => {
-              const bgMap = [T.white, T.white2, "#D8D5CF", T.ink];
-              const isDark = i === 3;
-              return (
-                <motion.div key={i} initial={{ opacity:0, y:16 }} whileInView={{ opacity:1, y:0 }}
-                  viewport={{ once:true, margin:"-8%" }}
-                  transition={{ duration:0.65, delay:i*0.1, ease:[0.22,1,0.36,1] }}
-                  className="relative p-8 pb-10 fn-card cursor-default"
-                  style={{ background:bgMap[i], border:"none" }}>
-                  {/* Gold top rule */}
-                  <div className="absolute top-0 left-0 w-10 h-0.5" style={{ background:T.gold }} />
+        {/* Full-width staggered rows — same layout as Four Moves section */}
+        <div>
+          {ORIGINS.map((item, i) => {
+            const isResolve = false;
+            return (
+              <motion.div
+                key={i}
+                initial={{ opacity:0, y:40 }}
+                whileInView={{ opacity:1, y:0 }}
+                whileHover={{ scale: 0.98, zIndex:10 }}
+                viewport={{ once:true, margin:"-10%" }}
+                transition={{ duration:0.45, ease:[0.22,1,0.36,1], delay:i*0.08 }}
+                className="group relative border-t cursor-default overflow-hidden"
+                style={{
+                  borderColor: T.rule,
+                  background: "transparent",
+                }}
+              >
+                {/* Gold border glow + bg tint on hover */}
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                  style={{
+                    boxShadow:`inset 0 0 0 1.5px ${T.gold}, 0 0 40px 0 rgba(196,152,72,0.15)`,
+                    background:`linear-gradient(135deg, rgba(196,152,72,0.06) 0%, transparent 60%)`,
+                  }}
+                />
 
-                  <span className="font-serif italic block mb-5" style={{ fontSize:"clamp(36px,4vw,52px)", color:isDark ? "rgba(196,152,72,.2)" : "rgba(160,120,48,.14)", lineHeight:1 }}>
+                <div className="relative max-w-[1280px] mx-auto px-6 sm:px-12 py-12 lg:py-16 flex flex-col lg:flex-row items-start lg:items-center gap-6 lg:gap-0">
+
+                  {/* Ghost number watermark — directly behind the outlined numeral in the left column */}
+                  <div
+                    className="absolute top-1/2 -translate-y-1/2 font-serif italic leading-none pointer-events-none select-none overflow-hidden"
+                    style={{ fontSize:"18vw", color:T.ink, opacity:0.06, maxWidth:"26%", lineHeight:1, left:"6%" }}
+                  >
                     {item.num}
-                  </span>
-                  <div className="font-mono mb-3" style={{ fontSize:9, letterSpacing:".3em", textTransform:"uppercase", color:isDark ? "rgba(196,152,72,.55)" : T.gold }}>
-                    {item.place}
                   </div>
-                  <h3 className="font-serif font-medium mb-4" style={{ fontFamily:T.display, fontSize:"clamp(19px,1.8vw,23px)", color:isDark ? T.white : T.ink, lineHeight:1.15 }}>
-                    {item.title}
-                  </h3>
-                  <p style={{ fontFamily:T.display, fontSize:15, color:isDark ? T.dim : T.ink3, lineHeight:1.7, marginBottom:16 }}>
-                    {item.body}
-                  </p>
-                  <div style={{ borderTop:`1px solid ${isDark ? "rgba(247,246,243,.1)" : T.rule2}`, paddingTop:14 }}>
-                    <p className="font-serif italic" style={{ fontSize:13, color:isDark ? T.gold2 : T.gold, lineHeight:1.6 }}>
+
+                  {/* Left — place label + outlined numeral */}
+                  <div className={`lg:w-1/4 flex flex-col gap-3 ${i % 2 === 1 ? "lg:items-end lg:text-right" : ""}`}>
+                    <span
+                      className="font-mono text-[12px] uppercase tracking-[0.4em]"
+                      style={{ color: isResolve ? T.ink : T.ink, opacity:0.7 }}
+                    >
+                      {item.place}
+                    </span>
+                    <span
+                      className="font-serif italic leading-none"
+                      style={{
+                        fontSize:"clamp(52px,7vw,88px)",
+                        WebkitTextStroke:`1px ${isResolve ? T.ink : T.ink}`,
+                        color:"transparent",
+                      }}
+                    >
+                      {item.num}.
+                    </span>
+                  </div>
+
+                  {/* Vertical divider */}
+                  <div
+                    className="hidden lg:block w-px self-stretch mx-12"
+                    style={{
+                      background:`linear-gradient(to bottom, transparent, ${isResolve ? "rgba(13,13,11,0.14)" : T.rule2}, transparent)`,
+                      opacity:0.6,
+                    }}
+                  />
+
+                  {/* Right — title + body + take */}
+                  <div className={`flex-1 ${i % 2 === 1 ? "lg:text-right" : ""}`}>
+                    <h3
+                      className="font-serif font-medium"
+                      style={{
+                        fontFamily:T.display,
+                        fontSize:"clamp(32px,4.5vw,64px)",
+                        lineHeight:1.0,
+                        color: isResolve ? T.ink : T.gold,
+                      }}
+                    >
+                      {item.title}
+                    </h3>
+                    <p
+                      className="font-serif italic mt-4"
+                      style={{
+                        fontFamily:T.display,
+                        fontSize:24,
+                        color: isResolve ? "rgba(13,13,11,0.75)" : T.ink,
+                        lineHeight:1.7,
+                        maxWidth:"46ch",
+                        marginLeft: i % 2 === 1 ? "auto" : 0,
+                      }}
+                    >
+                      {item.body}
+                    </p>
+                    <p
+                      className="font-serif italic mt-5"
+                      style={{
+                        fontFamily:T.display,
+                        fontSize:18,
+                        color: isResolve ? "rgba(13,13,11,0.55)" : T.gold,
+                        lineHeight:1.6,
+                        maxWidth:"46ch",
+                        marginLeft: i % 2 === 1 ? "auto" : 0,
+                        borderTop:`1px solid ${isResolve ? "rgba(13,13,11,0.15)" : "rgba(160,120,48,0.2)"}`,
+                        paddingTop:16,
+                      }}
+                    >
                       {item.take}
                     </p>
                   </div>
-                </motion.div>
-              );
-            })}
-          </div>
+                </div>
+
+                {/* Gold bottom slide line on hover */}
+                <div
+                  className="absolute bottom-0 left-0 h-[1px] w-0 group-hover:w-full transition-all duration-700"
+                  style={{ background:`linear-gradient(90deg, ${T.gold}, transparent)` }}
+                />
+              </motion.div>
+            );
+          })}
         </div>
       </section>
 
