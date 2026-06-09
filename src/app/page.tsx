@@ -404,7 +404,7 @@ function MethodSection() {
         borderBottom: "1px solid rgba(247,246,243,0.08)",
       }}
     >
-      <div className="max-w-[1280px] mx-auto px-6 sm:px-12 py-20 lg:py-28">
+      <div className="max-w-[1280px] mx-auto px-6 sm:px-12 py-8 lg:py-10">
         <div className="grid grid-cols-1 lg:grid-cols-[2fr_3fr] gap-16 lg:gap-24 items-start">
 
           {/* ── Left: headline ── */}
