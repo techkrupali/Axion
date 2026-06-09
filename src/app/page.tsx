@@ -114,7 +114,7 @@ function HeroBand() {
       />
 
       {/* Content */}
-      <div className="relative z-10 max-w-[1280px] mx-auto px-6 sm:px-12 pt-10 pb-28">
+      <div className="relative z-10 max-w-[1280px] mx-auto px-6 sm:px-12 pt-[84px] pb-28">
         {/* Practice line */}
         <div className="flex flex-wrap items-baseline gap-0">
           {["People Architecture", "Labour Codes", "AI Edge Lab", "Family Business"].map((p, i, arr) => (
@@ -386,67 +386,90 @@ function HeroBody({ onDiagnosticOpen }: { onDiagnosticOpen: () => void }) {
 // ─────────────────────────────────────────────
 // METHOD
 // ─────────────────────────────────────────────
+const METHOD_LESSONS = [
+  { from: "From the Soil",          line: "The first operating system is absorbed before it is designed." },
+  { from: "From Wipro",             line: "Effort without system leverage becomes invisible. Architecture beats activity." },
+  { from: "Standard Chartered",     line: "Evidence converts where argument fails." },
+  { from: "From HSBC",              line: "Authority rarely creates alignment. Clarity does." },
+  { from: "From Tata",              line: "Culture is what your systems enforce, not what you declare." },
+  { from: "From Udaan",             line: "Design for the organisation you are becoming." },
+  { from: "From Gameskraft",        line: "The proof of architecture is the moment it is tested." },
+];
+
 function MethodSection() {
   return (
-    <section style={{ borderBottom: `1px solid ${T.rule}` }}>
-      <div className="max-w-[1280px] mx-auto px-6 sm:px-12 py-24">
-        {/* Section head */}
-        <div className="flex items-baseline justify-between mb-14 gap-6">
-          <span className="font-mono text-[17px] uppercase" style={{ letterSpacing: "0.24em", color: T.mid }}>How we do it</span>
-          <span className="font-mono text-[10px]" style={{ letterSpacing: "0.14em", color: T.dim }}>01 / 05</span>
-        </div>
+    <section
+      style={{
+        background: "#0D0D0B",
+        borderBottom: "1px solid rgba(247,246,243,0.08)",
+      }}
+    >
+      <div className="max-w-[1280px] mx-auto px-6 sm:px-12 py-20 lg:py-28">
+        <div className="grid grid-cols-1 lg:grid-cols-[2fr_3fr] gap-16 lg:gap-24 items-start">
 
-        <Reveal>
-          <h2
-            className="font-serif font-medium mb-14"
-            style={{
-              fontFamily: T.display,
-              fontSize: "clamp(34px,4.8vw,62px)",
-              lineHeight: 1.04,
-              color: T.ink,
-            }}
-          >
-            We don't start with the symptom. We map the architecture carrying{" "}
-            <em style={{ color: T.gold, fontStyle: "italic" }}>the consequence.</em>
-          </h2>
-        </Reveal>
+          {/* ── Left: headline ── */}
+          <Reveal>
+            <div className="lg:sticky lg:top-[74px]">
+              {/* eyebrow */}
+              <p
+                className="font-mono uppercase mb-10"
+                style={{ fontSize: 10, letterSpacing: "0.22em", color: "rgba(247,246,243,0.35)" }}
+              >
+                The Synthesis
+              </p>
+              <h2
+                className="font-serif"
+                style={{
+                  fontFamily: T.display,
+                  fontSize: "clamp(52px, 7vw, 96px)",
+                  lineHeight: 1.0,
+                  color: "rgba(247,246,243,0.92)",
+                  fontWeight: 400,
+                }}
+              >
+                The chapters became a{" "}
+                <em style={{ color: T.gold, fontStyle: "italic" }}>method.</em>
+              </h2>
+            </div>
+          </Reveal>
 
-        {/* 4-cell grid */}
-        <div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
-          style={{ gap: 1, background: T.rule, border: `1px solid ${T.rule}` }}
-        >
-          {[
-            { n: "01", title: "Where the system is breaking", bg: T.white },
-            { n: "02", title: "What's holding it together artificially", bg: "#E7E3DA" },
-            { n: "03", title: "What will fail next", bg: "#6E695E", dark: true },
-            { n: "04", title: "Then we redesign it so it holds", bg: T.ink, dark: true },
-          ].map((cell, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-8%" }}
-              transition={{ duration: 0.7, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] }}
-              className="relative p-8 pb-10"
-              style={{ background: cell.bg }}
-            >
-              {/* Gold top rule */}
-              <div className="absolute top-0 left-0 w-10 h-0.5" style={{ background: T.gold }} />
-              <span
-                className="font-mono block mb-8"
-                style={{ fontSize: 16, color: T.gold, letterSpacing: "0.14em" }}
+          {/* ── Right: lesson rows ── */}
+          <div>
+            {METHOD_LESSONS.map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-6%" }}
+                transition={{ duration: 0.6, delay: i * 0.07, ease: [0.22, 1, 0.36, 1] }}
+                className="py-6"
+                style={{
+                  borderTop: i === 0 ? "none" : "1px solid rgba(247,246,243,0.08)",
+                }}
               >
-                {cell.n}
-              </span>
-              <h3
-                className="font-serif font-medium"
-                style={{ fontFamily: T.display, fontSize: 26, lineHeight: 1.18, color: cell.dark ? T.white : T.ink }}
-              >
-                {cell.title}
-              </h3>
-            </motion.div>
-          ))}
+                <div className="grid grid-cols-[160px_1fr] gap-6 items-start">
+                  <span
+                    className="font-mono uppercase pt-0.5"
+                    style={{ fontSize: 9, letterSpacing: "0.2em", color: "rgba(247,246,243,0.32)" }}
+                  >
+                    {item.from}
+                  </span>
+                  <p
+                    className="font-serif"
+                    style={{
+                      fontFamily: T.display,
+                      fontSize: "clamp(14px,1.1vw,17px)",
+                      lineHeight: 1.55,
+                      color: "rgba(247,246,243,0.75)",
+                    }}
+                  >
+                    {item.line}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
         </div>
       </div>
     </section>
@@ -1244,7 +1267,7 @@ export default function Home() {
           backgroundImage:
             "linear-gradient(rgba(13,13,11,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(13,13,11,.045) 1px,transparent 1px)",
           backgroundSize: "52px 52px",
-          paddingTop: 74, // offset for fixed navbar
+          paddingTop: 0,
         }}
       >
         {diagOpen && <DiagnosticModal onClose={() => setDiagOpen(false)} />}

@@ -904,7 +904,7 @@ export default function FounderPage() {
               <FadeUp delay={0.28}>
                 <div style={{ background:T.ink, padding:"28px 32px", position:"relative" }}>
                   <div className="absolute top-0 left-0 w-10 h-0.5" style={{ background:T.gold }} />
-                  <p className="font-serif" style={{ fontFamily:T.display, fontStyle:"italic", fontSize:"clamp(16px,1.55vw,19px)", lineHeight:1.65, color:"rgba(247,246,243,.9)", margin:0 }}>
+                  <p className="font-serif" style={{ fontFamily:T.display, fontStyle:"italic", fontSize:"clamp(22px,2.4vw,32px)", lineHeight:1.6, color:"rgba(247,246,243,.9)", margin:0 }}>
                     A bamboo plant spends years building roots underground. When it finally rises, the speed is not sudden. It was always happening, invisibly, structurally, below the surface.
                   </p>
                 </div>
@@ -1068,6 +1068,7 @@ export default function FounderPage() {
         </div>
 
         <ChapterAccordion />
+        <div className="pb-16" />
       </section>
 
       {/* ══ S5 — SYNTHESIS ═══════════════════════════════════════════════════════ */}
@@ -1200,17 +1201,16 @@ export default function FounderPage() {
                 viewport={{ once:true, margin:"-8%" }}
                 transition={{ duration:0.65, delay:i*0.09, ease:[0.22,1,0.36,1] }}
                 className="fn-card relative p-8 pb-10 cursor-default"
-                style={{ background:i<=1?T.ink:(i===2?"#6E695E":T.white2) }}>
-                {i<=1 && <div className="absolute top-0 left-0 right-0 h-0.5" style={{ background:`linear-gradient(90deg, ${T.gold}, transparent)` }} />}
-                {i>1  && <div className="absolute top-0 left-0 w-10 h-0.5" style={{ background:T.gold }} />}
-                <span className="font-mono block mb-6" style={{ fontSize:16, color:T.gold2, letterSpacing:".14em" }}>{p.num}</span>
-                <h3 className="font-serif font-medium mb-3" style={{ fontFamily:T.display, fontSize:"clamp(19px,1.8vw,24px)", lineHeight:1.15, color:i<=2?T.white:T.ink }}>
+                style={{ background:i%2===0?T.white:T.white2 }}>
+                <div className="absolute top-0 left-0 w-10 h-0.5" style={{ background:T.gold }} />
+                <span className="font-mono block mb-6" style={{ fontSize:16, color:T.gold, letterSpacing:".14em" }}>{p.num}</span>
+                <h3 className="font-serif font-medium mb-3" style={{ fontFamily:T.display, fontSize:"clamp(19px,1.8vw,24px)", lineHeight:1.15, color:T.ink }}>
                   {p.name}
                 </h3>
-                <p className="font-mono mb-4" style={{ fontSize:10.5, letterSpacing:".12em", color:T.gold2, lineHeight:1.6 }}>
+                <p className="font-mono mb-4" style={{ fontSize:10.5, letterSpacing:".12em", color:T.gold, lineHeight:1.6 }}>
                   {p.hook}
                 </p>
-                <p style={{ fontFamily:T.display, fontSize:15, color:i<=2?T.dim:T.ink3, lineHeight:1.7 }}>{p.desc}</p>
+                <p style={{ fontFamily:T.display, fontSize:15, color:T.ink3, lineHeight:1.7 }}>{p.desc}</p>
               </motion.div>
             ))}
           </div>
