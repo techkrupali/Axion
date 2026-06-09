@@ -188,23 +188,36 @@ export default function FounderPage() {
       <style>{`
         /* ── scoped nav + strip ── */
         .fn-nav {
-          position:fixed; top:0; left:0; right:0; height:64px; z-index:900;
+          position:fixed; top:0; left:0; right:0; height:70px; z-index:900;
           display:flex; align-items:center;
-          background:rgba(247,246,243,.82); backdrop-filter:blur(18px);
-          border-bottom:1px solid rgba(13,13,11,.10);
+          background:transparent;
           transition:all 0.45s cubic-bezier(0.22,1,0.36,1);
         }
-        .fn-nav.s { background:rgba(247,246,243,.98); box-shadow:0 1px 0 rgba(13,13,11,.08); height:58px; }
+        .fn-nav.s {
+          background:rgba(13,13,11,.95); backdrop-filter:blur(18px);
+          border-bottom:1px solid rgba(247,246,243,.06);
+          height:62px;
+        }
         .fn-nav-inner { width:100%; padding:0 32px; display:flex; align-items:center; justify-content:space-between; }
-        .fn-brand { font-family:var(--font-cormorant-garamond),'Cormorant Garamond',serif; font-size:22px; font-weight:500; color:#0D0D0B; letter-spacing:-.01em; text-decoration:none; display:flex; align-items:baseline; gap:10px; transition:opacity .3s; }
-        .fn-brand:hover { opacity:.75; }
-        .fn-nl { display:flex; align-items:center; gap:28px; }
-        .fn-nl a { font-family:var(--font-geist-mono),ui-monospace,monospace; font-size:10.5px; font-weight:500; letter-spacing:.22em; text-transform:uppercase; color:#7A7870; transition:color .25s; padding:5px 0; position:relative; text-decoration:none; }
-        .fn-nl a:hover, .fn-nl a.on { color:#0D0D0B; }
-        .fn-nl a.on::after { content:""; position:absolute; left:0; right:0; bottom:-2px; height:1.5px; background:#A07830; }
-        .fn-btn { color:#F7F6F3 !important; background:#0D0D0B; border-radius:0; padding:9px 22px; font-weight:600 !important; transition:background .25s !important; }
+        /* Brand — serif, cream */
+        .fn-brand { font-family:var(--font-cormorant-garamond),'Cormorant Garamond',serif; font-size:21px; font-weight:500; color:#F7F6F3; letter-spacing:.04em; text-decoration:none; text-transform:uppercase; display:flex; align-items:baseline; gap:6px; transition:opacity .3s; letter-spacing:.18em; }
+        .fn-brand:hover { opacity:.8; }
+        /* Center links */
+        .fn-nl { display:flex; align-items:center; gap:32px; }
+        .fn-nl a { font-family:var(--font-geist-mono),ui-monospace,monospace; font-size:10px; font-weight:500; letter-spacing:.24em; text-transform:uppercase; color:rgba(247,246,243,.55); transition:color .25s; padding:5px 0; position:relative; text-decoration:none; }
+        .fn-nl a:hover, .fn-nl a.on { color:rgba(247,246,243,.9); }
+        .fn-nl a.on::after { content:""; position:absolute; left:0; right:0; bottom:-2px; height:1px; background:#A07830; }
+        /* CTA button — dark solid */
+        .fn-btn {
+          color:#F7F6F3 !important; background:#0D0D0B !important;
+          border:none; padding:10px 22px; font-weight:600 !important;
+          font-family:var(--font-geist-mono),ui-monospace,monospace !important;
+          font-size:10px !important; letter-spacing:.22em !important;
+          text-transform:uppercase !important; white-space:nowrap;
+          transition:background .25s !important;
+        }
         .fn-btn:hover { background:#A07830 !important; }
-        .fn-hamb { display:none; background:none; border:1px solid rgba(13,13,11,.15); color:#0D0D0B; width:42px; height:38px; border-radius:2px; cursor:pointer; align-items:center; justify-content:center; }
+        .fn-hamb { display:none; background:none; border:1px solid rgba(247,246,243,.2); color:#F7F6F3; width:42px; height:38px; border-radius:2px; cursor:pointer; align-items:center; justify-content:center; }
         /* Company strip */
         .co-strip { overflow:hidden; white-space:nowrap; -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent); mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent); }
         .co-track { display:inline-flex; gap:0; animation:co-scroll 30s linear infinite; }
@@ -222,10 +235,10 @@ export default function FounderPage() {
         @media (prefers-reduced-motion:reduce) { *,*::before,*::after { animation-duration:.01ms !important; transition-duration:.01ms !important; } }
         /* Responsive */
         @media (max-width:960px) {
-          .fn-nl { position:fixed; inset:64px 0 auto 0; flex-direction:column; gap:0; background:rgba(247,246,243,.98); border-bottom:1px solid rgba(13,13,11,.12); max-height:0; overflow:hidden; transition:max-height .35s; padding:0 32px; }
+          .fn-nl { position:fixed; inset:62px 0 auto 0; flex-direction:column; gap:0; background:rgba(13,13,11,.97); border-bottom:1px solid rgba(247,246,243,.07); max-height:0; overflow:hidden; transition:max-height .35s; padding:0 32px; }
           .fn-nl.open { max-height:560px; padding:12px 32px 28px; }
-          .fn-nl a { padding:14px 0; width:100%; border-bottom:1px solid rgba(13,13,11,.07); font-size:13px; }
-          .fn-btn { margin-top:12px; text-align:center; border-radius:0; }
+          .fn-nl a { padding:14px 0; width:100%; border-bottom:1px solid rgba(247,246,243,.06); font-size:13px; color:rgba(247,246,243,.55) !important; }
+          .fn-btn { margin-top:12px; text-align:center; }
           .fn-hamb { display:inline-flex; }
         }
         @media (max-width:768px) {
@@ -245,8 +258,9 @@ export default function FounderPage() {
       {/* ══ FIXED NAV ══════════════════════════════════════════════════════════ */}
       <nav className={`fn-nav${navScrolled ? " s" : ""}`} aria-label="Founder page navigation">
         <div className="fn-nav-inner">
-          <a className="fn-brand" href="#story">
-            Nitin <em style={{ fontStyle: "italic", color: T.gold }}>Nahata</em>
+          {/* Brand — "AXION INDEX" serif wordmark as in photo */}
+          <a className="fn-brand" href="/">
+            AX<em style={{ fontStyle:"italic" }}>I</em>ON&nbsp;INDEX
           </a>
           <button className="fn-hamb" aria-label={mobileOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileOpen} onClick={() => setMobileOpen(!mobileOpen)}>
@@ -256,140 +270,371 @@ export default function FounderPage() {
                 : <><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/></>}
             </svg>
           </button>
+          {/* Center nav links */}
           <div className={`fn-nl${mobileOpen ? " open" : ""}`} id="fn-nl">
             {NAV_LINKS.map((l) => (
               <a key={l.href} href={l.href}
                 className={activeSection === l.href.slice(1) ? "on" : ""}
                 onClick={() => setMobileOpen(false)}>{l.label}</a>
             ))}
-            <a className="fn-btn" href="/" onClick={() => setMobileOpen(false)}>Axion Index ↗</a>
+            {/* Dark CTA button matching photo */}
+            <a className="fn-btn" href="/connect" onClick={() => setMobileOpen(false)}>
+              Start Conversation
+            </a>
           </div>
         </div>
       </nav>
 
-      {/* ══ S1 — HERO BAND (dark, mirrors landing HeroBand) ═══════════════════ */}
+      {/* ══ S1 — HERO ════════════════════════════════════════════════════════════
+           Exact match to photo:
+           • Full-viewport dark background with subtle architectural texture
+           • Portrait (nitishhh.png) anchored left, fades into bg at right
+           • Headline stacked: The / Making / of the / [gold italic] Operating / Architect.
+           • Kicker top, name + body text below headline
+           • Vertical "FOUNDER" text on far right edge
+      ═══════════════════════════════════════════════════════════════════════════ */}
       <header
         id="story"
-        className="hero-split"
         style={{
-          display: "grid",
-          gridTemplateColumns: "0.9fr 1.1fr",
-          alignItems: "stretch",
-          minHeight: "100vh",
-          paddingTop: 64,
-          background: "radial-gradient(120% 140% at 70% 10%, #232320 0%, #15150f 45%, #0D0D0B 100%)",
-          borderBottom: `1px solid ${T.ink}`,
           position: "relative",
+          minHeight: "100vh",
+          background: "#0e0e0c",
           overflow: "hidden",
+          display: "flex",
+          alignItems: "stretch",
         }}
       >
-        {/* Grid overlay — same as landing HeroBand */}
+        {/* ── Dark architectural texture overlay ── */}
         <div className="absolute inset-0 pointer-events-none" style={{
-          backgroundImage: "linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px)",
+          backgroundImage: "linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px)",
           backgroundSize: "52px 52px",
-          WebkitMaskImage: "linear-gradient(180deg,rgba(0,0,0,.95),transparent 88%)",
-          maskImage: "linear-gradient(180deg,rgba(0,0,0,.95),transparent 88%)",
+          opacity: 0.6,
         }} />
-        {/* Gold right edge rule */}
-        <div className="absolute top-0 right-0 w-0.5 h-full" style={{ background: `linear-gradient(${T.gold},transparent)`, zIndex:2 }} />
 
-        {/* Portrait column */}
-        <div style={{ display:"flex", alignItems:"center", justifyContent:"center", position:"relative", overflow:"hidden" }}>
-          <div className="absolute inset-0 pointer-events-none" style={{ background:"radial-gradient(60% 50% at 50% 42%, rgba(201,162,74,.05), transparent 70%)" }} />
-          <div className="absolute pointer-events-none" style={{ top:0, right:0, bottom:0, width:"42%", background:"linear-gradient(90deg, transparent, #0D0D0B)" }} />
+        {/* ── Subtle radial warm glow center-right ── */}
+        <div className="absolute inset-0 pointer-events-none" style={{
+          background: "radial-gradient(ellipse 80% 70% at 65% 45%, rgba(30,26,18,0.9) 0%, transparent 70%)",
+        }} />
 
-          <motion.div initial={{ opacity:0, scale:0.9 }} animate={{ opacity:1, scale:1 }}
-            transition={{ duration:1.1, delay:0.2, ease:[0.22,1,0.36,1] }}
-            className="relative z-10 text-center px-8">
-            {/* Rings */}
-            <div style={{ width:340, height:340, borderRadius:"50%", border:"1px solid rgba(201,162,74,.10)", display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto" }}>
-              <div style={{ width:300, height:300, borderRadius:"50%", border:"1px solid rgba(201,162,74,.32)", display:"flex", alignItems:"center", justifyContent:"center", boxShadow:"0 0 80px -30px rgba(201,162,74,.55), inset 0 0 40px -20px rgba(201,162,74,.06)", overflow:"hidden" }}>
-                <Image src="/nitishcolorfull.png" alt="Nitin Nahata — Founder, Axion Index" width={300} height={300}
-                  style={{ objectFit:"cover", width:"100%", height:"100%", borderRadius:"50%" }} priority />
-              </div>
-            </div>
-            {/* Badge */}
-            <div style={{ marginTop:24, display:"inline-flex", flexDirection:"column", gap:4, border:"1px solid rgba(201,162,74,0.4)", padding:"14px 28px", background:"rgba(201,162,74,0.07)", boxShadow:"0 0 24px -8px rgba(201,162,74,0.2)" }}>
-              <span className="font-mono" style={{ fontSize:12, fontWeight:600, letterSpacing:".32em", textTransform:"uppercase", color:T.gold2 }}>Founder</span>
-              <span className="font-mono" style={{ fontSize:11, letterSpacing:".22em", textTransform:"uppercase", color:"rgba(196,152,72,.55)" }}>Axion Index</span>
-            </div>
+        {/* ── PORTRAIT — left-anchored, bleeds from bottom, fades right ── */}
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+          style={{
+            position: "absolute",
+            left: 0,
+            bottom: 0,
+            width: "clamp(300px, 42%, 560px)",
+            height: "100%",
+            zIndex: 2,
+          }}
+        >
+          <Image
+            src="/nitishhh.png"
+            alt="Nitin Nahata — Founder, Axion Index"
+            fill
+            style={{
+              objectFit: "cover",
+              objectPosition: "top center",
+            }}
+            priority
+          />
+          {/* Fade portrait into dark bg — right edge */}
+          <div style={{
+            position: "absolute", inset: 0,
+            background: "linear-gradient(90deg, transparent 40%, #0e0e0c 92%)",
+          }} />
+          {/* Fade portrait at bottom */}
+          <div style={{
+            position: "absolute", bottom: 0, left: 0, right: 0, height: "30%",
+            background: "linear-gradient(to top, #0e0e0c, transparent)",
+          }} />
+          {/* Very slight fade at top */}
+          <div style={{
+            position: "absolute", top: 0, left: 0, right: 0, height: "18%",
+            background: "linear-gradient(to bottom, #0e0e0c 0%, transparent 100%)",
+          }} />
+        </motion.div>
+
+        {/* ── CONTENT — sits over the right portion ── */}
+        <div
+          style={{
+            position: "relative",
+            zIndex: 3,
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            padding: "clamp(100px,14vh,160px) clamp(56px,8vw,120px) clamp(60px,8vh,100px) clamp(280px,46%,640px)",
+          }}
+        >
+          {/* Kicker */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="font-mono"
+            style={{
+              fontSize: 10,
+              letterSpacing: ".38em",
+              textTransform: "uppercase",
+              color: "rgba(196,152,72,.7)",
+              marginBottom: 28,
+            }}
+          >
+            Founder Doctrine&nbsp;&nbsp;·&nbsp;&nbsp;Axion Index
           </motion.div>
+
+          {/* Main headline — stacked, large serif */}
+          <motion.h1
+            className="font-serif"
+            initial={{ opacity: 0, y: 36 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.0, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+            style={{
+              fontFamily: T.display,
+              fontWeight: 400,
+              fontSize: "clamp(52px, 7.5vw, 108px)",
+              lineHeight: 0.96,
+              letterSpacing: "-0.02em",
+              color: "rgba(247,246,243,0.93)",
+              marginBottom: 20,
+            }}
+          >
+            <span style={{ display: "block" }}>The</span>
+            <span style={{ display: "block" }}>Making</span>
+            <span style={{ display: "block" }}>of the</span>
+            <em style={{ display: "block", fontStyle: "italic", color: T.gold2 }}>Operating</em>
+            <em style={{ display: "block", fontStyle: "italic", color: T.gold2 }}>Architect.</em>
+          </motion.h1>
+
+          {/* Name */}
+          <motion.p
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            className="font-mono"
+            style={{
+              fontSize: 10,
+              fontWeight: 600,
+              letterSpacing: ".28em",
+              textTransform: "uppercase",
+              color: "rgba(247,246,243,.55)",
+              marginBottom: 16,
+            }}
+          >
+            Nitin Nahata
+          </motion.p>
+
+          {/* Body text */}
+          <motion.p
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.85, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            className="font-serif"
+            style={{
+              fontFamily: T.display,
+              fontStyle: "italic",
+              fontSize: "clamp(15px, 1.45vw, 18px)",
+              lineHeight: 1.65,
+              color: "rgba(176,174,168,.75)",
+              maxWidth: "34ch",
+              fontWeight: 300,
+            }}
+          >
+            A 23-year journey through institutions, scale, crisis, and unfinished organisations.
+          </motion.p>
         </div>
 
-        {/* Copy column */}
-        <div style={{ display:"flex", flexDirection:"column", justifyContent:"center", padding:"clamp(80px,10vh,120px) 9% 56px", position:"relative" }}>
-          <div className="absolute inset-0 pointer-events-none" style={{ background:"radial-gradient(80% 60% at 70% 40%, rgba(196,152,72,.03), transparent 70%)" }} />
-          <div style={{ position:"relative" }}>
-            {/* Kicker */}
-            <motion.div initial={{ opacity:0, y:16 }} animate={{ opacity:1, y:0 }}
-              transition={{ duration:0.7, ease:[0.22,1,0.36,1] }}
-              className="font-mono" style={{ fontSize:10, letterSpacing:".38em", textTransform:"uppercase", color:T.gold2, opacity:.75, marginBottom:20 }}>
-              Founder Doctrine · Axion Index
-            </motion.div>
-
-            {/* Headline */}
-            <motion.h1 className="font-serif" initial={{ opacity:0, y:32 }} animate={{ opacity:1, y:0 }}
-              transition={{ duration:1.0, delay:0.1, ease:[0.22,1,0.36,1] }}
-              style={{ fontFamily:T.display, fontWeight:500, fontSize:"clamp(42px,5.6vw,76px)", lineHeight:0.97, letterSpacing:"-.014em", color:"rgba(247,246,243,0.93)", marginBottom:22 }}>
-              The Making of the{" "}
-              <em style={{ fontStyle:"italic", color:T.gold2, display:"block" }}>Operating Architect.</em>
-            </motion.h1>
-
-            {/* Name */}
-            <motion.p initial={{ opacity:0, y:16 }} animate={{ opacity:1, y:0 }}
-              transition={{ duration:0.8, delay:0.2, ease:[0.22,1,0.36,1] }}
-              className="font-mono" style={{ fontSize:15, fontWeight:600, letterSpacing:".08em", textTransform:"uppercase", color:"rgba(247,246,243,.85)", marginBottom:6 }}>
-              Nitin Nahata
-            </motion.p>
-
-            <motion.p initial={{ opacity:0, y:16 }} animate={{ opacity:1, y:0 }}
-              transition={{ duration:0.8, delay:0.26, ease:[0.22,1,0.36,1] }}
-              style={{ fontFamily:T.display, fontSize:"clamp(15px,1.45vw,18px)", color:"rgba(176,174,168,.85)", maxWidth:"40ch", marginBottom:30, lineHeight:1.7, fontWeight:300 }}>
-              A 23-year journey through institutions, scale, crisis, and unfinished organisations.
-            </motion.p>
-
-            {/* Pull-quote */}
-            <motion.blockquote className="font-serif" initial={{ opacity:0, x:-12 }} animate={{ opacity:1, x:0 }}
-              transition={{ duration:0.85, delay:0.35, ease:[0.22,1,0.36,1] }}
-              style={{ fontStyle:"italic", fontSize:"clamp(14px,1.35vw,16px)", lineHeight:1.7, color:T.gold, maxWidth:"42ch", borderLeft:`1.5px solid rgba(160,120,48,.4)`, paddingLeft:20, margin:0 }}>
-              Not a biography. The operating evidence behind Axion Index.
-            </motion.blockquote>
-
-            {/* Company strip inline */}
-            <motion.div initial={{ opacity:0 }} animate={{ opacity:1 }}
-              transition={{ duration:0.8, delay:0.5, ease:[0.22,1,0.36,1] }}
-              style={{ marginTop:32, paddingTop:24, borderTop:"1px solid rgba(247,246,243,.07)" }}>
-              <div className="font-mono" style={{ fontSize:9.5, fontWeight:600, letterSpacing:".14em", textTransform:"uppercase", color:T.gold, lineHeight:1.9 }}>
-                {COMPANIES.map((c,i) => (
-                  <span key={i}>
-                    {c.name}
-                    {i < COMPANIES.length-1 && <span style={{ color:"rgba(160,120,48,.3)", margin:"0 6px" }}>|</span>}
-                  </span>
-                ))}
-              </div>
-              <div className="font-mono" style={{ fontSize:9, fontWeight:400, letterSpacing:".12em", textTransform:"uppercase", color:"rgba(247,246,243,.22)", lineHeight:1.9, marginTop:4 }}>
-                Asia | Americas | Australia | Europe | Middle East
-              </div>
-            </motion.div>
-          </div>
+        {/* ── Vertical "FOUNDER" text — far right ── */}
+        <div
+          style={{
+            position: "absolute",
+            right: 20,
+            top: "50%",
+            transform: "translateY(-50%) rotate(180deg)",
+            writingMode: "vertical-rl",
+            zIndex: 4,
+          }}
+        >
+          <span
+            className="font-mono"
+            style={{
+              fontSize: 10,
+              letterSpacing: ".35em",
+              textTransform: "uppercase",
+              color: "rgba(247,246,243,.22)",
+            }}
+          >
+            Founder
+          </span>
         </div>
 
-        {/* Bottom fade into cream */}
-        <div style={{ position:"absolute", bottom:0, left:0, width:"100%", height:"15vh", background:`linear-gradient(to top, ${T.white}, transparent)`, pointerEvents:"none", gridColumn:"1 / -1" }} />
-      </header>
+        {/* ── "Not a biography" sub-note — below body text, visible in photo ── */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          style={{
+            position: "absolute",
+            bottom: "clamp(120px,16vh,180px)",
+            left: "clamp(280px,46%,640px)",
+            zIndex: 4,
+          }}
+        >
+          <p
+            className="font-mono"
+            style={{
+              fontSize: 10,
+              letterSpacing: ".18em",
+              color: "rgba(247,246,243,.32)",
+              maxWidth: "44ch",
+            }}
+          >
+            Not a biography. The operating evidence behind Axion Index.
+          </p>
+        </motion.div>
 
-      {/* ══ COMPANY TICKER ══════════════════════════════════════════════════════ */}
-      <div style={{ borderTop:`1px solid ${T.rule}`, borderBottom:`1px solid ${T.rule}`, background:T.white2, padding:"18px 0" }} aria-hidden="true">
-        <div className="co-strip">
-          <div className="co-track">
-            {[...COMPANIES, ...COMPANIES].map((c,i) => (
-              <span key={i} style={{ display:"inline-flex", alignItems:"baseline", gap:6, padding:"0 36px" }}>
-                <span className="font-mono" style={{ fontSize:9, letterSpacing:".3em", textTransform:"uppercase", color:T.gold, opacity:.6 }}>{c.tag}</span>
-                <span className="font-serif" style={{ fontSize:18, color:T.ink }}>{c.name}</span>
-                <span style={{ display:"inline-block", width:4, height:4, background:T.gold, opacity:.4, transform:"rotate(45deg)", margin:"0 4px" }} />
+        {/* ── Bottom meta bar — company list left + SCROLL right ── */}
+        <div
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            zIndex: 6,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: "0 clamp(20px,3vw,48px)",
+            height: 48,
+            borderTop: "1px solid rgba(247,246,243,.07)",
+            background: "rgba(8,8,6,0.6)",
+          }}
+        >
+          {/* Left — "FOUNDER" tag */}
+          <span
+            className="font-mono"
+            style={{ fontSize: 9, letterSpacing: ".32em", textTransform: "uppercase", color: "rgba(247,246,243,.28)" }}
+          >
+            Founder
+          </span>
+
+          {/* Center — company list separated by / */}
+          <div
+            className="font-mono"
+            style={{
+              fontSize: 9,
+              letterSpacing: ".16em",
+              textTransform: "uppercase",
+              color: "rgba(247,246,243,.28)",
+              display: "flex",
+              alignItems: "center",
+              gap: 0,
+              flexWrap: "nowrap",
+              overflow: "hidden",
+            }}
+          >
+            {COMPANIES.map((c, i) => (
+              <span key={i} style={{ display: "inline-flex", alignItems: "center" }}>
+                {c.name}
+                {i < COMPANIES.length - 1 && (
+                  <span style={{ margin: "0 10px", color: "rgba(247,246,243,.14)" }}>/</span>
+                )}
               </span>
             ))}
           </div>
+
+          {/* Right — SCROLL + line */}
+          <span
+            className="font-mono"
+            style={{
+              fontSize: 9,
+              letterSpacing: ".32em",
+              textTransform: "uppercase",
+              color: "rgba(247,246,243,.28)",
+              display: "flex",
+              alignItems: "center",
+              gap: 10,
+              flexShrink: 0,
+            }}
+          >
+            Scroll
+            <span style={{ display: "inline-block", width: 32, height: 1, background: "rgba(247,246,243,.25)" }} />
+          </span>
+        </div>
+
+        {/* ── Bottom fade — hero → dark ticker (no white fade) ── */}
+        <div style={{
+          position: "absolute", bottom: 48, left: 0, right: 0,
+          height: "8vh",
+          background: "linear-gradient(to top, rgba(8,8,6,0.6), transparent)",
+          pointerEvents: "none",
+          zIndex: 5,
+        }} />
+      </header>
+
+      {/* ══ COMPANY TICKER — dark strip matching photo ══════════════════════════
+           Dark background, cream serif company names, gold diamond separators,
+           small category labels — exactly as shown in the bottom of the photo
+      ═══════════════════════════════════════════════════════════════════════════ */}
+      <div
+        aria-hidden="true"
+        style={{
+          background: "#0D0D0B",
+          borderTop: "1px solid rgba(247,246,243,.06)",
+          borderBottom: "1px solid rgba(247,246,243,.06)",
+          padding: "20px 0",
+          overflow: "hidden",
+          WebkitMaskImage: "linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)",
+          maskImage: "linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)",
+        }}
+      >
+        <div className="co-track">
+          {[...COMPANIES, ...COMPANIES].map((c, i) => (
+            <span
+              key={i}
+              style={{ display: "inline-flex", alignItems: "baseline", gap: 6, padding: "0 28px" }}
+            >
+              <span
+                className="font-mono"
+                style={{
+                  fontSize: 8,
+                  letterSpacing: ".28em",
+                  textTransform: "uppercase",
+                  color: "rgba(160,120,48,.5)",
+                  marginRight: 6,
+                }}
+              >
+                {c.tag}
+              </span>
+              <span
+                className="font-serif"
+                style={{
+                  fontSize: "clamp(17px,1.6vw,22px)",
+                  color: "rgba(247,246,243,.82)",
+                  fontWeight: 400,
+                }}
+              >
+                {c.name}
+              </span>
+              {/* Gold diamond separator */}
+              <span
+                style={{
+                  display: "inline-block",
+                  width: 5,
+                  height: 5,
+                  background: T.gold,
+                  opacity: 0.35,
+                  transform: "rotate(45deg)",
+                  margin: "0 6px",
+                  flexShrink: 0,
+                  alignSelf: "center",
+                }}
+              />
+            </span>
+          ))}
         </div>
       </div>
 
