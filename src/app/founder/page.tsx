@@ -115,11 +115,101 @@ const NOTES = [
   { no: "02",   title: "The Art of Being Relevant",   body: "HR earns the seat when the business cannot decide without it.",                    status: "Read →" },
 ];
 
+const ARTICLES = [
+  { title: "Fresh Outta Campus, Straight Into the Game", pub: "All Things Talent", href: "https://allthingstalent.org/fresh-outta-campus-straight-into-the-game-how-gameskraft-is-powering-early-talent/2025/06/27/" },
+  { title: "Should AI Replace Empathy? The Limits of Technology in Hiring", pub: "All Things Talent", href: "https://allthingstalent.org/should-ai-replace-empathy-the-limits-of-technology-in-hiring/2024/11/18/" },
+  { title: "What Does HR Want? A Deep Dive into the Wishlist of HR Leaders", pub: "All Things Talent", href: "https://allthingstalent.org/what-does-hr-want-a-deep-dive-into-the-wishlist-of-hr-leaders/2024/05/20/" },
+  { title: "Nitin Nahata on Building Employee Experience Framework", pub: "All Things Talent", href: "https://allthingstalent.org/gameskrafts-nitin-nahata-on-building-employee-experience-framework-in-the-time-of-expansion/2023/12/13/" },
+  { title: "Continuous Feedback Through 'Konversations'", pub: "BW People", href: "https://www.bwpeople.in/article/continuous-feedback-through-%E2%80%98konversations%E2%80%99-535031" },
+  { title: "The Art of Being Relevant: Where Does the HR Function Stand?", pub: "People Matters", href: "https://www.peoplematters.in/blog/strategic-hr/the-art-of-being-relevant-where-does-the-hr-function-stand-20863" },
+  { title: "HR in Start-Ups: Unconventional Wisdom & Constant Re-Alignment", pub: "People Matters", href: "https://www.peoplematters.in/article/strategic-hr/hr-in-start-ups-is-all-about-unconventional-wisdom-and-constant-re-alignment-21507" },
+  { title: "Recruiting In-House, Outsourcing or Hybrid — Which Works Best?", pub: "ET HR World", href: "https://hr.economictimes.indiatimes.com/news/hrtech/talent-acquisition-and-management/recruiting-in-house-outsourcing-or-a-hybrid-of-both-which-hiring-practice-works-best-for-startups/105546791" },
+  { title: "Innovative Performance Management System That Earned Employee Trust", pub: "ET HR World", href: "https://hr.economictimes.indiatimes.com/news/workplace-4-0/performance-management/how-this-company-rolled-out-an-innovative-performance-management-system-and-earned-employees-trust/93285634" },
+  { title: "Are Unlimited, No-Questions-Asked Leave Policies Working?", pub: "Moneycontrol", href: "https://www.moneycontrol.com/news/business/are-unlimited-and-no-questions-asked-leave-policies-working-9631481.html" },
+  { title: "Can a 4.5-Day Workweek Module Be a Game-Changer in India?", pub: "Moneycontrol", href: "https://www.moneycontrol.com/news/business/can-a-4-5-day-workweek-module-be-a-game-changer-in-india-9779941.html" },
+  { title: "Online Gaming Industry in 2023: A Lot More Than Entertainment", pub: "Financial Express", href: "https://www.financialexpress.com/lifestyle/online-gaming-industry-in-2023-a-lot-more-than-just-for-passing-time-and-entertainment/2948476/" },
+  { title: "Beyond Tech: How Far Can HR Tech Address Human Emotions?", pub: "ET HR World", href: "https://hr.economictimes.indiatimes.com/news/hrtech/beyond-tech-how-far-can-hr-tech-address-human-emotions/97116214" },
+  { title: "HR Tech Tools That Could Define the Industry in 2023", pub: "ET HR World", href: "https://hr.economictimes.indiatimes.com/news/hrtech/hrtech-tools-that-could-define-the-industry-in-2023/97240548" },
+];
+
 const VISION_CARDS = [
   { n: "01 · Lived",   title: "The Practice",   desc: "Twenty-three years of collisions — the evidence that became raw material." },
   { n: "02 · Written", title: "The Philosophy", desc: "Books and essays codifying the patterns into a body of work." },
   { n: "03 · Applied", title: "The Loop",       desc: "Axion Index and HROS applying the doctrine into operating systems and advisory work." },
 ];
+
+/* ─── ARTICLE BOX — independent rotating card ──────────────────────────────── */
+function ArticleBox({ startOffset, delay }: { startOffset: number; delay: number }) {
+  const [idx, setIdx] = useState(startOffset % ARTICLES.length);
+  const counterRef = useRef(startOffset);
+
+  useEffect(() => {
+    const start = setTimeout(() => {
+      const interval = setInterval(() => {
+        counterRef.current = (counterRef.current + 4) % ARTICLES.length;
+        setIdx(counterRef.current);
+      }, 5500);
+      return () => clearInterval(interval);
+    }, delay);
+    return () => clearTimeout(start);
+  }, [delay]);
+
+  const a = ARTICLES[idx];
+
+  return (
+    <div style={{ position: "relative", overflow: "hidden", border: `1px solid ${T.gold}`, minHeight: 220, background: T.white }}>
+      <AnimatePresence mode="popLayout">
+        <motion.a
+          key={idx}
+          href={a.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+          style={{
+            position: "absolute",
+            inset: 0,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            padding: "clamp(24px,2.8vw,36px)",
+            textDecoration: "none",
+            background: "transparent",
+            transition: "background 0.25s",
+          }}
+          onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "rgba(160,120,48,0.05)"; }}
+          onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "transparent"; }}
+        >
+          <div>
+            <span className="font-mono block mb-4" style={{ fontSize: 9, letterSpacing: ".22em", textTransform: "uppercase", color: T.gold }}>
+              {a.pub}
+            </span>
+            <p className="font-serif" style={{ fontFamily: T.display, fontSize: "clamp(15px,1.4vw,19px)", color: T.ink, lineHeight: 1.4, fontWeight: 500 }}>
+              {a.title}
+            </p>
+          </div>
+          <span className="font-mono" style={{ fontSize: 9, letterSpacing: ".22em", textTransform: "uppercase", color: T.gold }}>
+            Read →
+          </span>
+        </motion.a>
+      </AnimatePresence>
+    </div>
+  );
+}
+
+/* ─── ARTICLE GRID — 4 independent rotating boxes ──────────────────────────── */
+function ArticleGrid() {
+  return (
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 2, background: T.gold }}>
+      <ArticleBox startOffset={0} delay={0} />
+      <ArticleBox startOffset={1} delay={1400} />
+      <ArticleBox startOffset={2} delay={2800} />
+      <ArticleBox startOffset={3} delay={4200} />
+    </div>
+  );
+}
 
 /* ─── SCROLL REVEAL ─────────────────────────────────────────────────────────── */
 function FadeUp({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
@@ -1219,56 +1309,29 @@ export default function FounderPage() {
 
       {/* ══ S8 — WRITING & MEDIA ═════════════════════════════════════════════════ */}
       <section id="writing" style={{ borderBottom:`1px solid ${T.rule}` }}>
-        <div className="max-w-[1280px] mx-auto px-6 sm:px-12 py-24">
-          <SectionHead label="Writing & media" index={4} total={5} />
-          <div className="notes-grid" style={{ display:"grid", gridTemplateColumns:"1fr 1.5fr", gap:"clamp(40px,6vw,96px)", alignItems:"start" }}>
-            {/* Left */}
-            <div>
-              <FadeUp>
-                <h2 className="font-serif font-medium mb-8" style={{ fontFamily:T.display, fontSize:"clamp(30px,4.4vw,54px)", lineHeight:1.04, color:T.ink }}>
+        <div className="max-w-[1280px] mx-auto px-6 sm:px-12 pt-10 pb-16">
+          <div className="flex items-baseline justify-between mb-6 gap-6">
+            <span className="font-mono text-[17px] uppercase" style={{ letterSpacing: "0.24em", color: T.mid }}>Writing & media</span>
+            <span className="font-mono text-[10px]" style={{ letterSpacing: "0.14em", color: T.dim }}>04 / 05</span>
+          </div>
+
+          <div style={{ display:"grid", gridTemplateColumns:"1fr 1.4fr", gap:"clamp(40px,6vw,80px)", alignItems:"start" }}>
+            {/* Left — title */}
+            <FadeUp>
+              <div style={{ paddingTop: "clamp(24px,3vw,48px)" }}>
+                <h2 className="font-serif font-medium mb-4" style={{ fontFamily:T.display, fontSize:"clamp(30px,4.4vw,54px)", lineHeight:1.04, color:T.ink }}>
                   The thinking, <em style={{ fontStyle:"italic", color:T.gold }}>in the open.</em>
                 </h2>
-              </FadeUp>
-              <FadeUp delay={0.1}>
-                <p style={{ fontFamily:T.display, fontSize:18, color:T.ink3, maxWidth:"34ch", lineHeight:1.7, marginBottom:28, fontWeight:300 }}>
-                  Essays, frameworks, and field notes written from inside organisations that are still figuring it out. Not thought leadership. Thought in progress.
+                <p style={{ fontFamily:T.display, fontSize:17, color:T.ink3, maxWidth:"30ch", lineHeight:1.7, marginBottom:0, fontWeight:300 }}>
+                  Essays, frameworks, and field notes written from inside organisations that are still figuring it out.
                 </p>
-              </FadeUp>
-              <FadeUp delay={0.18}>
-                <a href="#"
-                  className="inline-flex items-center gap-3 font-mono text-[10px] uppercase px-7 py-4 transition-all duration-250"
-                  style={{ letterSpacing:".18em", background:T.ink, color:T.white, textDecoration:"none" }}
-                  onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = T.gold; }}
-                  onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = T.ink; }}>
-                  Read Field Notes
-                  <span style={{ display:"inline-block", width:16, height:1, background:"currentColor" }} />
-                </a>
-              </FadeUp>
-            </div>
+              </div>
+            </FadeUp>
 
-            {/* Right — note rows */}
-            <div>
-              {NOTES.map((note,i) => (
-                <FadeUp key={i} delay={i*0.09}>
-                  <div style={{ borderTop:`1px solid ${T.rule2}`, padding:"clamp(20px,2.5vw,28px) 0", display:"flex", alignItems:"flex-start", gap:20, cursor:"default" }}>
-                    <span className="font-mono" style={{ fontSize:10, letterSpacing:".26em", color:T.gold, flexShrink:0, paddingTop:3, minWidth:36 }}>
-                      {note.no}
-                    </span>
-                    <div style={{ flex:1 }}>
-                      <h3 className="font-serif font-medium" style={{ fontFamily:T.display, fontSize:"clamp(18px,1.8vw,22px)", color:T.ink, marginBottom:6, lineHeight:1.2 }}>
-                        {note.title}
-                      </h3>
-                      <p style={{ fontFamily:T.display, fontSize:15, color:T.ink3, lineHeight:1.65 }}>
-                        {note.body}
-                      </p>
-                    </div>
-                    <span className="font-mono" style={{ fontSize:9.5, letterSpacing:".2em", color:T.gold, flexShrink:0, paddingTop:3, opacity:.7 }}>
-                      {note.status}
-                    </span>
-                  </div>
-                </FadeUp>
-              ))}
-            </div>
+            {/* Right — 4 independently rotating article boxes */}
+            <FadeUp delay={0.12}>
+              <ArticleGrid />
+            </FadeUp>
           </div>
         </div>
       </section>
