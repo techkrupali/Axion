@@ -656,7 +656,7 @@ export default function FounderPage() {
             position: "absolute",
             left: 0,
             bottom: 0,
-            width: "clamp(300px, 42%, 560px)",
+            width: "clamp(280px, 40%, 520px)",
             height: "100%",
             zIndex: 2,
           }}
@@ -667,25 +667,39 @@ export default function FounderPage() {
             fill
             style={{
               objectFit: "cover",
-              objectPosition: "top center",
+              objectPosition: "36% 27%",
+              filter: "grayscale(1) contrast(1.08) brightness(.86)",
+              transition: "filter 0.7s cubic-bezier(.22,.61,.36,1)",
             }}
             priority
           />
           {/* Fade portrait into dark bg — right edge */}
           <div style={{
             position: "absolute", inset: 0,
-            background: "linear-gradient(90deg, transparent 40%, #0e0e0c 92%)",
+            background: "linear-gradient(90deg, transparent 55%, #0e0e0c 95%)",
           }} />
           {/* Fade portrait at bottom */}
           <div style={{
-            position: "absolute", bottom: 0, left: 0, right: 0, height: "30%",
+            position: "absolute", bottom: 0, left: 0, right: 0, height: "25%",
             background: "linear-gradient(to top, #0e0e0c, transparent)",
           }} />
-          {/* Very slight fade at top */}
+          {/* Portrait caption bottom */}
           <div style={{
-            position: "absolute", top: 0, left: 0, right: 0, height: "18%",
-            background: "linear-gradient(to bottom, #0e0e0c 0%, transparent 100%)",
-          }} />
+            position: "absolute", left: 4, right: 60, bottom: 30, zIndex: 3,
+            fontFamily: "var(--font-geist-mono)",
+            fontSize: 9,
+            letterSpacing: ".18em",
+            textTransform: "uppercase",
+            color: "rgba(247,246,243,.76)",
+            display: "flex",
+            justifyContent: "space-between",
+            gap: 18,
+            borderTop: "1px solid rgba(247,246,243,.18)",
+            paddingTop: 14,
+          }}>
+            <span>Founder</span>
+            <span>Axion Index</span>
+          </div>
         </motion.div>
 
         {/* ── CONTENT — sits over the right portion ── */}
@@ -697,7 +711,9 @@ export default function FounderPage() {
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
-            padding: "clamp(100px,14vh,160px) clamp(56px,8vw,120px) clamp(60px,8vh,100px) clamp(280px,46%,640px)",
+            alignItems: "flex-start",
+            padding: "clamp(100px,14vh,160px) clamp(56px,8vw,120px) clamp(60px,8vh,100px) clamp(320px,48%,660px)",
+            textAlign: "left",
           }}
         >
           {/* Kicker */}
@@ -707,11 +723,11 @@ export default function FounderPage() {
             transition={{ duration: 0.7, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
             className="font-mono"
             style={{
-              fontSize: 10,
+              fontSize: 9,
               letterSpacing: ".38em",
               textTransform: "uppercase",
-              color: "rgba(196,152,72,.7)",
-              marginBottom: 28,
+              color: "rgba(196,152,72,.65)",
+              marginBottom: 22,
             }}
           >
             Founder Doctrine&nbsp;&nbsp;·&nbsp;&nbsp;Axion Index
@@ -725,19 +741,19 @@ export default function FounderPage() {
             transition={{ duration: 1.0, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
             style={{
               fontFamily: T.display,
-              fontWeight: 400,
-              fontSize: "clamp(52px, 7.5vw, 108px)",
-              lineHeight: 0.96,
-              letterSpacing: "-0.02em",
-              color: "rgba(247,246,243,0.93)",
-              marginBottom: 20,
+              fontWeight: 500,
+              fontSize: "clamp(68px, 9.5vw, 130px)",
+              lineHeight: 0.95,
+              letterSpacing: "-0.01em",
+              color: "rgba(247,246,243,0.97)",
+              marginBottom: 24,
             }}
           >
             <span style={{ display: "block" }}>The</span>
             <span style={{ display: "block" }}>Making</span>
             <span style={{ display: "block" }}>of the</span>
-            <em style={{ display: "block", fontStyle: "italic", color: T.gold2 }}>Operating</em>
-            <em style={{ display: "block", fontStyle: "italic", color: T.gold2 }}>Architect.</em>
+            <em style={{ display: "block", fontStyle: "italic", color: "#C9A24A", fontWeight: 400 }}>Operating</em>
+            <em style={{ display: "block", fontStyle: "italic", color: "#C9A24A", fontWeight: 400 }}>Architect.</em>
           </motion.h1>
 
           {/* Name */}
@@ -747,12 +763,12 @@ export default function FounderPage() {
             transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
             className="font-mono"
             style={{
-              fontSize: 10,
-              fontWeight: 600,
+              fontSize: 9,
+              fontWeight: 500,
               letterSpacing: ".28em",
               textTransform: "uppercase",
-              color: "rgba(247,246,243,.55)",
-              marginBottom: 16,
+              color: "rgba(247,246,243,.5)",
+              marginBottom: 14,
             }}
           >
             Nitin Nahata
@@ -767,10 +783,10 @@ export default function FounderPage() {
             style={{
               fontFamily: T.display,
               fontStyle: "italic",
-              fontSize: "clamp(15px, 1.45vw, 18px)",
-              lineHeight: 1.65,
-              color: "rgba(176,174,168,.75)",
-              maxWidth: "34ch",
+              fontSize: "clamp(18px, 1.8vw, 24px)",
+              lineHeight: 1.55,
+              color: "rgba(247,246,243,.82)",
+              maxWidth: "30ch",
               fontWeight: 300,
             }}
           >
