@@ -158,7 +158,7 @@ function HeroBand() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.35, ease: [0.22, 0.61, 0.36, 1] }}
           className="font-mono uppercase block"
-          style={{ fontSize: 14, letterSpacing: "0.24em", color: T.gold, opacity: 0.75 }}
+          style={{ fontSize: 11, letterSpacing: "0.24em", color: T.gold, opacity: 0.75 }}
         >
           Structural Signal
         </motion.span>
@@ -199,10 +199,11 @@ function HeroBand() {
 
       {/* Vertical wordmark */}
       <span
-        className="absolute right-10 top-1/2 -translate-y-1/2 font-serif font-medium uppercase hidden lg:block"
+        className="absolute right-10 hidden lg:block font-serif font-medium uppercase"
         style={{
           writingMode: "vertical-rl",
           transform: "translateY(-50%) rotate(180deg)",
+          top: "58%",
           fontSize: 30,
           letterSpacing: "0.18em",
           color: "rgba(247,246,243,0.85)",
@@ -266,13 +267,23 @@ function HeroBody({ onDiagnosticOpen }: { onDiagnosticOpen: () => void }) {
                 From{" "}
                 <span
                   style={{
-                    textDecoration: "line-through",
-                    textDecorationColor: T.gold,
-                    textDecorationThickness: 2,
+                    position: "relative",
                     color: T.mid,
+                    display: "inline-block",
                   }}
                 >
                   ambiguity
+                  <span
+                    style={{
+                      position: "absolute",
+                      left: 0,
+                      right: 0,
+                      top: "62%",
+                      height: 2,
+                      background: T.gold,
+                      pointerEvents: "none",
+                    }}
+                  />
                 </span>
               </span>
               <span className="block">
@@ -966,11 +977,13 @@ function MovesSection() {
             whileHover={{ scale: move.resolve ? 1 : 1.015, y: move.resolve ? 0 : -4, zIndex: 10 }}
             viewport={{ once: true, margin: "-10%" }}
             transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1], delay: i * 0.08 }}
-            className="group relative border-t cursor-default overflow-hidden"
+            className="group relative border cursor-default overflow-hidden"
             style={{
-              borderColor: move.resolve ? T.gold : T.rule,
+              borderColor: move.resolve ? T.gold : T.gold,
+              borderWidth: 1,
               background: move.resolve ? `linear-gradient(135deg, #C49848 0%, #A07830 100%)` : "transparent",
               position: "relative",
+              marginBottom: i < MOVES.length - 1 ? "0" : "0",
             }}
           >
             {/* Hover background glow — only non-resolve rows */}
@@ -991,7 +1004,7 @@ function MovesSection() {
 
             {/* Ghost number watermark */}
             <div
-              className={`absolute top-1/2 -translate-y-1/2 font-serif italic leading-none pointer-events-none select-none transition-opacity duration-700 overflow-hidden ${i % 2 === 1 ? "right-8" : "left-0"}`}
+              className={`absolute top-1/2 -translate-y-1/2 font-serif italic leading-none pointer-events-none select-none transition-opacity duration-700 overflow-hidden ${i % 2 === 1 ? "left-52" : "left-0"}`}
               style={{
                 fontSize: "22vw",
                 color: T.ink,
