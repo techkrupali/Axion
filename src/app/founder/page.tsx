@@ -519,22 +519,24 @@ export default function FounderPage() {
         .fn-nav {
           position:fixed; top:0; left:0; right:0; height:70px; z-index:900;
           display:flex; align-items:center;
-          background:transparent;
+          background:rgba(247,246,243,0.96);
+          backdrop-filter:blur(14px);
+          border-bottom:1px solid rgba(13,13,11,0.10);
           transition:all 0.45s cubic-bezier(0.22,1,0.36,1);
         }
         .fn-nav.s {
-          background:rgba(13,13,11,.95); backdrop-filter:blur(18px);
-          border-bottom:1px solid rgba(247,246,243,.06);
+          background:rgba(247,246,243,.98); backdrop-filter:blur(18px);
+          border-bottom:1px solid rgba(13,13,11,.12);
           height:62px;
         }
         .fn-nav-inner { width:100%; padding:0 32px; display:flex; align-items:center; justify-content:space-between; }
-        /* Brand — serif, cream */
-        .fn-brand { font-family:var(--font-cormorant-garamond),'Cormorant Garamond',serif; font-size:21px; font-weight:500; color:#F7F6F3; letter-spacing:.04em; text-decoration:none; text-transform:uppercase; display:flex; align-items:baseline; gap:6px; transition:opacity .3s; letter-spacing:.18em; }
-        .fn-brand:hover { opacity:.8; }
+        /* Brand — serif, dark ink */
+        .fn-brand { font-family:var(--font-cormorant-garamond),'Cormorant Garamond',serif; font-size:21px; font-weight:500; color:#0D0D0B; letter-spacing:.18em; text-decoration:none; text-transform:uppercase; display:flex; align-items:baseline; gap:6px; transition:opacity .3s; }
+        .fn-brand:hover { opacity:.7; }
         /* Center links */
         .fn-nl { display:flex; align-items:center; gap:32px; }
-        .fn-nl a { font-family:var(--font-geist-mono),ui-monospace,monospace; font-size:10px; font-weight:500; letter-spacing:.24em; text-transform:uppercase; color:rgba(247,246,243,.55); transition:color .25s; padding:5px 0; position:relative; text-decoration:none; }
-        .fn-nl a:hover, .fn-nl a.on { color:rgba(247,246,243,.9); }
+        .fn-nl a { font-family:var(--font-geist-mono),ui-monospace,monospace; font-size:10px; font-weight:500; letter-spacing:.24em; text-transform:uppercase; color:rgba(13,13,11,.45); transition:color .25s; padding:5px 0; position:relative; text-decoration:none; }
+        .fn-nl a:hover, .fn-nl a.on { color:rgba(13,13,11,.9); }
         .fn-nl a.on::after { content:""; position:absolute; left:0; right:0; bottom:-2px; height:1px; background:#A07830; }
         /* CTA button — dark solid */
         .fn-btn {
@@ -546,7 +548,7 @@ export default function FounderPage() {
           transition:background .25s !important;
         }
         .fn-btn:hover { background:#A07830 !important; }
-        .fn-hamb { display:none; background:none; border:1px solid rgba(247,246,243,.2); color:#F7F6F3; width:42px; height:38px; border-radius:2px; cursor:pointer; align-items:center; justify-content:center; }
+        .fn-hamb { display:none; background:none; border:1px solid rgba(13,13,11,.2); color:#0D0D0B; width:42px; height:38px; border-radius:2px; cursor:pointer; align-items:center; justify-content:center; }
         /* Company strip */
         .co-strip { overflow:hidden; white-space:nowrap; -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent); mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent); }
         .co-track { display:inline-flex; gap:0; animation:co-scroll 30s linear infinite; }
@@ -564,9 +566,9 @@ export default function FounderPage() {
         @media (prefers-reduced-motion:reduce) { *,*::before,*::after { animation-duration:.01ms !important; transition-duration:.01ms !important; } }
         /* Responsive */
         @media (max-width:960px) {
-          .fn-nl { position:fixed; inset:62px 0 auto 0; flex-direction:column; gap:0; background:rgba(13,13,11,.97); border-bottom:1px solid rgba(247,246,243,.07); max-height:0; overflow:hidden; transition:max-height .35s; padding:0 32px; }
+          .fn-nl { position:fixed; inset:62px 0 auto 0; flex-direction:column; gap:0; background:rgba(247,246,243,.98); border-bottom:1px solid rgba(13,13,11,.10); max-height:0; overflow:hidden; transition:max-height .35s; padding:0 32px; }
           .fn-nl.open { max-height:560px; padding:12px 32px 28px; }
-          .fn-nl a { padding:14px 0; width:100%; border-bottom:1px solid rgba(247,246,243,.06); font-size:13px; color:rgba(247,246,243,.55) !important; }
+          .fn-nl a { padding:14px 0; width:100%; border-bottom:1px solid rgba(13,13,11,.06); font-size:13px; color:rgba(13,13,11,.55) !important; }
           .fn-btn { margin-top:12px; text-align:center; }
           .fn-hamb { display:inline-flex; }
         }
@@ -589,7 +591,7 @@ export default function FounderPage() {
         <div className="fn-nav-inner">
           {/* Brand — "AXION INDEX" serif wordmark as in photo */}
           <a className="fn-brand" href="/">
-            AX<em style={{ fontStyle:"italic" }}>I</em>ON&nbsp;INDEX
+            AX<em style={{ fontStyle:"italic", color:"#A07830" }}>I</em>ON&nbsp;INDEX
           </a>
           <button className="fn-hamb" aria-label={mobileOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileOpen} onClick={() => setMobileOpen(!mobileOpen)}>
