@@ -1270,8 +1270,7 @@ export default function Home() {
         {/* 2 — Hero Body */}
         <HeroBody onDiagnosticOpen={() => setDiagOpen(true)} />
 
-        {/* 3 — Method */}
-        <MethodSection />
+
 
         {/* 4 — Operating Logic */}
         <LogicSection />
