@@ -419,72 +419,47 @@ function MethodSection() {
         borderBottom: "1px solid rgba(247,246,243,0.08)",
       }}
     >
-      <div className="max-w-[1280px] mx-auto px-6 sm:px-12 py-8 lg:py-10">
-        <div className="grid grid-cols-1 lg:grid-cols-[2fr_3fr] gap-16 lg:gap-24 items-start">
-
-          {/* ── Left: headline ── */}
-          <Reveal>
-            <div className="lg:sticky lg:top-[74px]">
-              {/* eyebrow */}
-              <p
-                className="font-mono uppercase mb-10"
-                style={{ fontSize: 10, letterSpacing: "0.22em", color: "rgba(247,246,243,0.35)" }}
-              >
-                The Synthesis
-              </p>
-              <h2
-                className="font-serif"
-                style={{
-                  fontFamily: T.display,
-                  fontSize: "clamp(52px, 7vw, 96px)",
-                  lineHeight: 1.0,
-                  color: "rgba(247,246,243,0.92)",
-                  fontWeight: 400,
-                }}
-              >
-                The chapters became a{" "}
+      <div className="max-w-[1280px] mx-auto px-6 sm:px-12 py-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+          {/* Left side: Hero text */}
+          <div className="lg:col-span-5">
+            <Reveal>
+              <span className="font-mono block mb-8" style={{ fontSize:9, letterSpacing:".38em", textTransform:"uppercase", color:"rgba(247,246,243,0.35)" }}>
+                THE SYNTHESIS
+              </span>
+              <h2 className="font-serif font-medium" style={{ fontFamily: T.display, fontSize:"clamp(48px, 8vw, 120px)", lineHeight:0.95, color:"rgba(247,246,243,0.92)" }}>
+                The chapters became a<br />
                 <em style={{ color: T.gold, fontStyle: "italic" }}>method.</em>
               </h2>
-            </div>
-          </Reveal>
-
-          {/* ── Right: lesson rows ── */}
-          <div>
-            {METHOD_LESSONS.map((item, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-6%" }}
-                transition={{ duration: 0.6, delay: i * 0.07, ease: [0.22, 1, 0.36, 1] }}
-                className="py-6"
-                style={{
-                  borderTop: i === 0 ? "none" : "1px solid rgba(247,246,243,0.08)",
-                }}
-              >
-                <div className="grid grid-cols-[160px_1fr] gap-6 items-start">
-                  <span
-                    className="font-mono uppercase pt-0.5"
-                    style={{ fontSize: 9, letterSpacing: "0.2em", color: "rgba(247,246,243,0.32)" }}
-                  >
-                    {item.from}
-                  </span>
-                  <p
-                    className="font-serif"
-                    style={{
-                      fontFamily: T.display,
-                      fontSize: "clamp(14px,1.1vw,17px)",
-                      lineHeight: 1.55,
-                      color: "rgba(247,246,243,0.75)",
-                    }}
-                  >
-                    {item.line}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
+            </Reveal>
           </div>
 
+          {/* Right side: Lessons list */}
+          <div className="lg:col-span-7">
+            {METHOD_LESSONS.map((item, i) => (
+              <Reveal key={i} delay={i * 0.05}>
+                <div style={{ borderTop:`1px solid rgba(247,246,243,0.1)`, padding:"20px 0" }}>
+                  <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-start">
+                    <div className="sm:col-span-4">
+                      <span className="font-mono" style={{ fontSize:10, letterSpacing:".3em", textTransform:"uppercase", color:"rgba(247,246,243,0.35)" }}>
+                        {item.from}
+                      </span>
+                    </div>
+                    <div className="sm:col-span-8">
+                      <p className="font-serif" style={{
+                        fontFamily: T.display,
+                        fontSize:"clamp(16px,2vw,18px)",
+                        lineHeight:1.6,
+                        color:"rgba(247,246,243,0.85)",
+                      }}>
+                        {item.line}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </div>
     </section>

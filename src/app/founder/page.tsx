@@ -1180,40 +1180,42 @@ export default function FounderPage() {
       </section>
 
       {/* ══ S5 — SYNTHESIS ═══════════════════════════════════════════════════════ */}
-      <section id="synthesis" style={{ background:T.ink, borderBottom:`1px solid ${T.ink}`, minHeight:"100vh", display:"flex", alignItems:"center" }}>
+      <section id="synthesis" style={{ background:T.ink, borderBottom:`1px solid ${T.ink}` }}>
         <div className="w-full max-w-[1280px] mx-auto px-6 sm:px-12 py-16">
-          {/* Top gold rule */}
-          <div style={{ height:1, background:`linear-gradient(90deg, ${T.gold}, transparent 60%)`, marginBottom:40 }} />
-
-          <div className="synth-grid" style={{ display:"grid", gridTemplateColumns:"1fr 1.6fr", gap:"clamp(32px,5vw,80px)", alignItems:"start" }}>
-            {/* Left */}
-            <div>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+            {/* Left side: Hero text */}
+            <div className="lg:col-span-5">
               <FadeUp>
-                <span className="font-mono block mb-4" style={{ fontSize:10, letterSpacing:".38em", textTransform:"uppercase", color:T.gold2, opacity:.7 }}>
-                  The synthesis
+                <span className="font-mono block mb-8" style={{ fontSize:9, letterSpacing:".38em", textTransform:"uppercase", color:"rgba(247,246,243,0.35)" }}>
+                  THE SYNTHESIS
                 </span>
-                <h2 className="font-serif font-medium" style={{ fontFamily:T.display, fontSize:"clamp(28px,3.8vw,50px)", lineHeight:1.04, color:T.white }}>
-                  The chapters became a{" "}
+                <h2 className="font-serif font-medium" style={{ fontFamily:T.display, fontSize:"clamp(48px, 8vw, 120px)", lineHeight:0.95, color:T.white }}>
+                  The chapters became a<br />
                   <em style={{ fontStyle:"italic", color:T.gold2 }}>method.</em>
                 </h2>
               </FadeUp>
             </div>
 
-            {/* Right list — all 7 quotes, no scroll */}
-            <div>
+            {/* Right side: Lessons list */}
+            <div className="lg:col-span-7">
               {SYNTHESIS.map((item,i) => (
                 <FadeUp key={i} delay={i*0.05}>
-                  <div className="syn-row" style={{ borderTop:`1px solid rgba(247,246,243,.08)`, padding:"12px 0", cursor:"default" }}>
-                    <div className="font-mono mb-1" style={{ fontSize:9, letterSpacing:".32em", textTransform:"uppercase", color:T.gold, opacity:.55 }}>
-                      {item.source}
+                  <div style={{ borderTop:`1px solid rgba(247,246,243,0.1)`, padding:"20px 0" }}>
+                    <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-start">
+                      <div className="sm:col-span-4">
+                        <span className="font-mono" style={{ fontSize:10, letterSpacing:".3em", textTransform:"uppercase", color:"rgba(247,246,243,0.35)" }}>
+                          {item.source}
+                        </span>
+                      </div>
+                      <div className="sm:col-span-8">
+                        <p className="font-serif" style={{ fontFamily:T.display, fontSize:"clamp(16px,2vw,18px)", lineHeight:1.6, color:"rgba(247,246,243,0.85)" }}>
+                          {item.quote}
+                        </p>
+                      </div>
                     </div>
-                    <p className="font-serif syn-q" style={{ fontFamily:T.display, fontSize:"clamp(14px,1.4vw,18px)", lineHeight:1.4, color:"rgba(247,246,243,.6)", transition:"color .3s" }}>
-                      {item.quote}
-                    </p>
                   </div>
                 </FadeUp>
               ))}
-              <div style={{ height:1, background:`linear-gradient(90deg, transparent, ${T.gold}, transparent)`, marginTop:20 }} />
             </div>
           </div>
         </div>
