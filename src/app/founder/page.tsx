@@ -293,7 +293,7 @@ function ChapterAccordion() {
                     fontSize:11,
                     letterSpacing:".28em",
                     color: isOpen ? T.gold : T.ink,
-                    minWidth:"2ch",
+                    width:"3.5ch",
                     transition:"color 0.3s",
                   }}
                 >
@@ -307,7 +307,7 @@ function ChapterAccordion() {
                     fontSize:11,
                     letterSpacing:".18em",
                     color: isOpen ? "rgba(247,246,243,0.6)" : T.ink,
-                    minWidth:"9ch",
+                    width:"11ch",
                     transition:"color 0.3s",
                   }}
                 >
@@ -345,9 +345,9 @@ function ChapterAccordion() {
                 </span>
 
                 {/* Plus / minus toggle */}
-                <div className="flex flex-col items-center gap-1">
+                <div className="flex flex-col items-center gap-1 w-10 shrink-0">
                   <span
-                    className="font-mono hidden sm:block"
+                    className="font-mono hidden sm:block text-center"
                     style={{
                       fontSize:8,
                       letterSpacing:".14em",
