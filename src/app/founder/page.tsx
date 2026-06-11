@@ -292,7 +292,7 @@ function ChapterAccordion() {
                   style={{
                     fontSize:11,
                     letterSpacing:".28em",
-                    color: isOpen ? T.gold : T.dim,
+                    color: isOpen ? T.gold : T.ink,
                     minWidth:"2ch",
                     transition:"color 0.3s",
                   }}
@@ -306,7 +306,7 @@ function ChapterAccordion() {
                   style={{
                     fontSize:11,
                     letterSpacing:".18em",
-                    color: isOpen ? "rgba(247,246,243,0.4)" : T.mid,
+                    color: isOpen ? "rgba(247,246,243,0.6)" : T.ink,
                     minWidth:"9ch",
                     transition:"color 0.3s",
                   }}
@@ -334,9 +334,9 @@ function ChapterAccordion() {
                     fontSize:9,
                     letterSpacing:".22em",
                     textTransform:"uppercase",
-                    color: T.gold,
-                    opacity: isOpen ? 0 : 0.6,
-                    border:`1px solid rgba(160,120,48,0.3)`,
+                    color: T.gold2,
+                    opacity: isOpen ? 0 : 1,
+                    border:`1px solid rgba(196,152,72,0.6)`,
                     padding:"4px 10px",
                     whiteSpace:"nowrap",
                   }}
@@ -345,28 +345,41 @@ function ChapterAccordion() {
                 </span>
 
                 {/* Plus / minus toggle */}
-                <div
-                  className="shrink-0 w-7 h-7 flex items-center justify-center"
-                  style={{
-                    border:`1px solid ${isOpen ? T.gold : "rgba(13,13,11,0.15)"}`,
-                    borderRadius:"50%",
-                    transition:"border-color 0.3s",
-                  }}
-                >
-                  <motion.span
-                    animate={{ rotate: isOpen ? 45 : 0 }}
-                    transition={{ duration:0.3, ease:[0.22,1,0.36,1] }}
+                <div className="flex flex-col items-center gap-1">
+                  <span
+                    className="font-mono hidden sm:block"
                     style={{
-                      display:"block",
-                      fontSize:16,
-                      lineHeight:1,
-                      color: isOpen ? T.gold : T.mid,
-                      fontWeight:300,
-                      marginTop:"-1px",
+                      fontSize:8,
+                      letterSpacing:".14em",
+                      textTransform:"uppercase",
+                      color: T.dim,
                     }}
                   >
-                    +
-                  </motion.span>
+                    {isOpen ? "Collapse" : "Expand"}
+                  </span>
+                  <div
+                    className="shrink-0 w-7 h-7 flex items-center justify-center"
+                    style={{
+                      border:`1px solid ${isOpen ? T.gold : "rgba(13,13,11,0.6)"}`,
+                      borderRadius:"50%",
+                      transition:"border-color 0.3s",
+                    }}
+                  >
+                    <motion.span
+                      animate={{ rotate: isOpen ? 45 : 0 }}
+                      transition={{ duration:0.3, ease:[0.22,1,0.36,1] }}
+                      style={{
+                        display:"block",
+                        fontSize:16,
+                        lineHeight:1,
+                        color: isOpen ? T.gold : T.ink,
+                        fontWeight:300,
+                        marginTop:"-1px",
+                      }}
+                    >
+                      +
+                    </motion.span>
+                  </div>
                 </div>
               </div>
             </button>
