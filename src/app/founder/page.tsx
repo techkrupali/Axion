@@ -302,12 +302,12 @@ function ChapterAccordion() {
 
                 {/* Year */}
                 <span
-                  className="font-mono shrink-0 hidden sm:block"
+                  className="font-mono shrink-0 hidden sm:block whitespace-nowrap"
                   style={{
                     fontSize:11,
                     letterSpacing:".18em",
                     color: isOpen ? "rgba(247,246,243,0.6)" : T.ink,
-                    width:"11ch",
+                    width:"14ch",
                     transition:"color 0.3s",
                   }}
                 >
