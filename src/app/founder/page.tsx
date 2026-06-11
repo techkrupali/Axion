@@ -496,12 +496,11 @@ export default function FounderPage() {
   }, []);
 
   const NAV_LINKS = [
+    { href: "/",    label: "Axion Index" },
     { href: "#story",    label: "Story" },
-    { href: "#soil",     label: "Origins" },
-    { href: "#timeline", label: "Roots" },
-    { href: "#patterns", label: "Patterns" },
-    { href: "#writing",  label: "Field Notes" },
-    { href: "#vision",   label: "Vision" },
+    { href: "#patterns", label: "Operating Patterns" },
+    { href: "#writing",  label: "Writing" },
+    { href: "/connect",    label: "Reach Us" },
   ];
 
   /* ── Root background — cream grid, same as landing ── */
@@ -635,6 +634,14 @@ export default function FounderPage() {
           alignItems: "stretch",
         }}
       >
+        {/* ── Architectural background image (concrete stairs) ── */}
+        <div className="absolute inset-0" style={{
+          backgroundImage: "url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=1600&h=1000')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          opacity: 0.25,
+          filter: "grayscale(100%) brightness(0.5) contrast(1.2)",
+        }} />
         {/* ── Dark architectural texture overlay ── */}
         <div className="absolute inset-0 pointer-events-none" style={{
           backgroundImage: "linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px)",
@@ -642,23 +649,25 @@ export default function FounderPage() {
           opacity: 0.6,
         }} />
 
-        {/* ── Subtle radial warm glow center-right ── */}
+        {/* ── Stronger warm radial glow center-right ── */}
         <div className="absolute inset-0 pointer-events-none" style={{
-          background: "radial-gradient(ellipse 80% 70% at 65% 45%, rgba(30,26,18,0.9) 0%, transparent 70%)",
+          background: "radial-gradient(ellipse 70% 60% at 70% 40%, rgba(160,120,48,0.25) 0%, transparent 60%)",
         }} />
 
-        {/* ── PORTRAIT — left-anchored, bleeds from bottom, fades right ── */}
+        {/* ── PORTRAIT — framed box, perfect match to photo, moved higher ── */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
           style={{
             position: "absolute",
-            left: 0,
-            bottom: 0,
-            width: "clamp(280px, 40%, 520px)",
-            height: "100%",
+            left: "10%",
+            top: "45%",
+            transform: "translateY(-50%)",
+            width: "clamp(300px, 34%, 480px)",
+            height: "clamp(480px, 70vh, 680px)",
             zIndex: 2,
+            overflow: "hidden",
           }}
         >
           <Image
@@ -667,42 +676,30 @@ export default function FounderPage() {
             fill
             style={{
               objectFit: "cover",
-              objectPosition: "36% 27%",
-              filter: "grayscale(1) contrast(1.08) brightness(.86)",
+              objectPosition: "40% 20%",
+              filter: "grayscale(100%) contrast(1.1) brightness(0.88)",
               transition: "filter 0.7s cubic-bezier(.22,.61,.36,1)",
             }}
             priority
           />
-          {/* Fade portrait into dark bg — right edge */}
+          {/* Warm light beam over portrait like target photo */}
           <div style={{
             position: "absolute", inset: 0,
-            background: "linear-gradient(90deg, transparent 55%, #0e0e0c 95%)",
+            background: "linear-gradient(120deg, transparent 30%, rgba(160,120,48,0.35) 45%, transparent 60%)",
+            mixBlendMode: "overlay",
           }} />
-          {/* Fade portrait at bottom */}
+          {/* Fade portrait right edge and bottom */}
           <div style={{
-            position: "absolute", bottom: 0, left: 0, right: 0, height: "25%",
+            position: "absolute", inset: 0,
+            background: "linear-gradient(90deg, transparent 75%, #0e0e0c 96%)",
+          }} />
+          <div style={{
+            position: "absolute", bottom: 0, left: 0, right: 0, height: "30%",
             background: "linear-gradient(to top, #0e0e0c, transparent)",
           }} />
-          {/* Portrait caption bottom */}
-          <div style={{
-            position: "absolute", left: 4, right: 60, bottom: 30, zIndex: 3,
-            fontFamily: "var(--font-geist-mono)",
-            fontSize: 9,
-            letterSpacing: ".18em",
-            textTransform: "uppercase",
-            color: "rgba(247,246,243,.76)",
-            display: "flex",
-            justifyContent: "space-between",
-            gap: 18,
-            borderTop: "1px solid rgba(247,246,243,.18)",
-            paddingTop: 14,
-          }}>
-            <span>Founder</span>
-            <span>Axion Index</span>
-          </div>
         </motion.div>
 
-        {/* ── CONTENT — sits over the right portion ── */}
+        {/* ── CONTENT — sits over the right portion, perfectly aligned ── */}
         <div
           style={{
             position: "relative",
@@ -712,11 +709,11 @@ export default function FounderPage() {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "flex-start",
-            padding: "clamp(100px,14vh,160px) clamp(56px,8vw,120px) clamp(60px,8vh,100px) clamp(320px,48%,660px)",
+            padding: "clamp(100px,14vh,160px) clamp(56px,8vw,120px) clamp(160px,20vh,220px) clamp(420px,56%,780px)",
             textAlign: "left",
           }}
         >
-          {/* Kicker */}
+          {/* Kicker — centered at the top of hero, above headline */}
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -727,7 +724,11 @@ export default function FounderPage() {
               letterSpacing: ".38em",
               textTransform: "uppercase",
               color: "rgba(196,152,72,.65)",
-              marginBottom: 22,
+              marginBottom: 40,
+              textAlign: "center",
+              position: "relative",
+              alignSelf: "center",
+              left: "20%",
             }}
           >
             Founder Doctrine&nbsp;&nbsp;·&nbsp;&nbsp;Axion Index
@@ -742,37 +743,39 @@ export default function FounderPage() {
             style={{
               fontFamily: T.display,
               fontWeight: 500,
-              fontSize: "clamp(68px, 9.5vw, 130px)",
-              lineHeight: 0.95,
+              fontSize: "clamp(60px, 8vw, 110px)",
+              lineHeight: 0.92,
               letterSpacing: "-0.01em",
               color: "rgba(247,246,243,0.97)",
-              marginBottom: 24,
+              marginBottom: 28,
             }}
           >
             <span style={{ display: "block" }}>The</span>
             <span style={{ display: "block" }}>Making</span>
             <span style={{ display: "block" }}>of the</span>
             <em style={{ display: "block", fontStyle: "italic", color: "#C9A24A", fontWeight: 400 }}>Operating</em>
-            <em style={{ display: "block", fontStyle: "italic", color: "#C9A24A", fontWeight: 400 }}>Architect.</em>
+            <span style={{ display: "block" }}>Architect.</span>
           </motion.h1>
 
-          {/* Name */}
-          <motion.p
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="font-mono"
-            style={{
-              fontSize: 9,
-              fontWeight: 500,
-              letterSpacing: ".28em",
-              textTransform: "uppercase",
-              color: "rgba(247,246,243,.5)",
-              marginBottom: 14,
-            }}
-          >
-            Nitin Nahata
-          </motion.p>
+          {/* Name label like target photo with vertical line */}
+          <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 18, marginTop: 8 }}>
+            <div style={{ width: 1, height: 40, background: "rgba(196,152,72,.6)" }} />
+            <motion.p
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              className="font-mono"
+              style={{
+                fontSize: 10,
+                fontWeight: 500,
+                letterSpacing: ".42em",
+                textTransform: "uppercase",
+                color: "rgba(196,152,72,.6)",
+              }}
+            >
+              NITIN NAHATA
+            </motion.p>
+          </div>
 
           {/* Body text */}
           <motion.p
@@ -783,7 +786,7 @@ export default function FounderPage() {
             style={{
               fontFamily: T.display,
               fontStyle: "italic",
-              fontSize: "clamp(18px, 1.8vw, 24px)",
+              fontSize: "clamp(22px, 2.2vw, 30px)",
               lineHeight: 1.55,
               color: "rgba(247,246,243,.82)",
               maxWidth: "30ch",
@@ -798,9 +801,9 @@ export default function FounderPage() {
         <div
           style={{
             position: "absolute",
-            right: 20,
+            right: 28,
             top: "50%",
-            transform: "translateY(-50%) rotate(180deg)",
+            transform: "translateY(-50%)",
             writingMode: "vertical-rl",
             zIndex: 4,
           }}
@@ -808,13 +811,14 @@ export default function FounderPage() {
           <span
             className="font-mono"
             style={{
-              fontSize: 10,
-              letterSpacing: ".35em",
+              fontSize: 14,
+              letterSpacing: ".5em",
               textTransform: "uppercase",
-              color: "rgba(247,246,243,.22)",
+              color: "rgba(247,246,243,.45)",
+              fontWeight: 500,
             }}
           >
-            Founder
+            FOUNDER
           </span>
         </div>
 
@@ -825,18 +829,22 @@ export default function FounderPage() {
           transition={{ duration: 0.8, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
           style={{
             position: "absolute",
-            bottom: "clamp(120px,16vh,180px)",
-            left: "clamp(280px,46%,640px)",
+            bottom: "clamp(80px,12vh,140px)",
+            left: "clamp(420px,56%,780px)",
             zIndex: 4,
+            display: "flex",
+            alignItems: "center",
+            gap: 16,
           }}
         >
+          <div style={{ width: 1, height: 30, background: "rgba(247,246,243,.2)" }} />
           <p
             className="font-mono"
             style={{
-              fontSize: 10,
+              fontSize: 12,
               letterSpacing: ".18em",
               color: "rgba(247,246,243,.32)",
-              maxWidth: "44ch",
+              whiteSpace: "nowrap",
             }}
           >
             Not a biography. The operating evidence behind Axion Index.
@@ -857,25 +865,25 @@ export default function FounderPage() {
             padding: "0 clamp(20px,3vw,48px)",
             height: 48,
             borderTop: "1px solid rgba(247,246,243,.07)",
-            background: "rgba(8,8,6,0.6)",
+            background: "transparent",
           }}
         >
           {/* Left — "FOUNDER" tag */}
           <span
             className="font-mono"
-            style={{ fontSize: 9, letterSpacing: ".32em", textTransform: "uppercase", color: "rgba(247,246,243,.28)" }}
+            style={{ fontSize: 8, letterSpacing: ".4em", textTransform: "uppercase", color: "rgba(247,246,243,.25)" }}
           >
-            Founder
+            FOUNDER
           </span>
 
           {/* Center — company list separated by / */}
           <div
             className="font-mono"
             style={{
-              fontSize: 9,
-              letterSpacing: ".16em",
+              fontSize: 7,
+              letterSpacing: ".2em",
               textTransform: "uppercase",
-              color: "rgba(247,246,243,.28)",
+              color: "rgba(247,246,243,.25)",
               display: "flex",
               alignItems: "center",
               gap: 0,
@@ -887,7 +895,7 @@ export default function FounderPage() {
               <span key={i} style={{ display: "inline-flex", alignItems: "center" }}>
                 {c.name}
                 {i < COMPANIES.length - 1 && (
-                  <span style={{ margin: "0 10px", color: "rgba(247,246,243,.14)" }}>/</span>
+                  <span style={{ margin: "0 8px", color: "rgba(247,246,243,.12)" }}>/</span>
                 )}
               </span>
             ))}
@@ -897,18 +905,18 @@ export default function FounderPage() {
           <span
             className="font-mono"
             style={{
-              fontSize: 9,
-              letterSpacing: ".32em",
+              fontSize: 8,
+              letterSpacing: ".4em",
               textTransform: "uppercase",
-              color: "rgba(247,246,243,.28)",
+              color: "rgba(247,246,243,.25)",
               display: "flex",
               alignItems: "center",
               gap: 10,
               flexShrink: 0,
             }}
           >
-            Scroll
-            <span style={{ display: "inline-block", width: 32, height: 1, background: "rgba(247,246,243,.25)" }} />
+            SCROLL
+            <span style={{ display: "inline-block", width: 36, height: 1, background: "rgba(247,246,243,.2)" }} />
           </span>
         </div>
 
@@ -923,8 +931,8 @@ export default function FounderPage() {
       </header>
 
       {/* ══ COMPANY TICKER — dark strip matching photo ══════════════════════════
-           Dark background, cream serif company names, gold diamond separators,
-           small category labels — exactly as shown in the bottom of the photo
+           Dark background, cream serif company names, gold tiny dot separators,
+           small category labels first then company name — exactly as shown
       ═══════════════════════════════════════════════════════════════════════════ */}
       <div
         aria-hidden="true"
@@ -932,7 +940,7 @@ export default function FounderPage() {
           background: "#0D0D0B",
           borderTop: "1px solid rgba(247,246,243,.06)",
           borderBottom: "1px solid rgba(247,246,243,.06)",
-          padding: "20px 0",
+          padding: "18px 0",
           overflow: "hidden",
           WebkitMaskImage: "linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)",
           maskImage: "linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)",
@@ -942,16 +950,15 @@ export default function FounderPage() {
           {[...COMPANIES, ...COMPANIES].map((c, i) => (
             <span
               key={i}
-              style={{ display: "inline-flex", alignItems: "baseline", gap: 6, padding: "0 28px" }}
+              style={{ display: "inline-flex", alignItems: "baseline", gap: 10, padding: "0 30px" }}
             >
               <span
                 className="font-mono"
                 style={{
-                  fontSize: 8,
-                  letterSpacing: ".28em",
+                  fontSize: 7,
+                  letterSpacing: ".3em",
                   textTransform: "uppercase",
-                  color: "rgba(160,120,48,.5)",
-                  marginRight: 6,
+                  color: "rgba(160,120,48,.45)",
                 }}
               >
                 {c.tag}
@@ -959,23 +966,24 @@ export default function FounderPage() {
               <span
                 className="font-serif"
                 style={{
-                  fontSize: "clamp(17px,1.6vw,22px)",
-                  color: "rgba(247,246,243,.82)",
+                  fontSize: "clamp(16px,1.5vw,20px)",
+                  color: "rgba(247,246,243,.8)",
                   fontWeight: 400,
+                  fontStyle: "italic",
                 }}
               >
                 {c.name}
               </span>
-              {/* Gold diamond separator */}
+              {/* Tiny gold dot separator */}
               <span
                 style={{
                   display: "inline-block",
-                  width: 5,
-                  height: 5,
+                  width: 3,
+                  height: 3,
+                  borderRadius: "50%",
                   background: T.gold,
-                  opacity: 0.35,
-                  transform: "rotate(45deg)",
-                  margin: "0 6px",
+                  opacity: 0.4,
+                  margin: "0 4px",
                   flexShrink: 0,
                   alignSelf: "center",
                 }}
