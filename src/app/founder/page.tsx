@@ -27,14 +27,15 @@ const T = {
 /* ─── DATA ──────────────────────────────────────────────────────────────────── */
 
 const COMPANIES = [
-  { tag: "Institution",   name: "Wipro" },
-  { tag: "Banking",       name: "Standard Chartered" },
-  { tag: "Banking",       name: "HSBC" },
-  { tag: "Group",         name: "Tata" },
-  { tag: "Real Estate",   name: "Lodha" },
-  { tag: "FMCG",          name: "Marico" },
-  { tag: "Startup",       name: "Udaan" },
-  { tag: "Gaming & Tech", name: "Gameskraft" },
+  { tag: "Institution",   name: "US" },
+  { tag: "Banking",       name: "Canada" },
+  { tag: "Banking",       name: "UK" },
+  { tag: "Group",         name: "Africa" },
+  { tag: "Real Estate",   name: "Middle East" },
+  { tag: "FMCG",          name: "India" },
+  { tag: "Startup",       name: "Bangladesh" },
+  { tag: "Gaming & Tech", name: "Australia" },
+  { tag: "Location",      name: "Europe" },
 ];
 
 const ORIGINS = [
@@ -674,8 +675,8 @@ export default function FounderPage() {
           transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
           style={{
             position: "absolute",
-            left: "10%",
-            top: "45%",
+            left: "16%",
+            top: "22%",
             transform: "translateY(-50%)",
             width: "clamp(300px, 34%, 480px)",
             height: "clamp(480px, 70vh, 680px)",
@@ -722,11 +723,11 @@ export default function FounderPage() {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "flex-start",
-            padding: "clamp(100px,14vh,160px) clamp(56px,8vw,120px) clamp(160px,20vh,220px) clamp(420px,56%,780px)",
+            padding: "clamp(120px,14vh,160px) clamp(56px,8vw,120px) clamp(160px,20vh,220px) clamp(580px,72%,940px)",
             textAlign: "left",
           }}
         >
-          {/* Kicker — centered at the top of hero, above headline */}
+          {/* Kicker — above headline */}
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -737,11 +738,7 @@ export default function FounderPage() {
               letterSpacing: ".38em",
               textTransform: "uppercase",
               color: "rgba(196,152,72,.65)",
-              marginBottom: 40,
-              textAlign: "center",
-              position: "relative",
-              alignSelf: "center",
-              left: "20%",
+              marginBottom: 20,
             }}
           >
             Founder Doctrine&nbsp;&nbsp;·&nbsp;&nbsp;Axion Index
@@ -779,7 +776,7 @@ export default function FounderPage() {
               transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
               className="font-mono"
               style={{
-                fontSize: 10,
+                fontSize: 12,
                 fontWeight: 500,
                 letterSpacing: ".42em",
                 textTransform: "uppercase",
@@ -842,8 +839,8 @@ export default function FounderPage() {
           transition={{ duration: 0.8, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
           style={{
             position: "absolute",
-            bottom: "clamp(80px,12vh,140px)",
-            left: "clamp(420px,56%,780px)",
+            bottom: "clamp(100px,14vh,160px)",
+            left: "clamp(580px,72%,940px)",
             zIndex: 4,
             display: "flex",
             alignItems: "center",
@@ -955,20 +952,18 @@ export default function FounderPage() {
           borderBottom: "1px solid rgba(247,246,243,.06)",
           padding: "18px 0",
           overflow: "hidden",
-          WebkitMaskImage: "linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)",
-          maskImage: "linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)",
         }}
       >
         <div className="co-track">
           {[...COMPANIES, ...COMPANIES].map((c, i) => (
             <span
               key={i}
-              style={{ display: "inline-flex", alignItems: "baseline", gap: 10, padding: "0 30px" }}
+              style={{ display: "inline-flex", alignItems: "baseline", gap: 10, padding: "0 30px", whiteSpace: "nowrap" }}
             >
               <span
                 className="font-mono"
                 style={{
-                  fontSize: 7,
+                  fontSize: 9,
                   letterSpacing: ".3em",
                   textTransform: "uppercase",
                   color: "rgba(160,120,48,.45)",
