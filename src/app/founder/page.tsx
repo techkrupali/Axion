@@ -736,6 +736,53 @@ export default function FounderPage() {
           </div>
         </motion.div>
 
+        {/* ── Line and text below portrait ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
+          style={{
+            position: "absolute",
+            left: "16%",
+            top: "70%",
+            width: "clamp(300px, 34%, 480px)",
+            zIndex: 10
+          }}
+        >
+          {/* Divider line */}
+          <div style={{
+            width: "100%",
+            height: "1px",
+            background: "rgba(247, 246, 243, 0.3)",
+            marginBottom: "12px"
+          }} />
+          {/* Text */}
+          <div style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center"
+          }}>
+            <span style={{
+              fontFamily: "var(--font-geist-mono), ui-monospace, monospace",
+              fontSize: "11px",
+              letterSpacing: "0.3em",
+              textTransform: "uppercase",
+              color: "rgba(196, 152, 72, 0.7)"
+            }}>
+              Founder
+            </span>
+            <span style={{
+              fontFamily: "var(--font-geist-mono), ui-monospace, monospace",
+              fontSize: "11px",
+              letterSpacing: "0.3em",
+              textTransform: "uppercase",
+              color: "rgba(196, 152, 72, 0.7)"
+            }}>
+              Axion Index
+            </span>
+          </div>
+        </motion.div>
+
         {/* ── CONTENT — sits over the right portion, perfectly aligned ── */}
         <div
           style={{
@@ -1433,9 +1480,9 @@ export default function FounderPage() {
           <div className="grid gap-12 pb-14"
             style={{ gridTemplateColumns:"repeat(auto-fit,minmax(180px,1fr))", borderBottom:"1px solid rgba(247,246,243,0.14)" }}>
             {/* Brand */}
-            <div className="col-span-full lg:col-span-1">
+            <div className="col-span-full lg:col-span-1" style={{ marginLeft: "0" }}>
               <img src="/axion-index-lockup-gold-transparent.svg" alt="Axion Index"
-                style={{ width:"clamp(200px,40vw,320px)", maxWidth:"100%", height:"auto", display:"block" }} />
+                style={{ width:"clamp(200px,40vw,320px)", maxWidth:"100%", height:"auto", display:"block", marginLeft:"-40px" }} />
               <p className="mt-4" style={{ fontFamily:T.display, fontSize:14, color:T.mid, maxWidth:"34ch", lineHeight:1.6 }}>
                 Architecture is read, not pitched.
               </p>
