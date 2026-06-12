@@ -703,26 +703,15 @@ export default function FounderPage() {
             style={{
               objectFit: "cover",
               objectPosition: "40% 20%",
-              filter: "grayscale(100%) contrast(1.1) brightness(0.88)",
+              filter: "grayscale(100%) contrast(1.3) brightness(0.55)",
               transition: "filter 0.7s cubic-bezier(.22,.61,.36,1)",
             }}
             priority
           />
-          {/* Warm light beam over portrait like target photo */}
-          <div style={{
-            position: "absolute", inset: 0,
-            background: "linear-gradient(120deg, transparent 30%, rgba(160,120,48,0.35) 45%, transparent 60%)",
-            mixBlendMode: "overlay",
-          }} />
-          {/* Fade portrait right edge and bottom */}
-          <div style={{
-            position: "absolute", inset: 0,
-            background: "linear-gradient(90deg, transparent 75%, #0e0e0c 96%)",
-          }} />
-          <div style={{
-            position: "absolute", bottom: 0, left: 0, right: 0, height: "30%",
-            background: "linear-gradient(to top, #0e0e0c, transparent)",
-          }} />
+          {/* Fade all 4 edges into bg — aggressive */}
+          <div style={{ position:"absolute", inset:0, background:"linear-gradient(90deg, #0e0e0c 0%, transparent 40%, transparent 55%, #0e0e0c 100%)" }} />
+          <div style={{ position:"absolute", inset:0, background:"linear-gradient(to bottom, #0e0e0c 0%, transparent 25%, transparent 65%, #0e0e0c 100%)" }} />
+          <div style={{ position:"absolute", inset:0, background:"radial-gradient(ellipse at center, transparent 30%, #0e0e0c 80%)" }} />
         </motion.div>
 
         {/* ── CONTENT — sits over the right portion, perfectly aligned ── */}
