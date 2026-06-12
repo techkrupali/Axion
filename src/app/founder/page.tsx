@@ -685,20 +685,30 @@ export default function FounderPage() {
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+          className="portrait-container"
           style={{
             position: "absolute",
             left: "16%",
-            top: "22%",
+            top: "18%",
             transform: "translateY(-50%)",
             width: "clamp(300px, 34%, 480px)",
             height: "clamp(480px, 70vh, 680px)",
-            zIndex: 2,
+            zIndex: 10,
             overflow: "hidden",
-            WebkitMaskImage: "linear-gradient(90deg, transparent 0%, #000 8%, #000 65%, transparent 100%)",
-            maskImage: "linear-gradient(90deg, transparent 0%, #000 8%, #000 65%, transparent 100%)",
+            cursor: "pointer"
           }}
         >
           <style>{`
+            .portrait-container {
+              -webkit-mask-image:
+                linear-gradient(90deg, rgba(0,0,0,1) 60%, rgba(0,0,0,0.6) 80%, rgba(0,0,0,0.2) 90%, rgba(0,0,0,0) 100%),
+                linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.2) 5%, rgba(0,0,0,0.6) 10%, rgba(0,0,0,1) 15%, rgba(0,0,0,1) 85%, rgba(0,0,0,0.6) 90%, rgba(0,0,0,0.2) 95%, rgba(0,0,0,0) 100%);
+              -webkit-mask-composite: source-in;
+              mask-image:
+                linear-gradient(90deg, rgba(0,0,0,1) 60%, rgba(0,0,0,0.6) 80%, rgba(0,0,0,0.2) 90%, rgba(0,0,0,0) 100%),
+                linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.2) 5%, rgba(0,0,0,0.6) 10%, rgba(0,0,0,1) 15%, rgba(0,0,0,1) 85%, rgba(0,0,0,0.6) 90%, rgba(0,0,0,0.2) 95%, rgba(0,0,0,0) 100%);
+              mask-composite: intersect;
+            }
             .portrait-img {
               object-fit: cover;
               object-position: 40% 20%;
@@ -708,14 +718,15 @@ export default function FounderPage() {
               inset: 0 !important;
               width: 100% !important;
               height: 100% !important;
+              z-index: 100;
             }
-            .portrait-wrap:hover .portrait-img {
-              filter: grayscale(0%) contrast(1.05) brightness(0.95);
+            .portrait-container:hover .portrait-img {
+              filter: none !important;
             }
           `}</style>
           <div
             className="portrait-wrap"
-            style={{ position: "absolute", inset: 0 }}
+            style={{ position: "absolute", inset: 0, zIndex: 1 }}
           >
             <img
               src="/nitishhh.png"
@@ -723,9 +734,6 @@ export default function FounderPage() {
               className="portrait-img"
             />
           </div>
-          {/* Fade right edge into bg */}
-          <div style={{ position:"absolute", inset:0, background:"linear-gradient(90deg, transparent 50%, #0e0e0c 100%)", pointerEvents:"none" }} />
-          <div style={{ position:"absolute", inset:0, background:"linear-gradient(to bottom, #0e0e0c 0%, transparent 15%, transparent 75%, #0e0e0c 100%)", pointerEvents:"none" }} />
         </motion.div>
 
         {/* ── CONTENT — sits over the right portion, perfectly aligned ── */}
