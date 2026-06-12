@@ -694,6 +694,10 @@ export default function FounderPage() {
             height: "clamp(480px, 70vh, 680px)",
             zIndex: 2,
             overflow: "hidden",
+            WebkitMaskImage: "linear-gradient(90deg, #000 0%, #000 58%, transparent 100%), linear-gradient(180deg, #000 0%, #000 84%, transparent 100%)",
+            maskImage: "linear-gradient(90deg, #000 0%, #000 58%, transparent 100%), linear-gradient(180deg, #000 0%, #000 84%, transparent 100%)",
+            WebkitMaskComposite: "source-in",
+            maskComposite: "intersect",
           }}
         >
           <Image
