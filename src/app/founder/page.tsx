@@ -694,28 +694,38 @@ export default function FounderPage() {
             height: "clamp(480px, 70vh, 680px)",
             zIndex: 2,
             overflow: "hidden",
-            WebkitMaskImage: "linear-gradient(90deg, #000 0%, #000 58%, transparent 100%), linear-gradient(180deg, #000 0%, #000 84%, transparent 100%)",
-            maskImage: "linear-gradient(90deg, #000 0%, #000 58%, transparent 100%), linear-gradient(180deg, #000 0%, #000 84%, transparent 100%)",
-            WebkitMaskComposite: "source-in",
-            maskComposite: "intersect",
+            WebkitMaskImage: "linear-gradient(90deg, transparent 0%, #000 8%, #000 65%, transparent 100%)",
+            maskImage: "linear-gradient(90deg, transparent 0%, #000 8%, #000 65%, transparent 100%)",
           }}
         >
-          <Image
-            src="/nitishhh.png"
-            alt="Nitin Nahata — Founder, Axion Index"
-            fill
-            style={{
-              objectFit: "cover",
-              objectPosition: "40% 20%",
-              filter: "grayscale(100%) contrast(1.3) brightness(0.55)",
-              transition: "filter 0.7s cubic-bezier(.22,.61,.36,1)",
-            }}
-            priority
-          />
-          {/* Fade all 4 edges into bg — aggressive */}
-          <div style={{ position:"absolute", inset:0, background:"linear-gradient(90deg, #0e0e0c 0%, transparent 40%, transparent 55%, #0e0e0c 100%)" }} />
-          <div style={{ position:"absolute", inset:0, background:"linear-gradient(to bottom, #0e0e0c 0%, transparent 25%, transparent 65%, #0e0e0c 100%)" }} />
-          <div style={{ position:"absolute", inset:0, background:"radial-gradient(ellipse at center, transparent 30%, #0e0e0c 80%)" }} />
+          <style>{`
+            .portrait-img {
+              object-fit: cover;
+              object-position: 40% 20%;
+              filter: grayscale(100%) contrast(1.15) brightness(0.80);
+              transition: filter 0.65s cubic-bezier(.22,.61,.36,1);
+              position: absolute !important;
+              inset: 0 !important;
+              width: 100% !important;
+              height: 100% !important;
+            }
+            .portrait-wrap:hover .portrait-img {
+              filter: grayscale(0%) contrast(1.05) brightness(0.95);
+            }
+          `}</style>
+          <div
+            className="portrait-wrap"
+            style={{ position: "absolute", inset: 0 }}
+          >
+            <img
+              src="/nitishhh.png"
+              alt="Nitin Nahata — Founder, Axion Index"
+              className="portrait-img"
+            />
+          </div>
+          {/* Fade right edge into bg */}
+          <div style={{ position:"absolute", inset:0, background:"linear-gradient(90deg, transparent 50%, #0e0e0c 100%)", pointerEvents:"none" }} />
+          <div style={{ position:"absolute", inset:0, background:"linear-gradient(to bottom, #0e0e0c 0%, transparent 15%, transparent 75%, #0e0e0c 100%)", pointerEvents:"none" }} />
         </motion.div>
 
         {/* ── CONTENT — sits over the right portion, perfectly aligned ── */}
@@ -1416,8 +1426,8 @@ export default function FounderPage() {
             style={{ gridTemplateColumns:"repeat(auto-fit,minmax(180px,1fr))", borderBottom:"1px solid rgba(247,246,243,0.14)" }}>
             {/* Brand */}
             <div className="col-span-full lg:col-span-1">
-              <img src="/axion-index-lockup-gold-on-black.svg" alt="Axion Index"
-                style={{ width:"clamp(140px,30vw,200px)", maxWidth:"100%", height:"auto", display:"block" }} />
+              <img src="/axion-index-lockup-gold-transparent.svg" alt="Axion Index"
+                style={{ width:"clamp(200px,40vw,320px)", maxWidth:"100%", height:"auto", display:"block" }} />
               <p className="mt-4" style={{ fontFamily:T.display, fontSize:14, color:T.mid, maxWidth:"34ch", lineHeight:1.6 }}>
                 Architecture is read, not pitched.
               </p>
