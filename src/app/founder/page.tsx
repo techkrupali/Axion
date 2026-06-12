@@ -26,7 +26,7 @@ const T = {
 
 /* ─── DATA ──────────────────────────────────────────────────────────────────── */
 
-const COMPANIES = [
+const TICKER_COMPANIES = [
   { tag: "Institution",   name: "US" },
   { tag: "Banking",       name: "Canada" },
   { tag: "Banking",       name: "UK" },
@@ -36,6 +36,17 @@ const COMPANIES = [
   { tag: "Startup",       name: "Bangladesh" },
   { tag: "Gaming & Tech", name: "Australia" },
   { tag: "Location",      name: "Europe" },
+];
+
+const COMPANIES = [
+  { tag: "Institution",   name: "Wipro" },
+  { tag: "Banking",       name: "Standard Chartered" },
+  { tag: "Banking",       name: "HSBC" },
+  { tag: "Group",         name: "Tata" },
+  { tag: "Real Estate",   name: "Lodha" },
+  { tag: "FMCG",          name: "Marico" },
+  { tag: "Startup",       name: "Udaan" },
+  { tag: "Gaming & Tech", name: "Gameskraft" },
 ];
 
 const ORIGINS = [
@@ -531,7 +542,7 @@ export default function FounderPage() {
         /* ── scoped nav + strip ── */
         .fn-nav {
           position:fixed; top:0; left:0; right:0; height:70px; z-index:900;
-          display:flex; align-items:center;
+          display:flex; align-items:stretch;
           background:rgba(247,246,243,0.96);
           backdrop-filter:blur(14px);
           border-bottom:1px solid rgba(13,13,11,0.10);
@@ -542,23 +553,24 @@ export default function FounderPage() {
           border-bottom:1px solid rgba(13,13,11,.12);
           height:62px;
         }
-        .fn-nav-inner { width:100%; padding:0 32px; display:flex; align-items:center; justify-content:space-between; }
+        .fn-nav-inner { width:100%; padding:0 32px; display:flex; align-items:stretch; justify-content:space-between; }
         /* Brand — serif, dark ink */
-        .fn-brand { font-family:var(--font-cormorant-garamond),'Cormorant Garamond',serif; font-size:21px; font-weight:500; color:#0D0D0B; letter-spacing:.18em; text-decoration:none; text-transform:uppercase; display:flex; align-items:baseline; gap:6px; transition:opacity .3s; }
+        .fn-brand { font-family:var(--font-cormorant-garamond),'Cormorant Garamond',serif; font-size:21px; font-weight:500; color:#0D0D0B; letter-spacing:.18em; text-decoration:none; text-transform:uppercase; display:flex; align-items:center; gap:6px; transition:opacity .3s; }
         .fn-brand:hover { opacity:.7; }
         /* Center links */
         .fn-nl { display:flex; align-items:center; gap:32px; }
-        .fn-nl a { font-family:var(--font-geist-mono),ui-monospace,monospace; font-size:10px; font-weight:500; letter-spacing:.24em; text-transform:uppercase; color:rgba(13,13,11,.45); transition:color .25s; padding:5px 0; position:relative; text-decoration:none; }
+        .fn-nl a { font-family:var(--font-geist-mono),ui-monospace,monospace; font-size:13px; font-weight:500; letter-spacing:.24em; text-transform:uppercase; color:rgba(13,13,11,.45); transition:color .25s; padding:5px 0; position:relative; text-decoration:none; }
         .fn-nl a:hover, .fn-nl a.on { color:rgba(13,13,11,.9); }
         .fn-nl a.on::after { content:""; position:absolute; left:0; right:0; bottom:-2px; height:1px; background:#A07830; }
-        /* CTA button — dark solid */
+        /* CTA button — dark solid, full height */
         .fn-btn {
           color:#F7F6F3 !important; background:#0D0D0B !important;
-          border:none; padding:10px 22px; font-weight:600 !important;
+          border:none; padding:0 40px; font-weight:600 !important;
           font-family:var(--font-geist-mono),ui-monospace,monospace !important;
           font-size:10px !important; letter-spacing:.22em !important;
           text-transform:uppercase !important; white-space:nowrap;
           transition:background .25s !important;
+          align-self:stretch; display:flex; align-items:center;
         }
         .fn-btn:hover { background:#A07830 !important; }
         .fn-hamb { display:none; background:none; border:1px solid rgba(13,13,11,.2); color:#0D0D0B; width:42px; height:38px; border-radius:2px; cursor:pointer; align-items:center; justify-content:center; }
@@ -878,27 +890,23 @@ export default function FounderPage() {
             background: "transparent",
           }}
         >
-          {/* Left — "FOUNDER" tag */}
-          <span
-            className="font-mono"
-            style={{ fontSize: 8, letterSpacing: ".4em", textTransform: "uppercase", color: "rgba(247,246,243,.25)" }}
-          >
-            FOUNDER
-          </span>
+          <span />
 
           {/* Center — company list separated by / */}
           <div
             className="font-mono"
             style={{
-              fontSize: 7,
+              fontSize: 11,
               letterSpacing: ".2em",
               textTransform: "uppercase",
-              color: "rgba(247,246,243,.25)",
+              color: "rgba(247,246,243,.45)",
               display: "flex",
               alignItems: "center",
               gap: 0,
               flexWrap: "nowrap",
               overflow: "hidden",
+              justifyContent: "flex-start",
+              flex: 1,
             }}
           >
             {COMPANIES.map((c, i) => (
@@ -911,23 +919,7 @@ export default function FounderPage() {
             ))}
           </div>
 
-          {/* Right — SCROLL + line */}
-          <span
-            className="font-mono"
-            style={{
-              fontSize: 8,
-              letterSpacing: ".4em",
-              textTransform: "uppercase",
-              color: "rgba(247,246,243,.25)",
-              display: "flex",
-              alignItems: "center",
-              gap: 10,
-              flexShrink: 0,
-            }}
-          >
-            SCROLL
-            <span style={{ display: "inline-block", width: 36, height: 1, background: "rgba(247,246,243,.2)" }} />
-          </span>
+          <span />
         </div>
 
         {/* ── Bottom fade — hero → dark ticker (no white fade) ── */}
@@ -955,7 +947,7 @@ export default function FounderPage() {
         }}
       >
         <div className="co-track">
-          {[...COMPANIES, ...COMPANIES].map((c, i) => (
+          {[...TICKER_COMPANIES, ...TICKER_COMPANIES].map((c, i) => (
             <span
               key={i}
               style={{ display: "inline-flex", alignItems: "baseline", gap: 10, padding: "0 30px", whiteSpace: "nowrap" }}
