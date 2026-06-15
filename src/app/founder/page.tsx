@@ -574,11 +574,6 @@ export default function FounderPage() {
         }
         .fn-btn:hover { background:#A07830 !important; }
         .fn-hamb { display:none; background:none; border:1px solid rgba(13,13,11,.2); color:#0D0D0B; width:42px; height:38px; border-radius:2px; cursor:pointer; align-items:center; justify-content:center; }
-        /* Company strip */
-        .co-strip { overflow:hidden; white-space:nowrap; -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent); mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent); }
-        .co-track { display:inline-flex; gap:0; animation:co-scroll 30s linear infinite; }
-        @keyframes co-scroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
-        .co-track:hover { animation-play-state:paused; }
         /* Pattern / origin card hover */
         .fn-card { transition:border-color .25s, transform .25s, background .25s; }
         .fn-card:hover { border-color:rgba(160,120,48,.45) !important; }
@@ -1004,11 +999,11 @@ export default function FounderPage() {
           overflow: "hidden",
         }}
       >
-        <div className="co-track">
-          {[...TICKER_COMPANIES, ...TICKER_COMPANIES].map((c, i) => (
+        <div style={{ display:"flex", flexWrap:"nowrap", justifyContent:"center", alignItems:"center" }}>
+          {TICKER_COMPANIES.map((c, i) => (
             <span
               key={i}
-              style={{ display: "inline-flex", alignItems: "baseline", gap: 10, padding: "0 30px", whiteSpace: "nowrap" }}
+              style={{ display: "inline-flex", alignItems: "baseline", gap: 8, padding: "0 clamp(8px,1vw,18px)", whiteSpace: "nowrap" }}
             >
               <span
                 className="font-mono"
@@ -1318,7 +1313,7 @@ export default function FounderPage() {
 
           <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:1, background:T.rule, border:`1px solid ${T.rule}` }}>
             {BEDROCK.map((row,i) => {
-              const bgMap = [T.white, T.ink2, T.white2];
+              const bgMap = [T.white, T.ink2, "#C2C1BD"];
               const isDark = i === 1;
               return (
                 <motion.div key={i} initial={{ opacity:0, y:16 }} whileInView={{ opacity:1, y:0 }}
