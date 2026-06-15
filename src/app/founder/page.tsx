@@ -1075,16 +1075,18 @@ export default function FounderPage() {
                   The pattern is simple: when organisations grow faster than their operating architecture, people carry the system in their heads. Axion exists to codify what should never depend on one person.
                 </p>
               </FadeUp>
-              <FadeUp delay={0.28}>
-                <div style={{ background:T.ink, padding:"28px 32px", position:"relative" }}>
-                  <div className="absolute top-0 left-0 w-10 h-0.5" style={{ background:T.gold }} />
-                  <p className="font-serif" style={{ fontFamily:T.display, fontStyle:"italic", fontSize:"clamp(22px,2.4vw,32px)", lineHeight:1.6, color:"rgba(247,246,243,.9)", margin:0 }}>
-                    A bamboo plant spends years building roots underground. When it finally rises, the speed is not sudden. It was always happening, invisibly, structurally, below the surface.
-                  </p>
-                </div>
-              </FadeUp>
             </div>
           </div>
+
+          {/* Bamboo quote — full width */}
+          <FadeUp delay={0.28}>
+            <div style={{ background:T.ink, padding:"36px 48px", position:"relative", marginTop:40 }}>
+              <div className="absolute top-0 left-0 w-10 h-0.5" style={{ background:T.gold }} />
+              <p className="font-serif" style={{ fontFamily:T.display, fontStyle:"italic", fontSize:"clamp(22px,2.4vw,32px)", lineHeight:1.5, color:"rgba(247,246,243,.9)", margin:0 }}>
+                A bamboo plant spends years building roots underground. When it finally rises, the speed is not sudden — it was always happening, invisibly, structurally, below the surface.
+              </p>
+            </div>
+          </FadeUp>
         </div>
       </section>
 
@@ -1110,23 +1112,34 @@ export default function FounderPage() {
                 key={i}
                 initial={{ opacity:0, y:40 }}
                 whileInView={{ opacity:1, y:0 }}
-                whileHover={{ scale: 0.98, zIndex:10 }}
+                whileHover={{ y: -6, zIndex:10 }}
                 viewport={{ once:true, margin:"-10%" }}
                 transition={{ duration:0.45, ease:[0.22,1,0.36,1], delay:i*0.08 }}
                 className="group relative border-t cursor-default overflow-hidden"
                 style={{
                   borderColor: T.rule,
                   background: "transparent",
+                  transition: "background 0.3s ease",
                 }}
               >
                 {/* Gold border glow + bg tint on hover */}
                 <div
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
                   style={{
-                    boxShadow:`inset 0 0 0 1.5px ${T.gold}, 0 0 40px 0 rgba(196,152,72,0.15)`,
-                    background:`linear-gradient(135deg, rgba(196,152,72,0.06) 0%, transparent 60%)`,
+                    boxShadow:`inset 0 0 0 1.5px ${T.gold}, 0 8px 40px 0 rgba(196,152,72,0.18)`,
+                    background:`rgba(196,152,72,0.10)`,
                   }}
                 />
+
+                {/* Arrow — appears on hover at top-right */}
+                <div
+                  className="absolute top-5 right-6 sm:right-12 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none"
+                  style={{ transform:"translateY(-4px)" }}
+                >
+                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                    <path d="M6 22L22 6M22 6H10M22 6V18" stroke={T.gold} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
 
                 <div className="relative max-w-[1280px] mx-auto px-6 sm:px-12 py-12 lg:py-16 flex flex-col lg:flex-row items-start lg:items-center gap-6 lg:gap-0">
 

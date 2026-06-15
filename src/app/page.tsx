@@ -115,53 +115,59 @@ function HeroBand() {
 
       {/* Content */}
       <div className="relative z-10 max-w-[1280px] mx-auto px-6 sm:px-12 pt-[84px] pb-28">
-        {/* Practice line */}
-        <div className="flex flex-wrap items-baseline gap-0">
-          {["People Architecture", "Labour Codes", "AI Edge Lab", "Family Business"].map((p, i, arr) => (
-            <span key={p} className="inline-flex items-baseline">
-              <Link
-                href="#practices"
-                className="font-mono text-[11px] uppercase transition-colors duration-200"
-                style={{ letterSpacing: "0.2em", color: "rgba(247,246,243,0.62)" }}
-              >
-                {p}
-              </Link>
-              {i < arr.length - 1 && (
-                <span className="mx-4" style={{ color: T.gold, opacity: 0.6, fontSize: 11 }}>/</span>
-              )}
-            </span>
-          ))}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Left — empty spacer on md+ */}
+          <div />
+
+          {/* Right — all text content */}
+          <div>
+            {/* Practice line */}
+            <div className="flex flex-nowrap items-baseline gap-0 whitespace-nowrap">
+              {["People Architecture", "Labour Codes", "AI Edge Lab", "Family Business"].map((p, i, arr) => (
+                <span key={p} className="inline-flex items-baseline">
+                  <Link
+                    href="#practices"
+                    className="font-mono text-[11px] uppercase transition-colors duration-200"
+                    style={{ letterSpacing: "0.2em", color: "rgba(247,246,243,0.62)" }}
+                  >
+                    {p}
+                  </Link>
+                  {i < arr.length - 1 && (
+                    <span className="mx-4" style={{ color: T.gold, opacity: 0.6, fontSize: 11 }}>/</span>
+                  )}
+                </span>
+              ))}
+            </div>
+
+            {/* Thesis */}
+            <motion.p
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 0.15, ease: [0.22, 0.61, 0.36, 1] }}
+              className="font-serif italic mt-7"
+              style={{
+                fontSize: "clamp(22px,2.6vw,32px)",
+                lineHeight: 1.1,
+                color: "rgba(247,246,243,0.92)",
+                maxWidth: "30ch",
+              }}
+            >
+              You don't need a service. You need to read{" "}
+              <em style={{ color: T.gold2 }}>what is breaking.</em>
+            </motion.p>
+
+            {/* Structural Signal label */}
+            <motion.span
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.35, ease: [0.22, 0.61, 0.36, 1] }}
+              className="font-mono uppercase block mt-10"
+              style={{ fontSize: 11, letterSpacing: "0.24em", color: T.gold, opacity: 0.75 }}
+            >
+              Structural Signal
+            </motion.span>
+          </div>
         </div>
-
-        {/* Thesis */}
-        <motion.p
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.15, ease: [0.22, 0.61, 0.36, 1] }}
-          className="font-serif italic mt-7"
-          style={{
-            fontSize: "clamp(22px,2.6vw,32px)",
-            lineHeight: 1.1,
-            color: "rgba(247,246,243,0.92)",
-            maxWidth: "30ch",
-          }}
-        >
-          You don't need a service. You need to read{" "}
-          <em style={{ color: T.gold2 }}>what is breaking.</em>
-        </motion.p>
-      </div>
-
-      {/* Structural Signal Title above ticker */}
-      <div className="absolute left-0 right-0 bottom-[88px] z-10 px-6 sm:px-12 max-w-[1280px] mx-auto">
-        <motion.span
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.35, ease: [0.22, 0.61, 0.36, 1] }}
-          className="font-mono uppercase block"
-          style={{ fontSize: 11, letterSpacing: "0.24em", color: T.gold, opacity: 0.75 }}
-        >
-          Structural Signal
-        </motion.span>
       </div>
 
       {/* Signal strip at bottom */}
@@ -197,21 +203,7 @@ function HeroBand() {
         Operating Architecture Practice / Bengaluru / 2026
       </span>
 
-      {/* Vertical wordmark */}
-      <span
-        className="absolute right-10 hidden lg:block font-serif font-medium uppercase"
-        style={{
-          writingMode: "vertical-rl",
-          transform: "translateY(-50%) rotate(180deg)",
-          top: "58%",
-          fontSize: 30,
-          letterSpacing: "0.18em",
-          color: "rgba(247,246,243,0.85)",
-          zIndex: 2,
-        }}
-      >
-        Axion Index
-      </span>
+
 
       {/* Gold edge rule */}
       <div
