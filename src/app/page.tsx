@@ -1117,13 +1117,13 @@ function SiteFooter() {
           }}
         >
           {/* Brand */}
-          <div className="col-span-full lg:col-span-1">
+          <div className="col-span-full lg:col-span-1" style={{ marginLeft: "0" }}>
             <img
-              src="/axion-index-lockup-gold-on-black.svg"
+              src="/axion-index-lockup-gold-transparent.svg"
               alt="Axion Index"
-              style={{ width: "clamp(140px, 30vw, 200px)", maxWidth: "100%", height: "auto", display: "block" }}
+              style={{ width: "clamp(200px, 40vw, 320px)", maxWidth: "100%", height: "auto", display: "block", marginLeft: "-40px" }}
             />
-            <p className="mt-4" style={{ fontSize: 13, color: T.mid, maxWidth: "34ch", lineHeight: 1.6 }}>
+            <p className="mt-4" style={{ fontFamily: T.display, fontSize: 14, color: T.mid, maxWidth: "34ch", lineHeight: 1.6 }}>
               Architecture is read, not pitched.
             </p>
           </div>
