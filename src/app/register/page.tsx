@@ -3,10 +3,11 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { UserPlus, Mail, Lock, Loader2, User, UserCheck } from "lucide-react";
+import { UserPlus, Mail, Lock, Loader2, User, UserCheck, Phone } from "lucide-react";
 
 export default function RegisterPage() {
   const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -22,7 +23,7 @@ export default function RegisterPage() {
       const response = await fetch("/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password }),
+        body: JSON.stringify({ name, phone, email, password }),
       });
 
       const data = await response.json();
@@ -70,6 +71,24 @@ export default function RegisterPage() {
                   onChange={(e) => setName(e.target.value)}
                   className="block w-full pl-11 pr-4 py-4 bg-[#111] border border-[rgba(240,241,245,0.1)] rounded-xl text-[#e5e5e5] text-sm placeholder-[#404040] focus:outline-none focus:ring-1 focus:ring-[#C9A24A]/30 focus:border-[#C9A24A]/30 transition-all"
                   placeholder="John Doe"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-[10px] font-bold uppercase tracking-widest text-[#737373] mb-2 px-1">Phone Number</label>
+              <div className="relative group/input">
+                <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
+                  <Phone className="w-4 h-4 text-[#525252] group-focus-within/input:text-[#C9A24A] transition-colors" />
+                </div>
+                <input
+                  type="tel"
+                  required
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  pattern="[0-9+\-\s()]{7,20}"
+                  className="block w-full pl-11 pr-4 py-4 bg-[#111] border border-[rgba(240,241,245,0.1)] rounded-xl text-[#e5e5e5] text-sm placeholder-[#404040] focus:outline-none focus:ring-1 focus:ring-[#C9A24A]/30 focus:border-[#C9A24A]/30 transition-all"
+                  placeholder="+91 98765 43210"
                 />
               </div>
             </div>

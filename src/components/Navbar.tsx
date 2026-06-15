@@ -10,6 +10,7 @@ import AxionWordmark from "@/components/AxionWordmark";
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isExpertiseOpen, setIsExpertiseOpen] = useState(false);
+  const [isCtaOpen, setIsCtaOpen] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const pathname = usePathname();
 
@@ -170,22 +171,63 @@ const Navbar = () => {
             </button>
           </div>
 
-          {/* ── Black right CTA block ── */}
-          <Link
-            href="/connect"
-            className="hidden lg:flex items-center justify-center px-8 xl:px-10 font-mono text-[11px] uppercase whitespace-nowrap transition-colors duration-300"
-            style={{
-              letterSpacing: "0.22em",
-              background: "#0D0D0B",
-              color: isScrolled ? "#FFFFFF" : "#F7F6F3",
-              minWidth: 180,
-              borderBottom: "1px solid #0D0D0B",
-            }}
-            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "#F7F6F3"; (e.currentTarget as HTMLElement).style.color = "#0D0D0B"; }}
-            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "#0D0D0B"; (e.currentTarget as HTMLElement).style.color = isScrolled ? "#FFFFFF" : "#F7F6F3"; }}
+          {/* ── Black right CTA block with hover dropdown ── */}
+          <div
+            className="relative hidden lg:flex"
+            onMouseEnter={() => setIsCtaOpen(true)}
+            onMouseLeave={() => setIsCtaOpen(false)}
           >
-            Start Diagnostic
-          </Link>
+            <button
+              type="button"
+              onClick={() => setIsCtaOpen(o => !o)}
+              className="flex items-center justify-center px-8 xl:px-10 font-mono text-[11px] uppercase whitespace-nowrap transition-colors duration-300 cursor-pointer outline-none"
+              style={{
+                letterSpacing: "0.22em",
+                background: isCtaOpen ? "#F7F6F3" : "#0D0D0B",
+                color: isCtaOpen ? "#0D0D0B" : isScrolled ? "#FFFFFF" : "#F7F6F3",
+                minWidth: 180,
+                borderBottom: "1px solid #0D0D0B",
+              }}
+            >
+              Start Diagnostic
+            </button>
+
+            <AnimatePresence>
+              {isCtaOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: 6, scale: 0.98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 6, scale: 0.98 }}
+                  transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                  className="absolute top-full right-0 min-w-[220px] p-2 flex flex-col gap-0.5 z-[90]"
+                  style={{
+                    background: "rgba(13,13,11,0.98)",
+                    border: "1px solid rgba(247,246,243,0.10)",
+                    boxShadow: "0 8px 32px rgba(0,0,0,0.4)",
+                  }}
+                >
+                  {[
+                    { label: "Register", href: "/register" },
+                    { label: "Login", href: "/login" },
+                    { label: "Start your journey", href: "/connect" },
+                  ].map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => setIsCtaOpen(false)}
+                      className="px-4 py-3 font-mono text-[11px] uppercase transition-colors duration-150 min-h-[40px] flex items-center justify-between"
+                      style={{ letterSpacing: "0.18em", color: "rgba(247,246,243,0.75)" }}
+                      onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = "#C9A24A"; (e.currentTarget as HTMLElement).style.background = "rgba(247,246,243,0.05)"; }}
+                      onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = "rgba(247,246,243,0.75)"; (e.currentTarget as HTMLElement).style.background = "transparent"; }}
+                    >
+                      {item.label}
+                      <span style={{ color: "#A07830" }}>→</span>
+                    </Link>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </motion.header>
 
         {/* Mobile menu */}

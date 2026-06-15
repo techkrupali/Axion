@@ -116,8 +116,14 @@ function HeroBand() {
       {/* Content */}
       <div className="relative z-10 max-w-[1280px] mx-auto px-6 sm:px-12 pt-[84px] pb-28">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Left — empty spacer on md+ */}
-          <div />
+          {/* Left — monogram mark */}
+          <div className="hidden md:flex items-start">
+            <img
+              src="/axion-mark-gold-transparent.svg"
+              alt="Axion Index"
+              style={{ width: "clamp(90px, 12vw, 160px)", height: "auto", display: "block", marginLeft: "clamp(-260px, -20vw, -110px)" }}
+            />
+          </div>
 
           {/* Right — all text content */}
           <div>
@@ -464,7 +470,7 @@ function MethodSection() {
 function LogicSection() {
   return (
     <section id="about" style={{ borderBottom: `1px solid ${T.rule}` }}>
-      <div className="max-w-[1280px] mx-auto px-6 sm:px-12 py-24">
+      <div className="max-w-[1280px] mx-auto px-6 sm:px-12 pt-12 pb-12">
         <div className="flex items-baseline justify-between mb-14 gap-6">
           <span className="font-mono text-[17px] uppercase" style={{ letterSpacing: "0.24em", color: T.mid }}>Our operating logic</span>
           <span className="font-mono text-[10px]" style={{ letterSpacing: "0.14em", color: T.dim }}>02 / 05</span>
@@ -591,7 +597,7 @@ const PRACTICES = [
 function PracticesSection() {
   return (
     <section id="practices" style={{ borderBottom: `1px solid ${T.rule}` }}>
-      <div className="max-w-[1280px] mx-auto px-6 sm:px-12 py-24">
+      <div className="max-w-[1280px] mx-auto px-6 sm:px-12 pt-12 pb-12">
         <div className="flex items-baseline justify-between mb-14 gap-6">
           <span className="font-mono text-[17px] uppercase" style={{ letterSpacing: "0.24em", color: T.mid }}>Where the work happens</span>
           <span className="font-mono text-[10px]" style={{ letterSpacing: "0.14em", color: T.dim }}>03 / 05</span>
@@ -780,7 +786,7 @@ function RolesSection() {
 
   return (
     <section style={{ borderBottom: `1px solid ${T.rule}` }}>
-      <div className="max-w-[1280px] mx-auto px-6 sm:px-12 py-24">
+      <div className="max-w-[1280px] mx-auto px-6 sm:px-12 pt-12 pb-12">
         {/* Header */}
         <div className="flex items-baseline justify-between mb-14 gap-6">
           <span className="font-mono text-[17px] uppercase" style={{ letterSpacing: "0.24em", color: T.mid }}>Where you sit</span>
@@ -921,7 +927,7 @@ const MOVES = [
 function MovesSection() {
   return (
     <section style={{ borderBottom: `1px solid ${T.rule}` }}>
-      <div className="max-w-[1280px] mx-auto px-6 sm:px-12 py-24">
+      <div className="max-w-[1280px] mx-auto px-6 sm:px-12 pt-12 pb-24">
         <div className="flex items-baseline justify-between mb-6 gap-6">
           <span className="font-mono text-[17px] uppercase" style={{ letterSpacing: "0.24em", color: T.mid }}>The engagement</span>
           <span className="font-mono text-[10px]" style={{ letterSpacing: "0.14em", color: T.dim }}>05 / 05</span>

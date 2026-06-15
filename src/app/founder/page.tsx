@@ -683,8 +683,8 @@ export default function FounderPage() {
           className="portrait-container"
           style={{
             position: "absolute",
-            left: "16%",
-            top: "18%",
+            left: "19%",
+            top: "12%",
             transform: "translateY(-50%)",
             width: "clamp(300px, 34%, 480px)",
             height: "clamp(480px, 70vh, 680px)",
@@ -738,8 +738,8 @@ export default function FounderPage() {
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
           style={{
             position: "absolute",
-            left: "16%",
-            top: "70%",
+            left: "19%",
+            top: "68%",
             width: "clamp(300px, 34%, 480px)",
             zIndex: 10
           }}
@@ -1048,7 +1048,7 @@ export default function FounderPage() {
 
       {/* ══ S2 — WHAT THIS PAGE IS ═══════════════════════════════════════════════ */}
       <section style={{ borderBottom:`1px solid ${T.rule}` }}>
-        <div className="max-w-[1280px] mx-auto px-6 sm:px-12 py-24">
+        <div className="max-w-[1280px] mx-auto px-6 sm:px-12 pt-24 pb-12">
           <div className="intro-grid" style={{ display:"grid", gridTemplateColumns:"1fr 1.45fr", gap:"clamp(40px,6vw,96px)", alignItems:"start" }}>
             <FadeUp>
               <div>
@@ -1087,7 +1087,7 @@ export default function FounderPage() {
 
       {/* ══ S3 — THE SOIL ═══════════════════════════════════════════════════════ */}
       <section id="soil" style={{ borderBottom:`1px solid ${T.rule}` }}>
-        <div className="max-w-[1280px] mx-auto px-6 sm:px-12 py-24">
+        <div className="max-w-[1280px] mx-auto px-6 sm:px-12 pt-12 pb-24">
           <SectionHead label="The soil before 2003" index={1} total={5} />
           <FadeUp delay={0.05}>
             <h2 className="font-serif font-medium mb-2"
