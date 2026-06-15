@@ -282,7 +282,7 @@ function ChapterAccordion() {
               {!isOpen && (
                 <div
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                  style={{ background:`linear-gradient(90deg, rgba(160,120,48,0.04) 0%, transparent 60%)` }}
+                  style={{ background:`rgba(196,152,72,0.16)` }}
                 />
               )}
 
@@ -1118,7 +1118,7 @@ export default function FounderPage() {
                 className="group relative border-t cursor-default overflow-hidden"
                 style={{
                   borderColor: T.rule,
-                  background: "transparent",
+                  background: i === 3 ? T.gold : "transparent",
                   transition: "background 0.3s ease",
                 }}
               >
@@ -1188,7 +1188,7 @@ export default function FounderPage() {
                         fontFamily:T.display,
                         fontSize:"clamp(32px,4.5vw,64px)",
                         lineHeight:1.0,
-                        color: isResolve ? T.ink : T.gold,
+                        color: i === 3 ? T.ink : isResolve ? T.ink : T.gold,
                       }}
                     >
                       {item.title}
@@ -1211,11 +1211,11 @@ export default function FounderPage() {
                       style={{
                         fontFamily:T.display,
                         fontSize:18,
-                        color: isResolve ? "rgba(13,13,11,0.55)" : T.gold,
+                        color: i === 3 ? T.ink : isResolve ? "rgba(13,13,11,0.55)" : T.gold,
                         lineHeight:1.6,
                         maxWidth:"46ch",
                         marginLeft: i % 2 === 1 ? "auto" : 0,
-                        borderTop:`1px solid ${isResolve ? "rgba(13,13,11,0.15)" : "rgba(160,120,48,0.2)"}`,
+                        borderTop:`1px solid ${i === 3 ? "rgba(13,13,11,0.3)" : isResolve ? "rgba(13,13,11,0.15)" : "rgba(160,120,48,0.2)"}`,
                         paddingTop:16,
                       }}
                     >
@@ -1282,7 +1282,16 @@ export default function FounderPage() {
                   <div style={{ borderTop:`1px solid rgba(247,246,243,0.1)`, padding:"20px 0" }}>
                     <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-start">
                       <div className="sm:col-span-4">
-                        <span className="font-mono" style={{ fontSize:10, letterSpacing:".3em", textTransform:"uppercase", color:"rgba(247,246,243,0.35)" }}>
+                        <span className="font-mono" style={{
+                          fontSize:10,
+                          letterSpacing:".3em",
+                          textTransform:"uppercase",
+                          backgroundImage:`linear-gradient(100deg, ${T.gold} 0%, ${T.gold2} 30%, #F0D89A 50%, ${T.gold2} 70%, ${T.gold} 100%)`,
+                          WebkitBackgroundClip:"text",
+                          backgroundClip:"text",
+                          WebkitTextFillColor:"transparent",
+                          color:"transparent",
+                        }}>
                           {item.source}
                         </span>
                       </div>
