@@ -1,817 +1,561 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { Bebas_Neue, DM_Sans, DM_Mono } from "next/font/google";
 
 /* ─── Fonts ─── */
-const bebasNeue = Bebas_Neue({
-  weight: "400",
-  subsets: ["latin"],
-  variable: "--aiel-display",
-  display: "swap",
-});
+const bebas = Bebas_Neue({ weight: "400", subsets: ["latin"], variable: "--f-display" });
+const dmSans = DM_Sans({ subsets: ["latin"], weight: ["300", "400", "500"], variable: "--f-sans" });
+const dmMono = DM_Mono({ subsets: ["latin"], weight: ["300", "400", "500"], variable: "--f-mono" });
 
-const dmSans = DM_Sans({
-  weight: ["200", "300", "400", "500"],
-  style: ["normal", "italic"],
-  subsets: ["latin"],
-  variable: "--aiel-sans",
-  display: "swap",
-});
+/* ─── Theme ─── */
+const T = {
+  white: "#F7F6F3",
+  ink: "#0D0D0B",
+  ink2: "#151512",
+  mid: "#7A7870",
+  dim: "#B0AEA8",
+  gold: "#A07830",
+  gold2: "#C49848",
+  goldAccent: "#C8A24A",
+  rule: "rgba(247,246,243,0.10)",
+};
 
-const dmMono = DM_Mono({
-  weight: ["300", "400", "500"],
-  subsets: ["latin"],
-  variable: "--aiel-mono",
-  display: "swap",
-});
+/* ─── Nav ─── */
+const NAV: [string, string][] = [
+  ["Vision", "#frame-01"],
+  ["Research", "#frame-05"],
+  ["Frameworks", "#frame-08"],
+  ["Assessments", "#frame-13"],
+  ["About", "/about"],
+];
 
-/* ─── Scroll Progress Bar ─── */
-function useScrollProgress(ref: React.RefObject<HTMLDivElement | null>) {
-  useEffect(() => {
-    const prog = ref.current;
-    if (!prog) return;
-    const onScroll = () => {
-      const h = document.documentElement;
-      const b = document.body;
-      const st = h.scrollTop || b.scrollTop;
-      const sh = (h.scrollHeight || b.scrollHeight) - h.clientHeight;
-      prog.style.width = sh > 0 ? `${(st / sh) * 100}%` : "0%";
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [ref]);
-}
-
-/* ─── Intersection Observer for .r elements ─── */
-function useRevealOnScroll() {
-  useEffect(() => {
-    const els = document.querySelectorAll<HTMLElement>(".aiel-r");
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.classList.add("aiel-v");
-            io.unobserve(e.target);
-          }
-        });
-      },
-      { threshold: 0.08 }
-    );
-    els.forEach((el) => io.observe(el));
-    return () => io.disconnect();
-  }, []);
-}
-
-/* ─── Header Component ─── */
-function AielHeader() {
+function Header() {
   return (
-    <header
-      style={{
-        position: "sticky",
-        top: 0,
-        zIndex: 200,
-        height: 44,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        padding: "0 52px",
-        background: "rgba(247,246,243,.94)",
-        backdropFilter: "blur(12px)",
-        WebkitBackdropFilter: "blur(12px)",
-        borderBottom: "1px solid rgba(13,13,11,.1)",
-      }}
-    >
-      <Link
-        href="/"
-        style={{
-          fontFamily: "var(--aiel-mono),'DM Mono','Courier New',monospace",
-          fontSize: 9,
-          letterSpacing: ".24em",
-          textTransform: "uppercase",
-          color: "#0D0D0B",
-          textDecoration: "none",
-        }}
-      >
-        AI Edge Lab · Axionindex
+    <header style={{
+      position: "sticky", top: 0, zIndex: 200, height: 56,
+      display: "flex", alignItems: "center", justifyContent: "space-between",
+      padding: "0 clamp(20px,4vw,52px)", background: "rgba(13,13,11,0.88)",
+      backdropFilter: "blur(12px)", borderBottom: `1px solid ${T.rule}`,
+    }}>
+      <Link href="/expertise/ai-edge" style={{ display: "flex", alignItems: "center", gap: 10 }}>
+        <svg viewBox="0 0 512 512" width="22" height="22" aria-hidden>
+          <g transform="translate(-78,0)" fill={T.goldAccent}>
+            <polygon points="120,392 234,120 270,120 156,392" />
+            <polygon points="270,120 234,120 348,392 384,392" />
+            <polygon points="398,120 434,120 548,392 512,392" />
+          </g>
+        </svg>
+        <span style={{ fontFamily: "var(--f-display)", fontSize: 18, letterSpacing: ".06em", color: T.white }}>
+          AI EDGE LAB<sup style={{ fontSize: 8, color: T.gold2 }}>™</sup>
+        </span>
       </Link>
-
-      {/* Desktop nav */}
-      <nav
-        className="aiel-hdr-nav"
-        style={{ display: "flex", alignItems: "center", gap: 22 }}
-      >
-        {/* Individuals dropdown */}
-        <HdrDropdown
-          label="Individuals"
-          links={[
-            { label: "Overview", href: "/expertise/ai-edge/individuals" },
-            { label: "AAI™ · Aspiring", href: "/expertise/ai-edge/individuals/aai" },
-            { label: "ARI™ · Working", href: "/expertise/ai-edge/individuals/ari" },
-            { label: "BDI™ · Leaders", href: "/expertise/ai-edge/individuals/bdi" },
-          ]}
-        />
-        {/* Organisations dropdown */}
-        <HdrDropdown
-          label="Organisations"
-          links={[
-            { label: "Overview", href: "/expertise/ai-edge/organisations" },
-            { label: "Readiness Check", href: "/expertise/ai-edge/organisations/readiness" },
-            { label: "Implementation Charter", href: "/expertise/ai-edge/organisations/implementation-charter" },
-            { label: "AI Maturity Assessment", href: "/expertise/ai-edge/organisations/maturity" },
-            { label: "ORG AI DARS™", href: "/expertise/ai-edge/organisations/org-ai-dars" },
-          ]}
-        />
-        {/* Framework dropdown */}
-        <HdrDropdown
-          label="Framework"
-          links={[
-            { label: "Framework Overview", href: "/expertise/ai-edge/framework" },
-            { label: "Doctrine", href: "/expertise/ai-edge/framework/doctrine" },
-            { label: "E.D.G.E.", href: "/expertise/ai-edge/framework/edge" },
-            { label: "Brainpower Density", href: "/expertise/ai-edge/framework/brainpower-density" },
-            { label: "Lexicon", href: "/expertise/ai-edge/framework/lexicon" },
-          ]}
-        />
-        {/* Research dropdown */}
-        <HdrDropdown
-          label="Research"
-          links={[
-            { label: "Research Overview", href: "/expertise/ai-edge/research" },
-            { label: "Evidence Wall", href: "/expertise/ai-edge/research/evidence-wall" },
-            { label: "Methodology", href: "/expertise/ai-edge/research/methodology" },
-            { label: "Essays", href: "/expertise/ai-edge/research/essays/essay-01" },
-          ]}
-        />
-        <Link href="/about" className="aiel-hdr-link">
-          About
-        </Link>
-        <Link href="/#enterprise-form" className="aiel-hdr-cta">
-          Start the Conversation
-        </Link>
+      <nav className="ael-nav" style={{ display: "flex", alignItems: "center", gap: 24 }}>
+        {NAV.map(([lbl, href]) => (
+          <Link key={lbl} href={href}
+            style={{ fontFamily: "var(--f-mono)", fontSize: 10, letterSpacing: ".16em", textTransform: "uppercase", color: T.dim }}>
+            {lbl}
+          </Link>
+        ))}
       </nav>
-
-      <div
-        className="aiel-hdr-pg"
-        style={{
-          fontFamily: "var(--aiel-mono),'DM Mono','Courier New',monospace",
-          fontSize: 9,
-          color: "#B0AEA8",
-          letterSpacing: ".08em",
-        }}
-      >
-        axionindex.org · 2026
-      </div>
+      <Link href="/connect" style={{
+        fontFamily: "var(--f-mono)", fontSize: 10, letterSpacing: ".18em", textTransform: "uppercase",
+        border: `1px solid ${T.gold}`, color: T.gold2, padding: "9px 16px", whiteSpace: "nowrap",
+      }}>Find My AI Edge →</Link>
     </header>
   );
 }
 
-/* ─── Dropdown helper (CSS-only hover via group) ─── */
-function HdrDropdown({
-  label,
-  links,
-}: {
-  label: string;
-  links: { label: string; href: string }[];
-}) {
+/* ─── Tokens ─── */
+const kicker: React.CSSProperties = { fontFamily: "var(--f-mono)", fontSize: 10, letterSpacing: ".26em", textTransform: "uppercase", color: T.gold };
+const rise = { initial: { opacity: 0, y: 24 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true, margin: "-12%" } };
+const bodyText: React.CSSProperties = { fontFamily: "var(--f-sans)", fontWeight: 300, fontSize: 15, lineHeight: 1.9, color: "rgba(247,246,243,0.7)", maxWidth: 460 };
+const doctrine: React.CSSProperties = { marginTop: 34, paddingLeft: 18, borderLeft: `2px solid ${T.gold}`, fontFamily: "var(--f-display)", fontSize: "clamp(18px,2vw,24px)", lineHeight: 1.2, color: T.white, letterSpacing: ".01em" };
+const h1: React.CSSProperties = { fontFamily: "var(--f-display)", fontSize: "clamp(40px,5.4vw,80px)", lineHeight: 0.98, letterSpacing: ".01em", margin: "22px 0 26px" };
+
+/* ─── Split frame (45/55) ─── */
+function SplitFrame({ id, index, left, right }: { id: string; index: string; left: React.ReactNode; right: React.ReactNode }) {
   return (
-    <div
-      style={{ position: "relative", display: "inline-flex", alignItems: "center" }}
-      className="aiel-hdr-item"
-    >
-      <span className="aiel-hdr-link" style={{ cursor: "default" }}>
-        {label}
-      </span>
-      <div className="aiel-hdr-drop">
-        {links.map((l, i) => (
-          <Link key={l.href} href={l.href} className={i === 0 ? "aiel-drop-first" : undefined}>
-            {l.label}
-          </Link>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-/* ─── 404 Hero ─── */
-function NotFoundHero() {
-  return (
-    <div
-      className="subhero"
-      style={{
-        padding: "64px 52px 52px",
-        borderBottom: "1px solid rgba(13,13,11,.1)",
-        background: "#EEECEA",
-        minHeight: "50vh",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-      }}
-    >
-      <div
-        style={{
-          fontFamily: "var(--aiel-mono),'DM Mono','Courier New',monospace",
-          fontSize: 9,
-          letterSpacing: ".22em",
-          textTransform: "uppercase",
-          color: "#A07830",
-          marginBottom: 18,
-        }}
-      >
-        Error 404 · Structural Gap Detected
-      </div>
-      <h1
-        style={{
-          fontFamily: "var(--aiel-display),'Bebas Neue',sans-serif",
-          fontSize: "clamp(48px,7vw,92px)",
-          lineHeight: 0.94,
-          letterSpacing: ".04em",
-          color: "#0D0D0B",
-          marginBottom: 24,
-        }}
-      >
-        THIS PAGE
-        <br />
-        <span style={{ color: "#A07830" }}>DOESN&rsquo;T EXIST.</span>
-      </h1>
-      <p
-        style={{
-          fontSize: 15,
-          color: "#7A7870",
-          lineHeight: 1.8,
-          fontWeight: 300,
-          maxWidth: 620,
-        }}
-      >
-        The page you are looking for has moved, been renamed, or never existed.
-        The architecture below is intact — choose where to go.
-      </p>
-    </div>
-  );
-}
-
-/* ─── Crosslinks Grid ─── */
-function CrosslinksGrid() {
-  const items = [
-    {
-      n: "Start Here",
-      h: "The Homepage",
-      p: "The work shift, the four actors, and where to begin.",
-      go: "Go home",
-      href: "/",
-    },
-    {
-      n: "For Individuals",
-      h: "Find Your AI Edge",
-      p: "AAI™, ARI™, BDI™ — measure your structural position.",
-      go: "Diagnostics",
-      href: "/expertise/ai-edge/individuals",
-    },
-    {
-      n: "For Organisations",
-      h: "The Organisation Layer",
-      p: "Readiness, Charter, Maturity, and ORG AI DARS™.",
-      go: "Organisations",
-      href: "/expertise/ai-edge/organisations",
-    },
-    {
-      n: "The Thinking",
-      h: "The Framework",
-      p: "The doctrine, E.D.G.E., Brainpower Density, and the lexicon.",
-      go: "Framework",
-      href: "/expertise/ai-edge/framework",
-    },
-  ];
-
-  return (
-    <section style={{ borderBottom: "none" }}>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "16px 52px",
-          borderBottom: "1px solid rgba(13,13,11,.1)",
-          background: "#EEECEA",
-        }}
-      >
-        <span
-          style={{
-            fontFamily: "var(--aiel-mono),'DM Mono','Courier New',monospace",
-            fontSize: 8,
-            letterSpacing: ".22em",
-            textTransform: "uppercase",
-            color: "#7A7870",
-          }}
-        >
-          Find Your Way
-        </span>
-        <span
-          style={{
-            fontFamily: "var(--aiel-mono),'DM Mono','Courier New',monospace",
-            fontSize: 9,
-            color: "#B0AEA8",
-            letterSpacing: ".08em",
-          }}
-        >
-          —
-        </span>
-      </div>
-
-      <div
-        className="aiel-r"
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(2,1fr)",
-          gap: 1,
-          background: "rgba(13,13,11,.1)",
-          margin: 1,
-        }}
-      >
-        {items.map((item) => (
-          <Link
-            key={item.href}
-            href={item.href}
-            className="aiel-crosslink"
-            style={{
-              background: "#F7F6F3",
-              padding: "28px 24px",
-              display: "flex",
-              flexDirection: "column",
-              textDecoration: "none",
-              transition: "background .25s",
-            }}
-          >
-            <div className="cl-n">{item.n}</div>
-            <div className="cl-h">{item.h}</div>
-            <div className="cl-p">{item.p}</div>
-            <div className="cl-go">{item.go} →</div>
-          </Link>
-        ))}
-      </div>
+    <section id={id} className="ael-frame" style={{
+      position: "relative", minHeight: "100vh", background: T.ink, color: T.white,
+      display: "grid", gridTemplateColumns: "45% 55%", borderBottom: `1px solid ${T.rule}`,
+    }}>
+      <div style={{ padding: "clamp(64px,10vh,120px) clamp(28px,4vw,64px)", display: "flex", flexDirection: "column", justifyContent: "center" }}>{left}</div>
+      <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", padding: "clamp(40px,8vh,80px) clamp(28px,4vw,56px)", borderLeft: `1px solid ${T.rule}` }}>{right}</div>
+      <span aria-hidden style={{ position: "absolute", right: "clamp(20px,4vw,52px)", top: 24, fontFamily: "var(--f-display)", fontSize: 40, color: "rgba(247,246,243,0.10)" }}>{index}</span>
     </section>
   );
 }
 
-/* ─── Full Footer ─── */
-function AielFooter() {
+/* Narrative left column helper */
+function Narrative({ eye, title, paras, quote }: { eye: string; title: React.ReactNode; paras: React.ReactNode[]; quote: React.ReactNode }) {
   return (
-    <footer
-      className="ft-full"
-      style={{
-        background: "#0D0D0B",
-        color: "#F7F6F3",
-        padding: "72px 52px 40px",
-      }}
-    >
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1.4fr 3fr",
-          gap: 56,
-          paddingBottom: 48,
-          borderBottom: "1px solid rgba(255,255,255,.1)",
-        }}
-        className="ftf-top"
-      >
-        {/* Brand + newsletter */}
-        <div>
-          <div
-            style={{
-              fontFamily: "var(--aiel-display),'Bebas Neue',sans-serif",
-              fontSize: 26,
-              letterSpacing: ".04em",
-              color: "#F7F6F3",
-              marginBottom: 6,
-            }}
-          >
-            THE AI EDGE LAB
-          </div>
-          <div
-            style={{
-              fontFamily: "var(--aiel-mono),'DM Mono','Courier New',monospace",
-              fontSize: 9,
-              letterSpacing: ".16em",
-              textTransform: "uppercase",
-              color: "#C49848",
-              marginBottom: 28,
-            }}
-          >
-            an Axionindex initiative
-          </div>
-          <div
-            style={{
-              fontFamily: "var(--aiel-display),'Bebas Neue',sans-serif",
-              fontSize: 20,
-              letterSpacing: ".02em",
-              color: "#F7F6F3",
-              marginBottom: 12,
-            }}
-          >
-            One structural read a month
-          </div>
-          <p
-            style={{
-              fontSize: 12,
-              color: "rgba(247,246,243,.55)",
-              lineHeight: 1.7,
-              fontWeight: 300,
-              marginBottom: 18,
-              maxWidth: 340,
-            }}
-          >
-            A monthly research note on how AI is repricing work, leadership,
-            and organisations. Published when there is something to say.
-          </p>
-          <Link
-            href="/#enterprise-form"
-            style={{
-              display: "inline-block",
-              fontFamily: "var(--aiel-mono),'DM Mono','Courier New',monospace",
-              fontSize: 9,
-              letterSpacing: ".16em",
-              textTransform: "uppercase",
-              color: "#0D0D0B",
-              background: "#C49848",
-              padding: "11px 22px",
-              textDecoration: "none",
-            }}
-          >
-            Subscribe →
-          </Link>
-          <div
-            style={{
-              fontFamily: "var(--aiel-mono),'DM Mono','Courier New',monospace",
-              fontSize: 8,
-              letterSpacing: ".04em",
-              color: "rgba(247,246,243,.35)",
-              marginTop: 16,
-              lineHeight: 1.6,
-            }}
-          >
-            No marketing. No automation sequences. Unsubscribe in one click.
-          </div>
+    <>
+      <motion.div {...rise} transition={{ duration: 0.6 }}>
+        <span style={kicker}>{eye}</span>
+        <h1 style={h1}>{title}</h1>
+      </motion.div>
+      <motion.div {...rise} transition={{ duration: 0.6, delay: 0.12 }} style={bodyText}>
+        {paras.map((p, i) => <p key={i} style={{ marginBottom: i < paras.length - 1 ? 16 : 0 }}>{p}</p>)}
+      </motion.div>
+      <motion.div {...rise} transition={{ duration: 0.6, delay: 0.24 }} style={doctrine}>{quote}</motion.div>
+    </>
+  );
+}
+
+/* Full-width frame */
+function FullFrame({ id, index, eye, title, children }: { id: string; index: string; eye: string; title: React.ReactNode; children: React.ReactNode }) {
+  return (
+    <section id={id} style={{ position: "relative", background: T.ink, color: T.white, borderBottom: `1px solid ${T.rule}`, padding: "clamp(64px,10vh,110px) clamp(24px,5vw,72px)" }}>
+      <motion.div {...rise} transition={{ duration: 0.6 }} style={{ maxWidth: 1280, margin: "0 auto" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 14 }}>
+          <span style={kicker}>{eye}</span>
+          <span style={{ fontFamily: "var(--f-display)", fontSize: 32, color: "rgba(247,246,243,0.10)" }}>{index}</span>
         </div>
+        <h2 style={{ fontFamily: "var(--f-display)", fontSize: "clamp(36px,5vw,72px)", lineHeight: 0.98, letterSpacing: ".01em", marginBottom: 44 }}>{title}</h2>
+        {children}
+      </motion.div>
+    </section>
+  );
+}
 
-        {/* Four link columns */}
-        <div
-          className="ftf-cols"
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(4,1fr)",
-            gap: 32,
-          }}
-        >
-          {/* For Whom */}
-          <div>
-            <div className="ftf-col-h">For Whom</div>
-            <Link href="/expertise/ai-edge/individuals/aai" className="ftf-col-link">
-              Aspiring Professional · AAI™
-            </Link>
-            <Link href="/expertise/ai-edge/individuals/ari" className="ftf-col-link">
-              Working Professional · ARI™
-            </Link>
-            <Link href="/expertise/ai-edge/individuals/bdi" className="ftf-col-link">
-              Leader / CXO · BDI™
-            </Link>
-            <Link href="/expertise/ai-edge/organisations/org-ai-dars" className="ftf-col-link">
-              Organisation · ORG AI DARS™
-            </Link>
-          </div>
+/* ══════════ FRAME 01 — THE WORK SHIFT ══════════ */
+function FourActors() {
+  const nodes = [
+    { key: "Employee", cx: 200, cy: 72, ly: -46 },
+    { key: "Leader", cx: 78, cy: 300, ly: 54 },
+    { key: "Organisation", cx: 322, cy: 300, ly: 54 },
+  ];
+  const ai = { cx: 200, cy: 214 };
+  return (
+    <svg viewBox="0 0 400 400" width="100%" style={{ maxWidth: 460, margin: "0 auto" }} aria-hidden>
+      {nodes.map((n, i) => (
+        <motion.line key={n.key} x1={ai.cx} y1={ai.cy} x2={n.cx} y2={n.cy} stroke={T.gold} strokeWidth="1"
+          initial={{ pathLength: 0, opacity: 0 }} whileInView={{ pathLength: 1, opacity: 0.55 }} viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 1.4 + i * 0.15, ease: [0.22, 1, 0.36, 1] }} />
+      ))}
+      {nodes.map((n, i) => (
+        <motion.g key={n.key} initial={{ opacity: 0, scale: 0.6 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 + i * 0.35 }} style={{ transformOrigin: `${n.cx}px ${n.cy}px` }}>
+          <circle cx={n.cx} cy={n.cy} r="34" fill="none" stroke="rgba(247,246,243,0.55)" strokeWidth="1" />
+          <circle cx={n.cx} cy={n.cy} r="3" fill={T.white} />
+          <text x={n.cx} y={n.cy + n.ly} textAnchor="middle" style={{ fontFamily: "var(--f-mono)", fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", fill: T.dim }}>{n.key}</text>
+        </motion.g>
+      ))}
+      <motion.g initial={{ opacity: 0, scale: 0.4 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
+        transition={{ duration: 0.7, delay: 1.25 }} style={{ transformOrigin: `${ai.cx}px ${ai.cy}px` }}>
+        <circle cx={ai.cx} cy={ai.cy} r="40" fill={T.gold2} opacity="0.08" />
+        <circle cx={ai.cx} cy={ai.cy} r="40" fill="none" stroke={T.gold2} strokeWidth="1.5" />
+        <text x={ai.cx} y={ai.cy + 7} textAnchor="middle" style={{ fontFamily: "var(--f-display)", fontSize: 26, letterSpacing: "0.06em", fill: T.gold2 }}>AI</text>
+      </motion.g>
+    </svg>
+  );
+}
+function Frame01() {
+  return <SplitFrame id="frame-01" index="01"
+    left={<Narrative eye="The Work Shift"
+      title={<>AI ENTERS AS<br /><span style={{ color: T.gold2 }}>THE FOURTH ACTOR.</span></>}
+      paras={[
+        "For centuries, work has been shaped by three actors — the Employee, the Leader, the Organisation. Every technology before made these three faster, stronger, more connected.",
+        "AI is different. For the first time, work has a non-human participant capable of contributing to thinking, analysis, creation and decision. Work is no longer designed around three actors. It is designed around four.",
+      ]}
+      quote={<>&ldquo;When intelligence becomes abundant, <span style={{ color: T.gold2 }}>judgment</span> becomes the scarce source of advantage.&rdquo;</>} />}
+    right={<div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}><FourActors /></div>} />;
+}
 
-          {/* The Institution */}
-          <div>
-            <div className="ftf-col-h">The Institution</div>
-            <Link href="/expertise/ai-edge/research/evidence-wall" className="ftf-col-link">
-              The Evidence Wall · 12 reports
-            </Link>
-            <Link href="/expertise/ai-edge/framework/doctrine" className="ftf-col-link">
-              The Doctrine
-            </Link>
-            <Link href="/expertise/ai-edge/framework/lexicon" className="ftf-col-link">
-              The Lexicon · 19 terms
-            </Link>
-            <Link href="/expertise/ai-edge/research/methodology" className="ftf-col-link">
-              Methodology
-            </Link>
-            <Link href="/expertise/ai-edge/research" className="ftf-col-link">
-              Research · 4 essays
-            </Link>
-            <Link href="/about" className="ftf-col-link">
-              About Nitin Nahata
-            </Link>
-          </div>
+/* ══════════ FRAME 02 — EVOLUTION OF VALUE ══════════ */
+const ERAS = [
+  { era: "Industrial Age", cap: "Muscle" },
+  { era: "Knowledge Age", cap: "Expertise" },
+  { era: "Digital Age", cap: "Information" },
+  { era: "AI Era", cap: "Judgment" },
+];
+function Frame02() {
+  return <SplitFrame id="frame-02" index="02"
+    left={<Narrative eye="The Evolution of Value"
+      title={<>EVERY ERA REDEFINES<br /><span style={{ color: T.gold2 }}>THE SOURCE OF VALUE.</span></>}
+      paras={[
+        <>Every technological shift has rewarded a different human capability. The Industrial Age rewarded physical labour. The Knowledge Age rewarded expertise. The Digital Age rewarded information.</>,
+        <>The AI Era rewards <span style={{ color: T.gold2 }}>judgment</span>. Technology changes — and the capability that creates competitive advantage changes with it.</>,
+      ]}
+      quote={<>&ldquo;When intelligence becomes abundant, <span style={{ color: T.gold2 }}>judgment</span> becomes the new source of value.&rdquo;</>} />}
+    right={<>{ERAS.map((e, i) => {
+      const last = i === ERAS.length - 1;
+      return (
+        <motion.div key={e.era} initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: i * 0.25 }}
+          style={{ display: "flex", alignItems: "baseline", gap: 20, padding: "18px 0", borderBottom: i < ERAS.length - 1 ? `1px solid ${T.rule}` : "none" }}>
+          <span style={{ fontFamily: "var(--f-mono)", fontSize: 10, letterSpacing: ".18em", textTransform: "uppercase", color: T.dim, width: 130, flexShrink: 0 }}>{e.era}</span>
+          <span style={{ color: T.gold, fontSize: 14 }}>→</span>
+          <span style={{ fontFamily: "var(--f-display)", letterSpacing: ".02em", lineHeight: 0.9, fontSize: last ? "clamp(40px,5vw,68px)" : "clamp(28px,3vw,40px)", color: last ? T.gold2 : "rgba(247,246,243,0.55)" }}>{e.cap}</span>
+        </motion.div>
+      );
+    })}</>} />;
+}
 
-          {/* The Framework */}
-          <div>
-            <div className="ftf-col-h">The Framework</div>
-            <Link href="/expertise/ai-edge/framework/edge" className="ftf-col-link">
-              E.D.G.E. Framework
-            </Link>
-            <Link href="/expertise/ai-edge/framework/edge#worktypes" className="ftf-col-link">
-              Six Work Types
-            </Link>
-            <Link href="/expertise/ai-edge/framework/brainpower-density" className="ftf-col-link">
-              Brainpower Density
-            </Link>
-            <Link href="/expertise/ai-edge/framework/edge#edgescore" className="ftf-col-link">
-              Edge Score
-            </Link>
-            <Link href="/expertise/ai-edge/framework/doctrine#ownership" className="ftf-col-link">
-              Judgment Ownership
-            </Link>
+/* ══════════ FRAME 03 — NEW DESIGN CHOICE ══════════ */
+const STAGES = ["Customer Request", "Research", "Analysis", "Decision", "Execution", "Review"];
+const PERFORMERS = ["Human", "AI", "Human + AI"];
+function Frame03() {
+  const [tick, setTick] = useState(0);
+  useEffect(() => { const id = setInterval(() => setTick((t) => t + 1), 1400); return () => clearInterval(id); }, []);
+  return <SplitFrame id="frame-03" index="03"
+    left={<Narrative eye="The New Design Choice"
+      title={<>FOR THE FIRST TIME,<br /><span style={{ color: T.gold2 }}>WORK HAS A CHOICE.</span></>}
+      paras={[
+        <>Every technology before AI amplified human work. AI can now perform parts of the work itself — introducing a decision organisations have never had to make before.</>,
+        <><span style={{ color: T.gold2 }}>Who should perform the work?</span> Every activity, every decision, every workflow. Every organisation is now making these choices — consciously or not. The quality of those choices will determine advantage.</>,
+      ]}
+      quote={<>&ldquo;The future will not belong to organisations with more AI. It will belong to those that make better decisions about <span style={{ color: T.gold2 }}>where AI should work</span>.&rdquo;</>} />}
+    right={<>{STAGES.map((s, i) => {
+      const active = PERFORMERS[(tick + i) % PERFORMERS.length];
+      return (
+        <motion.div key={s} initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
+          transition={{ duration: 0.45, delay: i * 0.1 }}
+          style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, padding: "16px 0", borderBottom: i < STAGES.length - 1 ? `1px solid ${T.rule}` : "none" }}>
+          <span style={{ fontFamily: "var(--f-display)", fontSize: "clamp(20px,2.2vw,28px)", letterSpacing: ".02em" }}>{s}</span>
+          <div style={{ display: "flex", gap: 8 }}>
+            {PERFORMERS.map((p) => {
+              const on = p === active;
+              return <span key={p} style={{ fontFamily: "var(--f-mono)", fontSize: 9, letterSpacing: ".08em", textTransform: "uppercase", padding: "6px 10px", whiteSpace: "nowrap", border: `1px solid ${on ? T.gold2 : T.rule}`, color: on ? T.ink : T.dim, background: on ? T.gold2 : "transparent", transition: "all .35s ease" }}>{p}</span>;
+            })}
           </div>
+        </motion.div>
+      );
+    })}</>} />;
+}
 
-          {/* The Instruments */}
-          <div>
-            <div className="ftf-col-h">The Instruments</div>
-            <Link href="/samples" className="ftf-col-link">
-              Sample Reports
-            </Link>
-            <Link href="/expertise/ai-edge/individuals" className="ftf-col-link">
-              Begin a Diagnostic →
-            </Link>
-            <Link href="/expertise/ai-edge/organisations/org-ai-dars" className="ftf-col-link">
-              Request an Engagement →
-            </Link>
-          </div>
+/* ══════════ FRAME 04 — THE PARADOX ══════════ */
+const STATS = [
+  { n: "23%", d: "of organisations have scaled AI across the enterprise.", s: "McKinsey 2024" },
+  { n: "95%", d: "see no measurable P&L impact from AI.", s: "MIT NANDA 2025" },
+  { n: "39%", d: "of core skills will change by 2030.", s: "World Economic Forum" },
+];
+function Frame04() {
+  return <SplitFrame id="frame-04" index="04"
+    left={<Narrative eye="The Paradox"
+      title={<>THE PROMISE WAS EXTRAORDINARY.<br /><span style={{ color: T.gold2 }}>THE RESULTS WERE NOT.</span></>}
+      paras={[
+        <>Investment has never been higher. Adoption has never been broader. And yet, for most organisations, AI has not translated into measurable enterprise value.</>,
+        <>If every organisation is making these choices, why are so few consistently creating value? That question launches the investigation.</>,
+      ]}
+      quote={<>&ldquo;Everyone was measuring AI. No one had explained why value <span style={{ color: T.gold2 }}>remained inconsistent</span>.&rdquo;</>} />}
+    right={<>{STATS.map((st, i) => (
+      <motion.div key={st.n} initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: i * 0.2 }}
+        style={{ padding: "22px 0", borderBottom: i < STATS.length - 1 ? `1px solid ${T.rule}` : "none" }}>
+        <div style={{ fontFamily: "var(--f-display)", fontSize: "clamp(48px,7vw,84px)", lineHeight: 0.85, color: T.gold2 }}>{st.n}</div>
+        <div style={{ fontFamily: "var(--f-sans)", fontWeight: 300, fontSize: 14, color: "rgba(247,246,243,0.72)", marginTop: 10, maxWidth: 360 }}>{st.d}</div>
+        <div style={{ fontFamily: "var(--f-mono)", fontSize: 8, letterSpacing: ".14em", textTransform: "uppercase", color: T.mid, marginTop: 8 }}>{st.s}</div>
+      </motion.div>
+    ))}</>} />;
+}
+
+/* ══════════ FRAME 05 — FOLLOWING THE EVIDENCE ══════════ */
+const INSTITUTIONS = ["McKinsey & Company", "MIT Sloan", "World Economic Forum", "Microsoft Work Trend Index", "IBM Institute for Business Value", "BCG", "Gartner", "Stanford HAI", "RAND", "PwC", "Deloitte", "Accenture"];
+function Frame05() {
+  return <FullFrame id="frame-05" index="05" eye="Following the Evidence"
+    title={<>WE DIDN&rsquo;T START WITH A FRAMEWORK.<br /><span style={{ color: T.gold2 }}>WE STARTED WITH A QUESTION.</span></>}>
+    <div style={{ display: "grid", gridTemplateColumns: "1.4fr 1fr", gap: "clamp(32px,5vw,72px)", alignItems: "center" }} className="ael-2col">
+      <div>
+        <p style={{ ...bodyText, maxWidth: 560, marginBottom: 28 }}>
+          If AI is improving capability, why isn&rsquo;t it consistently improving enterprise value? To answer, we examined the world&rsquo;s leading research on AI adoption, transformation and organisational change — across industries, geographies and independent institutions.
+        </p>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(180px,1fr))", gap: 1, background: T.rule, border: `1px solid ${T.rule}` }}>
+          {INSTITUTIONS.map((n) => (
+            <div key={n} style={{ background: T.ink, padding: "14px 16px", fontFamily: "var(--f-mono)", fontSize: 10, letterSpacing: ".08em", textTransform: "uppercase", color: T.dim }}>{n}</div>
+          ))}
         </div>
       </div>
-
-      <div
-        style={{
-          fontFamily: "var(--aiel-mono),'DM Mono','Courier New',monospace",
-          fontSize: 9,
-          letterSpacing: ".1em",
-          color: "rgba(247,246,243,.4)",
-          paddingTop: 32,
-          textAlign: "center",
-        }}
-      >
-        © 2026 AXIONINDEX · AXIONINDEX.ORG · PRIVATE. CONFIDENTIAL.
+      <div style={{ textAlign: "center", border: `1px solid ${T.rule}`, padding: "48px 24px" }}>
+        <div style={{ fontFamily: "var(--f-display)", fontSize: "clamp(56px,9vw,110px)", lineHeight: 0.85, color: T.gold2 }}>12+</div>
+        <div style={{ fontFamily: "var(--f-mono)", fontSize: 10, letterSpacing: ".18em", textTransform: "uppercase", color: T.dim, marginTop: 12 }}>Global research studies · 2023–2026</div>
+        <div style={{ height: 1, background: T.rule, margin: "26px 0" }} />
+        <div style={{ fontFamily: "var(--f-display)", fontSize: "clamp(22px,2.4vw,30px)", color: T.white }}>A Consistent Pattern</div>
+        <p style={{ fontFamily: "var(--f-sans)", fontWeight: 300, fontSize: 13, color: "rgba(247,246,243,0.6)", marginTop: 12 }}>The evidence revealed a pattern. It did not yet reveal the cause.</p>
       </div>
+    </div>
+  </FullFrame>;
+}
+
+/* ══════════ FRAME 06 — THE HIDDEN FAULT LINE ══════════ */
+function Frame06() {
+  return <SplitFrame id="frame-06" index="06"
+    left={<Narrative eye="The Hidden Fault Line"
+      title={<>THE RESEARCH WASN&rsquo;T POINTING TO<br /><span style={{ color: T.gold2 }}>A TECHNOLOGY PROBLEM.</span></>}
+      paras={[
+        <>Every major study identified the symptoms. None fully explained the cause. When the patterns were laid side by side, they pointed in one direction.</>,
+        <>It was not pointing to a technology problem. <span style={{ color: T.gold2 }}>It was pointing to a work-design problem.</span> The world was architected for three actors. AI entered as the fourth — and the architecture never changed.</>,
+      ]}
+      quote={<>&ldquo;The design wasn&rsquo;t updated. The fault line <span style={{ color: T.gold2 }}>remained hidden</span>.&rdquo;</>} />}
+    right={<div style={{ display: "flex", flexDirection: "column", gap: 1, background: T.rule, border: `1px solid ${T.rule}` }}>
+      {[
+        ["The architecture", "never changed"],
+        ["The design", "wasn't updated"],
+        ["The fault line", "remained hidden"],
+      ].map(([a, b], i) => (
+        <motion.div key={i} initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: i * 0.2 }}
+          style={{ background: T.ink, padding: "28px 26px" }}>
+          <div style={{ fontFamily: "var(--f-display)", fontSize: "clamp(24px,3vw,34px)", letterSpacing: ".02em" }}>{a}</div>
+          <div style={{ fontFamily: "var(--f-display)", fontSize: "clamp(24px,3vw,34px)", letterSpacing: ".02em", color: T.gold2 }}>{b}</div>
+        </motion.div>
+      ))}
+    </div>} />;
+}
+
+/* ══════════ FRAME 07 — ADOPTION ≠ ASSIMILATION ══════════ */
+function Frame07() {
+  return <SplitFrame id="frame-07" index="07"
+    left={<Narrative eye="Adoption Is Not the Answer"
+      title={<>AI ADOPTION <span style={{ color: T.gold2 }}>≠</span><br />AI ASSIMILATION.</>}
+      paras={[
+        <>Most organisations treat AI as another tool to deploy. The technology changes. The work does not. The result is predictable — higher activity, more usage, incremental productivity, limited enterprise value.</>,
+        <>AI delivers its true value only when it becomes part of the <span style={{ color: T.gold2 }}>architecture of work itself</span> — AI performs what AI does best, humans perform what humans do best, and both operate as one integrated system.</>,
+      ]}
+      quote={<>&ldquo;AI should not be added to work. Work should be <span style={{ color: T.gold2 }}>redesigned around AI</span>.&rdquo;</>} />}
+    right={<div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 1, background: T.rule, border: `1px solid ${T.rule}` }}>
+      {[
+        { h: "Adoption", s: "Incremental", items: ["AI added to existing work", "Tools change", "Work stays the same", "Outcomes plateau"], gold: false },
+        { h: "Assimilation", s: "Transformational", items: ["Work redesigned around AI", "Work changes", "Outcomes transform", "Value compounds"], gold: true },
+      ].map((c) => (
+        <div key={c.h} style={{ background: c.gold ? T.ink2 : T.ink, padding: "28px 24px" }}>
+          <div style={{ fontFamily: "var(--f-mono)", fontSize: 9, letterSpacing: ".16em", textTransform: "uppercase", color: c.gold ? T.gold2 : T.mid, marginBottom: 8 }}>{c.s}</div>
+          <div style={{ fontFamily: "var(--f-display)", fontSize: "clamp(26px,3vw,38px)", letterSpacing: ".02em", color: c.gold ? T.gold2 : T.white, marginBottom: 18 }}>{c.h}</div>
+          {c.items.map((it) => (
+            <div key={it} style={{ display: "flex", gap: 10, fontFamily: "var(--f-sans)", fontWeight: 300, fontSize: 12.5, color: "rgba(247,246,243,0.7)", padding: "9px 0", borderTop: `1px solid ${T.rule}` }}>
+              <span style={{ color: T.gold }}>—</span>{it}
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>} />;
+}
+
+/* ══════════ FRAME 08 — UNIVERSAL WORK ARCHITECTURE ══════════ */
+const DISCIPLINES = [
+  ["Building", "Blueprint"],
+  ["Software", "Architecture"],
+  ["Manufacturing", "Process Design"],
+  ["Work", "Universal Work Architecture™"],
+];
+const UWA_OUTCOMES = ["Redesign Work", "Integrate AI into Work Design", "Optimise the Human–AI Division", "Maximise Enterprise Value"];
+function Frame08() {
+  return <FullFrame id="frame-08" index="08" eye="The Universal Work Architecture™"
+    title={<>BEFORE WORK CAN BE REDESIGNED,<br /><span style={{ color: T.gold2 }}>IT MUST FIRST BE DEFINED.</span></>}>
+    <p style={{ ...bodyText, maxWidth: 720, marginBottom: 36 }}>
+      Every engineering discipline begins with a universal architecture. Buildings have blueprints. Software has architecture. Manufacturing has process design. Work never had one — so organisations tried to transform work without first defining it.
+    </p>
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 1, background: T.rule, border: `1px solid ${T.rule}`, marginBottom: 40 }} className="ael-4col">
+      {DISCIPLINES.map(([d, b], i) => {
+        const last = i === DISCIPLINES.length - 1;
+        return (
+          <div key={d} style={{ background: last ? T.ink2 : T.ink, padding: "30px 22px", minHeight: 170, display: "flex", flexDirection: "column" }}>
+            <div style={{ fontFamily: "var(--f-mono)", fontSize: 9, letterSpacing: ".16em", textTransform: "uppercase", color: T.mid, marginBottom: 16 }}>{d}</div>
+            <div style={{ fontFamily: "var(--f-display)", fontSize: "clamp(20px,2.2vw,28px)", letterSpacing: ".02em", color: last ? T.gold2 : T.white, marginTop: "auto", lineHeight: 1.05 }}>{b}</div>
+          </div>
+        );
+      })}
+    </div>
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(230px,1fr))", gap: 1, background: T.rule, border: `1px solid ${T.rule}` }}>
+      {UWA_OUTCOMES.map((o) => (
+        <div key={o} style={{ background: T.ink, padding: "18px 20px", display: "flex", gap: 12, alignItems: "center", fontFamily: "var(--f-sans)", fontSize: 13, color: "rgba(247,246,243,0.8)" }}>
+          <span style={{ color: T.gold2 }}>✓</span>{o}
+        </div>
+      ))}
+    </div>
+  </FullFrame>;
+}
+
+/* ══════════ FRAME 09 — AI TRANSFORMATION ARCHITECTURE ══════════ */
+const FLOW = ["Universal Work Architecture™", "Analyse Work", "Redesign Work", "Allocate Work", "Human + AI Operating Model", "Enterprise Value"];
+function Frame09() {
+  return <SplitFrame id="frame-09" index="09"
+    left={<Narrative eye="The AI Transformation Architecture™"
+      title={<>REDESIGNING WORK<br /><span style={{ color: T.gold2 }}>IS NOT ABOUT AI.</span></>}
+      paras={[
+        <>Once work is described through the Universal Work Architecture™, it can be systematically redesigned — every activity, decision, workflow and role.</>,
+        <>The objective is simple: assign every part of work to the performer best equipped to create value. The result is not Human versus AI — it is a new operating model where both work as <span style={{ color: T.gold2 }}>one integrated enterprise system</span>.</>,
+      ]}
+      quote={<>&ldquo;AI transformation is not the implementation of AI. It is the <span style={{ color: T.gold2 }}>redesign of work</span>.&rdquo;</>} />}
+    right={<div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 0 }}>
+      {FLOW.map((f, i) => {
+        const last = i === FLOW.length - 1;
+        return (
+          <motion.div key={f} initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: i * 0.12 }} style={{ width: "100%", maxWidth: 440, textAlign: "center" }}>
+            <div style={{ border: `1px solid ${last ? T.gold2 : T.rule}`, background: last ? "rgba(196,152,72,0.08)" : "transparent", padding: "16px 18px", fontFamily: "var(--f-display)", fontSize: last ? "clamp(24px,2.6vw,32px)" : "clamp(17px,2vw,22px)", letterSpacing: ".02em", color: last ? T.gold2 : T.white }}>{f}</div>
+            {!last && <div style={{ color: T.gold, fontSize: 16, lineHeight: 1, padding: "6px 0" }}>↓</div>}
+          </motion.div>
+        );
+      })}
+    </div>} />;
+}
+
+/* ══════════ FRAME 10 — HUMAN–AI ORCHESTRATION ══════════ */
+function Frame10() {
+  const cols = [
+    { h: "Human Anchored", s: "The side that governs", items: ["Problem Framing", "Strategic Thinking", "Judgment", "Ownership", "AI Validation"], gold: true },
+    { h: "AI Leveraged", s: "The side that accelerates", items: ["Analysis", "Pattern Recognition", "Content Generation", "Simulation", "Optimisation & Execution"], gold: false },
+  ];
+  return <SplitFrame id="frame-10" index="10"
+    left={<Narrative eye="Human–AI Orchestration™"
+      title={<>AI SHOULD AMPLIFY VALUE,<br /><span style={{ color: T.gold2 }}>NOT REPLACE ACCOUNTABILITY.</span></>}
+      paras={[
+        <>The objective of AI is not to maximise automation — it is to maximise enterprise value. That requires a deliberate division of work between humans and AI.</>,
+        <>AI is responsible for <span style={{ color: T.gold2 }}>capability</span>. Humans remain responsible for <span style={{ color: T.gold2 }}>accountability</span>. Capability can be delegated. Judgment cannot.</>,
+      ]}
+      quote={<>&ldquo;AI should enhance human impact. Humans should <span style={{ color: T.gold2 }}>govern AI impact</span>.&rdquo;</>} />}
+    right={<div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 1, background: T.rule, border: `1px solid ${T.rule}` }}>
+      {cols.map((c) => (
+        <div key={c.h} style={{ background: c.gold ? T.ink2 : T.ink, padding: "26px 22px" }}>
+          <div style={{ fontFamily: "var(--f-mono)", fontSize: 9, letterSpacing: ".14em", textTransform: "uppercase", color: c.gold ? T.gold2 : T.mid, marginBottom: 6 }}>{c.s}</div>
+          <div style={{ fontFamily: "var(--f-display)", fontSize: "clamp(22px,2.6vw,30px)", color: c.gold ? T.gold2 : T.white, marginBottom: 16 }}>{c.h}</div>
+          {c.items.map((it) => (
+            <div key={it} style={{ fontFamily: "var(--f-sans)", fontWeight: 300, fontSize: 12.5, color: "rgba(247,246,243,0.72)", padding: "9px 0", borderTop: `1px solid ${T.rule}`, display: "flex", gap: 8 }}>
+              <span style={{ color: T.gold }}>{c.gold ? "▲" : "▸"}</span>{it}
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>} />;
+}
+
+/* ══════════ FRAME 11 — AI READINESS ══════════ */
+const ACTORS = [
+  { a: "Employee", d: "Augmented capability and impact." },
+  { a: "Leader", d: "Better decisions, greater leverage." },
+  { a: "Organisation", d: "Adaptive, resilient, future-ready." },
+  { a: "AI", d: "Reliable, aligned, improving." },
+];
+function Frame11() {
+  return <FullFrame id="frame-11" index="11" eye="AI Readiness"
+    title={<>AI CAPABILITY CAN BE PURCHASED.<br /><span style={{ color: T.gold2 }}>AI READINESS MUST BE BUILT.</span></>}>
+    <p style={{ ...bodyText, maxWidth: 720, marginBottom: 36 }}>
+      Transformation does not begin with technology. It begins with readiness — across four actors. A weakness in any one limits the value created by the entire system. Transformation succeeds only when all four evolve together.
+    </p>
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 1, background: T.rule, border: `1px solid ${T.rule}` }} className="ael-4col">
+      {ACTORS.map((x, i) => (
+        <motion.div key={x.a} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.45, delay: i * 0.1 }}
+          style={{ background: T.ink, padding: "30px 24px", minHeight: 180, display: "flex", flexDirection: "column" }}>
+          <div style={{ fontFamily: "var(--f-mono)", fontSize: 9, letterSpacing: ".16em", color: T.gold, marginBottom: 16 }}>0{i + 1}</div>
+          <div style={{ fontFamily: "var(--f-display)", fontSize: "clamp(24px,2.8vw,34px)", letterSpacing: ".02em" }}>{x.a}</div>
+          <div style={{ fontFamily: "var(--f-sans)", fontWeight: 300, fontSize: 12.5, color: "rgba(247,246,243,0.6)", marginTop: "auto", lineHeight: 1.6 }}>{x.d}</div>
+        </motion.div>
+      ))}
+    </div>
+  </FullFrame>;
+}
+
+/* ══════════ FRAME 12 — EVOLUTION JOURNEY ══════════ */
+const PATHWAYS = [
+  { a: "Employee", steps: ["Learn", "Adapt", "Augment", "Lead"] },
+  { a: "Leader", steps: ["Direct", "Orchestrate", "Transform", "Scale"] },
+  { a: "Organisation", steps: ["Adopt", "Assimilate", "Integrate", "Evolve"] },
+  { a: "AI", steps: ["Deploy", "Embed", "Collaborate", "Optimise"] },
+];
+function Frame12() {
+  return <FullFrame id="frame-12" index="12" eye="The AI Edge Lab Evolution Journey™"
+    title={<>EVERY ORGANISATION WANTS TO EVOLVE.<br /><span style={{ color: T.gold2 }}>VERY FEW KNOW HOW.</span></>}>
+    <p style={{ ...bodyText, maxWidth: 720, marginBottom: 36 }}>
+      AI transformation is not a single initiative — it is a coordinated evolution of every workplace actor. Each follows its own pathway, aligned to the same enterprise vision. Only when every actor progresses together does the organisation realise sustained enterprise value.
+    </p>
+    <div style={{ display: "flex", flexDirection: "column", gap: 1, background: T.rule, border: `1px solid ${T.rule}` }}>
+      {PATHWAYS.map((p, i) => (
+        <motion.div key={p.a} initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.45, delay: i * 0.1 }}
+          style={{ background: T.ink, padding: "22px 24px", display: "grid", gridTemplateColumns: "160px 1fr", gap: 20, alignItems: "center" }} className="ael-path">
+          <div style={{ fontFamily: "var(--f-display)", fontSize: "clamp(22px,2.4vw,30px)", letterSpacing: ".02em", color: T.gold2 }}>{p.a}</div>
+          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 8 }}>
+            {p.steps.map((s, j) => (
+              <span key={s} style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+                <span style={{ fontFamily: "var(--f-mono)", fontSize: 11, letterSpacing: ".08em", textTransform: "uppercase", color: j === p.steps.length - 1 ? T.gold2 : "rgba(247,246,243,0.72)" }}>{s}</span>
+                {j < p.steps.length - 1 && <span style={{ color: T.gold, fontSize: 12 }}>→</span>}
+              </span>
+            ))}
+          </div>
+        </motion.div>
+      ))}
+    </div>
+  </FullFrame>;
+}
+
+/* ══════════ FRAME 13 — MEASURE YOUR AI EDGE ══════════ */
+const INSTRUMENTS = [
+  { tag: "Aspiring", code: "AAI™", name: "AI Alignment Index", desc: "For those entering the workforce. Where your foundations stay relevant as AI absorbs executional work." },
+  { tag: "Working", code: "ARI™", name: "AI Replaceability Index", desc: "For working professionals. Your structural position across the four E.D.G.E. dimensions." },
+  { tag: "Leaders", code: "BDI™", name: "Business Leaders Index", desc: "For leaders. Measure leadership in the AI era and where your edge holds." },
+  { tag: "Organisation", code: "ORG AI DARS™", name: "Organisation AI DARS", desc: "Assess and benchmark your organisation's readiness to operate with AI." },
+];
+function Frame13() {
+  return <FullFrame id="frame-13" index="13" eye="Measure Your AI Edge"
+    title={<>EVIDENCE-BASED ASSESSMENTS.<br /><span style={{ color: T.gold2 }}>BUILT FOR EVERY ACTOR.</span></>}>
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 1, background: T.rule, border: `1px solid ${T.rule}`, marginBottom: 36 }} className="ael-4col">
+      {INSTRUMENTS.map((x, i) => (
+        <motion.div key={x.code} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.45, delay: i * 0.1 }}
+          style={{ background: T.ink, padding: "28px 22px", minHeight: 230, display: "flex", flexDirection: "column" }}>
+          <div style={{ fontFamily: "var(--f-mono)", fontSize: 8, letterSpacing: ".16em", textTransform: "uppercase", color: T.mid, marginBottom: 14 }}>{x.tag}</div>
+          <div style={{ fontFamily: "var(--f-display)", fontSize: "clamp(22px,2.4vw,28px)", color: T.gold2 }}>{x.code}</div>
+          <div style={{ fontFamily: "var(--f-display)", fontSize: 16, letterSpacing: ".02em", color: T.white, marginBottom: 12 }}>{x.name}</div>
+          <div style={{ fontFamily: "var(--f-sans)", fontWeight: 300, fontSize: 12, color: "rgba(247,246,243,0.6)", lineHeight: 1.6, marginBottom: 16 }}>{x.desc}</div>
+          <Link href="/connect" style={{ fontFamily: "var(--f-mono)", fontSize: 8, letterSpacing: ".16em", textTransform: "uppercase", color: T.gold, marginTop: "auto" }}>Start →</Link>
+        </motion.div>
+      ))}
+    </div>
+    <Link href="/connect" style={{ display: "inline-block", fontFamily: "var(--f-mono)", fontSize: 11, letterSpacing: ".18em", textTransform: "uppercase", background: T.gold2, color: T.ink, padding: "16px 30px", fontWeight: 500 }}>Start Your Assessment →</Link>
+  </FullFrame>;
+}
+
+/* ══════════ CLOSING ══════════ */
+function Closing() {
+  return (
+    <section id="closing" style={{ background: T.ink, color: T.white, padding: "clamp(80px,14vh,140px) clamp(24px,5vw,72px)", textAlign: "center", borderBottom: `1px solid ${T.rule}` }}>
+      <motion.div {...rise} transition={{ duration: 0.7 }} style={{ maxWidth: 1000, margin: "0 auto" }}>
+        <span style={kicker}>Find My AI Edge</span>
+        <h2 style={{ fontFamily: "var(--f-display)", fontSize: "clamp(44px,7vw,96px)", lineHeight: 0.95, letterSpacing: ".01em", margin: "24px 0 20px" }}>
+          THE FUTURE OF WORK WILL BE ARCHITECTED.<br /><span style={{ color: T.gold2 }}>NOT ACCIDENTAL.</span>
+        </h2>
+        <p style={{ fontFamily: "var(--f-sans)", fontWeight: 300, fontSize: 15, color: "rgba(247,246,243,0.6)", maxWidth: 620, margin: "0 auto 36px", lineHeight: 1.8 }}>
+          The question is not if you will transform. The question is how intentionally.
+        </p>
+        <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
+          <Link href="/connect" style={{ fontFamily: "var(--f-mono)", fontSize: 11, letterSpacing: ".18em", textTransform: "uppercase", background: T.gold2, color: T.ink, padding: "16px 30px" }}>Find My AI Edge →</Link>
+          <Link href="#frame-05" style={{ fontFamily: "var(--f-mono)", fontSize: 11, letterSpacing: ".18em", textTransform: "uppercase", border: `1px solid ${T.rule}`, color: T.white, padding: "16px 30px" }}>Explore the Research →</Link>
+        </div>
+      </motion.div>
+    </section>
+  );
+}
+
+function Footer() {
+  return (
+    <footer style={{ background: T.ink, color: T.dim, padding: "40px clamp(24px,5vw,52px)", display: "flex", flexWrap: "wrap", justifyContent: "space-between", gap: 16, borderTop: `1px solid ${T.rule}` }}>
+      <span style={{ fontFamily: "var(--f-display)", fontSize: 16, letterSpacing: ".04em", color: "rgba(247,246,243,0.3)" }}>AI EDGE LAB™</span>
+      <span style={{ fontFamily: "var(--f-mono)", fontSize: 9, letterSpacing: ".1em", textTransform: "uppercase" }}>The Institute for the AI Architecture of Work</span>
+      <span style={{ fontFamily: "var(--f-mono)", fontSize: 8, letterSpacing: ".06em", color: "rgba(247,246,243,0.25)" }}>© 2026 Axion Index · Private &amp; Confidential</span>
     </footer>
   );
 }
 
-/* ─── Main Page ─── */
-export default function AIEdgePage() {
-  const progRef = useRef<HTMLDivElement>(null);
-  useScrollProgress(progRef);
-  useRevealOnScroll();
-
+/* ─── Page ─── */
+export default function AIEdgeLabPage() {
   return (
-    <div
-      className={`${bebasNeue.variable} ${dmSans.variable} ${dmMono.variable}`}
-      style={{
-        background: "#F7F6F3",
-        color: "#0D0D0B",
-        fontFamily: "var(--aiel-sans),'DM Sans',system-ui,sans-serif",
-        fontWeight: 300,
-        WebkitFontSmoothing: "antialiased",
-        overflowX: "hidden",
-        minHeight: "100vh",
-      }}
-    >
-      {/* Scroll progress bar */}
-      <div
-        ref={progRef}
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          right: 0,
-          height: 2,
-          background: "#A07830",
-          width: "0%",
-          zIndex: 9999,
-          transition: "width .1s",
-        }}
-      />
-
-      <AielHeader />
-      <NotFoundHero />
-      <CrosslinksGrid />
-      <AielFooter />
-
-      {/* Scoped styles */}
+    <div className={`${bebas.variable} ${dmSans.variable} ${dmMono.variable}`} style={{ background: T.ink, fontFamily: "var(--f-sans)" }}>
       <style>{`
-        /* ── Variables ── */
-        :root {
-          --aiel-white:  #F7F6F3;
-          --aiel-white2: #EEECEA;
-          --aiel-ink:    #0D0D0B;
-          --aiel-ink3:   #2E2E2C;
-          --aiel-mid:    #7A7870;
-          --aiel-dim:    #B0AEA8;
-          --aiel-gold:   #A07830;
-          --aiel-gold2:  #C49848;
-          --aiel-rule:   rgba(13,13,11,.1);
-          --aiel-rule2:  rgba(13,13,11,.18);
+        @media (max-width: 900px){
+          .ael-frame{ grid-template-columns: 1fr !important; }
+          .ael-frame > div:nth-child(2){ border-left: none !important; border-top: 1px solid ${T.rule}; }
+          .ael-nav{ display: none !important; }
+          .ael-2col{ grid-template-columns: 1fr !important; }
+          .ael-4col{ grid-template-columns: 1fr 1fr !important; }
+          .ael-path{ grid-template-columns: 1fr !important; gap: 10px !important; }
         }
-
-        /* ── Header nav ── */
-        .aiel-hdr-nav {
-          display: flex;
-          align-items: center;
-          gap: 22px;
-        }
-        @media(max-width:820px) {
-          .aiel-hdr-nav { display: none; }
-        }
-
-        .aiel-hdr-item {
-          position: relative;
-          display: inline-flex;
-          align-items: center;
-        }
-
-        .aiel-hdr-link {
-          font-family: var(--aiel-mono),'DM Mono','Courier New',monospace;
-          font-size: 8px;
-          letter-spacing: .16em;
-          text-transform: uppercase;
-          color: #7A7870;
-          text-decoration: none;
-          transition: color .2s;
-        }
-        .aiel-hdr-link:hover { color: #0D0D0B; }
-
-        .aiel-hdr-cta {
-          font-family: var(--aiel-mono),'DM Mono','Courier New',monospace;
-          font-size: 8px;
-          letter-spacing: .18em;
-          text-transform: uppercase;
-          background: #0D0D0B;
-          color: #F7F6F3;
-          padding: 8px 18px;
-          text-decoration: none;
-          transition: background .2s;
-        }
-        .aiel-hdr-cta:hover { background: #2E2E2C; }
-
-        .aiel-hdr-pg {
-          font-family: var(--aiel-mono),'DM Mono','Courier New',monospace;
-          font-size: 9px;
-          color: #B0AEA8;
-          letter-spacing: .08em;
-        }
-        @media(max-width:1024px) { .aiel-hdr-pg { display: none; } }
-
-        /* ── Dropdown ── */
-        .aiel-hdr-drop {
-          position: absolute;
-          top: 100%;
-          left: 50%;
-          transform: translateX(-50%) translateY(6px);
-          background: #F7F6F3;
-          border: 1px solid rgba(13,13,11,.1);
-          min-width: 210px;
-          padding: 8px 0;
-          opacity: 0;
-          visibility: hidden;
-          transition: opacity .18s ease, transform .18s ease;
-          box-shadow: 0 12px 32px rgba(13,13,11,.08);
-          z-index: 60;
-          pointer-events: none;
-        }
-        .aiel-hdr-item:hover .aiel-hdr-drop {
-          opacity: 1;
-          visibility: visible;
-          transform: translateX(-50%) translateY(0);
-          pointer-events: auto;
-        }
-        .aiel-hdr-drop a {
-          display: block;
-          padding: 9px 20px;
-          font-family: var(--aiel-mono),'DM Mono','Courier New',monospace;
-          font-size: 10px;
-          letter-spacing: .08em;
-          text-transform: uppercase;
-          color: #2E2E2C;
-          text-decoration: none;
-          transition: all .15s;
-        }
-        .aiel-hdr-drop a:hover { background: #0D0D0B; color: #F7F6F3; }
-        .aiel-hdr-drop a.aiel-drop-first,
-        .aiel-hdr-drop a:first-child {
-          color: #A07830;
-          border-bottom: 1px solid rgba(13,13,11,.1);
-          margin-bottom: 4px;
-          padding-bottom: 11px;
-        }
-        .aiel-hdr-drop a.aiel-drop-first:hover,
-        .aiel-hdr-drop a:first-child:hover {
-          background: #EEECEA;
-          color: #A07830;
-        }
-        @media(max-width:900px) { .aiel-hdr-drop { display: none; } }
-
-        /* ── Crosslink cards ── */
-        .aiel-crosslink { transition: background .25s; }
-        .aiel-crosslink:hover { background: #0D0D0B !important; }
-        .aiel-crosslink:hover .cl-h,
-        .aiel-crosslink:hover .cl-p { color: #F7F6F3 !important; }
-        .aiel-crosslink:hover .cl-n { color: #C49848 !important; }
-        .aiel-crosslink:hover .cl-go { color: #C49848 !important; gap: 12px !important; }
-
-        .cl-n {
-          font-family: var(--aiel-mono),'DM Mono','Courier New',monospace;
-          font-size: 8px;
-          letter-spacing: .16em;
-          text-transform: uppercase;
-          color: #A07830;
-          margin-bottom: 14px;
-        }
-        .cl-h {
-          font-family: var(--aiel-display),'Bebas Neue',sans-serif;
-          font-size: clamp(20px,2.1vw,26px);
-          letter-spacing: .02em;
-          color: #0D0D0B;
-          line-height: 1.04;
-          margin-bottom: 10px;
-        }
-        .cl-p {
-          font-size: 12px;
-          color: #7A7870;
-          line-height: 1.65;
-          font-weight: 300;
-          margin-bottom: 18px;
-        }
-        .cl-go {
-          font-family: var(--aiel-mono),'DM Mono','Courier New',monospace;
-          font-size: 8px;
-          letter-spacing: .16em;
-          text-transform: uppercase;
-          color: #A07830;
-          margin-top: auto;
-          display: inline-flex;
-          align-items: center;
-          gap: 6px;
-          transition: gap .25s;
-        }
-
-        @media(max-width:860px) {
-          .aiel-r[style*="grid-template-columns: repeat(2"] {
-            grid-template-columns: 1fr !important;
-          }
-        }
-
-        /* ── Footer link cols ── */
-        .ftf-col-h {
-          font-family: var(--aiel-mono),'DM Mono','Courier New',monospace;
-          font-size: 9px;
-          letter-spacing: .16em;
-          text-transform: uppercase;
-          color: #C49848;
-          margin-bottom: 18px;
-        }
-        .ftf-col-link {
-          display: block;
-          font-size: 12px;
-          color: rgba(247,246,243,.6);
-          line-height: 1.5;
-          margin-bottom: 11px;
-          text-decoration: none;
-          font-weight: 300;
-          transition: color .18s;
-        }
-        .ftf-col-link:hover { color: #F7F6F3; }
-
-        @media(max-width:860px) {
-          .ftf-top { grid-template-columns: 1fr !important; gap: 40px !important; }
-          .ftf-cols { grid-template-columns: 1fr 1fr !important; }
-        }
-        @media(max-width:480px) {
-          .ftf-cols { grid-template-columns: 1fr !important; }
-          .ft-full { padding: 48px 28px 32px !important; }
-        }
-
-        /* ── Reveal animation ── */
-        .aiel-r {
-          opacity: 0;
-          transform: translateY(16px);
-          transition: opacity .7s ease, transform .7s ease;
-        }
-        .aiel-r.aiel-v {
-          opacity: 1;
-          transform: translateY(0);
-        }
-
-        @media(prefers-reduced-motion: reduce) {
-          .aiel-r {
-            opacity: 1 !important;
-            transform: none !important;
-            transition: none !important;
-          }
-        }
-
-        /* ── Subhero responsive ── */
-        @media(max-width:768px) {
-          .subhero { padding: 48px 32px 40px !important; }
-        }
+        @media (max-width: 520px){ .ael-4col{ grid-template-columns: 1fr !important; } }
       `}</style>
+      <Header />
+      <Frame01 /><Frame02 /><Frame03 /><Frame04 /><Frame05 /><Frame06 />
+      <Frame07 /><Frame08 /><Frame09 /><Frame10 /><Frame11 /><Frame12 /><Frame13 />
+      <Closing />
+      <Footer />
     </div>
   );
 }
