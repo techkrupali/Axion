@@ -1,14 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Bebas_Neue, DM_Sans, DM_Mono } from "next/font/google";
+import { Bebas_Neue, DM_Sans, DM_Mono, Cormorant_Garamond } from "next/font/google";
 
 /* ─── Fonts ─── */
 const bebas = Bebas_Neue({ weight: "400", subsets: ["latin"], variable: "--f-display" });
 const dmSans = DM_Sans({ subsets: ["latin"], weight: ["300", "400", "500"], variable: "--f-sans" });
 const dmMono = DM_Mono({ subsets: ["latin"], weight: ["300", "400", "500"], variable: "--f-mono" });
+const cormorant = Cormorant_Garamond({ subsets: ["latin"], weight: ["400", "500", "600"], style: ["normal", "italic"], variable: "--f-serif" });
 
 /* ─── Theme ─── */
 const T = {
@@ -25,10 +26,11 @@ const T = {
 
 /* ─── Nav ─── */
 const NAV: [string, string][] = [
-  ["Vision", "#frame-01"],
-  ["Research", "#frame-05"],
-  ["Frameworks", "#frame-08"],
+  ["Why AI Edge Lab", "#frame-01"],
+  ["Doctrine", "#frame-07"],
+  ["Framework", "#frame-08"],
   ["Assessments", "#frame-13"],
+  ["Insights", "#frame-05"],
   ["About", "/about"],
 ];
 
@@ -48,8 +50,9 @@ function Header() {
             <polygon points="398,120 434,120 548,392 512,392" />
           </g>
         </svg>
-        <span style={{ fontFamily: "var(--f-display)", fontSize: 18, letterSpacing: ".06em", color: T.white }}>
-          AI EDGE LAB<sup style={{ fontSize: 8, color: T.gold2 }}>™</sup>
+        <span style={{ display: "flex", flexDirection: "column", lineHeight: 1 }}>
+          <span style={{ fontFamily: "var(--f-display)", fontSize: 18, letterSpacing: ".06em", color: T.white }}>AI EDGE LAB</span>
+          <span style={{ fontFamily: "var(--f-mono)", fontSize: 7.5, letterSpacing: ".14em", textTransform: "uppercase", color: T.mid, marginTop: 3 }}>Architecture. Not Automation.</span>
         </span>
       </Link>
       <nav className="ael-nav" style={{ display: "flex", alignItems: "center", gap: 24 }}>
@@ -121,136 +124,382 @@ function FullFrame({ id, index, eye, title, children }: { id: string; index: str
   );
 }
 
-/* ══════════ FRAME 01 — THE WORK SHIFT ══════════ */
-function FourActors() {
-  const nodes = [
-    { key: "Employee", cx: 200, cy: 72, ly: -46 },
-    { key: "Leader", cx: 78, cy: 300, ly: 54 },
-    { key: "Organisation", cx: 322, cy: 300, ly: 54 },
-  ];
-  const ai = { cx: 200, cy: 214 };
+/* ══════════ FRAME 01 — HERO / THE WORK SHIFT ══════════ */
+function HeroArcs() {
   return (
-    <svg viewBox="0 0 400 400" width="100%" style={{ maxWidth: 460, margin: "0 auto" }} aria-hidden>
-      {nodes.map((n, i) => (
-        <motion.line key={n.key} x1={ai.cx} y1={ai.cy} x2={n.cx} y2={n.cy} stroke={T.gold} strokeWidth="1"
-          initial={{ pathLength: 0, opacity: 0 }} whileInView={{ pathLength: 1, opacity: 0.55 }} viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 1.4 + i * 0.15, ease: [0.22, 1, 0.36, 1] }} />
+    <svg viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" aria-hidden
+      style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}>
+      <defs>
+        <radialGradient id="ael-glow" cx="52%" cy="60%" r="42%">
+          <stop offset="0%" stopColor="#C8A24A" stopOpacity="0.34" />
+          <stop offset="55%" stopColor="#C8A24A" stopOpacity="0.05" />
+          <stop offset="100%" stopColor="#C8A24A" stopOpacity="0" />
+        </radialGradient>
+      </defs>
+      <rect width="800" height="800" fill="url(#ael-glow)" />
+      {[130, 195, 260, 325, 390, 455].map((r, i) => (
+        <circle key={r} cx="410" cy="500" r={r} fill="none" stroke="#C8A24A" strokeWidth="1" strokeOpacity={0.3 - i * 0.035} />
       ))}
-      {nodes.map((n, i) => (
-        <motion.g key={n.key} initial={{ opacity: 0, scale: 0.6 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 + i * 0.35 }} style={{ transformOrigin: `${n.cx}px ${n.cy}px` }}>
-          <circle cx={n.cx} cy={n.cy} r="34" fill="none" stroke="rgba(247,246,243,0.55)" strokeWidth="1" />
-          <circle cx={n.cx} cy={n.cy} r="3" fill={T.white} />
-          <text x={n.cx} y={n.cy + n.ly} textAnchor="middle" style={{ fontFamily: "var(--f-mono)", fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", fill: T.dim }}>{n.key}</text>
-        </motion.g>
-      ))}
-      <motion.g initial={{ opacity: 0, scale: 0.4 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
-        transition={{ duration: 0.7, delay: 1.25 }} style={{ transformOrigin: `${ai.cx}px ${ai.cy}px` }}>
-        <circle cx={ai.cx} cy={ai.cy} r="40" fill={T.gold2} opacity="0.08" />
-        <circle cx={ai.cx} cy={ai.cy} r="40" fill="none" stroke={T.gold2} strokeWidth="1.5" />
-        <text x={ai.cx} y={ai.cy + 7} textAnchor="middle" style={{ fontFamily: "var(--f-display)", fontSize: 26, letterSpacing: "0.06em", fill: T.gold2 }}>AI</text>
-      </motion.g>
     </svg>
   );
 }
+function HeroSkyline() {
+  return (
+    <div aria-hidden style={{
+      position: "absolute", bottom: 0, left: 0, right: 0, height: "34%", background: "#050506",
+      clipPath: "polygon(0% 100%,0% 55%,4% 55%,4% 40%,6% 40%,6% 55%,10% 55%,10% 30%,12% 30%,12% 55%,16% 55%,16% 45%,19% 45%,19% 25%,21% 25%,21% 55%,26% 55%,26% 38%,29% 38%,29% 55%,34% 55%,34% 20%,36% 20%,36% 55%,41% 55%,41% 42%,44% 42%,44% 30%,46% 30%,46% 55%,52% 55%,52% 22%,54% 22%,54% 55%,60% 55%,60% 40%,63% 40%,63% 28%,65% 28%,65% 55%,70% 55%,70% 34%,73% 34%,73% 55%,79% 55%,79% 24%,81% 24%,81% 55%,86% 55%,86% 44%,89% 44%,89% 30%,91% 30%,91% 55%,96% 55%,96% 48%,100% 48%,100% 100%)",
+    }} />
+  );
+}
 function Frame01() {
-  return <SplitFrame id="frame-01" index="01"
-    left={<Narrative eye="The Work Shift"
-      title={<>AI ENTERS AS<br /><span style={{ color: T.gold2 }}>THE FOURTH ACTOR.</span></>}
-      paras={[
-        "For centuries, work has been shaped by three actors — the Employee, the Leader, the Organisation. Every technology before made these three faster, stronger, more connected.",
-        "AI is different. For the first time, work has a non-human participant capable of contributing to thinking, analysis, creation and decision. Work is no longer designed around three actors. It is designed around four.",
-      ]}
-      quote={<>&ldquo;When intelligence becomes abundant, <span style={{ color: T.gold2 }}>judgment</span> becomes the scarce source of advantage.&rdquo;</>} />}
-    right={<div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}><FourActors /></div>} />;
+  return (
+    <>
+      <section id="frame-01" style={{ position: "relative", minHeight: "auto", background: "#0A0A0B", overflow: "hidden", display: "flex", alignItems: "center" }}>
+        {/* placeholder visual (arcs + skyline) — shows until hero photo is added */}
+        <div style={{ position: "absolute", inset: 0 }}><HeroArcs /><HeroSkyline /></div>
+        {/* hero photo — drop the 4-silhouette image at public/ai-edge-hero.png to match the design */}
+        <div style={{ position: "absolute", inset: 0, backgroundImage: "url('/ai-edge-hero.png')", backgroundSize: "cover", backgroundPosition: "center right", backgroundRepeat: "no-repeat" }} />
+        {/* left legibility gradient */}
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(90deg,#0A0A0B 0%,#0A0A0B 26%,rgba(10,10,11,0.72) 46%,rgba(10,10,11,0.15) 70%,transparent 88%)" }} />
+        {/* content */}
+        <div style={{ position: "relative", zIndex: 3, maxWidth: 1280, width: "100%", margin: "0 auto", padding: "clamp(40px,8vh,80px) clamp(24px,5vw,64px)" }}>
+          <div style={{ maxWidth: 580 }}>
+            <motion.span {...rise} transition={{ duration: 0.6 }} style={{ ...kicker, display: "block", marginBottom: 22 }}>The Work Shift</motion.span>
+            <motion.h1 {...rise} transition={{ duration: 0.7, delay: 0.05 }}
+              style={{ fontFamily: "var(--f-serif)", fontWeight: 500, fontSize: "clamp(44px,6vw,86px)", lineHeight: 1.02, color: T.white, marginBottom: 24 }}>
+              AI has entered the workplace as <span style={{ color: T.gold2 }}>the fourth actor.</span>
+            </motion.h1>
+            <motion.p {...rise} transition={{ duration: 0.6, delay: 0.14 }}
+              style={{ fontFamily: "var(--f-sans)", fontSize: 17, color: "rgba(247,246,243,0.9)", marginBottom: 22 }}>
+              It has redefined the value of work.
+            </motion.p>
+            <motion.div {...rise} transition={{ duration: 0.6, delay: 0.2 }}
+              style={{ fontFamily: "var(--f-sans)", fontWeight: 300, fontSize: 14.5, lineHeight: 1.85, color: "rgba(247,246,243,0.62)", maxWidth: 440 }}>
+              <p style={{ marginBottom: 18 }}>As AI commoditises execution, the premium shifts to <span style={{ color: T.gold2 }}>intelligence</span>, <span style={{ color: T.gold2 }}>judgment</span> and <span style={{ color: T.gold2 }}>Human&ndash;AI orchestration</span>.</p>
+              <p>Do you know where your edge stands&mdash; and how long it will hold?</p>
+            </motion.div>
+            <motion.div {...rise} transition={{ duration: 0.6, delay: 0.28 }} style={{ marginTop: 34 }}>
+              <Link href="/connect" style={{ display: "inline-flex", alignItems: "center", gap: 12, fontFamily: "var(--f-mono)", fontSize: 11, letterSpacing: ".16em", textTransform: "uppercase", background: T.gold2, color: T.ink, padding: "16px 26px", fontWeight: 500 }}>
+                Find My AI Edge <span aria-hidden>→</span>
+              </Link>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+      {/* cream transition band */}
+      <div style={{ background: "#F2F0EA", color: T.ink, textAlign: "center", padding: "clamp(30px,4.5vh,52px) clamp(24px,5vw,64px) clamp(20px,3vh,30px)", borderBottom: "1px solid rgba(13,13,11,0.08)" }}>
+        <motion.p {...rise} transition={{ duration: 0.7 }}
+          style={{ fontFamily: "var(--f-serif)", fontWeight: 500, fontSize: "clamp(22px,3vw,34px)", lineHeight: 1.35, color: "#2A2A28", maxWidth: 760, margin: "0 auto" }}>
+          The equation of value creation has changed&mdash;<br />for employees, leaders and organisations alike.
+        </motion.p>
+        <div style={{ marginTop: 26, color: T.gold, fontSize: 22 }} aria-hidden>⌄</div>
+      </div>
+    </>
+  );
 }
 
-/* ══════════ FRAME 02 — EVOLUTION OF VALUE ══════════ */
-const ERAS = [
-  { era: "Industrial Age", cap: "Muscle" },
-  { era: "Knowledge Age", cap: "Expertise" },
-  { era: "Digital Age", cap: "Information" },
-  { era: "AI Era", cap: "Judgment" },
+/* ══════════ FRAME 02 — THE EVOLUTION OF VALUE CREATION (light) ══════════ */
+const EV_ERAS = [
+  { name: "Industrial", year: "~1900s" },
+  { name: "Knowledge", year: "~1950s" },
+  { name: "Digital", year: "~2000s" },
+  { name: "AI-First", year: "~2020s+", gold: true },
 ];
-function Frame02() {
-  return <SplitFrame id="frame-02" index="02"
-    left={<Narrative eye="The Evolution of Value"
-      title={<>EVERY ERA REDEFINES<br /><span style={{ color: T.gold2 }}>THE SOURCE OF VALUE.</span></>}
-      paras={[
-        <>Every technological shift has rewarded a different human capability. The Industrial Age rewarded physical labour. The Knowledge Age rewarded expertise. The Digital Age rewarded information.</>,
-        <>The AI Era rewards <span style={{ color: T.gold2 }}>judgment</span>. Technology changes — and the capability that creates competitive advantage changes with it.</>,
-      ]}
-      quote={<>&ldquo;When intelligence becomes abundant, <span style={{ color: T.gold2 }}>judgment</span> becomes the new source of value.&rdquo;</>} />}
-    right={<>{ERAS.map((e, i) => {
-      const last = i === ERAS.length - 1;
-      return (
-        <motion.div key={e.era} initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: i * 0.25 }}
-          style={{ display: "flex", alignItems: "baseline", gap: 20, padding: "18px 0", borderBottom: i < ERAS.length - 1 ? `1px solid ${T.rule}` : "none" }}>
-          <span style={{ fontFamily: "var(--f-mono)", fontSize: 10, letterSpacing: ".18em", textTransform: "uppercase", color: T.dim, width: 130, flexShrink: 0 }}>{e.era}</span>
-          <span style={{ color: T.gold, fontSize: 14 }}>→</span>
-          <span style={{ fontFamily: "var(--f-display)", letterSpacing: ".02em", lineHeight: 0.9, fontSize: last ? "clamp(40px,5vw,68px)" : "clamp(28px,3vw,40px)", color: last ? T.gold2 : "rgba(247,246,243,0.55)" }}>{e.cap}</span>
-        </motion.div>
-      );
-    })}</>} />;
+const EV_ROWS = [
+  { role: "Employee", sub: "What creates value for me", cells: ["Physical effort and time", "Knowledge and expertise", "Information and access", "Intelligence and judgment"] },
+  { role: "Leader", sub: "What I must do to create value", cells: ["Direct and control", "Guide and develop", "Empower and align", "Orchestrate and amplify"] },
+  { role: "Organisation", sub: "What drives organisational value", cells: ["Assets and efficiency", "Processes and capabilities", "Platforms and scale", "Human–AI systems and adaptability"] },
+];
+const LT = { bg: "#F5F3ED", ink: "#1A1A18", ink2: "#2E2E2C", mid: "#7A7870", line: "rgba(13,13,11,0.12)", gold: "#A07830" };
+
+function RoleIcon({ i }: { i: number }) {
+  return (
+    <span style={{ display: "inline-flex", width: 30, height: 30, border: `1px solid ${LT.line}`, borderRadius: "50%", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={LT.gold} strokeWidth={1.3} strokeLinecap="round" strokeLinejoin="round">
+        {i === 0 && (<><circle cx="12" cy="8" r="4" /><path d="M4 21c0-4 4-6 8-6s8 2 8 6" /></>)}
+        {i === 1 && (<><circle cx="8" cy="9" r="3" /><circle cx="16" cy="9" r="3" /><path d="M2 20c0-3 3-5 6-5M22 20c0-3-3-5-6-5" /></>)}
+        {i === 2 && (<><rect x="5" y="4" width="14" height="17" /><path d="M9 8h2M13 8h2M9 12h2M13 12h2M9 16h2M13 16h2" /></>)}
+      </svg>
+    </span>
+  );
 }
 
-/* ══════════ FRAME 03 — NEW DESIGN CHOICE ══════════ */
+function Frame02() {
+  return (
+    <section id="frame-02" style={{ background: LT.bg, color: LT.ink, padding: "clamp(44px,6vh,72px) clamp(20px,4vw,52px)", borderBottom: `1px solid ${LT.line}` }}>
+      <div style={{ maxWidth: 1320, margin: "0 auto", display: "grid", gridTemplateColumns: "clamp(104px,9vw,124px) 1fr", gap: "clamp(14px,3vw,36px)" }}>
+        {/* index rail */}
+        <div style={{ borderRight: `1px solid ${LT.line}`, paddingRight: 8 }}>
+          <div style={{ fontFamily: "var(--f-display)", fontSize: 34, color: LT.gold, lineHeight: 1 }}>02</div>
+          <div style={{ width: 20, height: 1, background: LT.gold, margin: "10px 0 14px" }} />
+          <div style={{ fontFamily: "var(--f-mono)", fontSize: 8.5, letterSpacing: ".1em", textTransform: "uppercase", color: LT.mid, lineHeight: 1.9, paddingRight: 6 }}>The Evolution of Value Creation</div>
+        </div>
+        {/* main (scrolls horizontally on small screens) */}
+        <div style={{ overflowX: "auto" }}>
+          <div style={{ minWidth: 820 }}>
+            {/* headline + timeline */}
+            <div style={{ display: "grid", gridTemplateColumns: "32% 1fr", gap: 24, alignItems: "start", marginBottom: 8 }}>
+              <div>
+                <motion.h2 {...rise} transition={{ duration: 0.6 }}
+                  style={{ fontFamily: "var(--f-serif)", fontWeight: 500, fontSize: "clamp(32px,3.4vw,50px)", lineHeight: 1.05, color: LT.ink }}>
+                  Value creation has <span style={{ color: LT.gold }}>evolved.</span> The <span style={{ color: LT.gold }}>sources</span> have <span style={{ color: LT.gold }}>shifted.</span>
+                </motion.h2>
+                <div style={{ width: 40, height: 2, background: LT.gold, margin: "20px 0 14px" }} />
+                <p style={{ fontFamily: "var(--f-sans)", fontWeight: 300, fontSize: 13.5, lineHeight: 1.7, color: LT.mid, maxWidth: 220 }}>Every era rewards a different source of value.</p>
+              </div>
+              <div style={{ position: "relative", height: 300 }}>
+                {/* fallback golden glow (AI-First) — visible if imagery not yet added */}
+                <div aria-hidden style={{ position: "absolute", right: 0, bottom: 0, width: "38%", height: "76%", background: "radial-gradient(ellipse at bottom right, rgba(196,152,72,0.26), transparent 72%)", pointerEvents: "none" }} />
+                {/* era imagery — save the eras photo to public/ai-edge-eras.png (factory · book · network · golden mountain) */}
+                <div aria-hidden style={{ position: "absolute", inset: 0, backgroundImage: "url('/ai-edge-eras.png')", backgroundSize: "cover", backgroundPosition: "center bottom", backgroundRepeat: "no-repeat", WebkitMaskImage: "linear-gradient(to bottom, transparent 6%, #000 34%)", maskImage: "linear-gradient(to bottom, transparent 6%, #000 34%)", pointerEvents: "none" }} />
+                <svg viewBox="0 0 100 100" preserveAspectRatio="none" style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }} aria-hidden>
+                  <defs>
+                    <linearGradient id="ev-line" x1="0" y1="0" x2="1" y2="0">
+                      <stop offset="0%" stopColor="#C7C2B6" />
+                      <stop offset="65%" stopColor="#A07830" />
+                      <stop offset="100%" stopColor="#C49848" />
+                    </linearGradient>
+                  </defs>
+                  <motion.path d="M0,84 C10,78 20,76 25,72 C40,64 45,62 50,60 C58,55 60,50 62,46 C74,36 80,32 87,22 C94,14 98,11 100,8"
+                    fill="none" stroke="url(#ev-line)" strokeWidth="2" vectorEffect="non-scaling-stroke"
+                    initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }} transition={{ duration: 1.4, ease: "easeOut" }} />
+                </svg>
+                {EV_ERAS.map((e, i) => {
+                  const x = 12.5 + i * 25;
+                  const y = [72, 60, 46, 22][i];
+                  return (
+                    <div key={e.name}>
+                      <div style={{ position: "absolute", left: `${x}%`, top: 0, transform: "translateX(-50%)", textAlign: "center", whiteSpace: "nowrap" }}>
+                        <div style={{ fontFamily: "var(--f-mono)", fontSize: 11, letterSpacing: ".14em", textTransform: "uppercase", color: e.gold ? LT.gold : LT.ink2, fontWeight: 500 }}>{e.name}</div>
+                        <div style={{ fontFamily: "var(--f-mono)", fontSize: 9, letterSpacing: ".06em", color: LT.mid, marginTop: 4 }}>{e.year}</div>
+                      </div>
+                      <motion.div initial={{ opacity: 0, scale: 0 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: 0.6 + i * 0.2 }}
+                        style={{ position: "absolute", left: `${x}%`, top: `${y}%`, transform: "translate(-50%,-50%)", width: e.gold ? 16 : 9, height: e.gold ? 16 : 9, borderRadius: "50%", background: LT.gold, boxShadow: e.gold ? "0 0 0 5px rgba(160,120,48,0.18)" : "none" }} />
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* matrix */}
+            <div style={{ display: "grid", gridTemplateColumns: "32% repeat(4,1fr)", borderTop: `1px solid ${LT.line}` }}>
+              {EV_ROWS.map((row, ri) => (
+                <Fragment key={row.role}>
+                  <div style={{ display: "flex", gap: 12, alignItems: "flex-start", padding: "20px 16px 20px 0", borderBottom: `1px solid ${LT.line}` }}>
+                    <RoleIcon i={ri} />
+                    <div>
+                      <div style={{ fontFamily: "var(--f-mono)", fontSize: 11, letterSpacing: ".12em", textTransform: "uppercase", color: LT.ink, fontWeight: 500 }}>{row.role}</div>
+                      <div style={{ fontFamily: "var(--f-sans)", fontWeight: 300, fontSize: 12, color: LT.mid, marginTop: 4, lineHeight: 1.4 }}>{row.sub}</div>
+                    </div>
+                  </div>
+                  {row.cells.map((c, ci) => {
+                    const gold = ci === row.cells.length - 1;
+                    return (
+                      <div key={ci} style={{ padding: "20px 18px", borderBottom: `1px solid ${LT.line}`, borderLeft: `1px solid ${LT.line}`, fontFamily: "var(--f-sans)", fontWeight: gold ? 400 : 300, fontSize: 13.5, lineHeight: 1.5, color: gold ? LT.gold : LT.ink2 }}>
+                        {c}
+                      </div>
+                    );
+                  })}
+                </Fragment>
+              ))}
+            </div>
+
+            {/* bottom */}
+            <div style={{ textAlign: "center", padding: "34px 0 6px" }}>
+              <div style={{ fontFamily: "var(--f-serif)", fontSize: "clamp(18px,2.2vw,26px)", color: LT.ink }}>The tools change. The source of value changes.</div>
+              <div style={{ fontFamily: "var(--f-serif)", fontStyle: "italic", fontSize: "clamp(18px,2.2vw,26px)", color: LT.gold, marginTop: 4 }}>The equation changes.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ══════════ FRAME 03 — THE NEW DESIGN CHOICE ══════════ */
 const STAGES = ["Customer Request", "Research", "Analysis", "Decision", "Execution", "Review"];
 const PERFORMERS = ["Human", "AI", "Human + AI"];
 function Frame03() {
   const [tick, setTick] = useState(0);
   useEffect(() => { const id = setInterval(() => setTick((t) => t + 1), 1400); return () => clearInterval(id); }, []);
-  return <SplitFrame id="frame-03" index="03"
-    left={<Narrative eye="The New Design Choice"
-      title={<>FOR THE FIRST TIME,<br /><span style={{ color: T.gold2 }}>WORK HAS A CHOICE.</span></>}
-      paras={[
-        <>Every technology before AI amplified human work. AI can now perform parts of the work itself — introducing a decision organisations have never had to make before.</>,
-        <><span style={{ color: T.gold2 }}>Who should perform the work?</span> Every activity, every decision, every workflow. Every organisation is now making these choices — consciously or not. The quality of those choices will determine advantage.</>,
-      ]}
-      quote={<>&ldquo;The future will not belong to organisations with more AI. It will belong to those that make better decisions about <span style={{ color: T.gold2 }}>where AI should work</span>.&rdquo;</>} />}
-    right={<>{STAGES.map((s, i) => {
-      const active = PERFORMERS[(tick + i) % PERFORMERS.length];
-      return (
-        <motion.div key={s} initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
-          transition={{ duration: 0.45, delay: i * 0.1 }}
-          style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, padding: "16px 0", borderBottom: i < STAGES.length - 1 ? `1px solid ${T.rule}` : "none" }}>
-          <span style={{ fontFamily: "var(--f-display)", fontSize: "clamp(20px,2.2vw,28px)", letterSpacing: ".02em" }}>{s}</span>
-          <div style={{ display: "flex", gap: 8 }}>
-            {PERFORMERS.map((p) => {
-              const on = p === active;
-              return <span key={p} style={{ fontFamily: "var(--f-mono)", fontSize: 9, letterSpacing: ".08em", textTransform: "uppercase", padding: "6px 10px", whiteSpace: "nowrap", border: `1px solid ${on ? T.gold2 : T.rule}`, color: on ? T.ink : T.dim, background: on ? T.gold2 : "transparent", transition: "all .35s ease" }}>{p}</span>;
-            })}
+  return (
+    <section id="frame-03" style={{ background: T.ink, color: T.white, padding: "clamp(44px,6vh,72px) clamp(20px,4vw,52px)", borderBottom: `1px solid ${T.rule}` }}>
+      <div style={{ maxWidth: 1320, margin: "0 auto", display: "grid", gridTemplateColumns: "clamp(104px,9vw,124px) 1fr", gap: "clamp(14px,3vw,36px)" }}>
+        {/* rail */}
+        <div style={{ borderRight: `1px solid ${T.rule}`, paddingRight: 8 }}>
+          <div style={{ fontFamily: "var(--f-display)", fontSize: 34, color: T.gold, lineHeight: 1 }}>03</div>
+          <div style={{ width: 20, height: 1, background: T.gold, margin: "10px 0 14px" }} />
+          <div style={{ fontFamily: "var(--f-mono)", fontSize: 8.5, letterSpacing: ".1em", textTransform: "uppercase", color: T.mid, lineHeight: 1.9, paddingRight: 6 }}>The New Design Choice</div>
+        </div>
+        {/* main */}
+        <div style={{ overflowX: "auto" }}>
+          <div style={{ minWidth: 900 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "minmax(260px,30%) 1fr", gap: "clamp(20px,3vw,44px)", alignItems: "center" }}>
+              <div>
+                <motion.h2 {...rise} transition={{ duration: 0.6 }} style={{ fontFamily: "var(--f-serif)", fontWeight: 500, fontSize: "clamp(40px,4.4vw,64px)", lineHeight: 1.04, color: T.white }}>
+                  For the first time,<br /><span style={{ color: T.gold2 }}>work has a choice.</span>
+                </motion.h2>
+                <div style={{ width: 40, height: 2, background: T.gold, margin: "22px 0 16px" }} />
+                <p style={{ fontFamily: "var(--f-sans)", fontWeight: 300, fontSize: 16.5, lineHeight: 1.8, color: "rgba(247,246,243,0.62)", maxWidth: 340 }}>
+                  Every technology before AI amplified human work. AI can now perform parts of it. For every activity — <span style={{ color: T.gold2 }}>who should perform the work?</span>
+                </p>
+              </div>
+              {/* workflow — each stage cycles its performer */}
+              <div style={{ display: "flex", alignItems: "stretch", gap: 0 }}>
+                {STAGES.map((s, i) => {
+                  const active = PERFORMERS[(tick + i) % PERFORMERS.length];
+                  return (
+                    <Fragment key={s}>
+                      <div style={{ flex: 1, minWidth: 118 }}>
+                        <div style={{ fontFamily: "var(--f-mono)", fontSize: 9, letterSpacing: ".1em", textTransform: "uppercase", color: T.dim, marginBottom: 12, minHeight: 26, lineHeight: 1.3 }}>{s}</div>
+                        <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                          {PERFORMERS.map((p) => {
+                            const on = p === active;
+                            return <span key={p} style={{ fontFamily: "var(--f-mono)", fontSize: 9, letterSpacing: ".05em", textTransform: "uppercase", textAlign: "center", padding: "8px 4px", border: `1px solid ${on ? T.gold2 : T.rule}`, color: on ? T.ink : T.dim, background: on ? T.gold2 : "transparent", transition: "all .35s ease", whiteSpace: "nowrap" }}>{p}</span>;
+                          })}
+                        </div>
+                      </div>
+                      {i < STAGES.length - 1 && <div style={{ display: "flex", alignItems: "flex-start", color: T.gold, padding: "26px 5px 0", fontSize: 13 }}>→</div>}
+                    </Fragment>
+                  );
+                })}
+              </div>
+            </div>
+            {/* bottom */}
+            <div style={{ textAlign: "center", padding: "36px 0 6px" }}>
+              <div style={{ fontFamily: "var(--f-serif)", fontSize: "clamp(18px,2.2vw,28px)", color: T.white }}>The future won&rsquo;t belong to organisations with more AI &mdash;</div>
+              <div style={{ fontFamily: "var(--f-serif)", fontSize: "clamp(18px,2.2vw,28px)", color: T.gold2, marginTop: 2 }}>but to those who decide where AI should work.</div>
+              <div style={{ marginTop: 22, color: T.gold, fontSize: 22 }} aria-hidden>⌄</div>
+            </div>
           </div>
-        </motion.div>
-      );
-    })}</>} />;
+        </div>
+      </div>
+    </section>
+  );
 }
 
-/* ══════════ FRAME 04 — THE PARADOX ══════════ */
-const STATS = [
-  { n: "23%", d: "of organisations have scaled AI across the enterprise.", s: "McKinsey 2024" },
-  { n: "95%", d: "see no measurable P&L impact from AI.", s: "MIT NANDA 2025" },
-  { n: "39%", d: "of core skills will change by 2030.", s: "World Economic Forum" },
+/* ══════════ FRAME 04 — THE OUTCOME GAP ══════════ */
+const OG_STAGES = ["Investment", "Adoption", "Capability", "Integration", "Scale"];
+const OG_ORGS = [
+  { name: "Organisation A", tag: "Compounding value", filled: 6, gold: true },
+  { name: "Organisation B", tag: "Isolated gains", filled: 5, gold: false },
+  { name: "Organisation C", tag: "Activity without impact", filled: 2, gold: false },
 ];
+function StageIcon({ i, cx, cy }: { i: number; cx: number; cy: number }) {
+  const p = (d: string) => <path d={d} />;
+  return (
+    <g stroke={T.gold2} strokeWidth={1.2} fill="none" strokeLinecap="round" strokeLinejoin="round">
+      {i === 0 && (<>{p(`M${cx - 6},${cy + 6} L${cx + 6},${cy - 6}`)}{p(`M${cx - 6},${cy - 6} L${cx + 6},${cy + 6}`)}<circle cx={cx - 6} cy={cy - 6} r="2" /><circle cx={cx + 6} cy={cy + 6} r="2" /></>)}
+      {i === 1 && (<><circle cx={cx - 4} cy={cy - 3} r="2.4" /><circle cx={cx + 4} cy={cy - 3} r="2.4" />{p(`M${cx - 9},${cy + 6} q4,-6 5,-1`)}{p(`M${cx + 9},${cy + 6} q-4,-6 -5,-1`)}</>)}
+      {i === 2 && (<>{p(`M${cx - 8},${cy - 1} L${cx},${cy - 5} L${cx + 8},${cy - 1} L${cx},${cy + 3} Z`)}{p(`M${cx + 6},${cy} L${cx + 6},${cy + 5}`)}</>)}
+      {i === 3 && (<><rect x={cx - 6} y={cy - 6} width="4.5" height="4.5" /><rect x={cx + 1.5} y={cy - 6} width="4.5" height="4.5" /><rect x={cx - 6} y={cy + 1.5} width="4.5" height="4.5" /><rect x={cx + 1.5} y={cy + 1.5} width="4.5" height="4.5" /></>)}
+      {i === 4 && (<><rect x={cx - 7} y={cy} width="3" height="6" /><rect x={cx - 1.5} y={cy - 4} width="3" height="10" /><rect x={cx + 4} y={cy - 7} width="3" height="13" /></>)}
+    </g>
+  );
+}
+function OutcomeDiagram() {
+  const stageX = [120, 205, 290, 375, 460];
+  const rowY = [135, 178, 221, 264];
+  const ends = [78, 150, 215, 300];
+  const goldRow = [true, true, false, false];
+  return (
+    <svg viewBox="0 0 640 340" width="100%" style={{ display: "block" }} aria-hidden>
+      {/* top labels */}
+      <text x="290" y="16" textAnchor="middle" style={{ fontFamily: "var(--f-mono)", fontSize: 9, letterSpacing: "0.14em", fill: "rgba(247,246,243,0.55)" }}>SAME INVESTMENT. SAME JOURNEY.</text>
+      <text x="560" y="16" textAnchor="middle" style={{ fontFamily: "var(--f-mono)", fontSize: 9, letterSpacing: "0.14em", fill: T.gold2 }}>DIFFERENT OUTCOMES.</text>
+      {/* stage icons + labels + column guides */}
+      {stageX.map((x, i) => (
+        <g key={i}>
+          <line x1={x} y1="72" x2={x} y2="130" stroke={T.rule} strokeWidth="1" />
+          <circle cx={x} cy="50" r="20" fill="none" stroke={T.gold} strokeWidth="1" opacity="0.85" />
+          <StageIcon i={i} cx={x} cy={50} />
+          <text x={x} y="92" textAnchor="middle" style={{ fontFamily: "var(--f-mono)", fontSize: 9, letterSpacing: "0.08em", fill: T.dim }}>{OG_STAGES[i]}</text>
+        </g>
+      ))}
+      {/* fan-in from origin */}
+      {rowY.map((y, r) => (
+        <motion.path key={"in" + r} d={`M36,200 C80,200 90,${y} 120,${y}`} fill="none" stroke={T.gold} strokeWidth="1.2" strokeOpacity="0.6"
+          initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.2 }} />
+      ))}
+      {/* horizontal rails */}
+      {rowY.map((y, r) => (
+        <line key={"h" + r} x1="120" y1={y} x2="460" y2={y} stroke={T.gold} strokeWidth="1.2" strokeOpacity="0.55" />
+      ))}
+      {/* fan-out diverging */}
+      {rowY.map((y, r) => (
+        <motion.path key={"out" + r} d={`M460,${y} C540,${y} 560,${ends[r]} 632,${ends[r]}`} fill="none"
+          stroke={goldRow[r] ? T.gold2 : "#8C887E"} strokeWidth={goldRow[r] ? 1.6 : 1} strokeOpacity={goldRow[r] ? (r === 0 ? 0.95 : 0.7) : 0.4}
+          initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }} transition={{ duration: 0.9, delay: 0.6 }} />
+      ))}
+      {/* particle spray hints */}
+      {[[600, 66], [615, 60], [625, 55], [590, 74], [608, 90], [618, 138]].map(([px, py], k) => (
+        <circle key={"pg" + k} cx={px} cy={py} r={1.6} fill={T.gold2} opacity={0.8 - k * 0.08} />
+      ))}
+      {[[600, 300], [615, 306], [590, 292], [608, 312]].map(([px, py], k) => (
+        <circle key={"pgr" + k} cx={px} cy={py} r={1.4} fill="#8C887E" opacity={0.35} />
+      ))}
+      {/* origin */}
+      <circle cx="36" cy="200" r="6" fill={T.gold2} />
+      <circle cx="36" cy="200" r="11" fill="none" stroke={T.gold2} strokeWidth="1" opacity="0.4" />
+      {/* grid dots */}
+      {rowY.map((y, r) => stageX.map((x, c) => (
+        <motion.circle key={`d${r}-${c}`} cx={x} cy={y} r="4.5" fill={T.gold2}
+          initial={{ opacity: 0, scale: 0 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.3, delay: 0.3 + c * 0.06 }} />
+      )))}
+    </svg>
+  );
+}
 function Frame04() {
-  return <SplitFrame id="frame-04" index="04"
-    left={<Narrative eye="The Paradox"
-      title={<>THE PROMISE WAS EXTRAORDINARY.<br /><span style={{ color: T.gold2 }}>THE RESULTS WERE NOT.</span></>}
-      paras={[
-        <>Investment has never been higher. Adoption has never been broader. And yet, for most organisations, AI has not translated into measurable enterprise value.</>,
-        <>If every organisation is making these choices, why are so few consistently creating value? That question launches the investigation.</>,
-      ]}
-      quote={<>&ldquo;Everyone was measuring AI. No one had explained why value <span style={{ color: T.gold2 }}>remained inconsistent</span>.&rdquo;</>} />}
-    right={<>{STATS.map((st, i) => (
-      <motion.div key={st.n} initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: i * 0.2 }}
-        style={{ padding: "22px 0", borderBottom: i < STATS.length - 1 ? `1px solid ${T.rule}` : "none" }}>
-        <div style={{ fontFamily: "var(--f-display)", fontSize: "clamp(48px,7vw,84px)", lineHeight: 0.85, color: T.gold2 }}>{st.n}</div>
-        <div style={{ fontFamily: "var(--f-sans)", fontWeight: 300, fontSize: 14, color: "rgba(247,246,243,0.72)", marginTop: 10, maxWidth: 360 }}>{st.d}</div>
-        <div style={{ fontFamily: "var(--f-mono)", fontSize: 8, letterSpacing: ".14em", textTransform: "uppercase", color: T.mid, marginTop: 8 }}>{st.s}</div>
-      </motion.div>
-    ))}</>} />;
+  return (
+    <section id="frame-04" style={{ background: T.ink, color: T.white, padding: "clamp(44px,6vh,72px) clamp(20px,4vw,52px)", borderBottom: `1px solid ${T.rule}` }}>
+      <div style={{ maxWidth: 1320, margin: "0 auto", display: "grid", gridTemplateColumns: "clamp(104px,9vw,124px) 1fr", gap: "clamp(14px,3vw,36px)" }}>
+        {/* rail */}
+        <div style={{ borderRight: `1px solid ${T.rule}`, paddingRight: 8 }}>
+          <div style={{ fontFamily: "var(--f-display)", fontSize: 34, color: T.gold, lineHeight: 1 }}>04</div>
+          <div style={{ width: 20, height: 1, background: T.gold, margin: "10px 0 14px" }} />
+          <div style={{ fontFamily: "var(--f-mono)", fontSize: 8.5, letterSpacing: ".1em", textTransform: "uppercase", color: T.mid, lineHeight: 1.9, paddingRight: 6 }}>The Outcome Gap</div>
+        </div>
+        {/* main */}
+        <div style={{ overflowX: "auto" }}>
+          <div style={{ minWidth: 960 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "minmax(200px,22%) 1fr minmax(180px,20%)", gap: "clamp(20px,3vw,44px)", alignItems: "center" }}>
+              {/* text */}
+              <div>
+                <motion.h2 {...rise} transition={{ duration: 0.6 }} style={{ fontFamily: "var(--f-serif)", fontWeight: 500, fontSize: "clamp(30px,3.2vw,44px)", lineHeight: 1.06, color: T.white }}>
+                  Same start.<br />Same investment.<br /><span style={{ color: T.gold2 }}>Different outcomes.</span>
+                </motion.h2>
+                <div style={{ width: 40, height: 2, background: T.gold, margin: "20px 0 14px" }} />
+                <p style={{ fontFamily: "var(--f-sans)", fontWeight: 300, fontSize: 13.5, lineHeight: 1.8, color: "rgba(247,246,243,0.6)", maxWidth: 220 }}>Every visible signal looks similar. Yet outcomes are radically different.</p>
+              </div>
+              {/* diagram */}
+              <div><OutcomeDiagram /></div>
+              {/* org bars */}
+              <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+                {OG_ORGS.map((o, oi) => (
+                  <motion.div key={o.name} initial={{ opacity: 0, x: 16 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.4 + oi * 0.15 }}>
+                    <div style={{ fontFamily: "var(--f-mono)", fontSize: 10, letterSpacing: ".14em", textTransform: "uppercase", color: o.gold ? T.gold2 : T.white }}>{o.name}</div>
+                    <div style={{ fontFamily: "var(--f-sans)", fontWeight: 300, fontSize: 12, color: T.dim, margin: "4px 0 10px" }}>{o.tag}</div>
+                    <div style={{ display: "flex", gap: 3 }}>
+                      {Array.from({ length: 10 }).map((_, b) => {
+                        const on = b < o.filled;
+                        return <span key={b} style={{ flex: 1, height: 18, background: on ? (o.gold ? T.gold2 : "#6E6B63") : "transparent", border: on ? "none" : `1px solid ${T.rule}` }} />;
+                      })}
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+            {/* bottom */}
+            <div style={{ textAlign: "center", padding: "36px 0 6px" }}>
+              <div style={{ fontFamily: "var(--f-serif)", fontSize: "clamp(20px,2.4vw,30px)", color: T.white }}>If every organisation starts from the same place,</div>
+              <div style={{ fontFamily: "var(--f-serif)", fontSize: "clamp(20px,2.4vw,30px)", color: T.gold2, marginTop: 2 }}>what determines who creates advantage?</div>
+              <div style={{ marginTop: 22, color: T.gold, fontSize: 22 }} aria-hidden>⌄</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 }
 
 /* ══════════ FRAME 05 — FOLLOWING THE EVIDENCE ══════════ */
@@ -539,7 +788,7 @@ function Footer() {
 /* ─── Page ─── */
 export default function AIEdgeLabPage() {
   return (
-    <div className={`${bebas.variable} ${dmSans.variable} ${dmMono.variable}`} style={{ background: T.ink, fontFamily: "var(--f-sans)" }}>
+    <div className={`${bebas.variable} ${dmSans.variable} ${dmMono.variable} ${cormorant.variable}`} style={{ background: T.ink, fontFamily: "var(--f-sans)" }}>
       <style>{`
         @media (max-width: 900px){
           .ael-frame{ grid-template-columns: 1fr !important; }
