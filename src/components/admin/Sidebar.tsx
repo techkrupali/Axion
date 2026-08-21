@@ -11,7 +11,8 @@ import {
   BarChart3, 
   Shield,
   Radio,
-  Package
+  Package,
+  Mail
 } from "lucide-react";
 import { signOut } from "next-auth/react";
 
@@ -36,11 +37,17 @@ export function Sidebar() {
           label="Dashboard" 
           active={pathname === "/admin/dashboard"} 
         />
-        <NavItem 
-          href="/admin/signals" 
-          icon={<Radio className="w-5 h-5" />} 
-          label="Signals" 
-          active={pathname === "/admin/signals"} 
+        <NavItem
+          href="/admin/signals"
+          icon={<Radio className="w-5 h-5" />}
+          label="Signals"
+          active={pathname === "/admin/signals"}
+        />
+        <NavItem
+          href="/admin/written-intents"
+          icon={<Mail className="w-5 h-5" />}
+          label="Written Intents"
+          active={pathname === "/admin/written-intents"}
         />
         <NavItem 
           href="/admin/users" 

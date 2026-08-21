@@ -1,9 +1,9 @@
 "use client";
 
 import { Reveal } from "@/components/Reveal";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
 import Footer from "@/components/Footer";
 import Button from "@/components/Button";
 
@@ -29,11 +29,82 @@ const sidebarItems = [
 export default function Connect() {
   const [selectedPractice, setSelectedPractice] = useState<string | null>(null);
   const [selectedReading, setSelectedReading] = useState<string>("");
+  const [form, setForm] = useState({ name: "", role: "", organisation: "", email: "", message: "" });
+  const [submitState, setSubmitState] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [errorMsg, setErrorMsg] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrorMsg("");
+    if (!form.name.trim() || !form.email.trim()) {
+      setErrorMsg("Name and email are required.");
+      setSubmitState("error");
+      return;
+    }
+    setSubmitState("sending");
+    try {
+      const res = await fetch("/api/written-intent", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...form, practice: selectedPractice || "", reading: selectedReading || "" }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.ok) throw new Error(data.error || "Failed to send");
+      setSubmitState("sent");
+      setForm({ name: "", role: "", organisation: "", email: "", message: "" });
+      setSelectedPractice(null);
+      setSelectedReading("");
+    } catch (err: any) {
+      setErrorMsg(err.message || "Something went wrong. Please try again.");
+      setSubmitState("error");
+    }
+  };
 
   const inputClass = "bg-transparent border-b border-[var(--line-strong)] px-0 py-3 text-[var(--fg)] text-[16px] outline-none focus:border-[var(--accent)] transition-colors duration-300 placeholder:text-[var(--fg-5)] w-full";
 
   return (
     <div className="min-h-screen">
+
+      {/* SUCCESS POPUP */}
+      <AnimatePresence>
+        {submitState === "sent" && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-6"
+            style={{ background: "rgba(6,7,10,0.78)", backdropFilter: "blur(6px)" }}
+            onClick={() => setSubmitState("idle")}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.94, y: 16 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.96, y: 10 }}
+              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-full max-w-[440px] bg-[#0C0E14] border border-[#C9A24A]/25 rounded-[28px] p-10 text-center shadow-2xl"
+            >
+              <div className="w-16 h-16 rounded-2xl bg-[#C9A24A]/10 border border-[#C9A24A]/25 flex items-center justify-center mx-auto mb-6">
+                <CheckCircle2 className="w-8 h-8 text-[#C9A24A]" />
+              </div>
+              <h3 className="font-serif text-[26px] leading-tight text-[var(--fg)] mb-3">
+                Intent submitted
+              </h3>
+              <p className="text-[15px] leading-[1.7] text-[var(--fg-4)] mb-8">
+                Your written intent has been submitted successfully. Our team will connect with you within <span className="text-[#C9A24A]">24–48 hours</span>.
+              </p>
+              <button
+                type="button"
+                onClick={() => setSubmitState("idle")}
+                className="inline-flex items-center justify-center gap-2 px-8 py-3.5 font-mono text-[11px] tracking-[0.24em] uppercase rounded-full font-semibold bg-[#C9A24A] text-[#0A0A0B] transition-transform active:scale-[0.97]"
+              >
+                Done
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* HERO */}
       <header className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -98,16 +169,22 @@ export default function Connect() {
                 </p>
               </div>
 
-              <form className="flex flex-col gap-8">
+              <form className="flex flex-col gap-8" onSubmit={handleSubmit}>
                 {[
-                  { label: "Name", type: "text", placeholder: "Your name" },
-                  { label: "Role", type: "text", placeholder: "e.g. Founder, CFO, CHRO" },
-                  { label: "Organisation", type: "text", placeholder: "Your organisation" },
-                  { label: "Email", type: "email", placeholder: "your@email.com" },
+                  { label: "Name", k: "name", type: "text", placeholder: "Your name" },
+                  { label: "Role", k: "role", type: "text", placeholder: "e.g. Founder, CFO, CHRO" },
+                  { label: "Organisation", k: "organisation", type: "text", placeholder: "Your organisation" },
+                  { label: "Email", k: "email", type: "email", placeholder: "your@email.com" },
                 ].map((field) => (
                   <div key={field.label} className="flex flex-col gap-3">
                     <label className="font-mono text-[10px] tracking-widest uppercase text-[var(--fg-4)]">{field.label}</label>
-                    <input type={field.type} className={inputClass} placeholder={field.placeholder} />
+                    <input
+                      type={field.type}
+                      className={inputClass}
+                      placeholder={field.placeholder}
+                      value={(form as any)[field.k]}
+                      onChange={(e) => setForm((f) => ({ ...f, [field.k]: e.target.value }))}
+                    />
                   </div>
                 ))}
 
@@ -161,20 +238,29 @@ export default function Connect() {
                   <textarea
                     className="bg-transparent border-b border-[var(--line-strong)] px-0 py-3 text-[var(--fg)] text-[16px] outline-none focus:border-[var(--accent)] transition-colors duration-300 min-h-[120px] resize-none placeholder:text-[var(--fg-5)]"
                     placeholder="What is the architecture being asked to do that it currently can't? What event or pressure is making this urgent?"
+                    value={form.message}
+                    onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}
                   />
                 </div>
 
-                <div className="flex items-center gap-8 pt-4">
-                  <motion.button
-                    type="submit"
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.97 }}
-                    className="inline-flex items-center gap-3 px-10 py-4 font-mono text-[11px] tracking-[0.28em] uppercase rounded-full font-semibold bg-[#C9A24A] text-[#0A0A0B]"
-                  >
-                    Send written intent
-                    <ArrowRight size={13} />
-                  </motion.button>
-                  <span className="font-mono text-[10px] tracking-widest uppercase text-[var(--fg-5)]">Send written intent · Response within 48 hours</span>
+                <div className="flex flex-col gap-4 pt-4">
+                  <div className="flex items-center gap-8">
+                    <motion.button
+                      type="submit"
+                      disabled={submitState === "sending" || submitState === "sent"}
+                      whileHover={submitState === "idle" || submitState === "error" ? { scale: 1.03 } : {}}
+                      whileTap={submitState === "idle" || submitState === "error" ? { scale: 0.97 } : {}}
+                      className="inline-flex items-center gap-3 px-10 py-4 font-mono text-[11px] tracking-[0.28em] uppercase rounded-full font-semibold bg-[#C9A24A] text-[#0A0A0B] disabled:opacity-60"
+                    >
+                      {submitState === "sending" ? "Sending…" : submitState === "sent" ? "Intent sent" : "Send written intent"}
+                      {submitState !== "sent" && <ArrowRight size={13} />}
+                    </motion.button>
+                    <span className="font-mono text-[10px] tracking-widest uppercase text-[var(--fg-5)]">Response within 48 hours</span>
+                  </div>
+
+                  {submitState === "error" && errorMsg && (
+                    <p className="font-mono text-[11px] tracking-wide text-red-400">{errorMsg}</p>
+                  )}
                 </div>
               </form>
             </motion.div>
