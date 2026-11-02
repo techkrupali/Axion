@@ -3,7 +3,7 @@ import dbConnect from "@/lib/db";
 import WrittenIntent from "@/models/WrittenIntent";
 import { auth } from "@/auth";
 import { getSubmitter, isAdmin } from "@/lib/currentUser";
-import { sendOwnerEmail, contactBlock, row, esc } from "@/lib/mailer";
+import { sendOwnerEmail } from "@/lib/mailer";
 
 const str = (v: unknown, max = 5000) => (typeof v === "string" ? v.trim().slice(0, max) : "");
 
@@ -34,17 +34,20 @@ export async function POST(req: NextRequest) {
     await sendOwnerEmail({
       subject: `[Axion] Written Intent — ${doc.name}${doc.organisation ? " · " + doc.organisation : ""}`,
       replyTo: doc.email,
-      html: `
-        <h2 style="font-family:Georgia,serif">New written intent</h2>
-        ${contactBlock(doc)}
-        <h3 style="font-family:Georgia,serif;margin:16px 0 6px">Details</h3>
-        ${row("Role", doc.role)}
-        ${row("Organisation", doc.organisation)}
-        ${row("Practice of interest", doc.practice)}
-        ${row("Architecture under stress", doc.reading)}
-        <h3 style="font-family:Georgia,serif;margin:16px 0 6px">Intent</h3>
-        <p style="white-space:pre-wrap">${esc(doc.message) || "-"}</p>
-      `,
+      email: {
+        badge: "Written intent",
+        heading: "New written intent",
+        subheading: [doc.name, doc.organisation].filter(Boolean).join(" · "),
+        preheader: [doc.role && doc.organisation ? `${doc.role} at ${doc.organisation}` : doc.role || doc.organisation, doc.practice, doc.message.slice(0, 90)]
+          .filter(Boolean).join(" · "),
+        contact: { name: doc.name, email: doc.email, phone: doc.phone },
+        sections: [
+          { type: "tags", title: "Practice of interest", tags: doc.practice ? [doc.practice] : [] },
+          { type: "quote", title: "Their intent", text: doc.message },
+          { type: "quote", title: "Where the architecture is under stress", text: doc.reading },
+          { type: "fields", title: "Context", rows: [["Role", doc.role], ["Organisation", doc.organisation]] },
+        ],
+      },
     });
 
     return NextResponse.json({ ok: true, id: doc._id });

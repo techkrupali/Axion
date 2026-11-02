@@ -3,7 +3,7 @@ import dbConnect from "@/lib/db";
 import DiagnosticSignal from "@/models/DiagnosticSignal";
 import { auth } from "@/auth";
 import { getSubmitter, isAdmin } from "@/lib/currentUser";
-import { sendOwnerEmail, contactBlock, row, esc } from "@/lib/mailer";
+import { sendOwnerEmail } from "@/lib/mailer";
 
 // Practice mapping (same as frontend for consistency)
 const ALL_SIGNALS: { text: string; practice: string }[] = [
@@ -71,27 +71,27 @@ export async function POST(req: NextRequest) {
       size: str(data.size, 50),
     });
 
-    const list = (items: string[], tag: "ul" | "ol") =>
-      `<${tag}>${items.map((s) => `<li>${esc(s)}</li>`).join("")}</${tag}>`;
-
+    const signalCount = `${doc.signals.length} signal${doc.signals.length === 1 ? "" : "s"}`;
     await sendOwnerEmail({
       subject: `[Axion] New Diagnostic Signal — ${doc.name}${doc.company ? " · " + doc.company : ""}`,
       replyTo: doc.email,
-      html: `
-        <h2 style="font-family:Georgia,serif">New diagnostic signal</h2>
-        ${contactBlock(doc)}
-        ${row("Preferred callback", doc.callback)}
-        <h3 style="font-family:Georgia,serif;margin:16px 0 6px">Context</h3>
-        ${row("Role", doc.role)}
-        ${row("Company", doc.company)}
-        ${row("Company size", doc.size)}
-        <h3 style="font-family:Georgia,serif;margin:16px 0 6px">Signals</h3>
-        ${list(doc.signals, "ul")}
-        ${row("Practices", doc.practices.join(", "))}
-        ${doc.rankedSignals.length ? `<h3 style="font-family:Georgia,serif;margin:16px 0 6px">Ranked top 3</h3>${list(doc.rankedSignals, "ol")}` : ""}
-        ${doc.whyNow ? `<h3 style="font-family:Georgia,serif;margin:16px 0 6px">What's loudest — and why now</h3><p style="white-space:pre-wrap">${esc(doc.whyNow)}</p>` : ""}
-        ${doc.catchAllDetail ? `<h3 style="font-family:Georgia,serif;margin:16px 0 6px">Something else</h3><p style="white-space:pre-wrap">${esc(doc.catchAllDetail)}</p>` : ""}
-      `,
+      email: {
+        badge: "Diagnostic",
+        heading: "New diagnostic signal",
+        subheading: [doc.name, doc.company].filter(Boolean).join(" · "),
+        preheader: [doc.role && doc.company ? `${doc.role} at ${doc.company}` : doc.role || doc.company, signalCount, doc.practices.join(", ")]
+          .filter(Boolean).join(" · "),
+        contact: { name: doc.name, email: doc.email, phone: doc.phone },
+        contactExtra: [["Callback", doc.callback]],
+        sections: [
+          { type: "tags", title: "Practice routing", tags: doc.practices },
+          { type: "list", title: `Signals they selected (${doc.signals.length})`, items: doc.signals },
+          { type: "list", title: "Their top priorities, ranked", items: doc.rankedSignals, ordered: true },
+          { type: "quote", title: "What's loudest — and why now", text: doc.whyNow },
+          { type: "quote", title: "Something else, in their words", text: doc.catchAllDetail },
+          { type: "fields", title: "Context", rows: [["Role", doc.role], ["Company", doc.company], ["Company size", doc.size ? `${doc.size} people` : ""]] },
+        ],
+      },
     });
 
     return NextResponse.json({ ok: true, id: doc._id });

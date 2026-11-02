@@ -1,7 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import EdgeAssessment from "@/models/EdgeAssessment";
 import { getSubmitter } from "@/lib/currentUser";
-import { sendOwnerEmail, contactBlock, row } from "@/lib/mailer";
+import { sendOwnerEmail } from "@/lib/mailer";
+
+// Same colours as the result screen on the site
+const BAND_COLOR: Record<string, string> = {
+  "Edge Thinning": "#E05252",
+  "Edge Holding": "#C9A24A",
+  "Edge Accelerating": "#52C8A8",
+};
 import { INDEX_DEFINITIONS, IndexType, QUESTIONS } from "@/config/diagnosticConfig";
 import { Answers, Profile, scoreDiagnostic } from "@/engine/scoring";
 
@@ -78,25 +85,39 @@ export async function POST(req: NextRequest) {
     await sendOwnerEmail({
       subject: `[Axion] AI Edge Diagnostic — ${doc.name} · ${def.name} · ${result.score}/100`,
       replyTo: doc.email,
-      html: `
-        <h2 style="font-family:Georgia,serif">AI Edge Lab diagnostic completed</h2>
-        ${contactBlock(doc)}
-        <h3 style="font-family:Georgia,serif;margin:16px 0 6px">Profile</h3>
-        ${row("Track", `${def.name} (${def.audience})`)}
-        ${row("Name entered", profile.name)}
-        ${row("Role / title", profile.role)}
-        ${row("Experience", `${profile.experienceBand} years`)}
-        <h3 style="font-family:Georgia,serif;margin:16px 0 6px">Result</h3>
-        ${row("Edge Score", `${result.score} / 100 (range ${result.range})`)}
-        ${row("Band", result.band)}
-        ${row("Archetype", result.archetype)}
-        ${row("Judgment Density", c.judgmentDensity)}
-        ${row("Output Exposure", c.outputExposure)}
-        ${row("Consequence Signal", c.consequenceSignal)}
-        ${row("Impact Score", c.impactScore)}
-        ${row("Growth Signal", c.growthSignal)}
-        ${row("Cross-signal", `${result.crossSignals.stoWork} ${result.crossSignals.judgmentThinking}`)}
-      `,
+      email: {
+        badge: "AI Edge Lab",
+        heading: "AI Edge diagnostic completed",
+        subheading: `${doc.name} · ${def.name}`,
+        preheader: `Edge score ${result.score}/100 · ${result.band} · ${result.archetype}${profile.role ? ` · ${profile.role}` : ""}`,
+        contact: { name: doc.name, email: doc.email, phone: doc.phone },
+        sections: [
+          {
+            type: "score", title: "Result", score: result.score, outOf: 100, range: result.range,
+            band: result.band, bandColor: BAND_COLOR[result.band] ?? "#C9A24A", caption: result.archetype,
+          },
+          {
+            type: "bars", title: "Component scores",
+            bars: [
+              { label: "Judgment Density", value: c.judgmentDensity },
+              { label: "Output Exposure", value: c.outputExposure },
+              { label: "Consequence Signal", value: c.consequenceSignal },
+              { label: "Impact Score", value: c.impactScore },
+              { label: "Growth Signal", value: c.growthSignal },
+            ],
+          },
+          { type: "list", title: "Cross-signal read", items: [result.crossSignals.stoWork, result.crossSignals.judgmentThinking] },
+          {
+            type: "fields", title: "Profile",
+            rows: [
+              ["Track", `${def.name} (${def.audience})`],
+              ["Name entered", profile.name && profile.name !== doc.name ? profile.name : ""],
+              ["Role / title", profile.role],
+              ["Experience", `${profile.experienceBand} years`],
+            ],
+          },
+        ],
+      },
     });
 
     return NextResponse.json({ ok: true, id: doc._id });
