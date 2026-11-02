@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "@/lib/db";
 import DiagnosticSignal from "@/models/DiagnosticSignal";
-import nodemailer from "nodemailer";
+import { auth } from "@/auth";
+import { getSubmitter, isAdmin } from "@/lib/currentUser";
+import { sendOwnerEmail, contactBlock, row, esc } from "@/lib/mailer";
 
 // Practice mapping (same as frontend for consistency)
 const ALL_SIGNALS: { text: string; practice: string }[] = [
@@ -26,73 +28,82 @@ const ALL_SIGNALS: { text: string; practice: string }[] = [
   { text: "Something else. I'll describe it.",                              practice: "Catch-all → manual triage" },
 ];
 
+const str = (v: unknown, max = 2000) => (typeof v === "string" ? v.trim().slice(0, max) : "");
+const strList = (v: unknown) => (Array.isArray(v) ? v.filter((x): x is string => typeof x === "string").map((s) => s.slice(0, 300)).slice(0, 30) : []);
+
+/* ─── LOGGED-IN USERS: submit a diagnostic signal ─── */
 export async function POST(req: NextRequest) {
   try {
-    await dbConnect();
+    const submitter = await getSubmitter();
+    if (!submitter) {
+      return NextResponse.json({ ok: false, error: "Please register or log in to start the diagnostic." }, { status: 401 });
+    }
+
     const data = await req.json();
-    
+    const signals = strList(data.signals);
+    if (signals.length === 0) {
+      return NextResponse.json({ ok: false, error: "Select at least one signal." }, { status: 400 });
+    }
+
     // Map signals to practices (backend only)
-    const mapped: string[] = [];
-    for (const s of (data.signals || []) as string[]) {
-      const match = ALL_SIGNALS.find((a) => a.text === s)?.practice;
-      if (match) mapped.push(match);
-    }
-    const practices = [...new Set(mapped)];
-    
-    const docData = {
-      ...data,
-      practices: practices
-    };
-    
-    const doc = await DiagnosticSignal.create(docData);
-    
-    // Send email if env configured
-    if (process.env.SMTP_HOST && process.env.ADMIN_EMAIL) {
-      const transporter = nodemailer.createTransport({
-        host: process.env.SMTP_HOST,
-        port: parseInt(process.env.SMTP_PORT || "587"),
-        secure: process.env.SMTP_SECURE === "true",
-        auth: {
-          user: process.env.SMTP_USER,
-          pass: process.env.SMTP_PASSWORD,
-        },
-      });
+    const practices = [...new Set(
+      signals.map((s) => ALL_SIGNALS.find((a) => a.text === s)?.practice).filter((p): p is string => !!p)
+    )];
 
-      const emailHtml = `
-        <h1>New diagnostic signal received</h1>
-        <h2>Contact</h2>
-        <p><strong>Name:</strong> ${doc.name}</p>
-        <p><strong>Email:</strong> ${doc.email}</p>
-        <p><strong>Phone:</strong> ${doc.phone || "-"}</p>
-        <p><strong>Callback:</strong> ${doc.callback || "-"}</p>
-        <h2>Context</h2>
-        <p><strong>Role:</strong> ${doc.role}</p>
-        <p><strong>Company:</strong> ${doc.company}</p>
-        <p><strong>Size:</strong> ${doc.size}</p>
-        <h2>Signals</h2>
-        <ul>${(doc.signals || []).map((s: string) => `<li>${s}</li>`).join("")}</ul>
-        <p><strong>Practices:</strong> ${(doc.practices || []).join(", ")}</p>
-        ${doc.rankedSignals && doc.rankedSignals.length > 0 ? `<h3>Ranked Signals</h3><ol>${doc.rankedSignals.map((s: string) => `<li>${s}</li>`).join("")}</ol>` : ""}
-        ${doc.whyNow ? `<h2>Why Now</h2><p>${doc.whyNow}</p>` : ""}
-        ${doc.catchAllDetail ? `<h2>Catch-All Detail</h2><p>${doc.catchAllDetail}</p>` : ""}
-      `;
+    const doc = await DiagnosticSignal.create({
+      // Contact always comes from the registered account
+      userId: submitter.userId,
+      name: submitter.name,
+      email: submitter.email,
+      phone: submitter.phone,
+      callback: str(data.callback, 200),
 
-      await transporter.sendMail({
-        from: process.env.SMTP_FROM || "no-reply@axion.com",
-        to: process.env.ADMIN_EMAIL,
-        subject: `[Axion] New Diagnostic Signal - ${doc.company || "Unknown Company"}`,
-        html: emailHtml
-      });
-    }
-    
+      signals,
+      rankedSignals: strList(data.rankedSignals).slice(0, 3),
+      breaking: signals.join(" | "),
+      signal: signals[0],
+      catchAllDetail: str(data.catchAllDetail),
+      whyNow: str(data.whyNow),
+      practices,
+
+      role: str(data.role, 100),
+      company: str(data.company, 200),
+      size: str(data.size, 50),
+    });
+
+    const list = (items: string[], tag: "ul" | "ol") =>
+      `<${tag}>${items.map((s) => `<li>${esc(s)}</li>`).join("")}</${tag}>`;
+
+    await sendOwnerEmail({
+      subject: `[Axion] New Diagnostic Signal — ${doc.name}${doc.company ? " · " + doc.company : ""}`,
+      replyTo: doc.email,
+      html: `
+        <h2 style="font-family:Georgia,serif">New diagnostic signal</h2>
+        ${contactBlock(doc)}
+        ${row("Preferred callback", doc.callback)}
+        <h3 style="font-family:Georgia,serif;margin:16px 0 6px">Context</h3>
+        ${row("Role", doc.role)}
+        ${row("Company", doc.company)}
+        ${row("Company size", doc.size)}
+        <h3 style="font-family:Georgia,serif;margin:16px 0 6px">Signals</h3>
+        ${list(doc.signals, "ul")}
+        ${row("Practices", doc.practices.join(", "))}
+        ${doc.rankedSignals.length ? `<h3 style="font-family:Georgia,serif;margin:16px 0 6px">Ranked top 3</h3>${list(doc.rankedSignals, "ol")}` : ""}
+        ${doc.whyNow ? `<h3 style="font-family:Georgia,serif;margin:16px 0 6px">What's loudest — and why now</h3><p style="white-space:pre-wrap">${esc(doc.whyNow)}</p>` : ""}
+        ${doc.catchAllDetail ? `<h3 style="font-family:Georgia,serif;margin:16px 0 6px">Something else</h3><p style="white-space:pre-wrap">${esc(doc.catchAllDetail)}</p>` : ""}
+      `,
+    });
+
     return NextResponse.json({ ok: true, id: doc._id });
   } catch (err) {
     console.error("[DIAGNOSTIC POST]", err);
-    return NextResponse.json({ ok: false }, { status: 500 });
+    return NextResponse.json({ ok: false, error: "Something went wrong. Please try again." }, { status: 500 });
   }
 }
 
-export async function GET() {
+/* ─── ADMIN: list all signals ─── */
+export const GET = auth(async (req) => {
+  if (!isAdmin(req.auth)) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   try {
     await dbConnect();
     const signals = await DiagnosticSignal.find().sort({ createdAt: -1 }).lean();
@@ -101,15 +112,18 @@ export async function GET() {
     console.error("[DIAGNOSTIC GET]", err);
     return NextResponse.json([], { status: 500 });
   }
-}
+});
 
-export async function PATCH(req: NextRequest) {
+/* ─── ADMIN: update status ─── */
+export const PATCH = auth(async (req) => {
+  if (!isAdmin(req.auth)) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   try {
     await dbConnect();
     const { id, status } = await req.json();
-    await DiagnosticSignal.findByIdAndUpdate(id, { status });
+    await DiagnosticSignal.findByIdAndUpdate(id, { status }, { runValidators: true });
     return NextResponse.json({ ok: true });
   } catch (err) {
+    console.error("[DIAGNOSTIC PATCH]", err);
     return NextResponse.json({ ok: false }, { status: 500 });
   }
-}
+});

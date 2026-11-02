@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import DiagnosticModal from "@/components/DiagnosticModal";
+import DiagnosticModal, { useReopenDiagnostic } from "@/components/DiagnosticModal";
 import { Reveal } from "@/components/Reveal";
 
 // ─────────────────────────────────────────────
@@ -1246,6 +1246,7 @@ function SiteFooter() {
 // ─────────────────────────────────────────────
 export default function Home() {
   const [diagOpen, setDiagOpen] = useState(false);
+  useReopenDiagnostic(() => setDiagOpen(true));
 
   return (
     <>

@@ -5,9 +5,13 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, Menu, X } from "lucide-react";
+import { useSession, signOut } from "next-auth/react";
 import AxionWordmark from "@/components/AxionWordmark";
 
 const Navbar = () => {
+  const { status } = useSession();
+  const loggedIn = status === "authenticated";
+  const logOut = () => signOut({ callbackUrl: "/" });
   const [isScrolled, setIsScrolled] = useState(false);
   const [isExpertiseOpen, setIsExpertiseOpen] = useState(false);
   const [isCtaOpen, setIsCtaOpen] = useState(false);
@@ -207,8 +211,10 @@ const Navbar = () => {
                   }}
                 >
                   {[
-                    { label: "Register", href: "/register" },
-                    { label: "Login", href: "/login" },
+                    ...(loggedIn ? [] : [
+                      { label: "Register", href: "/register" },
+                      { label: "Login", href: "/login" },
+                    ]),
                     { label: "Start your journey", href: "/connect" },
                   ].map((item) => (
                     <Link
@@ -224,6 +230,19 @@ const Navbar = () => {
                       <span style={{ color: "#A07830" }}>→</span>
                     </Link>
                   ))}
+                  {loggedIn && (
+                    <button
+                      type="button"
+                      onClick={() => { setIsCtaOpen(false); logOut(); }}
+                      className="px-4 py-3 font-mono text-[11px] uppercase transition-colors duration-150 min-h-[40px] flex items-center justify-between text-left"
+                      style={{ letterSpacing: "0.18em", color: "rgba(247,246,243,0.75)" }}
+                      onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = "#C9A24A"; (e.currentTarget as HTMLElement).style.background = "rgba(247,246,243,0.05)"; }}
+                      onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = "rgba(247,246,243,0.75)"; (e.currentTarget as HTMLElement).style.background = "transparent"; }}
+                    >
+                      Log out
+                      <span style={{ color: "#A07830" }}>→</span>
+                    </button>
+                  )}
                 </motion.div>
               )}
             </AnimatePresence>
@@ -373,12 +392,22 @@ const Navbar = () => {
           >
             Reach Us
           </Link>
-          <Link
-            href="/admin/login"
-            className="ml-1 px-4 py-3 font-mono text-[11px] tracking-[0.22em] uppercase rounded-full border border-[rgba(201,162,74,0.25)] text-[var(--fg-4)] hover:text-[#C9A24A] hover:border-[rgba(201,162,74,0.5)] transition-all duration-300 min-h-[44px]"
-          >
-            Login
-          </Link>
+          {loggedIn ? (
+            <button
+              type="button"
+              onClick={logOut}
+              className="ml-1 px-4 py-3 font-mono text-[11px] tracking-[0.22em] uppercase rounded-full border border-[rgba(201,162,74,0.25)] text-[var(--fg-4)] hover:text-[#C9A24A] hover:border-[rgba(201,162,74,0.5)] transition-all duration-300 min-h-[44px]"
+            >
+              Log out
+            </button>
+          ) : (
+            <Link
+              href="/login"
+              className="ml-1 px-4 py-3 font-mono text-[11px] tracking-[0.22em] uppercase rounded-full border border-[rgba(201,162,74,0.25)] text-[var(--fg-4)] hover:text-[#C9A24A] hover:border-[rgba(201,162,74,0.5)] transition-all duration-300 min-h-[44px]"
+            >
+              Login
+            </Link>
+          )}
         </div>
 
         {/* Mobile: Hamburger only */}
@@ -442,12 +471,22 @@ const Navbar = () => {
                 >
                   Reach Us →
                 </Link>
-                <Link
-                  href="/admin/login"
-                  className="block w-full text-center py-4 font-mono text-[12px] tracking-[0.24em] uppercase border border-[rgba(255,255,255,0.08)] text-[var(--fg-4)] hover:text-[var(--fg)] transition-colors rounded-lg min-h-[48px]"
-                >
-                  Login
-                </Link>
+                {loggedIn ? (
+                  <button
+                    type="button"
+                    onClick={logOut}
+                    className="block w-full text-center py-4 font-mono text-[12px] tracking-[0.24em] uppercase border border-[rgba(255,255,255,0.08)] text-[var(--fg-4)] hover:text-[var(--fg)] transition-colors rounded-lg min-h-[48px]"
+                  >
+                    Log out
+                  </button>
+                ) : (
+                  <Link
+                    href="/login"
+                    className="block w-full text-center py-4 font-mono text-[12px] tracking-[0.24em] uppercase border border-[rgba(255,255,255,0.08)] text-[var(--fg-4)] hover:text-[var(--fg)] transition-colors rounded-lg min-h-[48px]"
+                  >
+                    Login
+                  </Link>
+                )}
               </motion.div>
             </div>
           </motion.div>

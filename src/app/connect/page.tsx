@@ -3,9 +3,11 @@
 import { Reveal } from "@/components/Reveal";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
+import { useSession } from "next-auth/react";
 import Footer from "@/components/Footer";
 import Button from "@/components/Button";
+import { AuthGate, SubmittingAs } from "@/components/AuthGate";
 
 const practices = ["People Architecture", "Labour Codes", "AI Edge Lab", "Family Business", "Not sure yet"];
 
@@ -26,21 +28,21 @@ const sidebarItems = [
   { label: "What we don't do", content: <p className="text-[14px] leading-[1.65] text-[var(--fg-4)]">Recruiting · payroll · vendor management · executive coaching · culture surveys · &ldquo;engagement&rdquo; programs.</p> },
 ];
 
+const emptyForm = { role: "", organisation: "", message: "" };
+
 export default function Connect() {
+  const { data: session, status } = useSession();
+  const user = session?.user as { name?: string; email?: string; phone?: string } | undefined;
   const [selectedPractice, setSelectedPractice] = useState<string | null>(null);
   const [selectedReading, setSelectedReading] = useState<string>("");
-  const [form, setForm] = useState({ name: "", role: "", organisation: "", email: "", message: "" });
+  // Name / email / mobile come from the registered account (added on the server)
+  const [form, setForm] = useState(emptyForm);
   const [submitState, setSubmitState] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg("");
-    if (!form.name.trim() || !form.email.trim()) {
-      setErrorMsg("Name and email are required.");
-      setSubmitState("error");
-      return;
-    }
     setSubmitState("sending");
     try {
       const res = await fetch("/api/written-intent", {
@@ -48,10 +50,10 @@ export default function Connect() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...form, practice: selectedPractice || "", reading: selectedReading || "" }),
       });
-      const data = await res.json();
+      const data = await res.json().catch(() => ({}));
       if (!res.ok || !data.ok) throw new Error(data.error || "Failed to send");
       setSubmitState("sent");
-      setForm({ name: "", role: "", organisation: "", email: "", message: "" });
+      setForm(emptyForm);
       setSelectedPractice(null);
       setSelectedReading("");
     } catch (err: any) {
@@ -169,12 +171,22 @@ export default function Connect() {
                 </p>
               </div>
 
+              {status === "loading" ? (
+                <div className="flex justify-center py-16">
+                  <Loader2 className="w-6 h-6 text-[#C9A24A] animate-spin" />
+                </div>
+              ) : status === "unauthenticated" ? (
+                <AuthGate
+                  title="Register to send your written intent."
+                  message="Create a free account first. Your intent is recorded with your name, email and mobile number and goes straight to the founder."
+                  returnTo="/connect#form"
+                />
+              ) : (
               <form className="flex flex-col gap-8" onSubmit={handleSubmit}>
+                <SubmittingAs name={user?.name} email={user?.email} phone={user?.phone} />
                 {[
-                  { label: "Name", k: "name", type: "text", placeholder: "Your name" },
                   { label: "Role", k: "role", type: "text", placeholder: "e.g. Founder, CFO, CHRO" },
                   { label: "Organisation", k: "organisation", type: "text", placeholder: "Your organisation" },
-                  { label: "Email", k: "email", type: "email", placeholder: "your@email.com" },
                 ].map((field) => (
                   <div key={field.label} className="flex flex-col gap-3">
                     <label className="font-mono text-[10px] tracking-widest uppercase text-[var(--fg-4)]">{field.label}</label>
@@ -182,7 +194,7 @@ export default function Connect() {
                       type={field.type}
                       className={inputClass}
                       placeholder={field.placeholder}
-                      value={(form as any)[field.k]}
+                      value={form[field.k as keyof typeof form]}
                       onChange={(e) => setForm((f) => ({ ...f, [field.k]: e.target.value }))}
                     />
                   </div>
@@ -263,6 +275,7 @@ export default function Connect() {
                   )}
                 </div>
               </form>
+              )}
             </motion.div>
 
             {/* SIDEBAR */}

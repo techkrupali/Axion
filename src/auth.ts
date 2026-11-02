@@ -36,6 +36,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           id: account._id.toString(),
           email: account.email,
           name: account.name,
+          phone: (account as { phone?: string }).phone || '',
           role: account.role || 'user',
         };
       },

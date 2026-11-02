@@ -1,9 +1,10 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, ArrowRight, Download } from "lucide-react";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 import { INDEX_DEFINITIONS, IndexType, QUESTIONS, Question } from "@/config/diagnosticConfig";
 import { Answers, Profile, scoreDiagnostic } from "@/engine/scoring";
 
@@ -44,11 +45,36 @@ const BAND_COLOR: Record<string, string> = {
 };
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
+// This route is only reachable when logged in (see REGISTRATION_REQUIRED in src/auth.config.ts).
 export default function DiagnosticPage() {
+  const { data: session } = useSession();
   const [indexType, setIndexType] = useState<IndexType>("replaceability");
   const [step, setStep] = useState(0); // 0 = profile, 1..10 = questions, 11 = result
-  const [profile, setProfile] = useState<Profile>({ name: "", role: "", experienceBand: "8-12" });
+  // name stays undefined until the visitor edits it, so it defaults to the account name
+  const [profileInput, setProfile] = useState<Profile>({ role: "", experienceBand: "8-12" });
   const [answers, setAnswers] = useState<Answers>({});
+  const recorded = useRef(false);
+
+  const accountName = session?.user?.name;
+  const profile = useMemo<Profile>(
+    () => ({ ...profileInput, name: profileInput.name ?? accountName ?? "" }),
+    [profileInput, accountName],
+  );
+
+  // Record the completed diagnostic (with the account's name / email / mobile) and
+  // notify the owner. Fire-and-forget: the visitor sees their result either way.
+  function finish() {
+    setStep(QUESTIONS.length + 1);
+    if (recorded.current) return;
+    recorded.current = true;
+    fetch("/api/ai-edge-result", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ indexType, answers, profile }),
+    })
+      .then((res) => { if (!res.ok) recorded.current = false; })
+      .catch(() => { recorded.current = false; });
+  }
 
   const question: Question | undefined = QUESTIONS[step - 1];
   const result = useMemo(() => scoreDiagnostic(indexType, answers, profile), [indexType, answers, profile]);
@@ -234,7 +260,7 @@ export default function DiagnosticPage() {
                       Next <ArrowRight size={11} />
                     </button>
                   ) : (
-                    <button onClick={() => setStep(QUESTIONS.length + 1)} disabled={!isValid}
+                    <button onClick={finish} disabled={!isValid}
                       className="flex items-center gap-2 px-6 py-3 font-jetbrains text-[10px] tracking-[0.22em] uppercase transition-all duration-250"
                       style={{ background: isValid ? "var(--accent)" : "rgba(255,255,255,0.06)", color: isValid ? "#080A0F" : "rgba(255,255,255,0.2)", cursor: isValid ? "pointer" : "not-allowed" }}>
                       See Results <ArrowRight size={11} />
@@ -248,7 +274,7 @@ export default function DiagnosticPage() {
           {/* ── RESULT ── */}
           {step > QUESTIONS.length && (
             <ResultView key="result" result={result} indexType={indexType} answers={answers} profile={profile}
-              onRestart={() => { setStep(0); setAnswers({}); }} />
+              onRestart={() => { setStep(0); setAnswers({}); recorded.current = false; }} />
           )}
 
         </AnimatePresence>

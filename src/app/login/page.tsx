@@ -2,16 +2,19 @@
 
 import { useState } from "react";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { LogIn, Mail, Lock, Loader2, User } from "lucide-react";
+import { useCallbackUrl, useSearchParam } from "@/lib/callbackUrl";
+import { AFTER_LOGIN_PATH } from "@/config/features";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
+  // Where to send the visitor once logged in (e.g. back to the diagnostic)
+  const callbackUrl = useCallbackUrl();
+  const justRegistered = useSearchParam("registered") === "true";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,7 +31,8 @@ export default function LoginPage() {
       if (result?.error) {
         setError("Invalid email or password");
       } else {
-        router.push("/user/dashboard");
+        // Full navigation so the new session is picked up everywhere
+        window.location.assign(callbackUrl || AFTER_LOGIN_PATH);
       }
     } catch (err) {
       setError("An error occurred. Please try again.");
@@ -50,6 +54,11 @@ export default function LoginPage() {
           </div>
           <h1 className="text-3xl font-bold tracking-tight text-[#e5e5e5]">Welcome Back</h1>
           <p className="mt-3 text-xs font-bold uppercase tracking-[0.2em] text-[#737373]">Access your account</p>
+          {justRegistered ? (
+            <p className="mt-5 text-[13px] leading-relaxed text-[#a3a3a3]">Account created. Log in to continue.</p>
+          ) : callbackUrl ? (
+            <p className="mt-5 text-[13px] leading-relaxed text-[#a3a3a3]">Log in to continue where you left off.</p>
+          ) : null}
         </div>
 
         <form onSubmit={handleSubmit} className="mt-10 space-y-6 relative">
@@ -114,7 +123,7 @@ export default function LoginPage() {
         <div className="text-center mt-6">
           <p className="text-[10px] text-[#737373] uppercase tracking-widest">
             Don't have an account?{" "}
-            <Link href="/register" className="text-[#C9A24A] hover:underline">
+            <Link href={callbackUrl ? `/register?callbackUrl=${encodeURIComponent(callbackUrl)}` : "/register"} className="text-[#C9A24A] hover:underline">
               Create one
             </Link>
           </p>

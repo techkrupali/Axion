@@ -17,7 +17,8 @@ const DiagnosticSignalSchema = new Schema({
   company:  { type: String, default: '' },
   size:     { type: String, default: '' },
 
-  // Contact
+  // Contact — copied from the submitter's registered account
+  userId:   { type: Schema.Types.ObjectId, ref: 'User', index: true },
   name:     { type: String, required: true },
   email:    { type: String, required: true },
   phone:    { type: String, default: '' },

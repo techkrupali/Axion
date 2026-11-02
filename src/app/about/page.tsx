@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRef, useState } from "react";
 import { motion, useScroll, useTransform, useInView, AnimatePresence } from "framer-motion";
 import { ArrowRight, ChevronDown } from "lucide-react";
-import DiagnosticModal from "@/components/DiagnosticModal";
+import DiagnosticModal, { useReopenDiagnostic } from "@/components/DiagnosticModal";
 import Footer from "@/components/Footer";
 import Button from "@/components/Button";
 
@@ -221,6 +221,7 @@ const whoWeWorkWith = [
 ───────────────────────────────────────── */
 export default function About() {
   const [diagOpen, setDiagOpen] = useState(false);
+  useReopenDiagnostic(() => setDiagOpen(true));
   return (
     <div className="min-h-screen overflow-x-hidden">
 

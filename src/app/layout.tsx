@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Cormorant_Garamond, JetBrains_Mono } from "next/font
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import SmoothScroll from "@/components/SmoothScroll";
+import Providers from "@/components/Providers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -67,10 +68,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${cormorantGaramond.variable} ${jetbrainsMono.variable} antialiased`}
       >
-        <SmoothScroll>
-          <Navbar />
-          <main>{children}</main>
-        </SmoothScroll>
+        <Providers>
+          <SmoothScroll>
+            <Navbar />
+            <main>{children}</main>
+          </SmoothScroll>
+        </Providers>
       </body>
     </html>
   );

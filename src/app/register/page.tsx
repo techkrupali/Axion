@@ -2,8 +2,11 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { UserPlus, Mail, Lock, Loader2, User, UserCheck, Phone } from "lucide-react";
+import { useCallbackUrl } from "@/lib/callbackUrl";
+import { AFTER_LOGIN_PATH } from "@/config/features";
 
 export default function RegisterPage() {
   const [name, setName] = useState("");
@@ -12,6 +15,8 @@ export default function RegisterPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  // Where to send the visitor once registered (e.g. back to the diagnostic)
+  const callbackUrl = useCallbackUrl();
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -32,8 +37,13 @@ export default function RegisterPage() {
         throw new Error(data.error || "Registration failed");
       }
 
-      // After successful registration, redirect to login
-      router.push("/login?registered=true");
+      // Log the new account in straight away and return to where they started
+      const login = await signIn("credentials", { email, password, redirect: false });
+      if (login?.error) {
+        router.push(`/login?registered=true${callbackUrl ? `&callbackUrl=${encodeURIComponent(callbackUrl)}` : ""}`);
+        return;
+      }
+      window.location.assign(callbackUrl || AFTER_LOGIN_PATH);
     } catch (err: any) {
       setError(err.message || "An error occurred. Please try again.");
     } finally {
@@ -54,6 +64,11 @@ export default function RegisterPage() {
           </div>
           <h1 className="text-3xl font-bold tracking-tight text-[#e5e5e5]">Create Account</h1>
           <p className="mt-3 text-xs font-bold uppercase tracking-[0.2em] text-[#737373]">Join Axion Index</p>
+          {callbackUrl && (
+            <p className="mt-5 text-[13px] leading-relaxed text-[#a3a3a3]">
+              Create an account to continue. You&apos;ll be taken straight back to the form once you&apos;re registered.
+            </p>
+          )}
         </div>
 
         <form onSubmit={handleSubmit} className="mt-10 space-y-6 relative">
@@ -153,7 +168,7 @@ export default function RegisterPage() {
         <div className="text-center mt-6">
           <p className="text-[10px] text-[#737373] uppercase tracking-widest">
             Already have an account?{" "}
-            <Link href="/login" className="text-[#C9A24A] hover:underline">
+            <Link href={callbackUrl ? `/login?callbackUrl=${encodeURIComponent(callbackUrl)}` : "/login"} className="text-[#C9A24A] hover:underline">
               Log in
             </Link>
           </p>

@@ -1,8 +1,10 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ArrowRight, GripVertical, ChevronDown, ChevronUp } from "lucide-react";
+import { X, ArrowRight, GripVertical, ChevronDown, ChevronUp, Loader2 } from "lucide-react";
+import { useSession } from "next-auth/react";
+import { AuthGate, SubmittingAs } from "@/components/AuthGate";
 
 // ── Signal list with backend routing metadata (never shown to visitor) ──
 const ALL_SIGNALS: { text: string; practice: string }[] = [
@@ -38,12 +40,11 @@ type FormData = {
   role: string;
   company: string;
   size: string;
-  name: string;
-  email: string;
-  phone: string;
   callback: string;
 };
 
+// Name / email / mobile are not collected here — the server takes them from
+// the visitor's registered account.
 const empty: FormData = {
   signals: [],
   rankedSignals: [],
@@ -52,9 +53,6 @@ const empty: FormData = {
   role: '',
   company: '',
   size: '',
-  name: '',
-  email: '',
-  phone: '',
   callback: '',
 };
 
@@ -245,12 +243,33 @@ function RankList({
   );
 }
 
+/**
+ * Re-open the modal when the visitor comes back from register / login
+ * (the gate sends them back to `<page>?diagnostic=1`).
+ */
+export function useReopenDiagnostic(open: () => void) {
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    if (url.searchParams.get("diagnostic") !== "1") return;
+    url.searchParams.delete("diagnostic");
+    window.history.replaceState(null, "", url.pathname + url.search + url.hash);
+    open();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+}
+
 // ── Main modal ──
 export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
+  const { data: session, status } = useSession();
   const [step, setStep] = useState(1);
   const [form, setForm] = useState<FormData>(empty);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  // After register / login the visitor comes back here with the modal re-opened
+  const returnTo = typeof window !== "undefined" ? `${window.location.pathname}?diagnostic=1` : "/?diagnostic=1";
+  const user = session?.user as { name?: string; email?: string; phone?: string } | undefined;
 
   const set = useCallback(<K extends keyof FormData>(k: K, v: FormData[K]) =>
     setForm(f => ({ ...f, [k]: v })), []);
@@ -284,41 +303,38 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
 
   async function submit() {
     setLoading(true);
-    // Derive practice routing from selected signals (backend use only)
-    const practices = [...new Set(
-      form.signals
-        .map(s => ALL_SIGNALS.find(a => a.text === s)?.practice)
-        .filter(Boolean)
-    )];
-
-    await fetch("/api/diagnostic", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        breaking: form.signals.join(" | ") || "—",
-        signal: form.signals[0] || "",
-        signals: form.signals,
-        rankedSignals: form.rankedSignals,
-        catchAllDetail: form.catchAllDetail,
-        whyNow: form.whyNow,
-        practices,
-        role: form.role,
-        company: form.company,
-        size: form.size,
-        name: form.name,
-        email: form.email,
-        phone: form.phone,
-        callback: form.callback,
-      }),
-    });
-    setLoading(false);
-    setSubmitted(true);
+    setError("");
+    try {
+      // Practice routing is derived on the server; contact details come from the account.
+      const res = await fetch("/api/diagnostic", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          signals: form.signals,
+          rankedSignals: form.rankedSignals,
+          catchAllDetail: form.catchAllDetail,
+          whyNow: form.whyNow,
+          role: form.role,
+          company: form.company,
+          size: form.size,
+          callback: form.callback,
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.ok) throw new Error(data.error || "Could not send your signal. Please try again.");
+      setSubmitted(true);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Could not send your signal. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   const hasCatchAll = form.signals.includes("Something else. I'll describe it.");
   const canNext1 = form.signals.length > 0 && (!hasCatchAll || form.catchAllDetail.trim().length > 0);
   const canNext2 = form.role && form.company.trim().length > 0;
-  const canSubmit = form.name.trim().length > 0 && form.email.includes("@");
+  const canSubmit = status === "authenticated";
+  const gated = status !== "authenticated";
 
   const inputStyle = {
     background: "rgba(255,255,255,0.04)",
@@ -393,7 +409,23 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
                 overflow-y: scroll !important;
               }
             `}</style>
-            {!submitted ? (
+            {status === "loading" ? (
+              <div className="flex justify-center py-16">
+                <Loader2 className="w-6 h-6 text-[#C9A24A] animate-spin" />
+              </div>
+            ) : status === "unauthenticated" ? (
+              /* ── Register first ── */
+              <div className="py-4">
+                <p className="font-mono text-[9px] tracking-[0.4em] uppercase text-[var(--accent)] mb-6 text-center">
+                  Start Diagnostic
+                </p>
+                <AuthGate
+                  title="Register to start the diagnostic."
+                  message="Create a free account first. Your signal is recorded with your name, email and mobile number so we can read it and come back to you within 48 hours."
+                  returnTo={returnTo}
+                />
+              </div>
+            ) : !submitted ? (
               <>
                 {/* Progress bar */}
                 <div className="flex items-center gap-2 mb-8">
@@ -602,40 +634,9 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
                     <p className="font-mono text-[9px] tracking-[0.4em] uppercase text-[var(--accent)] mb-2">Where We Reach You</p>
                     <h3 className="font-serif text-[26px] text-[var(--fg)] mb-8 leading-tight">Almost done.</h3>
 
-                    <div className="flex gap-3 mb-5">
-                      <div className="flex-1">
-                        <label className="block mb-2 font-mono text-[10px] tracking-[0.2em] uppercase text-[var(--fg-4)]">Name</label>
-                        <input
-                          type="text"
-                          value={form.name}
-                          onChange={e => set("name", e.target.value)}
-                          placeholder="Your name"
-                          className="w-full rounded-[12px] px-4 py-3 text-[14px] text-[var(--fg)] placeholder:text-[var(--fg-5)] outline-none"
-                          style={inputStyle}
-                        />
-                      </div>
-                      <div className="flex-1">
-                        <label className="block mb-2 font-mono text-[10px] tracking-[0.2em] uppercase text-[var(--fg-4)]">Email</label>
-                        <input
-                          type="email"
-                          value={form.email}
-                          onChange={e => set("email", e.target.value)}
-                          placeholder="you@company.com"
-                          className="w-full rounded-[12px] px-4 py-3 text-[14px] text-[var(--fg)] placeholder:text-[var(--fg-5)] outline-none"
-                          style={inputStyle}
-                        />
-                      </div>
+                    <div className="mb-6">
+                      <SubmittingAs name={user?.name} email={user?.email} phone={user?.phone} />
                     </div>
-
-                    <label className="block mb-2 font-mono text-[10px] tracking-[0.2em] uppercase text-[var(--fg-4)]">Phone</label>
-                    <input
-                      type="tel"
-                      value={form.phone}
-                      onChange={e => set("phone", e.target.value)}
-                      placeholder="+91 98765 43210"
-                      className="w-full rounded-[12px] px-4 py-3 text-[14px] text-[var(--fg)] placeholder:text-[var(--fg-5)] mb-5 outline-none"
-                      style={inputStyle}
-                    />
 
                     <label className="block mb-2 font-mono text-[10px] tracking-[0.2em] uppercase text-[var(--fg-4)]">
                       Preferred callback window{" "}
@@ -649,6 +650,10 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
                       className="w-full rounded-[12px] px-4 py-3 text-[14px] text-[var(--fg)] placeholder:text-[var(--fg-5)] outline-none"
                       style={inputStyle}
                     />
+
+                    {error && (
+                      <p className="mt-5 font-mono text-[11px] tracking-wide text-red-400">{error}</p>
+                    )}
                   </motion.div>
                 )}
               </>
@@ -674,7 +679,7 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
           </div>
 
           {/* Fixed footer for buttons */}
-          {!submitted && (
+          {!submitted && !gated && (
             <div className="p-8 md:px-10 md:pb-10 pt-4 border-t border-transparent" style={{ borderTop: "1px solid rgba(201,168,76,0.1)" }}>
               {step === 1 && (
                 <button

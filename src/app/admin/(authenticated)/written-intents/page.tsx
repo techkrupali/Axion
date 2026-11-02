@@ -9,6 +9,7 @@ interface Intent {
   role?: string;
   organisation?: string;
   email: string;
+  phone?: string;
   practice?: string;
   reading?: string;
   message?: string;
@@ -108,6 +109,7 @@ export default function AdminWrittenIntentsPage() {
                         <p><span className="text-[#a3a3a3]">Role:</span> {it.role || "-"}</p>
                         <p><span className="text-[#a3a3a3]">Organisation:</span> {it.organisation || "-"}</p>
                         <p><span className="text-[#a3a3a3]">Email:</span> <a href={`mailto:${it.email}`} className="text-[#C9A24A] hover:underline">{it.email}</a></p>
+                        <p><span className="text-[#a3a3a3]">Mobile:</span> {it.phone ? <a href={`tel:${it.phone}`} className="text-[#C9A24A] hover:underline">{it.phone}</a> : "-"}</p>
                       </div>
                     </div>
                     <div>
