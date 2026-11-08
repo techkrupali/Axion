@@ -63,16 +63,76 @@ function Header() {
           </Link>
         ))}
       </nav>
-      <Link href="/connect" style={{
+      <SoonButton style={{
         fontFamily: "var(--f-mono)", fontSize: 10, letterSpacing: ".18em", textTransform: "uppercase",
         border: `1px solid ${T.gold}`, color: T.gold2, padding: "9px 16px", whiteSpace: "nowrap",
-      }}>Find My AI Edge →</Link>
+      }}>Find My AI Edge →</SoonButton>
     </header>
   );
 }
 
 /* ─── Tokens ─── */
 const kicker: React.CSSProperties = { fontFamily: "var(--f-mono)", fontSize: 10, letterSpacing: ".26em", textTransform: "uppercase", color: T.gold };
+
+/* ─── "Coming soon" popup for the assessment buttons (no redirect) ─── */
+const COMING_SOON_EVENT = "ael:coming-soon";
+const openComingSoon = () => window.dispatchEvent(new Event(COMING_SOON_EVENT));
+
+/** Looks exactly like the old link (same inline style), but opens the popup. */
+function SoonButton({ style, children }: { style: React.CSSProperties; children: React.ReactNode }) {
+  return (
+    <button
+      type="button"
+      onClick={openComingSoon}
+      style={{ cursor: "pointer", border: "none", background: "transparent", padding: 0, textAlign: "left", ...style }}
+    >
+      {children}
+    </button>
+  );
+}
+
+function ComingSoonModal() {
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    const show = () => setOpen(true);
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setOpen(false); };
+    window.addEventListener(COMING_SOON_EVENT, show);
+    window.addEventListener("keydown", onKey);
+    return () => { window.removeEventListener(COMING_SOON_EVENT, show); window.removeEventListener("keydown", onKey); };
+  }, []);
+  if (!open) return null;
+  return (
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="ael-soon-title"
+      onClick={() => setOpen(false)}
+      style={{ position: "fixed", inset: 0, zIndex: 400, display: "flex", alignItems: "center", justifyContent: "center", padding: 20, background: "rgba(5,5,4,0.82)", backdropFilter: "blur(10px)" }}
+    >
+      <motion.div
+        initial={{ opacity: 0, y: 18, scale: 0.97 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        onClick={(e) => e.stopPropagation()}
+        style={{ position: "relative", width: "100%", maxWidth: 440, background: T.ink2, border: `1px solid ${T.gold}`, padding: "40px 34px 34px", textAlign: "center", boxShadow: "0 30px 80px rgba(0,0,0,0.6)" }}
+      >
+        <button type="button" aria-label="Close" onClick={() => setOpen(false)}
+          style={{ position: "absolute", top: 14, right: 16, background: "transparent", border: "none", color: T.mid, fontSize: 22, lineHeight: 1, cursor: "pointer" }}>×</button>
+        <span style={{ ...kicker, color: T.gold2 }}>AI Edge Lab · Assessment</span>
+        <h3 id="ael-soon-title" style={{ fontFamily: "var(--f-display)", fontSize: "clamp(40px,7vw,56px)", letterSpacing: ".02em", color: T.white, margin: "14px 0 10px", lineHeight: 1 }}>
+          Coming <span style={{ color: T.gold2 }}>soon</span>
+        </h3>
+        <p style={{ fontFamily: "var(--f-sans)", fontWeight: 300, fontSize: 14, lineHeight: 1.7, color: T.dim, margin: "0 auto 26px", maxWidth: "32ch" }}>
+          The AI Edge assessment is being finalised and opens shortly.
+        </p>
+        <button type="button" onClick={() => setOpen(false)}
+          style={{ fontFamily: "var(--f-mono)", fontSize: 11, letterSpacing: ".16em", textTransform: "uppercase", background: T.gold2, color: T.ink, border: "none", padding: "14px 30px", cursor: "pointer", fontWeight: 500 }}>
+          Close
+        </button>
+      </motion.div>
+    </div>
+  );
+}
 const rise = { initial: { opacity: 0, y: 24 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true, margin: "-12%" } };
 const bodyText: React.CSSProperties = { fontFamily: "var(--f-sans)", fontWeight: 300, fontSize: 15, lineHeight: 1.9, color: "rgba(247,246,243,0.7)", maxWidth: 460 };
 const doctrine: React.CSSProperties = { marginTop: 34, paddingLeft: 18, borderLeft: `2px solid ${T.gold}`, fontFamily: "var(--f-display)", fontSize: "clamp(18px,2vw,24px)", lineHeight: 1.2, color: T.white, letterSpacing: ".01em" };
@@ -179,9 +239,9 @@ function Frame01() {
               <p>Do you know where your edge stands&mdash; and how long it will hold?</p>
             </motion.div>
             <motion.div {...rise} transition={{ duration: 0.6, delay: 0.28 }} style={{ marginTop: 34 }}>
-              <Link href="/connect" style={{ display: "inline-flex", alignItems: "center", gap: 12, fontFamily: "var(--f-mono)", fontSize: 11, letterSpacing: ".16em", textTransform: "uppercase", background: T.gold2, color: T.ink, padding: "16px 26px", fontWeight: 500 }}>
+              <SoonButton style={{ display: "inline-flex", alignItems: "center", gap: 12, fontFamily: "var(--f-mono)", fontSize: 11, letterSpacing: ".16em", textTransform: "uppercase", background: T.gold2, color: T.ink, padding: "16px 26px", fontWeight: 500 }}>
                 Find My AI Edge <span aria-hidden>→</span>
-              </Link>
+              </SoonButton>
             </motion.div>
           </div>
         </div>
@@ -1026,7 +1086,7 @@ function Frame13() {
                 <p style={{ fontFamily: "var(--f-sans)", fontWeight: 300, fontSize: 15, lineHeight: 1.85, color: T.mid, maxWidth: 340, marginBottom: 26 }}>
                   Every organisation begins at a different point — some need clarity, some readiness, some redesign. One evidence-based instrument for every actor in the system, from the individual to the enterprise.
                 </p>
-                <Link href="/connect" style={{ display: "inline-block", fontFamily: "var(--f-mono)", fontSize: 11, letterSpacing: ".16em", textTransform: "uppercase", background: T.gold2, color: T.ink, padding: "15px 26px", fontWeight: 500 }}>Start Your Assessment →</Link>
+                <SoonButton style={{ display: "inline-block", fontFamily: "var(--f-mono)", fontSize: 11, letterSpacing: ".16em", textTransform: "uppercase", background: T.gold2, color: T.ink, padding: "15px 26px", fontWeight: 500 }}>Start Your Assessment →</SoonButton>
               </div>
               {/* right: instruments */}
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 1, background: T.rule, border: `1px solid ${T.rule}` }}>
@@ -1037,7 +1097,7 @@ function Frame13() {
                     <div style={{ fontFamily: "var(--f-display)", fontSize: "clamp(22px,2.4vw,28px)", color: T.gold2 }}>{x.code}</div>
                     <div style={{ fontFamily: "var(--f-display)", fontSize: 16, letterSpacing: ".02em", color: T.white, marginBottom: 10 }}>{x.name}</div>
                     <div style={{ fontFamily: "var(--f-sans)", fontWeight: 300, fontSize: 12, color: T.mid, lineHeight: 1.6, marginBottom: 14 }}>{x.desc}</div>
-                    <Link href="/connect" style={{ fontFamily: "var(--f-mono)", fontSize: 8, letterSpacing: ".16em", textTransform: "uppercase", color: T.gold2, marginTop: "auto" }}>Start →</Link>
+                    <SoonButton style={{ fontFamily: "var(--f-mono)", fontSize: 8, letterSpacing: ".16em", textTransform: "uppercase", color: T.gold2, marginTop: "auto", alignSelf: "flex-start" }}>Start →</SoonButton>
                   </motion.div>
                 ))}
               </div>
@@ -1062,7 +1122,7 @@ function Closing() {
           The question is not if you will transform. The question is how intentionally.
         </p>
         <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
-          <Link href="/connect" style={{ fontFamily: "var(--f-mono)", fontSize: 11, letterSpacing: ".18em", textTransform: "uppercase", background: LT.gold, color: "#FBFAF6", padding: "16px 30px" }}>Find My AI Edge →</Link>
+          <SoonButton style={{ fontFamily: "var(--f-mono)", fontSize: 11, letterSpacing: ".18em", textTransform: "uppercase", background: LT.gold, color: "#FBFAF6", padding: "16px 30px" }}>Find My AI Edge →</SoonButton>
           <Link href="#frame-05" style={{ fontFamily: "var(--f-mono)", fontSize: 11, letterSpacing: ".18em", textTransform: "uppercase", border: `1px solid ${LT.line}`, color: LT.ink, padding: "16px 30px" }}>Explore the Research →</Link>
         </div>
       </motion.div>
@@ -1100,6 +1160,7 @@ export default function AIEdgeLabPage() {
       <Frame07 /><Frame08 /><Frame09 /><Frame10 /><Frame11 /><Frame12 /><Frame13 />
       <Closing />
       <Footer />
+      <ComingSoonModal />
     </div>
   );
 }
