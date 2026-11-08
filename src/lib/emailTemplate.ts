@@ -108,7 +108,7 @@ function renderContact(c: Contact, extra: [string, unknown][] = []) {
   ].join("");
 
   return block(`
-    ${sectionTitle("Registered contact")}
+    ${sectionTitle("Contact details")}
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:${C.panel};border:1px solid ${C.line};border-radius:12px;">
       <tr><td style="padding:20px 22px 14px;">
         <div style="font-family:${SERIF};font-size:21px;line-height:1.3;color:${C.text};">${esc(c.name)}</div>
@@ -209,7 +209,7 @@ function renderSection(s: EmailSection): string {
 // ── Plain-text twin (better deliverability, readable in any client) ──
 function renderText(e: OwnerEmail, when: string) {
   const out: string[] = [`AXION INDEX — ${e.heading.toUpperCase()}`, e.subheading ?? "", ""];
-  out.push("REGISTERED CONTACT", `Name:   ${e.contact.name}`, `Email:  ${e.contact.email}`, `Mobile: ${e.contact.phone || "-"}`);
+  out.push("CONTACT DETAILS", `Name:   ${e.contact.name}`, `Email:  ${e.contact.email}`, `Mobile: ${e.contact.phone || "-"}`);
   for (const [l, v] of e.contactExtra ?? []) if (filled(v)) out.push(`${l}: ${v}`);
   for (const s of e.sections) {
     const lines: string[] = [];

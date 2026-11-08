@@ -1,7 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
+import dbConnect from "@/lib/db";
 import EdgeAssessment from "@/models/EdgeAssessment";
-import { getSubmitter } from "@/lib/currentUser";
 import { sendOwnerEmail } from "@/lib/mailer";
+import { readContact, isBot } from "@/lib/contact";
+import { isRateLimited } from "@/lib/rateLimit";
+import { INDEX_DEFINITIONS, IndexType, QUESTIONS } from "@/config/diagnosticConfig";
+import { Answers, Profile, scoreDiagnostic } from "@/engine/scoring";
 
 // Same colours as the result screen on the site
 const BAND_COLOR: Record<string, string> = {
@@ -9,8 +13,6 @@ const BAND_COLOR: Record<string, string> = {
   "Edge Holding": "#C9A24A",
   "Edge Accelerating": "#52C8A8",
 };
-import { INDEX_DEFINITIONS, IndexType, QUESTIONS } from "@/config/diagnosticConfig";
-import { Answers, Profile, scoreDiagnostic } from "@/engine/scoring";
 
 const BANDS: NonNullable<Profile["experienceBand"]>[] = ["0-3", "4-7", "8-12", "13-20", "20+"];
 const str = (v: unknown, max = 200) => (typeof v === "string" ? v.trim().slice(0, max) : "");
@@ -36,22 +38,26 @@ function cleanAnswers(raw: unknown): Answers {
   return out;
 }
 
-/* ─── LOGGED-IN USERS: record a completed AI Edge Lab diagnostic ─── */
+/* ─── PUBLIC: record a completed AI Edge Lab diagnostic (name / email / mobile entered on the form) ─── */
 export async function POST(req: NextRequest) {
   try {
-    const submitter = await getSubmitter();
-    if (!submitter) {
-      return NextResponse.json({ ok: false, error: "Please register or log in to take the diagnostic." }, { status: 401 });
+    const data = await req.json();
+    if (isBot(data)) return NextResponse.json({ ok: true }); // honeypot: silently drop
+    if (isRateLimited(req, "ai-edge")) {
+      return NextResponse.json({ ok: false, error: "Too many submissions. Please try again in a few minutes." }, { status: 429 });
     }
 
-    const data = await req.json();
+    const parsed = readContact(data);
+    if (!parsed.ok) return NextResponse.json({ ok: false, error: parsed.error }, { status: 400 });
+    const contact = parsed.contact;
+
     const indexType = data.indexType as IndexType;
     if (!(indexType in INDEX_DEFINITIONS)) {
       return NextResponse.json({ ok: false, error: "Unknown diagnostic track." }, { status: 400 });
     }
 
     const profile: Profile = {
-      name: str(data.profile?.name),
+      name: contact.name,
       role: str(data.profile?.role),
       experienceBand: BANDS.includes(data.profile?.experienceBand) ? data.profile.experienceBand : "8-12",
     };
@@ -61,11 +67,11 @@ export async function POST(req: NextRequest) {
     const result = scoreDiagnostic(indexType, answers, profile);
     const def = INDEX_DEFINITIONS[indexType];
 
+    await dbConnect();
     const doc = await EdgeAssessment.create({
-      userId: submitter.userId,
-      name: submitter.name,
-      email: submitter.email,
-      phone: submitter.phone,
+      name: contact.name,
+      email: contact.email,
+      phone: contact.phone,
 
       indexType,
       indexName: def.name,

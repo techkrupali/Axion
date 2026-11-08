@@ -2,9 +2,10 @@
 
 import { useState, useRef, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ArrowRight, GripVertical, ChevronDown, ChevronUp, Loader2 } from "lucide-react";
-import { useSession } from "next-auth/react";
-import { AuthGate, SubmittingAs } from "@/components/AuthGate";
+import { X, ArrowRight, GripVertical, ChevronDown, ChevronUp } from "lucide-react";
+import { Honeypot } from "@/components/Honeypot";
+import { contactErrors, isContactValid } from "@/lib/contact";
+import { OPEN_DIAGNOSTIC_EVENT } from "@/lib/openDiagnostic";
 
 // ── Signal list with backend routing metadata (never shown to visitor) ──
 const ALL_SIGNALS: { text: string; practice: string }[] = [
@@ -33,6 +34,10 @@ const ROLES = ["Founder / CEO", "CFO", "CHRO", "Investor / Board", "Other"];
 const SIZES = ["1–50", "51–200", "201–500", "501–2000", "2000+"];
 
 type FormData = {
+  name: string;
+  email: string;
+  phone: string;
+  website: string; // honeypot — always empty for real visitors
   signals: string[];
   rankedSignals: string[];
   catchAllDetail: string;
@@ -43,9 +48,11 @@ type FormData = {
   callback: string;
 };
 
-// Name / email / mobile are not collected here — the server takes them from
-// the visitor's registered account.
 const empty: FormData = {
+  name: '',
+  email: '',
+  phone: '',
+  website: '',
   signals: [],
   rankedSignals: [],
   catchAllDetail: '',
@@ -244,32 +251,32 @@ function RankList({
 }
 
 /**
- * Re-open the modal when the visitor comes back from register / login
- * (the gate sends them back to `<page>?diagnostic=1`).
+ * Open the modal when the page is loaded as `<page>?diagnostic=1` (e.g. the
+ * Research page's "Start Diagnostic" button) or when OPEN_DIAGNOSTIC_EVENT fires.
  */
 export function useReopenDiagnostic(open: () => void) {
   useEffect(() => {
     const url = new URL(window.location.href);
-    if (url.searchParams.get("diagnostic") !== "1") return;
-    url.searchParams.delete("diagnostic");
-    window.history.replaceState(null, "", url.pathname + url.search + url.hash);
-    open();
+    if (url.searchParams.get("diagnostic") === "1") {
+      url.searchParams.delete("diagnostic");
+      window.history.replaceState(null, "", url.pathname + url.search + url.hash);
+      open();
+    }
+    window.addEventListener(OPEN_DIAGNOSTIC_EVENT, open);
+    return () => window.removeEventListener(OPEN_DIAGNOSTIC_EVENT, open);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 }
 
 // ── Main modal ──
 export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
-  const { data: session, status } = useSession();
   const [step, setStep] = useState(1);
   const [form, setForm] = useState<FormData>(empty);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-
-  // After register / login the visitor comes back here with the modal re-opened
-  const returnTo = typeof window !== "undefined" ? `${window.location.pathname}?diagnostic=1` : "/?diagnostic=1";
-  const user = session?.user as { name?: string; email?: string; phone?: string } | undefined;
+  // Which contact fields to show errors for (after blur, or after pressing Continue)
+  const [touched, setTouched] = useState({ name: false, email: false, phone: false });
 
   const set = useCallback(<K extends keyof FormData>(k: K, v: FormData[K]) =>
     setForm(f => ({ ...f, [k]: v })), []);
@@ -305,11 +312,15 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
     setLoading(true);
     setError("");
     try {
-      // Practice routing is derived on the server; contact details come from the account.
+      // Practice routing is derived on the server.
       const res = await fetch("/api/diagnostic", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          phone: form.phone,
+          website: form.website,
           signals: form.signals,
           rankedSignals: form.rankedSignals,
           catchAllDetail: form.catchAllDetail,
@@ -330,16 +341,23 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
     }
   }
 
+  // Step 1 = contact, step 2 = signals, step 3 = context (+ submit)
+  const contact = { name: form.name, email: form.email, phone: form.phone };
+  const errs = contactErrors(contact);
   const hasCatchAll = form.signals.includes("Something else. I'll describe it.");
-  const canNext1 = form.signals.length > 0 && (!hasCatchAll || form.catchAllDetail.trim().length > 0);
-  const canNext2 = form.role && form.company.trim().length > 0;
-  const canSubmit = status === "authenticated";
-  const gated = status !== "authenticated";
+  const canNext2 = form.signals.length > 0 && (!hasCatchAll || form.catchAllDetail.trim().length > 0);
+  const canSubmit = Boolean(form.role && form.company.trim().length > 0);
+
+  const continueFromContact = () => {
+    setTouched({ name: true, email: true, phone: true });
+    if (isContactValid(contact)) setStep(2);
+  };
 
   const inputStyle = {
     background: "rgba(255,255,255,0.04)",
     border: "1px solid rgba(255,255,255,0.08)",
   };
+  const errorBorder = "1px solid rgba(224,82,82,0.6)";
 
   return (
     <AnimatePresence>
@@ -409,23 +427,7 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
                 overflow-y: scroll !important;
               }
             `}</style>
-            {status === "loading" ? (
-              <div className="flex justify-center py-16">
-                <Loader2 className="w-6 h-6 text-[#C9A24A] animate-spin" />
-              </div>
-            ) : status === "unauthenticated" ? (
-              /* ── Register first ── */
-              <div className="py-4">
-                <p className="font-mono text-[9px] tracking-[0.4em] uppercase text-[var(--accent)] mb-6 text-center">
-                  Start Diagnostic
-                </p>
-                <AuthGate
-                  title="Register to start the diagnostic."
-                  message="Create a free account first. Your signal is recorded with your name, email and mobile number so we can read it and come back to you within 48 hours."
-                  returnTo={returnTo}
-                />
-              </div>
-            ) : !submitted ? (
+            {!submitted ? (
               <>
                 {/* Progress bar */}
                 <div className="flex items-center gap-2 mb-8">
@@ -439,9 +441,9 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
                   <span className="font-mono text-[9px] tracking-[0.3em] text-[var(--fg-5)] ml-2 shrink-0">{step} OF 3</span>
                 </div>
 
-                {/* ── STEP 1: Signal selection ── */}
-                {step === 1 && (
-                  <motion.div key="s1" initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }}>
+                {/* ── STEP 2: Signal selection ── */}
+                {step === 2 && (
+                  <motion.div key="s2" initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }}>
                     {/* Header copy */}
                     <p className="font-mono text-[9px] tracking-[0.4em] uppercase text-[var(--accent)] mb-2">
                       Your Signal
@@ -594,9 +596,9 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
                   </motion.div>
                 )}
 
-                {/* ── STEP 2: Context ── */}
-                {step === 2 && (
-                  <motion.div key="s2" initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }}>
+                {/* ── STEP 3: Context ── */}
+                {step === 3 && (
+                  <motion.div key="s3" initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }}>
                     <p className="font-mono text-[9px] tracking-[0.4em] uppercase text-[var(--accent)] mb-2">Where You Sit</p>
                     <h3 className="font-serif text-[26px] text-[var(--fg)] mb-8 leading-tight">Your context.</h3>
 
@@ -625,18 +627,45 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
                       options={SIZES}
                       placeholder="Select size…"
                     />
+
+                    {error && (
+                      <p className="mt-2 font-mono text-[11px] tracking-wide text-red-400">{error}</p>
+                    )}
                   </motion.div>
                 )}
 
-                {/* ── STEP 3: Contact ── */}
-                {step === 3 && (
-                  <motion.div key="s3" initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }}>
-                    <p className="font-mono text-[9px] tracking-[0.4em] uppercase text-[var(--accent)] mb-2">Where We Reach You</p>
-                    <h3 className="font-serif text-[26px] text-[var(--fg)] mb-8 leading-tight">Almost done.</h3>
+                {/* ── STEP 1: Contact details (first) ── */}
+                {step === 1 && (
+                  <motion.div key="s1" initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }}>
+                    <p className="font-mono text-[9px] tracking-[0.4em] uppercase text-[var(--accent)] mb-2">Your Details</p>
+                    <h3 className="font-serif text-[28px] text-[var(--fg)] leading-tight mb-1">First, where we reach you.</h3>
+                    <p className="text-[13px] text-[var(--fg-4)] mb-7 leading-relaxed">
+                      We read every signal personally and come back to you within 48 hours.
+                    </p>
 
-                    <div className="mb-6">
-                      <SubmittingAs name={user?.name} email={user?.email} phone={user?.phone} />
-                    </div>
+                    {([
+                      { k: "name", label: "Name", type: "text", ph: "Your full name", ac: "name" },
+                      { k: "email", label: "Email", type: "email", ph: "you@company.com", ac: "email" },
+                      { k: "phone", label: "Mobile number", type: "tel", ph: "+91 98765 43210", ac: "tel" },
+                    ] as const).map(f => {
+                      const showErr = touched[f.k] && errs[f.k];
+                      return (
+                        <div key={f.k} className="mb-5">
+                          <label className="block mb-2 font-mono text-[10px] tracking-[0.2em] uppercase text-[var(--fg-4)]">{f.label}</label>
+                          <input
+                            type={f.type}
+                            autoComplete={f.ac}
+                            value={form[f.k]}
+                            onChange={e => set(f.k, e.target.value)}
+                            onBlur={() => setTouched(t => ({ ...t, [f.k]: true }))}
+                            placeholder={f.ph}
+                            className="w-full rounded-[12px] px-4 py-3 text-[14px] text-[var(--fg)] placeholder:text-[var(--fg-5)] outline-none"
+                            style={{ ...inputStyle, border: showErr ? errorBorder : inputStyle.border }}
+                          />
+                          {showErr && <p className="mt-1.5 text-[12px] text-red-400">{errs[f.k]}</p>}
+                        </div>
+                      );
+                    })}
 
                     <label className="block mb-2 font-mono text-[10px] tracking-[0.2em] uppercase text-[var(--fg-4)]">
                       Preferred callback window{" "}
@@ -650,10 +679,7 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
                       className="w-full rounded-[12px] px-4 py-3 text-[14px] text-[var(--fg)] placeholder:text-[var(--fg-5)] outline-none"
                       style={inputStyle}
                     />
-
-                    {error && (
-                      <p className="mt-5 font-mono text-[11px] tracking-wide text-red-400">{error}</p>
-                    )}
+                    <Honeypot value={form.website} onChange={v => set("website", v)} />
                   </motion.div>
                 )}
               </>
@@ -679,12 +705,11 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
           </div>
 
           {/* Fixed footer for buttons */}
-          {!submitted && !gated && (
+          {!submitted && (
             <div className="p-8 md:px-10 md:pb-10 pt-4 border-t border-transparent" style={{ borderTop: "1px solid rgba(201,168,76,0.1)" }}>
               {step === 1 && (
                 <button
-                  onClick={() => setStep(2)}
-                  disabled={!canNext1}
+                  onClick={continueFromContact}
                   className="w-full py-4 rounded-full font-mono text-[11px] tracking-[0.28em] uppercase font-semibold flex items-center justify-center gap-2 transition-opacity disabled:opacity-30"
                   style={{ background: "#C9A24A", color: "#080A0F" }}
                 >

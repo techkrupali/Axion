@@ -7,10 +7,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { useSession, signOut } from "next-auth/react";
 import AxionWordmark from "@/components/AxionWordmark";
+import { PANELS_ENABLED } from "@/config/features";
+import { openDiagnostic } from "@/lib/openDiagnostic";
 
 const Navbar = () => {
   const { status } = useSession();
-  const loggedIn = status === "authenticated";
+  // Login / Register / Log out only exist while accounts (panels) are switched on
+  const accountsOn = PANELS_ENABLED;
+  const loggedIn = accountsOn && status === "authenticated";
   const logOut = () => signOut({ callbackUrl: "/" });
   const [isScrolled, setIsScrolled] = useState(false);
   const [isExpertiseOpen, setIsExpertiseOpen] = useState(false);
@@ -210,11 +214,24 @@ const Navbar = () => {
                     boxShadow: "0 8px 32px rgba(0,0,0,0.4)",
                   }}
                 >
+                  {!accountsOn && (
+                    <button
+                      type="button"
+                      onClick={() => { setIsCtaOpen(false); openDiagnostic(); }}
+                      className="px-4 py-3 font-mono text-[11px] uppercase transition-colors duration-150 min-h-[40px] flex items-center justify-between text-left"
+                      style={{ letterSpacing: "0.18em", color: "rgba(247,246,243,0.75)" }}
+                      onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = "#C9A24A"; (e.currentTarget as HTMLElement).style.background = "rgba(247,246,243,0.05)"; }}
+                      onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = "rgba(247,246,243,0.75)"; (e.currentTarget as HTMLElement).style.background = "transparent"; }}
+                    >
+                      Start diagnostic
+                      <span style={{ color: "#A07830" }}>→</span>
+                    </button>
+                  )}
                   {[
-                    ...(loggedIn ? [] : [
+                    ...(accountsOn && !loggedIn ? [
                       { label: "Register", href: "/register" },
                       { label: "Login", href: "/login" },
-                    ]),
+                    ] : []),
                     { label: "Start your journey", href: "/connect" },
                   ].map((item) => (
                     <Link
@@ -392,7 +409,7 @@ const Navbar = () => {
           >
             Reach Us
           </Link>
-          {loggedIn ? (
+          {accountsOn && (loggedIn ? (
             <button
               type="button"
               onClick={logOut}
@@ -407,7 +424,7 @@ const Navbar = () => {
             >
               Login
             </Link>
-          )}
+          ))}
         </div>
 
         {/* Mobile: Hamburger only */}
@@ -471,7 +488,7 @@ const Navbar = () => {
                 >
                   Reach Us →
                 </Link>
-                {loggedIn ? (
+                {accountsOn && (loggedIn ? (
                   <button
                     type="button"
                     onClick={logOut}
@@ -486,7 +503,7 @@ const Navbar = () => {
                   >
                     Login
                   </Link>
-                )}
+                ))}
               </motion.div>
             </div>
           </motion.div>

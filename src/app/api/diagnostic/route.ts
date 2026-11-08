@@ -2,7 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "@/lib/db";
 import DiagnosticSignal from "@/models/DiagnosticSignal";
 import { auth } from "@/auth";
-import { getSubmitter, isAdmin } from "@/lib/currentUser";
+import { isAdmin } from "@/lib/currentUser";
+import { readContact, isBot } from "@/lib/contact";
+import { isRateLimited } from "@/lib/rateLimit";
 import { sendOwnerEmail } from "@/lib/mailer";
 
 // Practice mapping (same as frontend for consistency)
@@ -31,15 +33,19 @@ const ALL_SIGNALS: { text: string; practice: string }[] = [
 const str = (v: unknown, max = 2000) => (typeof v === "string" ? v.trim().slice(0, max) : "");
 const strList = (v: unknown) => (Array.isArray(v) ? v.filter((x): x is string => typeof x === "string").map((s) => s.slice(0, 300)).slice(0, 30) : []);
 
-/* ─── LOGGED-IN USERS: submit a diagnostic signal ─── */
+/* ─── PUBLIC: submit a diagnostic signal (name / email / mobile entered on the form) ─── */
 export async function POST(req: NextRequest) {
   try {
-    const submitter = await getSubmitter();
-    if (!submitter) {
-      return NextResponse.json({ ok: false, error: "Please register or log in to start the diagnostic." }, { status: 401 });
+    const data = await req.json();
+    if (isBot(data)) return NextResponse.json({ ok: true }); // honeypot: silently drop
+    if (isRateLimited(req, "diagnostic")) {
+      return NextResponse.json({ ok: false, error: "Too many submissions. Please try again in a few minutes." }, { status: 429 });
     }
 
-    const data = await req.json();
+    const parsed = readContact(data);
+    if (!parsed.ok) return NextResponse.json({ ok: false, error: parsed.error }, { status: 400 });
+    const contact = parsed.contact;
+
     const signals = strList(data.signals);
     if (signals.length === 0) {
       return NextResponse.json({ ok: false, error: "Select at least one signal." }, { status: 400 });
@@ -50,12 +56,11 @@ export async function POST(req: NextRequest) {
       signals.map((s) => ALL_SIGNALS.find((a) => a.text === s)?.practice).filter((p): p is string => !!p)
     )];
 
+    await dbConnect();
     const doc = await DiagnosticSignal.create({
-      // Contact always comes from the registered account
-      userId: submitter.userId,
-      name: submitter.name,
-      email: submitter.email,
-      phone: submitter.phone,
+      name: contact.name,
+      email: contact.email,
+      phone: contact.phone,
       callback: str(data.callback, 200),
 
       signals,

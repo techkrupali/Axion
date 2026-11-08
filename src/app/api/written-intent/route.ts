@@ -2,27 +2,31 @@ import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "@/lib/db";
 import WrittenIntent from "@/models/WrittenIntent";
 import { auth } from "@/auth";
-import { getSubmitter, isAdmin } from "@/lib/currentUser";
+import { isAdmin } from "@/lib/currentUser";
+import { readContact, isBot } from "@/lib/contact";
+import { isRateLimited } from "@/lib/rateLimit";
 import { sendOwnerEmail } from "@/lib/mailer";
 
 const str = (v: unknown, max = 5000) => (typeof v === "string" ? v.trim().slice(0, max) : "");
 
-/* ─── LOGGED-IN USERS: submit a written intent ─── */
+/* ─── PUBLIC: submit a written intent (name / email / mobile entered on the form) ─── */
 export async function POST(req: NextRequest) {
   try {
-    const submitter = await getSubmitter();
-    if (!submitter) {
-      return NextResponse.json({ ok: false, error: "Please register or log in to send a written intent." }, { status: 401 });
+    const data = await req.json();
+    if (isBot(data)) return NextResponse.json({ ok: true }); // honeypot: silently drop
+    if (isRateLimited(req, "written-intent")) {
+      return NextResponse.json({ ok: false, error: "Too many submissions. Please try again in a few minutes." }, { status: 429 });
     }
 
-    const data = await req.json();
+    const parsed = readContact(data);
+    if (!parsed.ok) return NextResponse.json({ ok: false, error: parsed.error }, { status: 400 });
+    const contact = parsed.contact;
 
+    await dbConnect();
     const doc = await WrittenIntent.create({
-      // Contact always comes from the registered account
-      userId: submitter.userId,
-      name: submitter.name,
-      email: submitter.email,
-      phone: submitter.phone,
+      name: contact.name,
+      email: contact.email,
+      phone: contact.phone,
 
       role: str(data.role, 100),
       organisation: str(data.organisation, 200),

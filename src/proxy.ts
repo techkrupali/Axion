@@ -10,10 +10,12 @@ export const config = {
   matcher: [
     "/admin/:path*",
     "/user/:path*",
-    "/expertise/ai-edge/diagnostic/:path*",
-    // panel-only APIs (blocked while panels are switched off — see src/config/features.ts)
+    "/login",
+    "/register",
+    // account / panel-only APIs (blocked while panels are switched off — see src/config/features.ts)
     "/api/admin/:path*",
     "/api/user/:path*",
     "/api/razorpay/:path*",
+    "/api/auth/register",
   ],
 };

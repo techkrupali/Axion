@@ -1,8 +1,5 @@
 import type { NextAuthConfig } from "next-auth";
-import { PANELS_ENABLED, PANEL_API_PREFIXES } from "@/config/features";
-
-/** Pages a visitor must register (or log in) for before they can open them. */
-export const REGISTRATION_REQUIRED = ["/expertise/ai-edge/diagnostic"];
+import { PANELS_ENABLED, PANEL_API_PREFIXES, ACCOUNT_PAGE_PREFIXES } from "@/config/features";
 
 const under = (pathname: string, prefix: string) => pathname === prefix || pathname.startsWith(prefix + "/");
 
@@ -19,15 +16,14 @@ export const authConfig = {
       const isAdminRoute = under(pathname, "/admin");
       const isUserRoute = under(pathname, "/user");
       const isAdminLogin = pathname === "/admin/login";
-      const needsRegistration = REGISTRATION_REQUIRED.some((p) => under(pathname, p));
       const back = encodeURIComponent(pathname + search);
 
-      // Panels switched off: hide their pages and the APIs behind them
+      // Accounts switched off: hide panels, login and registration, and the APIs behind them
       if (!PANELS_ENABLED) {
         if (PANEL_API_PREFIXES.some((p) => under(pathname, p))) {
           return Response.json({ error: "Not found" }, { status: 404 });
         }
-        if (isAdminRoute || isUserRoute) {
+        if (ACCOUNT_PAGE_PREFIXES.some((p) => under(pathname, p))) {
           return Response.redirect(new URL("/", nextUrl));
         }
       }
@@ -43,10 +39,6 @@ export const authConfig = {
 
       if (isUserRoute && !isLoggedIn) {
         return Response.redirect(new URL(`/login?callbackUrl=${back}`, nextUrl));
-      }
-
-      if (needsRegistration && !isLoggedIn) {
-        return Response.redirect(new URL(`/register?callbackUrl=${back}`, nextUrl));
       }
 
       return true;

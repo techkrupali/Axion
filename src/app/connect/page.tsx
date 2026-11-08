@@ -3,11 +3,11 @@
 import { Reveal } from "@/components/Reveal";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import { ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
-import { useSession } from "next-auth/react";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
 import Footer from "@/components/Footer";
 import Button from "@/components/Button";
-import { AuthGate, SubmittingAs } from "@/components/AuthGate";
+import { Honeypot } from "@/components/Honeypot";
+import { contactErrors, isContactValid } from "@/lib/contact";
 
 const practices = ["People Architecture", "Labour Codes", "AI Edge Lab", "Family Business", "Not sure yet"];
 
@@ -28,21 +28,29 @@ const sidebarItems = [
   { label: "What we don't do", content: <p className="text-[14px] leading-[1.65] text-[var(--fg-4)]">Recruiting · payroll · vendor management · executive coaching · culture surveys · &ldquo;engagement&rdquo; programs.</p> },
 ];
 
-const emptyForm = { role: "", organisation: "", message: "" };
+const emptyForm = { name: "", email: "", phone: "", role: "", organisation: "", message: "", website: "" };
+const noneTouched = { name: false, email: false, phone: false };
 
 export default function Connect() {
-  const { data: session, status } = useSession();
-  const user = session?.user as { name?: string; email?: string; phone?: string } | undefined;
   const [selectedPractice, setSelectedPractice] = useState<string | null>(null);
   const [selectedReading, setSelectedReading] = useState<string>("");
-  // Name / email / mobile come from the registered account (added on the server)
   const [form, setForm] = useState(emptyForm);
+  const [touched, setTouched] = useState(noneTouched);
   const [submitState, setSubmitState] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
+
+  const contact = { name: form.name, email: form.email, phone: form.phone };
+  const errs = contactErrors(contact);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg("");
+    if (!isContactValid(contact)) {
+      setTouched({ name: true, email: true, phone: true });
+      setErrorMsg("Please fill in your name, email and mobile number.");
+      setSubmitState("error");
+      return;
+    }
     setSubmitState("sending");
     try {
       const res = await fetch("/api/written-intent", {
@@ -54,10 +62,11 @@ export default function Connect() {
       if (!res.ok || !data.ok) throw new Error(data.error || "Failed to send");
       setSubmitState("sent");
       setForm(emptyForm);
+      setTouched(noneTouched);
       setSelectedPractice(null);
       setSelectedReading("");
-    } catch (err: any) {
-      setErrorMsg(err.message || "Something went wrong. Please try again.");
+    } catch (err) {
+      setErrorMsg(err instanceof Error && err.message ? err.message : "Something went wrong. Please try again.");
       setSubmitState("error");
     }
   };
@@ -171,19 +180,32 @@ export default function Connect() {
                 </p>
               </div>
 
-              {status === "loading" ? (
-                <div className="flex justify-center py-16">
-                  <Loader2 className="w-6 h-6 text-[#C9A24A] animate-spin" />
-                </div>
-              ) : status === "unauthenticated" ? (
-                <AuthGate
-                  title="Register to send your written intent."
-                  message="Create a free account first. Your intent is recorded with your name, email and mobile number and goes straight to the founder."
-                  returnTo="/connect#form"
-                />
-              ) : (
-              <form className="flex flex-col gap-8" onSubmit={handleSubmit}>
-                <SubmittingAs name={user?.name} email={user?.email} phone={user?.phone} />
+              <form className="relative flex flex-col gap-8" onSubmit={handleSubmit} noValidate>
+                {/* Contact details first — sent to the founder with the intent */}
+                {([
+                  { label: "Name", k: "name", type: "text", placeholder: "Your full name", ac: "name" },
+                  { label: "Email", k: "email", type: "email", placeholder: "your@email.com", ac: "email" },
+                  { label: "Mobile number", k: "phone", type: "tel", placeholder: "+91 98765 43210", ac: "tel" },
+                ] as const).map((field) => {
+                  const showErr = touched[field.k] && errs[field.k];
+                  return (
+                    <div key={field.k} className="flex flex-col gap-3">
+                      <label className="font-mono text-[10px] tracking-widest uppercase text-[var(--fg-4)]">{field.label}</label>
+                      <input
+                        type={field.type}
+                        autoComplete={field.ac}
+                        className={`${inputClass} ${showErr ? "!border-red-400/70" : ""}`}
+                        placeholder={field.placeholder}
+                        value={form[field.k]}
+                        onChange={(e) => setForm((f) => ({ ...f, [field.k]: e.target.value }))}
+                        onBlur={() => setTouched((t) => ({ ...t, [field.k]: true }))}
+                      />
+                      {showErr && <p className="text-[12px] text-red-400 -mt-1">{errs[field.k]}</p>}
+                    </div>
+                  );
+                })}
+                <Honeypot value={form.website} onChange={(v) => setForm((f) => ({ ...f, website: v }))} />
+
                 {[
                   { label: "Role", k: "role", type: "text", placeholder: "e.g. Founder, CFO, CHRO" },
                   { label: "Organisation", k: "organisation", type: "text", placeholder: "Your organisation" },
@@ -275,7 +297,6 @@ export default function Connect() {
                   )}
                 </div>
               </form>
-              )}
             </motion.div>
 
             {/* SIDEBAR */}

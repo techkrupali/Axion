@@ -4,7 +4,8 @@ import { useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, ArrowRight, Download } from "lucide-react";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
+import { Honeypot } from "@/components/Honeypot";
+import { contactErrors, isContactValid } from "@/lib/contact";
 import { INDEX_DEFINITIONS, IndexType, QUESTIONS, Question } from "@/config/diagnosticConfig";
 import { Answers, Profile, scoreDiagnostic } from "@/engine/scoring";
 
@@ -45,23 +46,27 @@ const BAND_COLOR: Record<string, string> = {
 };
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
-// This route is only reachable when logged in (see REGISTRATION_REQUIRED in src/auth.config.ts).
 export default function DiagnosticPage() {
-  const { data: session } = useSession();
   const [indexType, setIndexType] = useState<IndexType>("replaceability");
-  const [step, setStep] = useState(0); // 0 = profile, 1..10 = questions, 11 = result
-  // name stays undefined until the visitor edits it, so it defaults to the account name
-  const [profileInput, setProfile] = useState<Profile>({ role: "", experienceBand: "8-12" });
+  const [step, setStep] = useState(0); // 0 = details + profile, 1..10 = questions, 11 = result
+  const [profile, setProfile] = useState<Profile>({ name: "", role: "", experienceBand: "8-12" });
+  // Contact details asked at the top of step 0 (name lives in `profile`)
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [website, setWebsite] = useState(""); // honeypot
+  const [touched, setTouched] = useState({ name: false, email: false, phone: false });
   const [answers, setAnswers] = useState<Answers>({});
   const recorded = useRef(false);
 
-  const accountName = session?.user?.name;
-  const profile = useMemo<Profile>(
-    () => ({ ...profileInput, name: profileInput.name ?? accountName ?? "" }),
-    [profileInput, accountName],
-  );
+  const contact = { name: profile.name ?? "", email, phone };
+  const errs = contactErrors(contact);
 
-  // Record the completed diagnostic (with the account's name / email / mobile) and
+  function begin() {
+    setTouched({ name: true, email: true, phone: true });
+    if (isContactValid(contact)) setStep(1);
+  }
+
+  // Record the completed diagnostic with the visitor's name / email / mobile and
   // notify the owner. Fire-and-forget: the visitor sees their result either way.
   function finish() {
     setStep(QUESTIONS.length + 1);
@@ -70,7 +75,7 @@ export default function DiagnosticPage() {
     fetch("/api/ai-edge-result", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ indexType, answers, profile }),
+      body: JSON.stringify({ ...contact, website, indexType, answers, profile }),
     })
       .then((res) => { if (!res.ok) recorded.current = false; })
       .catch(() => { recorded.current = false; });
@@ -138,11 +143,44 @@ export default function DiagnosticPage() {
                     Know where you stand.
                   </h1>
                   <p className="font-sans font-light text-[var(--fg-3)] leading-[1.65]" style={{ fontSize: "clamp(13px,1.1vw,16px)" }}>
-                    Select your track, fill in your profile, and complete 10 questions. Results are instant.
+                    Add your details, select your track, and complete 10 questions. Results are instant.
                   </p>
                 </div>
 
+                {/* Contact details — first */}
+                <span className="font-jetbrains text-[10px] tracking-[0.3em] uppercase mb-3 block" style={{ color: "rgba(201,168,76,0.7)" }}>
+                  Your details
+                </span>
+                <div className="relative flex flex-col gap-3 mb-8">
+                  {([
+                    { k: "name", ph: "Your name", type: "text", ac: "name", value: profile.name ?? "", set: (v: string) => setProfile({ ...profile, name: v }) },
+                    { k: "email", ph: "Your email", type: "email", ac: "email", value: email, set: setEmail },
+                    { k: "phone", ph: "Your mobile number", type: "tel", ac: "tel", value: phone, set: setPhone },
+                  ] as const).map(f => {
+                    const showErr = touched[f.k] && errs[f.k];
+                    return (
+                      <div key={f.k}>
+                        <input
+                          type={f.type}
+                          autoComplete={f.ac}
+                          placeholder={f.ph}
+                          value={f.value}
+                          onChange={e => f.set(e.target.value)}
+                          onBlur={() => setTouched(t => ({ ...t, [f.k]: true }))}
+                          className="w-full px-5 py-4 font-sans text-[var(--fg)] outline-none transition-all duration-250"
+                          style={{ background: "rgba(18,18,18,0.8)", border: `1px solid ${showErr ? "rgba(224,82,82,0.6)" : "rgba(255,255,255,0.1)"}`, fontSize: "14px" }}
+                        />
+                        {showErr && <p className="mt-1.5 text-[12px] text-red-400">{errs[f.k]}</p>}
+                      </div>
+                    );
+                  })}
+                  <Honeypot value={website} onChange={setWebsite} />
+                </div>
+
                 {/* Index selector */}
+                <span className="font-jetbrains text-[10px] tracking-[0.3em] uppercase mb-3 block" style={{ color: "rgba(201,168,76,0.7)" }}>
+                  Your track
+                </span>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
                   {(Object.entries(INDEX_DEFINITIONS) as [IndexType, typeof INDEX_DEFINITIONS[IndexType]][]).map(([k, v]) => (
                     <button key={k} onClick={() => setIndexType(k)}
@@ -166,13 +204,6 @@ export default function DiagnosticPage() {
                 {/* Profile inputs */}
                 <div className="flex flex-col gap-3 mb-8">
                   <input
-                    placeholder="Your name"
-                    value={profile.name}
-                    onChange={e => setProfile({ ...profile, name: e.target.value })}
-                    className="w-full px-5 py-4 font-sans text-[var(--fg)] outline-none transition-all duration-250"
-                    style={{ background: "rgba(18,18,18,0.8)", border: "1px solid rgba(255,255,255,0.1)", fontSize: "14px" }}
-                  />
-                  <input
                     placeholder="Your role / title"
                     value={profile.role}
                     onChange={e => setProfile({ ...profile, role: e.target.value })}
@@ -192,7 +223,7 @@ export default function DiagnosticPage() {
                   </select>
                 </div>
 
-                <button onClick={() => setStep(1)}
+                <button onClick={begin}
                   className="w-full py-4 font-jetbrains text-[11px] tracking-[0.25em] uppercase flex items-center justify-center gap-3 transition-all duration-300"
                   style={{ background: "var(--accent)", color: "#080A0F" }}>
                   Begin Diagnostic <ArrowRight size={13} />
