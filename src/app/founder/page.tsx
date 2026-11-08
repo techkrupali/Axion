@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import DiagnosticModal from "@/components/DiagnosticModal";
+import { PRACTICES, PRACTICE_ORDER, IN_DEVELOPMENT_LABEL, isLive } from "@/config/practices";
 
 /* ─── DESIGN TOKENS — mirror landing page exactly ──────────────────────────── */
 const T = {
@@ -1509,14 +1510,18 @@ export default function FounderPage() {
             <div>
               <h4 className="font-mono text-[9px] uppercase mb-5 pb-3"
                 style={{ letterSpacing:".22em", color:T.gold2, borderBottom:"1px solid rgba(196,152,72,.25)" }}>Practices</h4>
-              {[["People Architecture","/expertise/people"],["Labour Codes","/expertise/labour"],["AI Edge Lab","/expertise/ai-edge"],["Family Business","/expertise/family"]].map(([label,href]) => (
-                <Link key={href} href={href} className="block transition-all duration-200 py-1.5"
+              {PRACTICE_ORDER.map((k) => { const { name: label, href } = PRACTICES[k]; return !isLive(k) ? (
+                <span key={k} className="block py-1.5" style={{ fontSize:13, color:T.mid, cursor:"default" }}>
+                  {label} <span className="font-mono uppercase" style={{ fontSize:9, letterSpacing:".14em" }}>· {IN_DEVELOPMENT_LABEL}</span>
+                </span>
+              ) : (
+                <Link key={k} href={href} className="block transition-all duration-200 py-1.5"
                   style={{ fontSize:13, color:T.dim, textDecoration:"none" }}
                   onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color=T.white; (e.currentTarget as HTMLElement).style.paddingLeft="5px"; }}
                   onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color=T.dim; (e.currentTarget as HTMLElement).style.paddingLeft="0"; }}>
                   {label}
                 </Link>
-              ))}
+              ); })}
             </div>
 
             {/* Index */}

@@ -1,12 +1,14 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import DiagnosticModal, { useReopenDiagnostic } from "@/components/DiagnosticModal";
 import { Reveal } from "@/components/Reveal";
+import { PRACTICES as PRACTICE_STATUS, PRACTICE_ORDER, IN_DEVELOPMENT_LABEL, isLive, type PracticeKey } from "@/config/practices";
+import { reportLink } from "@/config/report";
 
 // ─────────────────────────────────────────────
 // CSS TOKENS (cream / light theme — mirrors the HTML)
@@ -98,7 +100,6 @@ function HeroBand() {
       style={{
         background: "radial-gradient(120% 140% at 70% 10%, #232320 0%, #15150f 45%, #0D0D0B 100%)",
         borderBottom: `1px solid ${T.ink}`,
-        minHeight: "clamp(280px, 40vw, 360px)",
       }}
     >
       {/* Grid overlay */}
@@ -114,14 +115,15 @@ function HeroBand() {
       />
 
       {/* Content */}
-      <div className="relative z-10 max-w-[1280px] mx-auto px-6 sm:px-12 pt-[84px] pb-28">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {/* Kept compact so the single headline + buttons below sit above the fold */}
+      <div className="relative z-10 max-w-[1280px] mx-auto px-6 sm:px-12 pt-[96px] pb-[84px]">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           {/* Left — monogram mark */}
           <div className="hidden md:flex items-start">
             <img
               src="/axion-mark-gold-transparent.svg"
               alt="Axion Index"
-              style={{ width: "clamp(90px, 12vw, 160px)", height: "auto", display: "block", marginLeft: "clamp(-260px, -20vw, -110px)" }}
+              style={{ width: "clamp(56px, 6vw, 88px)", height: "auto", display: "block", marginLeft: "clamp(-260px, -20vw, -110px)" }}
             />
           </div>
 
@@ -144,34 +146,6 @@ function HeroBand() {
                 </span>
               ))}
             </div>
-
-            {/* Thesis */}
-            <motion.p
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.15, ease: [0.22, 0.61, 0.36, 1] }}
-              className="font-serif italic mt-7"
-              style={{
-                fontSize: "clamp(22px,2.6vw,32px)",
-                lineHeight: 1.1,
-                color: "rgba(247,246,243,0.92)",
-                maxWidth: "30ch",
-              }}
-            >
-              You don't need a service. You need to read{" "}
-              <em style={{ color: T.gold2 }}>what is breaking.</em>
-            </motion.p>
-
-            {/* Structural Signal label */}
-            <motion.span
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.35, ease: [0.22, 0.61, 0.36, 1] }}
-              className="font-mono uppercase block mt-10"
-              style={{ fontSize: 11, letterSpacing: "0.24em", color: T.gold, opacity: 0.75 }}
-            >
-              Structural Signal
-            </motion.span>
           </div>
         </div>
       </div>
@@ -234,8 +208,8 @@ function HeroBody({ onDiagnosticOpen }: { onDiagnosticOpen: () => void }) {
       className="relative overflow-hidden"
       style={{ borderBottom: `1px solid ${T.rule}` }}
     >
-      <motion.div style={{ y }} className="max-w-[1280px] mx-auto px-4 sm:px-8 py-20 md:py-24">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-20 items-center">
+      <motion.div style={{ y }} className="max-w-[1280px] mx-auto px-4 sm:px-8 pt-10 pb-16 md:pt-12 md:pb-20">
+        <div className="grid grid-cols-1 md:grid-cols-[1.3fr_1fr] gap-12 md:gap-16 items-center">
           {/* Left */}
           <div>
             <motion.p
@@ -255,7 +229,7 @@ function HeroBody({ onDiagnosticOpen }: { onDiagnosticOpen: () => void }) {
               className="font-serif font-medium"
               style={{
                 fontFamily: T.display,
-                fontSize: "clamp(62px,9vw,116px)",
+                fontSize: "clamp(52px,6vw,90px)", // two lines on desktop so the buttons stay above the fold
                 lineHeight: 0.96,
                 letterSpacing: "0.005em",
                 color: T.ink,
@@ -309,8 +283,8 @@ function HeroBody({ onDiagnosticOpen }: { onDiagnosticOpen: () => void }) {
               >
                 Reach Us <span style={{ display: "inline-block", width: 16, height: 1, background: "currentColor" }} />
               </Link>
-              <a
-                href="#signals"
+              <Link
+                href="/research"
                 className="inline-flex items-center gap-3 font-mono text-[10px] uppercase px-7 py-4 transition-all duration-250"
                 style={{
                   letterSpacing: "0.18em",
@@ -327,7 +301,7 @@ function HeroBody({ onDiagnosticOpen }: { onDiagnosticOpen: () => void }) {
                 }}
               >
                 Read the signals <span style={{ display: "inline-block", width: 16, height: 1, background: "currentColor" }} />
-              </a>
+              </Link>
             </motion.div>
           </div>
 
@@ -354,9 +328,9 @@ function HeroBody({ onDiagnosticOpen }: { onDiagnosticOpen: () => void }) {
                 { val: "95%", key: "GenAI pilots show no P&L impact", src: "MIT NANDA" },
                 { val: "39%", key: "Core skills change by 2030", src: "WEF" },
               ].map((stat, i) => (
-                <a
+                <Link
                   key={i}
-                  href="#research"
+                  href="/research"
                   className="flex-1 group block"
                   style={{
                     borderLeft: i > 0 ? `1px solid ${T.rule2}` : "none",
@@ -386,7 +360,7 @@ function HeroBody({ onDiagnosticOpen }: { onDiagnosticOpen: () => void }) {
                   >
                     {stat.src} · See evidence
                   </span>
-                </a>
+                </Link>
               ))}
             </motion.div>
           </div>
@@ -553,6 +527,7 @@ function LogicSection() {
 // ─────────────────────────────────────────────
 const PRACTICES = [
   {
+    key: "people" as PracticeKey,
     num: "[01]",
     titleMain: "People",
     titleEm: "Architecture",
@@ -563,6 +538,7 @@ const PRACTICES = [
     href: "/expertise/people",
   },
   {
+    key: "labour" as PracticeKey,
     num: "[02]",
     titleMain: "Labour",
     titleEm: "Codes",
@@ -573,6 +549,7 @@ const PRACTICES = [
     href: "/expertise/labour",
   },
   {
+    key: "aiEdge" as PracticeKey,
     num: "[03]",
     titleMain: "AI",
     titleEm: "Edge Lab",
@@ -583,6 +560,7 @@ const PRACTICES = [
     href: "/expertise/ai-edge",
   },
   {
+    key: "family" as PracticeKey,
     num: "[04]",
     titleMain: "Family",
     titleEm: "Business",
@@ -612,23 +590,35 @@ function PracticesSection() {
         {/* Practice rows */}
         <div>
           {PRACTICES.map((p, i) => {
+            // People → its page · AI Edge Lab → Global AI Report · others → "In development", no link
+            const cta = p.key === "aiEdge" ? reportLink : isLive(p.key) ? { href: p.href, label: "Enter →" } : null;
+            const inDev = cta === null;
+            const ctaText = cta ? cta.label.replace(/ →$/, "") : IN_DEVELOPMENT_LABEL;
+            const ctaCol = ctaText.length > 14 ? "190px" : "130px";
             const isDarkRow = false;
-            const bodyTxt = T.ink3;
-            const labelTxt = T.gold;
+            const bodyTxt = inDev ? T.dim : T.ink3;
+            const labelTxt = inDev ? T.dim : T.gold;
+            // A real link for open practices, a plain box for "in development"
+            const Card = (inDev ? "div" : Link) as unknown as React.FC<React.HTMLAttributes<HTMLElement> & { href?: string }>;
             return (
             <Reveal key={i} delay={i * 0.08}>
               <div style={{ marginBottom: "12px" }}>
-              <Link
-                href={p.href}
-                className="block group"
-                style={{ border: `1px solid ${T.gold}`, transition: "background 0.3s, border-color 0.3s", background: "transparent" }}
-                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = T.white2; (e.currentTarget as HTMLElement).style.borderColor = T.gold2; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "transparent"; (e.currentTarget as HTMLElement).style.borderColor = T.gold; }}
+              <Card
+                {...(cta ? { href: cta.href } : { "aria-disabled": true })}
+                className={inDev ? "block" : "block group"}
+                style={{
+                  border: `1px solid ${inDev ? T.rule2 : T.gold}`,
+                  transition: "background 0.3s, border-color 0.3s",
+                  background: inDev ? "rgba(13,13,11,0.025)" : "transparent",
+                  cursor: inDev ? "default" : undefined,
+                }}
+                onMouseEnter={inDev ? undefined : (e: React.MouseEvent<HTMLElement>) => { e.currentTarget.style.background = T.white2; e.currentTarget.style.borderColor = T.gold2; }}
+                onMouseLeave={inDev ? undefined : (e: React.MouseEvent<HTMLElement>) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.borderColor = T.gold; }}
               >
                 {/* Desktop layout */}
                 <div
                   className="hidden md:grid gap-9 items-start py-10 px-2"
-                  style={{ gridTemplateColumns: i % 2 === 1 ? "130px 1.4fr 1.2fr 90px" : "90px 1.2fr 1.4fr 130px" }}
+                  style={{ gridTemplateColumns: i % 2 === 1 ? `${ctaCol} 1.4fr 1.2fr 90px` : `90px 1.2fr 1.4fr ${ctaCol}` }}
                 >
                   {/* Column order flips for even rows (zigzag) */}
                   {i % 2 === 1 ? (
@@ -636,7 +626,7 @@ function PracticesSection() {
                       {/* Enter — left */}
                       <span className="font-mono text-[10px] uppercase self-center inline-flex items-center gap-2.5"
                         style={{ letterSpacing: "0.14em", color: labelTxt }}>
-                        <span className="inline-block h-px group-hover:w-7 transition-all duration-300" style={{ width: 16, background: "currentColor" }} /> Enter
+                        {!inDev && <span className="inline-block h-px group-hover:w-7 transition-all duration-300" style={{ width: 16, background: "currentColor" }} />} {ctaText}
                       </span>
                       {/* Signal + Build */}
                       <div className="grid grid-cols-2 gap-9">
@@ -645,7 +635,7 @@ function PracticesSection() {
                           <p style={{ fontFamily: T.display, fontSize: 16, lineHeight: 1.65, color: bodyTxt }}>{p.signal}</p>
                         </div>
                         <div>
-                          <div className="font-mono text-[11px] uppercase mb-3" style={{ letterSpacing: "0.16em", color: T.gold }}>What We Build</div>
+                          <div className="font-mono text-[11px] uppercase mb-3" style={{ letterSpacing: "0.16em", color: labelTxt }}>What We Build</div>
                           <p style={{ fontFamily: T.display, fontSize: 16, lineHeight: 1.65, color: bodyTxt }}>{p.build}</p>
                         </div>
                       </div>
@@ -663,7 +653,7 @@ function PracticesSection() {
                           className="inline-flex items-center gap-2 mt-4 px-3 py-1.5"
                           style={{ fontFamily: T.mono, fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: isDarkRow ? "rgba(247,246,243,0.5)" : T.mid, border: `1px solid ${isDarkRow ? "rgba(247,246,243,0.15)" : T.rule2}` }}
                         >
-                          <b style={{ color: isDarkRow ? T.white : T.ink, fontWeight: 500, fontSize: 12 }}>{p.chip.split(" ").slice(0, 2).join(" ")}</b>{" "}
+                          <b style={{ color: isDarkRow ? T.white : inDev ? T.mid : T.ink, fontWeight: 500, fontSize: 12 }}>{p.chip.split(" ").slice(0, 2).join(" ")}</b>{" "}
                           {p.chip.split(" ").slice(2).join(" ")}
                         </span>
                       </div>
@@ -692,7 +682,7 @@ function PracticesSection() {
                           className="inline-flex items-center gap-2 mt-4 px-3 py-1.5"
                           style={{ fontFamily: T.mono, fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: isDarkRow ? "rgba(247,246,243,0.5)" : T.mid, border: `1px solid ${isDarkRow ? "rgba(247,246,243,0.15)" : T.rule2}` }}
                         >
-                          <b style={{ color: isDarkRow ? T.white : T.ink, fontWeight: 500, fontSize: 12 }}>{p.chip.split(" ").slice(0, 2).join(" ")}</b>{" "}
+                          <b style={{ color: isDarkRow ? T.white : inDev ? T.mid : T.ink, fontWeight: 500, fontSize: 12 }}>{p.chip.split(" ").slice(0, 2).join(" ")}</b>{" "}
                           {p.chip.split(" ").slice(2).join(" ")}
                         </span>
                       </div>
@@ -710,7 +700,7 @@ function PracticesSection() {
                       {/* Enter — far right */}
                       <span className="font-mono text-[10px] uppercase self-center justify-self-end inline-flex items-center gap-2.5"
                         style={{ letterSpacing: "0.14em", color: labelTxt }}>
-                        Enter <span className="inline-block h-px group-hover:w-7 transition-all duration-300" style={{ width: 16, background: "currentColor" }} />
+                        {ctaText} {!inDev && <span className="inline-block h-px group-hover:w-7 transition-all duration-300" style={{ width: 16, background: "currentColor" }} />}
                       </span>
                     </>
                   )}
@@ -720,7 +710,7 @@ function PracticesSection() {
                 <div className="md:hidden flex flex-col gap-4 py-8 px-2">
                   <div className="flex items-center justify-between">
                     <span className="font-mono text-[13px]" style={{ color: labelTxt, letterSpacing: "0.12em" }}>{p.num}</span>
-                    <span className="font-mono text-[11px] uppercase" style={{ letterSpacing: "0.14em", color: labelTxt }}>Enter →</span>
+                    <span className="font-mono text-[11px] uppercase text-right" style={{ letterSpacing: "0.14em", color: labelTxt }}>{cta ? cta.label : IN_DEVELOPMENT_LABEL}</span>
                   </div>
                   <span className="font-serif font-medium uppercase" style={{ fontFamily: T.display, fontSize: 30, lineHeight: 1.05, color: labelTxt }}>
                     {p.titleMain} <em style={{ fontStyle: "italic" }}>{p.titleEm}</em>
@@ -730,8 +720,12 @@ function PracticesSection() {
                     <div className="font-mono text-[11px] uppercase mb-2" style={{ letterSpacing: "0.16em", color: labelTxt }}>The Signal</div>
                     <p style={{ fontFamily: T.display, fontSize: 16, lineHeight: 1.65, color: bodyTxt }}>{p.signal}</p>
                   </div>
+                  <div>
+                    <div className="font-mono text-[11px] uppercase mb-2" style={{ letterSpacing: "0.16em", color: labelTxt }}>What We Build</div>
+                    <p style={{ fontFamily: T.display, fontSize: 16, lineHeight: 1.65, color: bodyTxt }}>{p.build}</p>
+                  </div>
                 </div>
-              </Link>
+              </Card>
               </div>
             </Reveal>
             );
@@ -780,6 +774,52 @@ const ROLES_DATA = [
   },
 ];
 
+// What one role sees: shown in the right-hand panel on desktop, under the role on mobile
+function RoleDetail({ r }: { r: (typeof ROLES_DATA)[number] }) {
+  return (
+    <>
+      {/* Big ghost number */}
+      <div className="flex items-start justify-between gap-3 mb-6 flex-wrap">
+        <span
+          className="font-serif font-medium select-none"
+          style={{ fontFamily: T.display, fontSize: "clamp(80px,10vw,130px)", lineHeight: 1, color: T.white3, letterSpacing: "-0.02em" }}
+        >
+          {r.num}
+        </span>
+        <span
+          className="font-mono text-[9px] uppercase mt-3"
+          style={{ letterSpacing: "0.18em", color: T.gold, border: `1px solid ${T.rule2}`, padding: "6px 12px" }}
+        >
+          {r.tag}
+        </span>
+      </div>
+
+      {/* Pull */}
+      <div className="mb-8">
+        <span className="font-mono text-[11px] uppercase block mb-3" style={{ letterSpacing: "0.18em", color: T.gold }}>
+          The pull
+        </span>
+        <p className="font-serif font-medium" style={{ fontFamily: T.display, fontSize: "clamp(22px,2.5vw,32px)", lineHeight: 1.3, color: T.ink }}>
+          {r.pull}
+        </p>
+      </div>
+
+      {/* Divider */}
+      <div style={{ height: 1, background: T.rule2, marginBottom: 28 }} />
+
+      {/* What we do */}
+      <div>
+        <span className="font-mono text-[11px] uppercase block mb-3" style={{ letterSpacing: "0.18em", color: T.gold }}>
+          What we do
+        </span>
+        <p style={{ fontFamily: T.display, fontSize: 18, lineHeight: 1.75, color: T.ink3 }}>
+          {r.work}
+        </p>
+      </div>
+    </>
+  );
+}
+
 function RolesSection() {
   const [active, setActive] = useState(0);
   const r = ROLES_DATA[active];
@@ -809,9 +849,10 @@ function RolesSection() {
               const isDark = i >= 2;
               const boxBg = BOX_BG[i];
               return (
+              <Fragment key={i}>
               <button
-                key={i}
                 onClick={() => setActive(i)}
+                aria-expanded={active === i}
                 className="w-full text-left group relative overflow-hidden transition-all duration-200 flex-1"
                 style={{
                   borderBottom: i < ROLES_DATA.length - 1 ? `1px solid ${T.rule2}` : "none",
@@ -845,12 +886,26 @@ function RolesSection() {
                   </span>
                 </div>
               </button>
+              {/* Mobile / tablet: the answer opens directly under the tapped role */}
+              {active === i && (
+                <motion.div
+                  key={`m-${i}`}
+                  initial={{ opacity: 0, y: -6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                  className="lg:hidden p-6 sm:p-10"
+                  style={{ background: T.white, borderBottom: i < ROLES_DATA.length - 1 ? `1px solid ${T.rule2}` : "none" }}
+                >
+                  <RoleDetail r={item} />
+                </motion.div>
+              )}
+              </Fragment>
               );
             })}
           </div>
 
           {/* Right: animated content panel */}
-          <div className="flex-1 relative overflow-hidden" style={{ minHeight: 320, background: T.white }}>
+          <div className="hidden lg:block flex-1 relative overflow-hidden" style={{ minHeight: 320, background: T.white }}>
             <AnimatePresence mode="wait">
               <motion.div
                 key={active}
@@ -860,44 +915,7 @@ function RolesSection() {
                 transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
                 className="p-6 sm:p-10 xl:p-14 h-full flex flex-col justify-between"
               >
-                {/* Big ghost number */}
-                <div className="flex items-start justify-between gap-3 mb-6 flex-wrap">
-                  <span
-                    className="font-serif font-medium select-none"
-                    style={{ fontFamily: T.display, fontSize: "clamp(80px,10vw,130px)", lineHeight: 1, color: T.white3, letterSpacing: "-0.02em" }}
-                  >
-                    {r.num}
-                  </span>
-                  <span
-                    className="font-mono text-[9px] uppercase mt-3"
-                    style={{ letterSpacing: "0.18em", color: T.gold, border: `1px solid ${T.rule2}`, padding: "6px 12px" }}
-                  >
-                    {r.tag}
-                  </span>
-                </div>
-
-                {/* Pull */}
-                <div className="mb-8">
-                  <span className="font-mono text-[11px] uppercase block mb-3" style={{ letterSpacing: "0.18em", color: T.gold }}>
-                    The pull
-                  </span>
-                  <p className="font-serif font-medium" style={{ fontFamily: T.display, fontSize: "clamp(22px,2.5vw,32px)", lineHeight: 1.3, color: T.ink }}>
-                    {r.pull}
-                  </p>
-                </div>
-
-                {/* Divider */}
-                <div style={{ height: 1, background: T.rule2, marginBottom: 28 }} />
-
-                {/* What we do */}
-                <div>
-                  <span className="font-mono text-[11px] uppercase block mb-3" style={{ letterSpacing: "0.18em", color: T.gold }}>
-                    What we do
-                  </span>
-                  <p style={{ fontFamily: T.display, fontSize: 18, lineHeight: 1.75, color: T.ink3 }}>
-                    {r.work}
-                  </p>
-                </div>
+                <RoleDetail r={r} />
               </motion.div>
             </AnimatePresence>
           </div>
@@ -1142,14 +1160,19 @@ function SiteFooter() {
             >
               Practices
             </h4>
-            {[
-              ["People Architecture", "/expertise/people"],
-              ["Labour Codes", "/expertise/labour"],
-              ["AI Edge Lab", "/expertise/ai-edge"],
-              ["Family Business", "/expertise/family"],
-            ].map(([label, href]) => (
+            {PRACTICE_ORDER.map((k) => {
+              const { name, href } = PRACTICE_STATUS[k];
+              if (!isLive(k)) {
+                return (
+                  <span key={k} className="block py-1.5" style={{ fontSize: 13, color: T.mid, cursor: "default" }}>
+                    {name}{" "}
+                    <span className="font-mono uppercase" style={{ fontSize: 9, letterSpacing: "0.14em", opacity: 0.8 }}>· {IN_DEVELOPMENT_LABEL}</span>
+                  </span>
+                );
+              }
+              return (
               <Link
-                key={href}
+                key={k}
                 href={href}
                 className="block transition-all duration-200 py-1.5"
                 style={{ fontSize: 13, color: T.dim }}
@@ -1162,9 +1185,10 @@ function SiteFooter() {
                   (e.currentTarget as HTMLElement).style.paddingLeft = "0px";
                 }}
               >
-                {label}
+                {name}
               </Link>
-            ))}
+              );
+            })}
           </div>
 
           {/* Index */}

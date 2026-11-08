@@ -227,6 +227,23 @@ export default function PeopleArchitecture() {
                 A People Architecture engagement runs across all four surfaces and ends with a redesign and an operating handover. Most engagements run 12–16 weeks across diagnostic, codification, and operating handover.
               </p>
             </Reveal>
+            {/* What you get */}
+            <Reveal delay={0.25}>
+              <div className="mb-14 text-left">
+                <span className="eyebrow eyebrow--center mb-6 text-[var(--accent)] flex">What you get</span>
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {["Diagnostic readout", "Decision rights, written down", "Succession map", "Handover"].map((item, i) => (
+                    <li
+                      key={item}
+                      className="flex items-center gap-4 rounded-2xl border border-[var(--line-gold)] bg-[rgba(201,162,74,0.04)] px-5 py-4"
+                    >
+                      <span className="font-mono text-[11px] tracking-[0.2em] text-[var(--accent)] shrink-0">{String(i + 1).padStart(2, "0")}</span>
+                      <span className="font-serif text-[20px] leading-tight text-[var(--fg)]">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Reveal>
             <Reveal delay={0.3}>
               <div className="flex flex-wrap justify-center gap-4 mb-20">
                 <Button href="/connect?practice=people-architecture" variant="primary" showArrow={true}>Begin a Diagnostic</Button>

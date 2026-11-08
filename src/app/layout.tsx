@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import SmoothScroll from "@/components/SmoothScroll";
 import Providers from "@/components/Providers";
+import { pageMetadata, SITE_URL } from "@/lib/seo";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,9 +28,18 @@ const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
+// Home page metadata. Every other page sets its own title, description and
+// share card via pageMetadata() in its layout.tsx / page.tsx.
+const home = pageMetadata({
   title: "Axion Index — From ambiguity to architecture.",
   description: "Axion Index is an operating architect. We do not begin by selling a service. We read what is already breaking — and build what must hold.",
+  path: "/",
+});
+
+export const metadata: Metadata = {
+  ...home,
+  metadataBase: new URL(SITE_URL),
+  alternates: undefined, // canonical is set per page, not inherited from here
   icons: {
     icon: [
       { url: "/favicon.svg", type: "image/svg+xml" },
@@ -42,19 +52,6 @@ export const metadata: Metadata = {
       { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
     ],
     shortcut: "/favicon.ico",
-  },
-  openGraph: {
-    title: "Axion Index — From ambiguity to architecture.",
-    description: "We read what is already breaking — and build what must hold.",
-    url: "https://axionindex.org",
-    siteName: "Axion Index",
-    locale: "en_US",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Axion Index — From ambiguity to architecture.",
-    description: "We read what is already breaking — and build what must hold.",
   },
 };
 

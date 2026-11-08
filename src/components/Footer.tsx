@@ -1,8 +1,7 @@
 'use client';
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import Button from "./Button";
-import AxionWordmark from "./AxionWordmark";
+import { PRACTICES, PRACTICE_ORDER, IN_DEVELOPMENT_LABEL, isLive } from "@/config/practices";
 
 export default function Footer() {
   return (
@@ -62,20 +61,22 @@ export default function Footer() {
           <div>
             <p className="font-mono text-[13px] tracking-[0.5em] uppercase text-[#C9A24A] opacity-50 mb-6">Practices</p>
               <ul className="flex flex-col gap-3">
-                {[
-                  { href: "/expertise/people", label: "People Architecture" },
-                  { href: "/expertise/labour", label: "Labour Codes" },
-                  { href: "/expertise/ai-edge", label: "AI Edge Lab" },
-                  { href: "/expertise/family", label: "Family Business" },
-                ].map((l) => (
-                  <li key={l.href}>
-                    <Link
-                      href={l.href}
-                      className="font-mono text-[14px] tracking-[0.18em] uppercase hover:text-[#C9A24A] transition-colors duration-300 inline-flex min-h-[40px] items-center"
-                      style={{ color: "#EDEBE3" }}
-                    >
-                      {l.label}
-                    </Link>
+                {PRACTICE_ORDER.map((k) => (
+                  <li key={k}>
+                    {isLive(k) ? (
+                      <Link
+                        href={PRACTICES[k].href}
+                        className="font-mono text-[14px] tracking-[0.18em] uppercase hover:text-[#C9A24A] transition-colors duration-300 inline-flex min-h-[40px] items-center"
+                        style={{ color: "#EDEBE3" }}
+                      >
+                        {PRACTICES[k].name}
+                      </Link>
+                    ) : (
+                      <span className="font-mono text-[14px] tracking-[0.18em] uppercase inline-flex flex-wrap items-center gap-x-2 min-h-[40px]" style={{ color: "#6B7280" }}>
+                        {PRACTICES[k].name}
+                        <span className="text-[10px] tracking-[0.14em]">· {IN_DEVELOPMENT_LABEL}</span>
+                      </span>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -86,10 +87,10 @@ export default function Footer() {
               <p className="font-mono text-[13px] tracking-[0.5em] uppercase text-[#C9A24A] opacity-50 mb-6">Index</p>
               <ul className="flex flex-col gap-3">
                 {[
-                  { href: "/", label: "Axion Index" },
-                  { href: "/patterns", label: "Operating Patterns" },
-                  { href: "/founder", label: "Story" },
                   { href: "/about", label: "About" },
+                  { href: "/founder", label: "Story" },
+                  { href: "/#about", label: "Operating Patterns" },
+                  { href: "/research", label: "Research & Journals" },
                 ].map((l) => (
                   <li key={l.href}>
                     <Link
@@ -127,25 +128,9 @@ export default function Footer() {
           <span className="font-mono text-[13px] tracking-[0.4em] uppercase" style={{ color: "#9DA3B6" }}>
             &copy; 2026 Axion Index. All rights reserved.
           </span>
-          <div className="flex flex-wrap items-center gap-4 sm:gap-6">
-            {[
-              { href: "https://linkedin.com/company/axionindex", label: "LinkedIn", external: true },
-              { href: "/", label: "Axion Index", external: false },
-              { href: "/patterns", label: "Operating Patterns", external: false },
-              { href: "/founder", label: "Story", external: false },
-            ].map((l) => (
-              <Link
-                key={l.label}
-                href={l.href}
-                target={l.external ? "_blank" : undefined}
-                rel={l.external ? "noopener noreferrer" : undefined}
-                className="font-mono text-[13px] tracking-[0.3em] uppercase hover:text-[#C9A24A] transition-colors duration-300 min-h-[40px] inline-flex items-center"
-                style={{ color: "#9DA3B6" }}
-              >
-                {l.label}
-              </Link>
-            ))}
-          </div>
+          <span className="font-mono text-[13px] tracking-[0.3em] uppercase" style={{ color: "#9DA3B6" }}>
+            Architecture is read, not pitched.
+          </span>
         </div>
 
       </div>

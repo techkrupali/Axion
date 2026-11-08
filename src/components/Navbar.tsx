@@ -9,6 +9,7 @@ import { useSession, signOut } from "next-auth/react";
 import AxionWordmark from "@/components/AxionWordmark";
 import { PANELS_ENABLED } from "@/config/features";
 import { openDiagnostic } from "@/lib/openDiagnostic";
+import { PRACTICES, PRACTICE_ORDER, IN_DEVELOPMENT_LABEL, isLive } from "@/config/practices";
 
 const Navbar = () => {
   const { status } = useSession();
@@ -42,21 +43,14 @@ const Navbar = () => {
     return null;
   }
 
-  const expertiseLinks = [
-    { name: "People Architecture", href: "/expertise/people", desc: "BCR · Structure · Signalling" },
-    { name: "AI Edge Lab", href: "/expertise/ai-edge", desc: "Judgement · Architecture · Governance" },
-    { name: "Labour Codes", href: "/expertise/labour", desc: "Cost · Classification · Compliance" },
-    { name: "Family Business", href: "/expertise/family", desc: "Ownership · Succession · Institution" },
-  ];
+  // Practices come from src/config/practices.ts — "in development" ones render greyed out, without a link
+  const expertiseLinks = PRACTICE_ORDER.map((k) => ({ ...PRACTICES[k], live: isLive(k) }));
 
   const allLinks = [
-    { label: "About", href: "/about" },
-    { label: "People Architecture", href: "/expertise/people" },
-    { label: "AI Edge Lab", href: "/expertise/ai-edge" },
-    { label: "Labour Codes", href: "/expertise/labour" },
-    { label: "Family Business", href: "/expertise/family" },
-    { label: "Founder", href: "/founder" },
-    { label: "Research & Journals", href: "/research" },
+    { label: "About", href: "/about", live: true },
+    ...PRACTICE_ORDER.map((k) => ({ label: PRACTICES[k].name, href: PRACTICES[k].href, live: isLive(k) })),
+    { label: "Founder", href: "/founder", live: true },
+    { label: "Research & Journals", href: "/research", live: true },
   ];
 
   const isHome = pathname === "/";
@@ -135,6 +129,16 @@ const Navbar = () => {
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: i * 0.04 }}
                         >
+                          {!link.live ? (
+                            <div
+                              aria-disabled="true"
+                              className="flex items-center justify-between gap-4 px-4 py-3 font-mono text-[11px] uppercase rounded-sm min-h-[40px]"
+                              style={{ letterSpacing: "0.18em", color: "#B0AEA8", cursor: "default" }}
+                            >
+                              {link.name}
+                              <span className="text-[9px] normal-case" style={{ letterSpacing: "0.08em" }}>{IN_DEVELOPMENT_LABEL}</span>
+                            </div>
+                          ) : (
                           <Link
                             href={link.href}
                             onClick={() => setIsExpertiseOpen(false)}
@@ -156,6 +160,7 @@ const Navbar = () => {
                             {link.name}
                             <span style={{ color: "#A07830" }}>→</span>
                           </Link>
+                          )}
                         </motion.div>
                       ))}
                     </motion.div>
@@ -182,12 +187,12 @@ const Navbar = () => {
           {/* ── Black right CTA block with hover dropdown ── */}
           <div
             className="relative hidden lg:flex"
-            onMouseEnter={() => setIsCtaOpen(true)}
+            onMouseEnter={() => { if (accountsOn) setIsCtaOpen(true); }}
             onMouseLeave={() => setIsCtaOpen(false)}
           >
             <button
               type="button"
-              onClick={() => setIsCtaOpen(o => !o)}
+              onClick={() => (accountsOn ? setIsCtaOpen(o => !o) : openDiagnostic())}
               className="flex items-center justify-center px-8 xl:px-10 font-mono text-[11px] uppercase whitespace-nowrap transition-colors duration-300 cursor-pointer outline-none"
               style={{
                 letterSpacing: "0.22em",
@@ -214,19 +219,6 @@ const Navbar = () => {
                     boxShadow: "0 8px 32px rgba(0,0,0,0.4)",
                   }}
                 >
-                  {!accountsOn && (
-                    <button
-                      type="button"
-                      onClick={() => { setIsCtaOpen(false); openDiagnostic(); }}
-                      className="px-4 py-3 font-mono text-[11px] uppercase transition-colors duration-150 min-h-[40px] flex items-center justify-between text-left"
-                      style={{ letterSpacing: "0.18em", color: "rgba(247,246,243,0.75)" }}
-                      onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = "#C9A24A"; (e.currentTarget as HTMLElement).style.background = "rgba(247,246,243,0.05)"; }}
-                      onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = "rgba(247,246,243,0.75)"; (e.currentTarget as HTMLElement).style.background = "transparent"; }}
-                    >
-                      Start diagnostic
-                      <span style={{ color: "#A07830" }}>→</span>
-                    </button>
-                  )}
                   {[
                     ...(accountsOn && !loggedIn ? [
                       { label: "Register", href: "/register" },
@@ -290,6 +282,16 @@ const Navbar = () => {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.04 }}
                   >
+                    {!link.live ? (
+                      <div
+                        aria-disabled="true"
+                        className="flex items-center justify-between py-4 font-mono text-[12px] uppercase border-b min-h-[48px]"
+                        style={{ letterSpacing: "0.2em", color: "#B0AEA8", borderColor: "rgba(13,13,11,0.08)", cursor: "default" }}
+                      >
+                        {link.label}
+                        <span className="text-[10px]" style={{ letterSpacing: "0.12em" }}>{IN_DEVELOPMENT_LABEL}</span>
+                      </div>
+                    ) : (
                     <Link
                       href={link.href}
                       className="block py-4 font-mono text-[12px] uppercase border-b transition-colors duration-150 min-h-[48px]"
@@ -301,11 +303,13 @@ const Navbar = () => {
                     >
                       {link.label}
                     </Link>
+                    )}
                   </motion.div>
                 ))}
                 <div className="pt-5 pb-2">
-                  <Link
-                    href="/connect"
+                  <button
+                    type="button"
+                    onClick={() => { setIsMobileOpen(false); openDiagnostic(); }}
                     className="block w-full text-center py-4 font-mono text-[12px] uppercase min-h-[48px] transition-colors duration-200"
                     style={{
                       letterSpacing: "0.2em",
@@ -314,7 +318,7 @@ const Navbar = () => {
                     }}
                   >
                     Start Diagnostic
-                  </Link>
+                  </button>
                 </div>
               </div>
             </motion.div>
@@ -382,6 +386,14 @@ const Navbar = () => {
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: i * 0.04 }}
                     >
+                      {!link.live ? (
+                        <div aria-disabled="true" className="nav-dropdown-item opacity-50" style={{ cursor: "default" }}>
+                          <div>
+                            <div className="text-[11px] tracking-[0.2em]">{link.name}</div>
+                            <div className="text-[10px] text-[var(--fg-5)] tracking-[0.1em] mt-0.5 normal-case font-sans">{IN_DEVELOPMENT_LABEL}</div>
+                          </div>
+                        </div>
+                      ) : (
                       <Link
                         href={link.href}
                         className={`nav-dropdown-item ${pathname === link.href ? "text-[#C9A24A] bg-[rgba(201,162,74,0.05)]" : ""}`}
@@ -393,6 +405,7 @@ const Navbar = () => {
                         </div>
                         <span className="text-[var(--accent)] opacity-0 group-hover:opacity-100">→</span>
                       </Link>
+                      )}
                     </motion.div>
                   ))}
                 </motion.div>
@@ -464,6 +477,16 @@ const Navbar = () => {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.04, duration: 0.3 }}
                 >
+                  {!link.live ? (
+                    <div
+                      aria-disabled="true"
+                      className="flex items-center justify-between py-4 font-mono text-[12px] tracking-[0.24em] uppercase border-b min-h-[48px] text-[var(--fg-5)] border-[rgba(255,255,255,0.05)]"
+                      style={{ cursor: "default" }}
+                    >
+                      {link.label}
+                      <span className="text-[10px] tracking-[0.12em]">{IN_DEVELOPMENT_LABEL}</span>
+                    </div>
+                  ) : (
                   <Link
                     href={link.href}
                     className={`block py-4 font-mono text-[12px] tracking-[0.24em] uppercase border-b transition-colors duration-200 min-h-[48px] ${
@@ -474,6 +497,7 @@ const Navbar = () => {
                   >
                     {link.label}
                   </Link>
+                  )}
                 </motion.div>
               ))}
               <motion.div

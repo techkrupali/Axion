@@ -341,16 +341,16 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
     }
   }
 
-  // Step 1 = contact, step 2 = signals, step 3 = context (+ submit)
+  // Step 1 = the problem (signals), step 2 = role / company, step 3 = name / email / mobile (+ send)
   const contact = { name: form.name, email: form.email, phone: form.phone };
   const errs = contactErrors(contact);
   const hasCatchAll = form.signals.includes("Something else. I'll describe it.");
-  const canNext2 = form.signals.length > 0 && (!hasCatchAll || form.catchAllDetail.trim().length > 0);
-  const canSubmit = Boolean(form.role && form.company.trim().length > 0);
+  const canNext1 = form.signals.length > 0 && (!hasCatchAll || form.catchAllDetail.trim().length > 0);
+  const canNext2 = Boolean(form.role && form.company.trim().length > 0);
 
-  const continueFromContact = () => {
+  const sendWithContact = () => {
     setTouched({ name: true, email: true, phone: true });
-    if (isContactValid(contact)) setStep(2);
+    if (isContactValid(contact)) submit();
   };
 
   const inputStyle = {
@@ -441,9 +441,9 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
                   <span className="font-mono text-[9px] tracking-[0.3em] text-[var(--fg-5)] ml-2 shrink-0">{step} OF 3</span>
                 </div>
 
-                {/* ── STEP 2: Signal selection ── */}
-                {step === 2 && (
-                  <motion.div key="s2" initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }}>
+                {/* ── STEP 1: The problem (signals) ── */}
+                {step === 1 && (
+                  <motion.div key="s1" initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }}>
                     {/* Header copy */}
                     <p className="font-mono text-[9px] tracking-[0.4em] uppercase text-[var(--accent)] mb-2">
                       Your Signal
@@ -596,9 +596,9 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
                   </motion.div>
                 )}
 
-                {/* ── STEP 3: Context ── */}
-                {step === 3 && (
-                  <motion.div key="s3" initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }}>
+                {/* ── STEP 2: Role / company ── */}
+                {step === 2 && (
+                  <motion.div key="s2" initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }}>
                     <p className="font-mono text-[9px] tracking-[0.4em] uppercase text-[var(--accent)] mb-2">Where You Sit</p>
                     <h3 className="font-serif text-[26px] text-[var(--fg)] mb-8 leading-tight">Your context.</h3>
 
@@ -627,18 +627,14 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
                       options={SIZES}
                       placeholder="Select size…"
                     />
-
-                    {error && (
-                      <p className="mt-2 font-mono text-[11px] tracking-wide text-red-400">{error}</p>
-                    )}
                   </motion.div>
                 )}
 
-                {/* ── STEP 1: Contact details (first) ── */}
-                {step === 1 && (
-                  <motion.div key="s1" initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }}>
-                    <p className="font-mono text-[9px] tracking-[0.4em] uppercase text-[var(--accent)] mb-2">Your Details</p>
-                    <h3 className="font-serif text-[28px] text-[var(--fg)] leading-tight mb-1">First, where we reach you.</h3>
+                {/* ── STEP 3: Name / email / mobile (last) ── */}
+                {step === 3 && (
+                  <motion.div key="s3" initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }}>
+                    <p className="font-mono text-[9px] tracking-[0.4em] uppercase text-[var(--accent)] mb-2">Where We Reach You</p>
+                    <h3 className="font-serif text-[28px] text-[var(--fg)] leading-tight mb-1">Almost done.</h3>
                     <p className="text-[13px] text-[var(--fg-4)] mb-7 leading-relaxed">
                       We read every signal personally and come back to you within 48 hours.
                     </p>
@@ -681,6 +677,10 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
                       style={inputStyle}
                     />
                     <Honeypot value={form.website} onChange={v => set("website", v)} />
+
+                    {error && (
+                      <p className="mt-5 font-mono text-[11px] tracking-wide text-red-400">{error}</p>
+                    )}
                   </motion.div>
                 )}
               </>
@@ -710,7 +710,8 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
             <div className="p-8 md:px-10 md:pb-10 pt-4 border-t border-transparent" style={{ borderTop: "1px solid rgba(201,168,76,0.1)" }}>
               {step === 1 && (
                 <button
-                  onClick={continueFromContact}
+                  onClick={() => setStep(2)}
+                  disabled={!canNext1}
                   className="w-full py-4 rounded-full font-mono text-[11px] tracking-[0.28em] uppercase font-semibold flex items-center justify-center gap-2 transition-opacity disabled:opacity-30"
                   style={{ background: "#C9A24A", color: "#080A0F" }}
                 >
@@ -742,8 +743,8 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
                     style={{ border: "1px solid rgba(201,168,76,0.25)", color: "var(--fg-4)" }}
                   >Back</button>
                   <button
-                    onClick={submit}
-                    disabled={!canSubmit || loading}
+                    onClick={sendWithContact}
+                    disabled={loading}
                     className="flex-[2] py-4 rounded-full font-mono text-[11px] tracking-[0.28em] uppercase font-semibold flex items-center justify-center gap-2 transition-opacity disabled:opacity-30"
                     style={{ background: "#C9A24A", color: "#080A0F" }}
                   >
