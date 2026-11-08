@@ -118,7 +118,7 @@ export default function Connect() {
       </AnimatePresence>
 
       {/* HERO */}
-      <header className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <header className="relative flex items-center justify-center overflow-hidden pt-36 sm:pt-44 pb-10 sm:pb-14">
         <div className="absolute inset-0 pointer-events-none">
           <svg className="absolute inset-0 w-full h-full opacity-[0.02]" xmlns="http://www.w3.org/2000/svg">
             <defs>
@@ -133,7 +133,7 @@ export default function Connect() {
         <div className="absolute top-[20%] right-[20%] w-[500px] h-[500px] rounded-full opacity-[0.04] pointer-events-none"
           style={{ background: "radial-gradient(circle, #C9A24A 0%, transparent 70%)", animation: "float 14s ease-in-out infinite" }} />
 
-        <div className="shell text-center relative z-10 pt-20">
+        <div className="shell text-center relative z-10">
           <Reveal>
             <div className="eyebrow eyebrow--center mb-10 text-[var(--accent)]">AXION&nbsp;&nbsp;·&nbsp;&nbsp;CONNECT</div>
           </Reveal>
@@ -158,11 +158,11 @@ export default function Connect() {
             </a>
           </Reveal>
         </div>
-        <div className="absolute bottom-0 left-0 w-full h-[35vh] bg-gradient-to-t from-[var(--bg)] to-transparent pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-[var(--bg)] to-transparent pointer-events-none" />
       </header>
 
       {/* FORM + SIDEBAR */}
-      <section className="chapter section-dark relative" id="form">
+      <section className="section-dark relative pt-8 sm:pt-12 pb-[var(--chap)] scroll-mt-24" id="form">
         <div className="shell">
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-16 lg:gap-24">
 

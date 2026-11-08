@@ -2,7 +2,7 @@ import nodemailer from "nodemailer";
 import { renderOwnerEmail, type OwnerEmail } from "@/lib/emailTemplate";
 
 /** Every form submission on the site is emailed here. Override with ADMIN_EMAIL. */
-export const OWNER_EMAIL = process.env.ADMIN_EMAIL || "office@axionindex.org";
+export const OWNER_EMAIL = process.env.ADMIN_EMAIL || "nitin@axionindex.org";
 
 /**
  * Send a branded notification to the site owner. Never throws: the submission

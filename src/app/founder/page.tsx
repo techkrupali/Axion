@@ -6,6 +6,7 @@ import Link from "next/link";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import DiagnosticModal from "@/components/DiagnosticModal";
 import { PRACTICES, PRACTICE_ORDER, IN_DEVELOPMENT_LABEL, isLive } from "@/config/practices";
+import { AxionMark } from "@/components/AxionWordmark";
 
 /* ─── DESIGN TOKENS — mirror landing page exactly ──────────────────────────── */
 const T = {
@@ -612,7 +613,8 @@ export default function FounderPage() {
         <div className="fn-nav-inner">
           {/* Brand — "AXION INDEX" serif wordmark as in photo */}
           <a className="fn-brand" href="/">
-            AX<em style={{ fontStyle:"italic", color:"#A07830" }}>I</em>ON&nbsp;INDEX
+            <AxionMark color="#A07830" height="21px" />
+            <span style={{ marginLeft: 4 }}>AX<em style={{ fontStyle:"italic", color:"#A07830" }}>I</em>ON&nbsp;INDEX</span>
           </a>
           <button className="fn-hamb" aria-label={mobileOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileOpen} onClick={() => setMobileOpen(!mobileOpen)}>
