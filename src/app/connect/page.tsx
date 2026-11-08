@@ -7,7 +7,7 @@ import { ArrowRight, CheckCircle2 } from "lucide-react";
 import Footer from "@/components/Footer";
 import Button from "@/components/Button";
 import { Honeypot } from "@/components/Honeypot";
-import { contactErrors, isContactValid } from "@/lib/contact";
+import { contactErrors, isContactValid, toMobileDigits } from "@/lib/contact";
 
 const practices = ["People Architecture", "Labour Codes", "AI Edge Lab", "Family Business", "Not sure yet"];
 
@@ -185,7 +185,7 @@ export default function Connect() {
                 {([
                   { label: "Name", k: "name", type: "text", placeholder: "Your full name", ac: "name" },
                   { label: "Email", k: "email", type: "email", placeholder: "your@email.com", ac: "email" },
-                  { label: "Mobile number", k: "phone", type: "tel", placeholder: "+91 98765 43210", ac: "tel" },
+                  { label: "Mobile number", k: "phone", type: "tel", placeholder: "10-digit mobile number", ac: "tel" },
                 ] as const).map((field) => {
                   const showErr = touched[field.k] && errs[field.k];
                   return (
@@ -194,10 +194,14 @@ export default function Connect() {
                       <input
                         type={field.type}
                         autoComplete={field.ac}
+                        inputMode={field.k === "phone" ? "numeric" : undefined}
                         className={`${inputClass} ${showErr ? "!border-red-400/70" : ""}`}
                         placeholder={field.placeholder}
                         value={form[field.k]}
-                        onChange={(e) => setForm((f) => ({ ...f, [field.k]: e.target.value }))}
+                        onChange={(e) => {
+                          const v = field.k === "phone" ? toMobileDigits(e.target.value) : e.target.value;
+                          setForm((f) => ({ ...f, [field.k]: v }));
+                        }}
                         onBlur={() => setTouched((t) => ({ ...t, [field.k]: true }))}
                       />
                       {showErr && <p className="text-[12px] text-red-400 -mt-1">{errs[field.k]}</p>}

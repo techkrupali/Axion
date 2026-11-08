@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, ArrowRight, Download } from "lucide-react";
 import Link from "next/link";
 import { Honeypot } from "@/components/Honeypot";
-import { contactErrors, isContactValid } from "@/lib/contact";
+import { contactErrors, isContactValid, toMobileDigits } from "@/lib/contact";
 import { INDEX_DEFINITIONS, IndexType, QUESTIONS, Question } from "@/config/diagnosticConfig";
 import { Answers, Profile, scoreDiagnostic } from "@/engine/scoring";
 
@@ -155,7 +155,7 @@ export default function DiagnosticPage() {
                   {([
                     { k: "name", ph: "Your name", type: "text", ac: "name", value: profile.name ?? "", set: (v: string) => setProfile({ ...profile, name: v }) },
                     { k: "email", ph: "Your email", type: "email", ac: "email", value: email, set: setEmail },
-                    { k: "phone", ph: "Your mobile number", type: "tel", ac: "tel", value: phone, set: setPhone },
+                    { k: "phone", ph: "10-digit mobile number", type: "tel", ac: "tel", value: phone, set: (v: string) => setPhone(toMobileDigits(v)) },
                   ] as const).map(f => {
                     const showErr = touched[f.k] && errs[f.k];
                     return (
@@ -163,6 +163,7 @@ export default function DiagnosticPage() {
                         <input
                           type={f.type}
                           autoComplete={f.ac}
+                          inputMode={f.k === "phone" ? "numeric" : undefined}
                           placeholder={f.ph}
                           value={f.value}
                           onChange={e => f.set(e.target.value)}

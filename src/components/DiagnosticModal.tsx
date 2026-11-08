@@ -4,7 +4,7 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ArrowRight, GripVertical, ChevronDown, ChevronUp } from "lucide-react";
 import { Honeypot } from "@/components/Honeypot";
-import { contactErrors, isContactValid } from "@/lib/contact";
+import { contactErrors, isContactValid, toMobileDigits } from "@/lib/contact";
 import { OPEN_DIAGNOSTIC_EVENT } from "@/lib/openDiagnostic";
 
 // ── Signal list with backend routing metadata (never shown to visitor) ──
@@ -646,7 +646,7 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
                     {([
                       { k: "name", label: "Name", type: "text", ph: "Your full name", ac: "name" },
                       { k: "email", label: "Email", type: "email", ph: "you@company.com", ac: "email" },
-                      { k: "phone", label: "Mobile number", type: "tel", ph: "+91 98765 43210", ac: "tel" },
+                      { k: "phone", label: "Mobile number", type: "tel", ph: "10-digit mobile number", ac: "tel" },
                     ] as const).map(f => {
                       const showErr = touched[f.k] && errs[f.k];
                       return (
@@ -655,8 +655,9 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
                           <input
                             type={f.type}
                             autoComplete={f.ac}
+                            inputMode={f.k === "phone" ? "numeric" : undefined}
                             value={form[f.k]}
-                            onChange={e => set(f.k, e.target.value)}
+                            onChange={e => set(f.k, f.k === "phone" ? toMobileDigits(e.target.value) : e.target.value)}
                             onBlur={() => setTouched(t => ({ ...t, [f.k]: true }))}
                             placeholder={f.ph}
                             className="w-full rounded-[12px] px-4 py-3 text-[14px] text-[var(--fg)] placeholder:text-[var(--fg-5)] outline-none"
