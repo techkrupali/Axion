@@ -24,6 +24,10 @@ function doPost(e) {
   const lock = LockService.getScriptLock();
   lock.waitLock(15000);
   try {
+    // The website retries when Google is slow to answer; never write the same submission twice
+    const cache = CacheService.getScriptCache();
+    const seenKey = body.id ? 'lead:' + String(body.id).slice(0, 64) : '';
+    if (seenKey && cache.get(seenKey)) return reply({ ok: true, duplicate: true });
     const book = SpreadsheetApp.getActiveSpreadsheet();
     const sheet = book.getSheetByName(tab) || book.insertSheet(tab);
     let headers = sheet.getLastRow() > 0 ? sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0] : [];
@@ -41,6 +45,7 @@ function doPost(e) {
       }
     });
     sheet.appendRow(headers.map(function (h) { return safe(row[h]); }));
+    if (seenKey) cache.put(seenKey, '1', 21600); // remembered for 6 hours
   } finally {
     lock.releaseLock();
   }

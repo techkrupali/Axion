@@ -54,31 +54,50 @@ function toColumns(r: LeadRow): Record<string, string> {
   };
 }
 
+/**
+ * Google Apps Script answers in about a second, but about 1 call in 5 hangs with no reply (measured from
+ * the server on 16 Nov; same on IPv4 and with curl, so it is on Google's side). So: short tries, a few of
+ * them. This runs after the visitor already has their answer, so the retries cost nobody any time.
+ * Each submission carries one id; Code.gs skips an id it has already written, so a retry after a reply
+ * that got lost on the way back cannot add the row twice.
+ */
+const TRY_MS = 12_000;
+const WAIT_BEFORE_TRY_MS = [0, 2_000, 5_000, 10_000];
+const pause = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
 async function post(url: string | undefined, tab: string, row: LeadRow): Promise<boolean> {
   if (!url) {
     console.info(`[SHEET] no sheet URL set — skipped "${tab}" row for ${row.form}`);
     return false;
   }
-  try {
-    const res = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ secret: process.env.LEADS_SHEET_SECRET ?? "", tab, row: toColumns(row) }),
-      redirect: "follow",
-      // Runs after the visitor already has their answer, so waiting longer costs nobody anything.
-      // Google Apps Script can take 10 s+ on its first call after a quiet spell, or when rows queue up.
-      signal: AbortSignal.timeout(30_000),
-    });
-    const data = await res.json().catch(() => null);
-    if (!res.ok || !data?.ok) {
-      console.error(`[SHEET] "${tab}" row rejected (${res.status})`, data);
-      return false;
+  const body = JSON.stringify({ secret: process.env.LEADS_SHEET_SECRET ?? "", tab, id: crypto.randomUUID(), row: toColumns(row) });
+  for (let i = 0; i < WAIT_BEFORE_TRY_MS.length; i++) {
+    if (WAIT_BEFORE_TRY_MS[i]) await pause(WAIT_BEFORE_TRY_MS[i]);
+    try {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body,
+        redirect: "follow",
+        signal: AbortSignal.timeout(TRY_MS),
+      });
+      const data = await res.json().catch(() => null);
+      if (res.ok && data?.ok) {
+        if (i > 0) console.info(`[SHEET] "${tab}" row added on try ${i + 1}`);
+        return true;
+      }
+      // The script answered "no" (wrong secret, bad data): trying again will not help
+      if (data && data.ok === false) {
+        console.error(`[SHEET] "${tab}" row rejected (${res.status})`, data);
+        return false;
+      }
+      console.warn(`[SHEET] "${tab}" try ${i + 1}: HTTP ${res.status}, no answer from the script`);
+    } catch (err) {
+      console.warn(`[SHEET] "${tab}" try ${i + 1} failed: ${err instanceof Error ? err.name : err}`);
     }
-    return true;
-  } catch (err) {
-    console.error(`[SHEET] could not add "${tab}" row:`, err);
-    return false;
   }
+  console.error(`[SHEET] could not add "${tab}" row (${row.form}, ${row.email}) after ${WAIT_BEFORE_TRY_MS.length} tries; it is still saved in the database`);
+  return false;
 }
 
 /** A row in the Axion leads sheet. Never throws. */
