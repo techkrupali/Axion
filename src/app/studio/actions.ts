@@ -6,7 +6,7 @@ import { auth, signIn, signOut } from "@/auth";
 import dbConnect from "@/lib/db";
 import LibraryItemModel from "@/models/LibraryItem";
 import LibrarySeriesModel from "@/models/LibrarySeries";
-import { LIBRARY_TAG, loadLibraryFresh } from "@/content/store";
+import { LIBRARY_TAG, libraryMeta, loadLibraryFresh } from "@/content/store";
 import { CATEGORIES, THEMES, itemPath, slugify, type Category, type LibraryItem, type Theme } from "@/content/library";
 import { dropPhotoIfUnused, isCoverPath } from "@/lib/libraryImages";
 
@@ -24,23 +24,36 @@ async function requireEditor(): Promise<string> {
   return session.user.email ?? "editor";
 }
 
-/** First save ever: copy the starting data (library.json + texts) into the database, so nothing is lost. */
+/**
+ * First save ever: copy the starting data (library.json + texts) into the database, so nothing is lost.
+ * Then mark the library as filled, so deleting items (even all of them) never brings the starting data back.
+ */
+let markedSeeded = false;
 async function ensureSeeded() {
   await dbConnect();
-  if ((await LibraryItemModel.estimatedDocumentCount()) > 0) return;
-  const lib = await loadLibraryFresh(); // the database is empty, so this is the starting data
+  if (markedSeeded) return;
+  const seeded = await libraryMeta().findOne({ _id: "seeded" });
+  if (seeded || (await LibraryItemModel.estimatedDocumentCount()) > 0) {
+    if (!seeded) await libraryMeta().updateOne({ _id: "seeded" }, { $setOnInsert: { at: new Date() } }, { upsert: true });
+    markedSeeded = true;
+    return;
+  }
+  const lib = await loadLibraryFresh(); // the database is empty and was never filled: this is the starting data
   const now = new Date();
   await LibrarySeriesModel.insertMany(lib.series.map((s) => ({ ...s })), { ordered: false }).catch(() => {});
   await LibraryItemModel.insertMany(
     lib.items.map(({ seriesName: _n, ...i }) => ({ ...i, draft: !!i.draft, publishedAt: i.draft ? undefined : now, updatedBy: "starting data" })),
     { ordered: false },
   ).catch(() => {});
+  await libraryMeta().updateOne({ _id: "seeded" }, { $setOnInsert: { at: new Date() } }, { upsert: true });
+  markedSeeded = true;
 }
 
 /** Show the change on the site now: drop the cached library and every cached page. */
 function refreshSite(slug?: string) {
   revalidateTag(LIBRARY_TAG, { expire: 0 });
   revalidatePath("/", "layout");
+  revalidatePath("/sitemap.xml");
   if (slug) revalidatePath(`/cover/${slug}`); // its cover / share image
 }
 

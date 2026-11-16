@@ -1,9 +1,12 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useCallback, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
+import { Trash2 } from "lucide-react";
 import { THEMES, slugify, type Series } from "@/content/library";
 import { deleteSeries, saveSeries } from "../actions";
+import ConfirmDialog from "../ConfirmDialog";
+import { ui } from "../ui";
 
 /** Add a series, or edit one's name and summary (its address stays fixed once it exists). */
 export default function SeriesEditor({ series, parts }: { series?: Series; parts?: number }) {
@@ -12,8 +15,9 @@ export default function SeriesEditor({ series, parts }: { series?: Series; parts
   const [summary, setSummary] = useState(series?.summary ?? "");
   const [theme, setTheme] = useState<string[]>(series?.theme ?? []);
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
+  const [confirm, setConfirm] = useState(false);
+  const [error, setError] = useState("");
   const [pending, start] = useTransition();
-  const input = "w-full rounded-lg px-3.5 py-2.5 text-[15px] text-[var(--fg)] bg-[rgba(255,255,255,0.04)] border border-[var(--line-strong)] outline-none focus:border-[#C9A24A]";
 
   const save = () => start(async () => {
     const r = await saveSeries({ originalSlug: series?.slug, name, slug: slugify(name), summary, theme });
@@ -21,32 +25,64 @@ export default function SeriesEditor({ series, parts }: { series?: Series; parts
     if (r.ok) { if (!series) { setName(""); setSummary(""); setTheme([]); } router.refresh(); }
   });
   const remove = () => start(async () => {
+    setError("");
     const r = await deleteSeries(series!.slug);
-    if (r.ok) router.refresh(); else setMsg({ ok: false, text: r.error });
+    if (r.ok) { setConfirm(false); router.refresh(); } else setError(r.error);
   });
+  const close = useCallback(() => { setConfirm(false); setError(""); }, []);
 
   return (
-    <div className="rounded-xl border border-[var(--line)] p-5 flex flex-col gap-3">
-      <div className="grid grid-cols-1 md:grid-cols-[1fr_1.4fr] gap-3">
-        <input aria-label="Series name" placeholder="Series name, e.g. The Big AI Bet" value={name} onChange={(e) => setName(e.target.value)} className={input} />
-        <input aria-label="One-line description" placeholder="One-line description" value={summary} onChange={(e) => setSummary(e.target.value)} className={input} />
+    <div className={`${ui.panel} p-6 sm:p-7 flex flex-col gap-5`}>
+      {series && (
+        <div className="flex flex-wrap items-baseline justify-between gap-3">
+          <p className="font-display font-medium text-[24px] leading-tight text-[var(--fg)]">{series.name}</p>
+          <p className={`${ui.mono} text-[10px] text-[var(--fg-5)]`}>
+            /publications/series/{series.slug} · <span className="text-[#C9A24A]">{parts} part{parts === 1 ? "" : "s"}</span>
+          </p>
+        </div>
+      )}
+      <div className="grid grid-cols-1 md:grid-cols-[1fr_1.4fr] gap-4">
+        <div>
+          <label htmlFor={`s-name-${series?.slug ?? "new"}`} className={ui.label}>Series name</label>
+          <input id={`s-name-${series?.slug ?? "new"}`} placeholder="e.g. The Big AI Bet" value={name} onChange={(e) => setName(e.target.value)} className={ui.input} />
+        </div>
+        <div>
+          <label htmlFor={`s-sum-${series?.slug ?? "new"}`} className={ui.label}>One-line description</label>
+          <input id={`s-sum-${series?.slug ?? "new"}`} placeholder="What the series is about" value={summary} onChange={(e) => setSummary(e.target.value)} className={ui.input} />
+        </div>
       </div>
-      <div className="flex flex-wrap gap-2">
-        {THEMES.map((t) => {
-          const on = theme.includes(t);
-          return (
-            <label key={t} className={`cursor-pointer px-3 py-1.5 rounded-full border text-[12.5px] ${on ? "border-[#C9A24A] text-[var(--fg)] bg-[rgba(201,162,74,0.12)]" : "border-[var(--line-strong)] text-[var(--fg-4)]"}`}>
-              <input type="checkbox" className="sr-only" checked={on} onChange={() => setTheme(on ? theme.filter((x) => x !== t) : [...theme, t])} />{t}
-            </label>
-          );
-        })}
+      <div>
+        <span className={ui.label}>Theme</span>
+        <div className="flex flex-wrap gap-2">
+          {THEMES.map((t) => {
+            const on = theme.includes(t);
+            return (
+              <label key={t} className={ui.chip(on)}>
+                <input type="checkbox" className="sr-only" checked={on} onChange={() => setTheme(on ? theme.filter((x) => x !== t) : [...theme, t])} />{t}
+              </label>
+            );
+          })}
+        </div>
       </div>
-      <div className="flex flex-wrap items-center gap-3">
-        <button type="button" disabled={pending} onClick={save} className="px-5 py-2.5 bg-[#C9A24A] text-[#0A0A0B] font-mono text-[10.5px] tracking-[0.16em] uppercase font-semibold disabled:opacity-50">{series ? "Save" : "Add series"}</button>
-        {series && <span className="font-mono text-[10.5px] tracking-[0.12em] uppercase text-[var(--fg-5)]">/publications/series/{series.slug} · {parts} part{parts === 1 ? "" : "s"}</span>}
-        {series && !parts && <button type="button" disabled={pending} onClick={remove} className="ml-auto text-[13px] text-red-400/80 underline">Delete series</button>}
-        {msg && <span role="status" className={`text-[13.5px] ${msg.ok ? "text-[#7FD1AE]" : "text-red-400"}`}>{msg.text}</span>}
+      <div className="flex flex-wrap items-center gap-3 pt-1">
+        <button type="button" disabled={pending} onClick={save} className={ui.primary}>{series ? "Save changes" : "Add series"}</button>
+        {msg && <span role="status" className={`text-[13.5px] ${msg.ok ? "text-[#8FDDB6]" : "text-[#E8877B]"}`}>{msg.text}</span>}
+        {series && (
+          parts ? (
+            <span className="ml-auto text-[12.5px] text-[var(--fg-5)]">To delete it, move or delete its parts first.</span>
+          ) : (
+            <button type="button" disabled={pending} onClick={() => setConfirm(true)} className="ml-auto inline-flex items-center gap-2 text-[13px] text-[var(--fg-5)] hover:text-[#E8877B] transition-colors">
+              <Trash2 size={14} strokeWidth={1.6} aria-hidden /> Delete series
+            </button>
+          )
+        )}
       </div>
+      {series && (
+        <ConfirmDialog open={confirm} title="Delete this series?" confirmLabel="Delete series" busy={pending} error={error} onConfirm={remove} onCancel={close}>
+          <span className="block mb-3 font-display text-[19px] leading-snug text-[var(--fg)]">{series.name}</span>
+          It has no parts, so nothing else changes. Its page comes off the website. This cannot be undone.
+        </ConfirmDialog>
+      )}
     </div>
   );
 }

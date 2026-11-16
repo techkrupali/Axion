@@ -25,7 +25,8 @@ node --env-file=.env scripts/studio-users.mjs add nitin@axionindex.org "Nitin Na
 - Visitors get a cached copy (`src/content/store.ts`). Every Studio save clears it, so changes show within seconds.
 - **Preview** in the Studio turns on Next's draft mode for that browser only. Drafts then show on the real pages, under a gold "Preview" bar.
 - New items get their pages on first visit. Nothing needs rebuilding.
-- If the database cannot be reached, the site falls back to `library.json`.
+- If the database cannot be reached, the site keeps showing the last copy it read. It falls back to `library.json` only if it has never reached the database.
+- **Deleting** (bin icon in the Studio list, or in the editor) removes the item, its page, its place in every list and the sitemap at once. Once the database has been filled (`librarymeta` marker), deleted items never come back from `library.json`, even if every item is deleted.
 
 ## Bulk import from the tracker
 

@@ -13,7 +13,11 @@ import seed from "./library.json";
  *  • The Studio (/studio) saves items in MongoDB; that is the source.
  *  • Published pages read a cached copy, refreshed the moment the Studio publishes (tag "library").
  *  • Preview (draft mode, opened from the Studio) reads the latest data, drafts included.
- *  • Until the database has been filled (scripts/seed-library.mjs), library.json is used.
+ *  • Until the database has been filled (scripts/seed-library.mjs), library.json is used. Once it has
+ *    been filled (marker in "librarymeta"), an empty database means an empty library: items deleted
+ *    in the Studio never come back from library.json.
+ *  • If the database cannot be reached, the last copy read from it is used (library.json only if
+ *    this server has never reached it), so deleted items do not reappear during an outage.
  */
 export const LIBRARY_TAG = "library";
 
@@ -42,11 +46,14 @@ function fromFiles(): Library {
   return { items, series: (seed.series as Record<string, unknown>[]).map(plainSeries) };
 }
 
+/** Set once the database holds the library (first seed or first Studio save). */
+export const libraryMeta = () => LibraryItemModel.db.collection<{ _id: string; at: Date }>("librarymeta");
+
 async function fromDb(): Promise<Library | null> {
   if (!process.env.MONGODB_URI) return null;
   await dbConnect();
   const [items, series] = await Promise.all([LibraryItemModel.find().lean(), LibrarySeriesModel.find().lean()]);
-  if (!items.length) return null; // not filled yet
+  if (!items.length && !(await libraryMeta().findOne({ _id: "seeded" }))) return null; // not filled yet
   return {
     items: (items as Record<string, unknown>[]).map(plainItem),
     series: (series as Record<string, unknown>[]).map(plainSeries),
@@ -58,12 +65,15 @@ function withSeriesNames(lib: Library): Library {
   return { ...lib, items: lib.items.map((i) => (i.series && names.has(i.series) ? { ...i, seriesName: names.get(i.series) } : i)) };
 }
 
+let lastGood: Library | null = null;
+
 async function load(): Promise<Library> {
   try {
     const db = await fromDb();
-    if (db) return withSeriesNames(db);
+    if (db) return (lastGood = withSeriesNames(db));
   } catch (err) {
-    console.error("[LIBRARY] database unavailable, using library.json:", err);
+    console.error(`[LIBRARY] database unavailable, using ${lastGood ? "the last copy read from it" : "library.json"}:`, err);
+    if (lastGood) return lastGood;
   }
   return withSeriesNames(fromFiles());
 }

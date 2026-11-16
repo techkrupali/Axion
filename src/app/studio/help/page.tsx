@@ -2,11 +2,11 @@ import Link from "next/link";
 
 /** How to use the Studio, and the weekly routine (Fix Brief Part 7). */
 export default function StudioHelp() {
-  const h = "font-serif text-[24px] text-[var(--fg)] mt-10 mb-3";
+  const h = "font-display font-medium text-[27px] text-[var(--fg)] mt-12 mb-4";
   const li = "mb-2";
   return (
     <div className="max-w-[720px] text-[15.5px] leading-[1.75] text-[var(--fg-3)]">
-      <h1 className="font-serif text-[36px] leading-tight text-[var(--fg)]">How to use the Studio</h1>
+      <h1 className="font-display font-medium text-[clamp(32px,4vw,46px)] leading-[1.08] text-[var(--fg)]">How to use the Studio</h1>
 
       <h2 className={h}>Add a LinkedIn essay (about 5 minutes)</h2>
       <ol className="list-decimal pl-6">
@@ -26,7 +26,7 @@ export default function StudioHelp() {
       <p>Use only photos Axion Index owns or has permission to use, and none of clients without their written permission.</p>
 
       <h2 className={h}>Change or take down something</h2>
-      <p>Open it from the Library. For a live item, <b>Save and update live</b> changes the page at once. <b>Unpublish</b> takes it off the site and keeps it as a draft. <b>Delete</b> removes it for good.</p>
+      <p>Open it from the Library. For a live item, <b>Save and update live</b> changes the page at once. <b>Unpublish</b> takes it off the site and keeps it as a draft. <b>Delete</b> (the bin icon in the Library list, or &ldquo;Delete this item&rdquo; in the editor) asks once, then removes it for good: its page, every list and the sitemap update straight away.</p>
 
       <h2 className={h}>Every Monday</h2>
       <ul className="list-disc pl-6">

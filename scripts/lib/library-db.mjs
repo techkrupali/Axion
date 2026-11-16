@@ -21,7 +21,8 @@ export function libraryFromFiles() {
 export async function connect() {
   if (!process.env.MONGODB_URI) throw new Error("MONGODB_URI is not set (did you pass --env-file=.env?)");
   await mongoose.connect(process.env.MONGODB_URI);
-  return { items: mongoose.connection.db.collection("libraryitems"), series: mongoose.connection.db.collection("libraryseries") };
+  const db = mongoose.connection.db;
+  return { items: db.collection("libraryitems"), series: db.collection("libraryseries"), meta: db.collection("librarymeta") };
 }
 
 /** The library as the site sees it: the database if filled, else the starting files. */
@@ -29,19 +30,25 @@ export async function loadLibrary() {
   if (!process.env.MONGODB_URI) return libraryFromFiles();
   const c = await connect();
   const items = await c.items.find().toArray();
-  if (!items.length) return libraryFromFiles();
+  if (!items.length && !(await c.meta.findOne({ _id: "seeded" }))) return libraryFromFiles();
   return { items, series: await c.series.find().toArray() };
 }
 
 /** Copy the starting files into an empty database. Returns how many items were added. */
 export async function seedIfEmpty(c) {
-  if ((await c.items.countDocuments()) > 0) return 0;
+  if ((await c.items.countDocuments()) > 0) {
+    await c.meta.updateOne({ _id: "seeded" }, { $setOnInsert: { at: new Date() } }, { upsert: true });
+    return 0;
+  }
+  // Filled once already and then emptied in the Studio: never bring the starting data back
+  if (await c.meta.findOne({ _id: "seeded" })) return 0;
   const lib = libraryFromFiles();
   const now = new Date();
   if (lib.series.length) await c.series.insertMany(lib.series.map((s) => ({ ...s, createdAt: now, updatedAt: now })));
   await c.items.insertMany(lib.items.map((i) => ({ ...i, draft: !!i.draft, ...(i.draft ? {} : { publishedAt: now }), updatedBy: "starting data", createdAt: now, updatedAt: now })));
   await c.items.createIndex({ slug: 1 }, { unique: true });
   await c.series.createIndex({ slug: 1 }, { unique: true });
+  await c.meta.updateOne({ _id: "seeded" }, { $setOnInsert: { at: now } }, { upsert: true });
   return lib.items.length;
 }
 

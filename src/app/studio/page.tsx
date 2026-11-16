@@ -1,70 +1,90 @@
 import Link from "next/link";
-import { CATEGORIES, CATEGORY_ORDER, formatDate, itemPath, sortNewest, type Category } from "@/content/library";
+import { ChartColumn, Layers, Mic, Newspaper, PenLine } from "lucide-react";
+import { CATEGORY_ORDER, type Category } from "@/content/library";
 import { studioLibrary } from "./data";
+import { PageHeader, savedBy, shortDate, ui } from "./ui";
+import LibraryTable, { type TableRow } from "./LibraryTable";
 
 type Props = { searchParams: Promise<{ category?: string; deleted?: string }> };
 
 export const dynamic = "force-dynamic";
 
-/** Everything in Reports and Articles & Publications, drafts first. */
+const CREATE: { category: Category; label: string; line: string; icon: typeof PenLine }[] = [
+  { category: "essay", label: "Essay", line: "A LinkedIn essay", icon: PenLine },
+  { category: "series", label: "Series part", line: "One part of a series", icon: Layers },
+  { category: "media", label: "In the media", line: "A publisher's article", icon: Newspaper },
+  { category: "podcast", label: "Podcast or talk", line: "A recording", icon: Mic },
+  { category: "report", label: "Report", line: "Axion or AI Edge Lab", icon: ChartColumn },
+];
+
+/** The Studio's home: create something, see where things stand, find and manage every item. */
 export default async function StudioHome({ searchParams }: Props) {
   const { category, deleted } = await searchParams;
   const { rows } = await studioLibrary();
-  const cat = CATEGORY_ORDER.includes(category as Category) ? (category as Category) : undefined;
-  const shown = sortNewest(rows.filter((r) => !cat || r.category === cat)) as typeof rows;
-  const drafts = shown.filter((r) => !r.live);
-  const live = shown.filter((r) => r.live);
+  const initial = CATEGORY_ORDER.includes(category as Category) ? (category as Category) : "all";
 
-  const chip = (active: boolean) => `px-3.5 py-1.5 rounded-full border text-[12.5px] ${active ? "border-[#C9A24A] text-[var(--fg)] bg-[rgba(201,162,74,0.12)]" : "border-[var(--line-strong)] text-[var(--fg-4)] hover:text-[var(--fg)]"}`;
+  const live = rows.filter((r) => r.live && r.visible).length;
+  const drafts = rows.filter((r) => !r.live).length;
+  const needs = rows.filter((r) => r.live && !r.visible).length;
+  const latest = rows.filter((r) => r.updatedAt).sort((a, b) => b.updatedAt!.localeCompare(a.updatedAt!))[0];
 
-  const table = (list: typeof rows, empty: string) =>
-    list.length ? (
-      <ul className="divide-y divide-[var(--line)] border-y border-[var(--line)]">
-        {list.map((r) => (
-          <li key={r.slug} className="py-3.5 flex flex-wrap items-center gap-x-4 gap-y-1.5">
-            <Link href={`/studio/edit/${r.slug}`} className="min-w-0 flex-1 basis-[280px]">
-              <span className="block text-[15.5px] text-[var(--fg)] hover:text-[var(--accent)] truncate">{r.title}</span>
-              <span className="block font-mono text-[10.5px] tracking-[0.12em] uppercase text-[var(--fg-5)] mt-0.5">
-                {CATEGORIES[r.category].label}{r.date ? ` · ${formatDate(r.date, "short")}` : " · no date"}{r.updatedBy ? ` · saved by ${r.updatedBy}` : ""}
-              </span>
-            </Link>
-            <span className={`font-mono text-[10px] tracking-[0.14em] uppercase px-2.5 py-1 rounded ${r.live ? (r.visible ? "bg-[rgba(127,209,174,0.12)] text-[#7FD1AE]" : "bg-[rgba(224,178,90,0.12)] text-[#E0B25A]") : "bg-[rgba(255,255,255,0.06)] text-[var(--fg-4)]"}`}>
-              {r.live ? (r.visible ? "Live" : "Published, not showing") : "Draft"}
-            </span>
-            {r.live && r.visible && <a href={itemPath(r)} target="_blank" rel="noopener noreferrer" className="font-mono text-[10.5px] tracking-[0.14em] uppercase text-[var(--fg-4)] hover:text-[var(--accent)]">View ↗</a>}
-          </li>
-        ))}
-      </ul>
-    ) : <p className="text-[14px] text-[var(--fg-5)] py-3">{empty}</p>;
+  const table: TableRow[] = rows.map((r) => ({
+    slug: r.slug, title: r.title, category: r.category, date: r.date, series: r.series,
+    status: !r.live ? "draft" : r.visible ? "live" : "hidden",
+    updatedAt: r.updatedAt, updatedBy: r.updatedBy,
+  }));
+
+  const stats = [
+    { n: rows.length, label: "Items in the library" },
+    { n: live, label: "Live on the website" },
+    { n: drafts, label: "Drafts" },
+    { n: needs, label: "Published, needs a link", warn: needs > 0 },
+  ];
 
   return (
-    <div className="flex flex-col gap-8">
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <h1 className="font-serif text-[36px] leading-tight text-[var(--fg)]">Library</h1>
-          <p className="text-[14.5px] text-[var(--fg-4)] mt-1">Reports and Articles & Publications. Add last week&apos;s LinkedIn essays and media pieces every Monday.</p>
-        </div>
-        <div className="flex flex-wrap gap-2">
-          {(["essay", "series", "media", "podcast", "report"] as Category[]).map((k) => (
-            <Link key={k} href={`/studio/new?category=${k}`} className="px-4 py-2.5 bg-[#C9A24A] text-[#0A0A0B] font-mono text-[10.5px] tracking-[0.14em] uppercase font-semibold">+ {CATEGORIES[k].label}</Link>
+    <>
+      <PageHeader
+        eyebrow="Reports · Articles & Publications"
+        title="Library"
+        intro="Everything on the Reports and Articles & Publications pages. Add last week's LinkedIn essays and media pieces every Monday."
+      />
+
+      {/* Create */}
+      <section aria-labelledby="create" className="mb-10">
+        <h2 id="create" className={`${ui.mono} text-[var(--fg-5)] mb-4`}>Add something new</h2>
+        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-px bg-[rgba(240,241,245,0.08)] border border-[rgba(240,241,245,0.08)]">
+          {CREATE.map((c, i) => (
+            <Link key={c.category} href={`/studio/new?category=${c.category}`}
+              className={`group flex flex-col gap-4 p-5 sm:p-6 bg-[#0E0E10] hover:bg-[#141416] transition-colors ${i === CREATE.length - 1 ? "col-span-2 md:col-span-1" : ""}`}>
+              <span className="w-10 h-10 flex items-center justify-center border border-[rgba(201,162,74,0.35)] text-[#C9A24A] group-hover:bg-[#C9A24A] group-hover:text-[#0A0A0B] transition-colors">
+                <c.icon size={18} strokeWidth={1.5} aria-hidden />
+              </span>
+              <span>
+                <span className="block text-[15px] text-[var(--fg)]"><span aria-hidden className="text-[#C9A24A] mr-1">+</span>{c.label}</span>
+                <span className="block text-[13px] text-[var(--fg-5)] mt-1">{c.line}</span>
+              </span>
+            </Link>
           ))}
         </div>
-      </div>
-      {deleted && <p role="status" className="text-[14px] text-[#7FD1AE]">Deleted.</p>}
-      <div className="flex flex-wrap gap-2">
-        <Link href="/studio" className={chip(!cat)}>All ({rows.length})</Link>
-        {CATEGORY_ORDER.map((k) => (
-          <Link key={k} href={`/studio?category=${k}`} className={chip(cat === k)}>{CATEGORIES[k].plural} ({rows.filter((r) => r.category === k).length})</Link>
+      </section>
+
+      {/* Where things stand */}
+      <section aria-label="Overview" className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-[rgba(240,241,245,0.08)] border border-[rgba(240,241,245,0.08)] mb-12">
+        {stats.map((s) => (
+          <div key={s.label} className="bg-[#0B0B0D] px-5 sm:px-6 py-5">
+            <p className={`font-display font-medium text-[38px] leading-none [font-variant-numeric:lining-nums] ${s.warn ? "text-[#E8C27A]" : "text-[var(--fg)]"}`}>{s.n}</p>
+            <p className={`${ui.mono} text-[9.5px] text-[var(--fg-5)] mt-3`}>{s.label}</p>
+          </div>
         ))}
-      </div>
-      <section>
-        <h2 className="font-mono text-[11px] tracking-[0.2em] uppercase text-[var(--accent)] mb-3">Drafts ({drafts.length})</h2>
-        {table(drafts, "No drafts.")}
       </section>
-      <section>
-        <h2 className="font-mono text-[11px] tracking-[0.2em] uppercase text-[var(--accent)] mb-3">Published ({live.length})</h2>
-        {table(live, "Nothing published yet.")}
-      </section>
-    </div>
+
+      <LibraryTable rows={table} initialCategory={initial} justDeleted={!!deleted} />
+
+      {latest && (
+        <p className="mt-6 text-[13px] text-[var(--fg-5)]">
+          Last change: <span className="text-[var(--fg-4)]">{latest.title}</span>, {shortDate(latest.updatedAt)}{savedBy(latest.updatedBy) ? ` · ${savedBy(latest.updatedBy)}` : ""}.
+        </p>
+      )}
+    </>
   );
 }
