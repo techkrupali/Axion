@@ -121,8 +121,8 @@ function PhotoField({ category, value, alt, onChange, onAlt, labelClass, inputCl
           {error && <p role="alert" className="text-[13px] text-red-400">{error}</p>}
           <p className={hintClass}>
             {category === "book"
-              ? "The book cover, shown whole beside the title on the cover image, the book page and LinkedIn previews."
-              : "Shown beside the title on the cover image: in every list, on the page and in LinkedIn previews. JPG or PNG; large photos are made smaller automatically."}
+              ? "The book cover. The whole photo becomes the cover: on the book page, in lists and in LinkedIn previews."
+              : "The whole photo becomes the cover: in every list, on the page and in LinkedIn previews. JPG or PNG; large photos are made smaller automatically."}
             {" "}Save to see it on the site.
           </p>
           {value && (
@@ -341,7 +341,7 @@ export default function ItemEditor({ item, series, live, everPublished, visible 
           </Section>
         )}
 
-        <Section title="Photo" intro="Optional. Without one, a cover is made from the title.">
+        <Section title="Photo" intro="Optional. With a photo, the whole photo is the cover. Without one, a cover is made from the title.">
           <PhotoField category={c} value={f.cover} alt={f.coverAlt} onChange={(v) => set("cover", v)} onAlt={(v) => set("coverAlt", v)}
             labelClass={label} inputClass={input} hintClass={hint} />
         </Section>

@@ -73,3 +73,23 @@ export async function shareImage({ label, kicker, title, meta, photo }: { label:
     },
   );
 }
+
+/**
+ * With a photo (Studio → Photo), the cover is the whole photo (studio decision, 16 Nov): shown
+ * uncropped in the middle, over an enlarged, darkened copy of itself, so there are no black bars
+ * and nothing is cut off. Without a photo, the title card above is used.
+ */
+export function photoCover(src: string) {
+  return new ImageResponse(
+    (
+      <div style={{ width: 1200, height: 630, display: "flex", position: "relative", background: "#0B0B09", overflow: "hidden" }}>
+        {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text */}
+        <img src={src} width={2400} height={1260} style={{ position: "absolute", left: -600, top: -315, width: 2400, height: 1260, objectFit: "cover", opacity: 0.55 }} />
+        <div style={{ position: "absolute", left: 0, top: 0, width: 1200, height: 630, background: "rgba(11,11,9,0.82)" }} />
+        {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text */}
+        <img src={src} width={1200} height={630} style={{ position: "absolute", left: 0, top: 0, width: 1200, height: 630, objectFit: "contain" }} />
+      </div>
+    ),
+    { width: 1200, height: 630 },
+  );
+}

@@ -1,11 +1,12 @@
 import { CATEGORIES, findItem, formatDate, publicItems } from "@/content/library";
 import { getLibrary, loadLibraryFresh } from "@/content/store";
-import { shareImage } from "@/lib/shareImage";
+import { photoCover, shareImage } from "@/lib/shareImage";
 import { coverPhotoDataUrl } from "@/lib/libraryImages";
 
 /**
  * One cover template (Fix Brief Part 3, item 13): 1200 × 630, site fonts and gold,
- * for every library item. Used on the cards and as the share image.
+ * for every library item. Used on the cards and as the share image. An item with a photo
+ * uses the whole photo instead (see photoCover).
  */
 export const dynamic = "force-static";
 
@@ -24,8 +25,8 @@ export async function GET(_req: Request, { params }: { params: Promise<{ slug: s
     : item.category === "media" ? item.publisher ?? "In the media"
     : item.kicker ?? CATEGORIES[item.category].label;
   const meta = [formatDate(item.date), item.theme[0]].filter(Boolean).join("  ·  ");
-  // The item's photo (Studio → Photo), beside the title. A book cover is shown whole.
+  // With a photo (Studio → Photo) the cover is the whole photo; without one, the title card
   const src = await coverPhotoDataUrl(item.cover);
-  const photo = src ? { src, fit: item.category === "book" ? ("contain" as const) : ("cover" as const) } : null;
-  return shareImage({ label: CATEGORIES[item.category].label, kicker, title: item.title, meta, photo });
+  if (src) return photoCover(src);
+  return shareImage({ label: CATEGORIES[item.category].label, kicker, title: item.title, meta });
 }

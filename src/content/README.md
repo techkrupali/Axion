@@ -7,7 +7,7 @@ Everything on `/reports` and `/publications` is edited in the **Studio**: **http
 | Every item and series | MongoDB, collections `libraryitems` and `libraryseries`, edited in the Studio |
 | Starting data, before the database is filled | `src/content/library.json` and `src/content/texts/<slug>.md` |
 
-Covers and share images are generated from one template (`src/lib/shareImage.tsx`, 1200 × 630, site fonts and gold), so nobody has to design one per item. An item can also have a **photo** (Studio → Photo, every category): the editor shrinks it in the browser (at most 1600 px, JPEG, under 900 KB), stores it in the database (`libraryimages`), serves it at `/uploads/<id>.jpg`, and the cover template draws it beside the title (the book cover is shown whole). The item's `cover` field holds that address; `coverAlt` describes the photo. A replaced or removed photo is deleted once no item uses it.
+Covers and share images are generated from one template (`src/lib/shareImage.tsx`, 1200 × 630, site fonts and gold), so nobody has to design one per item. An item can also have a **photo** (Studio → Photo, every category): the editor shrinks it in the browser (at most 1600 px, JPEG, under 900 KB), stores it in the database (`libraryimages`), serves it at `/uploads/<id>.jpg`, and then the whole photo is the item's cover, uncropped, over a darkened copy of itself (`photoCover` in `src/lib/shareImage.tsx`). Without a photo the cover is the title card. The item's `cover` field holds that address; `coverAlt` describes the photo. A replaced or removed photo is deleted once no item uses it.
 
 ## Setting up the Studio (once, on the server)
 
