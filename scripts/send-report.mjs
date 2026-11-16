@@ -11,9 +11,13 @@
  * Safe to run again: people already marked as sent are skipped. Sends one email every 1.5 s
  * to stay within mailbox limits. Uses the same SMTP settings as the website.
  */
+import dns from "node:dns";
 import mongoose from "mongoose";
 import nodemailer from "nodemailer";
 import { loadLibrary } from "./lib/library-db.mjs";
+
+// The server's IPv6 route to Google can hang; send over IPv4 (same as the website, src/lib/preferIpv4.ts)
+dns.setDefaultResultOrder("ipv4first");
 
 const args = process.argv.slice(2);
 const opt = (name) => { const i = args.indexOf(name); return i >= 0 ? args[i + 1] : undefined; };
@@ -33,7 +37,7 @@ if (!item) { console.error(`No report "${slug}" in the library`); process.exit(1
 // Same key as signupKey() in src/content/reportState.ts: the Global AI Report kept its first key
 const edition = slug === "make-or-break" ? "Edition 01" : slug;
 
-const PUBLIC_EMAIL = "office@axionindex.org";
+const PUBLIC_EMAIL = "support@axionindex.org"; // the only public address (src/config/contact.ts)
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 const first = (name) => String(name).trim().split(/\s+/)[0] || name;
 

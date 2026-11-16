@@ -14,22 +14,21 @@ Every form: saved in MongoDB, alert to `nitin@axionindex.org`, acknowledgement t
 
 There is one conversation form. Every "Start a conversation / Begin a diagnostic / Request a diagnostic" button opens it. Reach Us (`/connect`) embeds the same form. Practice pages pass their practice silently.
 
-## 1. Sending from office@axionindex.org
+## 1. Sender and reply address (support@)
 
-All emails are sent from the mailbox in `SMTP_USER`. To send as office@:
+`support@axionindex.org` (the helpdesk) is the only public address (Nitin, 16 Nov). office@ and admin@ do not exist. Every visitor email already has **Reply-To: support@**, so replies land in the helpdesk.
 
-1. Create the `office@axionindex.org` mailbox (Google Workspace) and turn on 2-step verification.
-2. Create an app password for it.
-3. In the server `.env`, set:
+Emails are sent through the mailbox in `SMTP_USER` (today nitin@, with an app password). To show support@ as the **sender** as well:
+
+1. In the nitin@ Gmail: **Settings → Accounts → Send mail as → Add another email address**, enter `support@axionindex.org`, untick "Treat as an alias", and confirm with the code Google sends to support@ (it arrives in the helpdesk).
+2. In the server `.env`, set:
    ```
-   SMTP_USER=office@axionindex.org
-   SMTP_PASSWORD=<the new app password>
-   SMTP_FROM="Axion Index <office@axionindex.org>"
-   ADMIN_EMAIL=nitin@axionindex.org
+   SMTP_FROM="Axion Index <support@axionindex.org>"
    ```
-4. Restart: `pm2 restart axion`.
+   Keep `SMTP_USER`, `SMTP_PASSWORD` and `ADMIN_EMAIL=nitin@axionindex.org` as they are.
+3. Restart: `pm2 restart axion`.
 
-Alerts still go to nitin@ (`ADMIN_EMAIL`). Visitors' replies go to office@.
+Without step 1, Gmail quietly replaces the sender with nitin@. Alerts always go to nitin@ (`ADMIN_EMAIL`); that address is never shown on the site.
 
 ## 2. The leads sheet (Google Sheets)
 
@@ -49,6 +48,8 @@ Columns: Date, Name, Organisation, Role, Form, Signals chosen, Message, Source p
 AI Edge Lab early-bird registrations go to an "AI Edge Lab" tab, with extra Country and Assessment columns. To keep them in a different file, deploy the same script in a second sheet and set `AI_EDGE_SHEET_URL`.
 
 If the sheet is down, nothing is lost: every submission is still in MongoDB and in nitin@'s inbox.
+
+If rows go missing and the server log (`pm2 logs axion --err`) shows `[SHEET] could not add … TimeoutError`, check the network first: the server's IPv6 route to Google has been seen to hang. The website prefers IPv4 for that reason (`src/lib/preferIpv4.ts`). Every submission is still in the database.
 
 ## 3. Analytics
 

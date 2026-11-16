@@ -83,8 +83,8 @@ const CHAPTERS = [
   { year: "2004–2008", company: "Standard Chartered",context: "Captive finance · Data-led HR",               body: "The room changed when evidence entered. The lesson was permanent: argument persuades only after proof earns the right to be heard.",                                                                                      installed: "Evidence before argument" },
   { year: "2008–2009", company: "HSBC",              context: "Reward architecture · Talent redesign",       body: "Constraint forced clarity. Authority was not enough; alignment came from making choices, rules, and consequences legible.",                                                                                              installed: "Clarity before authority" },
   { year: "2009–2019", company: "Tata",              context: "Global HR · M&A · Starbucks India JV",        body: "A decade across scale, integration, culture, and global operating systems. Starbucks India belongs here as a Tata/JV mandate.",                                                                                        installed: "Culture as systems" },
-  { year: "2015",      company: "Lodha",             context: "Real estate · Operating context shift",       body: "A short, intense context shift where the plan and reality diverged. It compressed the need to read conditions before applying frameworks.",                                                                            installed: "Context reading" },
-  { year: "2011",      company: "Marico",            context: "Consumer organisation · Deliberate reset",    body: "A mature, consumer-first organisation where the work was not just building systems, but refining and sustaining them with focus.",                                                                                     installed: "Focus as architecture" },
+  { year: "2015",      company: "Lodha",             note: "(6 months, between Tata stints)", context: "Real estate · Operating context shift",       body: "A short, intense context shift where the plan and reality diverged. It compressed the need to read conditions before applying frameworks.",                                                                            installed: "Context reading" },
+  { year: "2011",      company: "Marico",            note: "(6 months, between Tata stints)", context: "Consumer organisation · Deliberate reset",    body: "A mature, consumer-first organisation where the work was not just building systems, but refining and sustaining them with focus.",                                                                                     installed: "Focus as architecture" },
   { year: "2019–2021", company: "Udaan",            context: "Startup hypergrowth · National scale",        body: "There was no inherited architecture at startup velocity. The work was to design before the organisation knew what it would become.",                                                                                   installed: "Pre-institutional design" },
   { year: "2022–2026", company: "Gameskraft",    context: "Gaming & tech · Crisis-tested scale",         body: "The proof of architecture is the moment it is tested. Crisis revealed which commitments were real because they had been built before the shock arrived.",                                                              installed: "Crisis architecture" },
 ];
@@ -379,6 +379,12 @@ function ChapterAccordion() {
                           <span className="font-serif italic" style={{ fontFamily:T.display, fontSize:"clamp(36px,4vw,56px)", color:T.gold2, lineHeight:1 }}>
                             {ch.year}
                           </span>
+                          {/* N-05 (Nitin, 16 Nov): Lodha and Marico were six-month breaks between Tata stints */}
+                          {ch.note && (
+                            <span className="font-mono block mt-3" style={{ fontSize:13, letterSpacing:".12em", color:"rgba(247,246,243,0.7)", lineHeight:1.6 }}>
+                              {ch.note}
+                            </span>
+                          )}
                         </div>
                         {/* Context */}
                         <div>

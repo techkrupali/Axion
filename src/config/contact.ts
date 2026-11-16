@@ -7,7 +7,8 @@
  */
 import { LINKEDIN_NITIN } from "@/config/nav";
 
-export const PUBLIC_EMAIL = "office@axionindex.org";
+/** Nitin, 16 Nov: support@ (the helpdesk) is the only public address. office@ and admin@ do not exist. */
+export const PUBLIC_EMAIL = "support@axionindex.org";
 
 export const FORM_PRIVACY_LINE = "We use your details only to reply to you.";
 

@@ -12,7 +12,7 @@
  * /global-ai-report keeps working at its own address (SEO-01). The long-form page stays at readPath.
  */
 export const REPORT = {
-  /** R-04 / D7: title assumed until Nitin confirms */
+  /** R-04 / D7: title confirmed by Nitin, 16 Nov 2026 */
   name: "Make or Break",
   subtitle: "The Weakest Link in the Big AI Bet",
   edition: "Edition 01",

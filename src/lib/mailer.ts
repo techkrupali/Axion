@@ -7,8 +7,9 @@ import { PUBLIC_EMAIL } from "@/config/contact";
 export const OWNER_EMAIL = process.env.ADMIN_EMAIL || "nitin@axionindex.org";
 
 /**
- * Sender for every email (item 17: "sent from the Axion Index address"). Point SMTP_USER /
- * SMTP_PASSWORD / SMTP_FROM in the server .env at office@axionindex.org to send as that address.
+ * Sender for every email (item 17: "sent from the Axion Index address"). Replies always go to
+ * PUBLIC_EMAIL (support@). To show support@ as the sender too, add it as a "Send mail as" address
+ * in the SMTP_USER mailbox, then set SMTP_FROM="Axion Index <support@axionindex.org>" in the server .env.
  */
 const fromLine = () => process.env.SMTP_FROM || `"Axion Index" <${process.env.SMTP_USER || PUBLIC_EMAIL}>`;
 

@@ -14,8 +14,8 @@ Every account behind axionindex.org must belong to Axion Index, with Nitin as ow
 | Database | **MongoDB Atlas** (forms, Studio content, Studio logins) | Axion Index, Nitin as owner | Tech lead | Confirm the Atlas organisation owner. Turn on backups if the plan allows; otherwise rely on the monthly exports below. |
 | Code | GitHub repo **techkrupali/Axion** (a developer's personal account) | **Axion Index organisation**, Nitin as owner | Developers as members | Create a GitHub organisation, then transfer the repo. Steps below. |
 | Content manager | **Studio** at axionindex.org/studio | Nitin as admin | Content person (editor), tech (admin) | `scripts/studio-users.mjs` adds, lists and removes logins. Keep two admins. |
-| Email inboxes | Google Workspace: nitin@, office@ | Axion Index | — | Create **office@** (the public address); it should also send the site's emails. Alerts go to nitin@. |
-| Website email sending | SMTP app password in the server `.env` | Axion Index | Tech (server only) | Switch to office@'s own app password once it exists (`docs/forms-and-leads.md` § 1). |
+| Email inboxes | Google Workspace: nitin@; helpdesk: support@ (the only public address) | Axion Index | — | office@ and admin@ do not exist. Alerts go to nitin@. |
+| Website email sending | SMTP app password (nitin@) in the server `.env`; replies go to support@ | Axion Index | Tech (server only) | Add support@ as a "Send mail as" address so it also shows as the sender (`docs/forms-and-leads.md` § 1). |
 | Leads sheet and form data | Google Sheet + Apps Script (`docs/forms-and-leads.md` § 2) | Axion Index Drive | Nitin; tech for setup only | Create the sheet **in Axion's Drive**, not a developer's. Personal data stays there and in Atlas. |
 | Analytics | Plausible or GA4 (not chosen yet) | Axion Index, Nitin admin | Tech, content person (view) | Open the account in Axion's name. |
 | Search Console | A Google verification record already exists on the domain | Axion Index, Nitin admin | Tech (view) | Find which Google account verified it; make sure Nitin is an owner. |
@@ -31,9 +31,11 @@ These let inboxes trust the site's form replies and report emails:
 | Type | Host | Value |
 | --- | --- | --- |
 | TXT | `@` | `v=spf1 include:_spf.google.com ~all` |
-| TXT | `_dmarc` | `v=DMARC1; p=none; rua=mailto:office@axionindex.org` |
+| TXT | `_dmarc` | `v=DMARC1; p=none` |
 
-DKIM is already in place (`google._domainkey`). After two clean weeks of DMARC reports, change `p=none` to `p=quarantine`.
+DKIM (Google Workspace) is already in place (`google._domainkey`); check it shows **Authenticating** in Google Admin → Apps → Gmail → Authenticate email. If the support@ helpdesk sends replies through its own service, add that service's SPF include and DKIM records too (its help pages list them). DMARC has no report address, so reports never fill the helpdesk; to get them, add `rua=mailto:<a mailbox that is not support@>`. After two clean weeks, change `p=none` to `p=quarantine`.
+
+Test before 19 Nov: send a form reply to a Gmail and an Outlook address. In Gmail, **Show original** must say SPF, DKIM and DMARC **PASS**; in Outlook, the message must reach the inbox.
 
 ## The six rules, in practice
 

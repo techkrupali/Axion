@@ -8,6 +8,7 @@ import { openDiagnostic } from "@/lib/openDiagnostic";
 import Footer from "@/components/Footer";
 import Button from "@/components/Button";
 import { CONVERSATION_INVITE, LINKEDIN_NITIN } from "@/config/nav";
+import { PUBLIC_EMAIL } from "@/config/contact";
 
 /* ─────────────────────────────────────────
    SHARED PRIMITIVES
@@ -1146,8 +1147,8 @@ function EndSection({ onStartDiagnostic }: { onStartDiagnostic: () => void }) {
             <span className="text-[var(--line-gold)]">·</span>
             <span>Est. 2024</span>
             <span className="text-[var(--line-gold)]">·</span>
-            <a href="mailto:office@axionindex.org" className="hover:text-[var(--accent)] transition-colors">
-              office@axionindex.org
+            <a href={`mailto:${PUBLIC_EMAIL}`} className="hover:text-[var(--accent)] transition-colors">
+              {PUBLIC_EMAIL}
             </a>
             <span className="text-[var(--line-gold)]">·</span>
             <a href={LINKEDIN_NITIN} target="_blank" rel="noopener noreferrer" className="hover:text-[var(--accent)] transition-colors">

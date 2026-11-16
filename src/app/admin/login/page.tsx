@@ -65,7 +65,7 @@ export default function AdminLoginPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="block w-full pl-11 pr-4 py-4 bg-[#111] border border-[rgba(240,241,245,0.1)] rounded-xl text-[#e5e5e5] text-sm placeholder-[#404040] focus:outline-none focus:ring-1 focus:ring-[#C9A24A]/30 focus:border-[#C9A24A]/30 transition-all"
-                  placeholder="admin@axion.com"
+                  placeholder="name@axionindex.org"
                 />
               </div>
             </div>

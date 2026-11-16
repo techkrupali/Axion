@@ -4,7 +4,7 @@ import { FOOTER_COLUMNS, FOOTER_BOTTOM_LINE } from "@/config/nav";
 import { CookieSettingsLink } from "@/components/CookieBanner";
 import { mediaKitReady } from "@/config/mediaKit";
 import NewsletterForm from "@/components/NewsletterForm";
-import { JOURNAL } from "@/config/contact";
+import { JOURNAL, PUBLIC_EMAIL } from "@/config/contact";
 
 /** The one site footer (Fix Brief Part 1 D-02 + Part 2): same links on every page. */
 export default function Footer() {
@@ -24,7 +24,7 @@ export default function Footer() {
         <div className="pt-16 sm:pt-20 pb-12 sm:pb-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.2fr_1fr_1.3fr_0.9fr_1.1fr] gap-10 sm:gap-12 lg:gap-8 border-b border-[rgba(240,241,245,0.1)]">
 
           {/* Brand */}
-          <div className="sm:col-span-2 lg:col-span-1">
+          <div className="sm:col-span-2 lg:col-span-1 flex flex-col items-start">
             <Link href="/" aria-label="Axion Index — home" className="inline-block">
               <img
                 src="/axion-index-lockup-gold-transparent.svg"
@@ -33,6 +33,10 @@ export default function Footer() {
                 style={{ width: "clamp(180px, 20vw, 260px)", height: "auto" }}
               />
             </Link>
+            {/* Nitin, 16 Nov: support@ is the one public address, in the footer too */}
+            <a href={`mailto:${PUBLIC_EMAIL}`} className="mt-5 inline-flex min-h-[36px] items-center text-[14px] hover:text-[#C9A24A] transition-colors duration-300 break-all" style={{ color: "#EDEBE3" }}>
+              {PUBLIC_EMAIL}
+            </a>
           </div>
 
           {FOOTER_COLUMNS.map((c) => (c.title === "Firm" && mediaKitReady() ? { ...c, links: [...c.links, { label: "Media kit", href: "/media-kit" }] } : c)).map((col) => (

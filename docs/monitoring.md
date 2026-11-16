@@ -4,7 +4,7 @@ Alerts go to **Nitin (nitin@axionindex.org)** and the **tech lead**. Record each
 
 ## 1. Uptime alerts (free, about 10 minutes)
 
-1. Create a free account at https://uptimerobot.com with an Axion address (office@axionindex.org).
+1. Create a free account at https://uptimerobot.com with an Axion address (support@axionindex.org).
 2. Add two HTTP(s) monitors, checked every 5 minutes:
    - `https://axionindex.org/` (the homepage);
    - `https://axionindex.org/api/health` (answers 200 only when the site **and** its database work; 503 otherwise).

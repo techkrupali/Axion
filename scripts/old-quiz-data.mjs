@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 /**
  * Data from the old AI Edge quiz (Fix Brief Part 10, A-11). The quiz came down in Part 5;
- * its results (name, email, phone, answers, score) stay in the database until Nitin decides.
- * Those people did not agree to their data moving to the AI Edge Lab institute, so it is
- * not added to the early-bird list.
+ * Nitin, 16 Nov: move only people who agreed to hear from us; delete phone numbers and the rest.
+ * The quiz never asked for that consent, so nobody qualifies for the early-bird list. Checked on
+ * 16 Nov: the live database holds no quiz results, so there was nothing to delete.
  *
  *   node --env-file=.env scripts/old-quiz-data.mjs count              how many, and the date range
  *   node --env-file=.env scripts/old-quiz-data.mjs export quiz.csv    for Nitin (upload to Axion's Drive, then delete the file)

@@ -11,6 +11,8 @@ import { REPORT, REPORT_FULL_TITLE, inLaunchWeek } from "@/config/report";
  * REPORT.launchWeek.from and .until, so it goes away by itself. A visitor can close it.
  */
 const KEY = "axion-launch-banner";
+/** Nitin, 16 Nov: the bar links to /global-ai-report (it shows the report's page, see next.config.ts). */
+const BANNER_HREF = "/global-ai-report";
 const listeners = new Set<() => void>();
 let dismissed = false;
 
@@ -30,7 +32,7 @@ function close() {
 export default function LaunchBanner() {
   const show = useSyncExternalStore(subscribe, snapshot, serverSnapshot);
   const pathname = usePathname() ?? "";
-  if (!show || pathname.startsWith("/studio") || pathname === REPORT.signupPath || pathname.startsWith("/thank-you")) return null;
+  if (!show || pathname.startsWith("/studio") || pathname === REPORT.signupPath || pathname === BANNER_HREF || pathname.startsWith("/thank-you")) return null;
   return (
     <>
       {/* keeps the end of the page (footer) clear of the banner */}
@@ -42,7 +44,7 @@ export default function LaunchBanner() {
             <span className="hidden sm:inline"> · {REPORT_FULL_TITLE}</span>
             <span className="sm:hidden"> · {REPORT.name}</span>
           </p>
-          <Link href={REPORT.signupPath} className="shrink-0 px-3 sm:px-4 py-2 bg-[#C9A24A] text-[#0A0A0B] font-mono text-[10.5px] sm:text-[11px] tracking-[0.14em] uppercase font-semibold">
+          <Link href={BANNER_HREF} className="shrink-0 px-3 sm:px-4 py-2 bg-[#C9A24A] text-[#0A0A0B] font-mono text-[10.5px] sm:text-[11px] tracking-[0.14em] uppercase font-semibold">
             <span className="sm:hidden">Download →</span>
             <span className="hidden sm:inline">Download the report →</span>
           </Link>
