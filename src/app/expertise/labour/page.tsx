@@ -50,8 +50,9 @@ export default function LabourCodes() {
   const [outputs, setOutputs] = useState({ total: 8.9, wages: 2.7, ss: 3.2, cl: 1.8, osh: 1.3 });
   const [activeCls, setActiveCls] = useState(0);
 
-  const nextCls = () => setActiveCls((prev) => (prev + 1) % classifications.length);
-  const prevCls = () => setActiveCls((prev) => (prev - 1 + classifications.length) % classifications.length);
+  // B-22: the carousel opens on 01 and stops at the ends (no wrap-around to 06)
+  const nextCls = () => setActiveCls((prev) => Math.min(prev + 1, classifications.length - 1));
+  const prevCls = () => setActiveCls((prev) => Math.max(prev - 1, 0));
 
   useEffect(() => {
     // Basic logic to simulate the requested output for the default inputs
@@ -77,7 +78,7 @@ export default function LabourCodes() {
   const inp = "bg-transparent border-b border-[rgba(255,255,255,0.1)] px-0 py-3 text-[var(--fg)] text-[15px] outline-none focus:border-[var(--accent)] transition-colors duration-300 w-full";
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen overflow-x-clip">
 
       {/* HERO */}
       <header className="relative min-h-screen flex items-center justify-center bg-transparent pt-20 overflow-hidden">
@@ -96,8 +97,12 @@ export default function LabourCodes() {
             </h1>
           </Reveal>
           <Reveal delay={0.2}>
-            <p className="lead mx-auto mb-12 opacity-90 text-[var(--fg-2)] max-w-[52ch]">
+            <p className="lead mx-auto mb-6 opacity-90 text-[var(--fg-2)] max-w-[52ch]">
               India's Labour Code consolidation is a structural reset of how organisations define, compensate, and govern their workforce. This is an interpretive advisory interface — not a substitute for legal counsel.
+            </p>
+            {/* B-21 (Fix Brief Part 8): where the Codes stand. Confirm with Nitin at each monthly date check. */}
+            <p className="mx-auto mb-12 max-w-[60ch] font-mono text-[10.5px] tracking-[0.16em] uppercase text-[var(--fg-4)] leading-relaxed">
+              Status: the four Codes took effect on 21 November 2025 · Central Rules notified in May 2026
             </p>
           </Reveal>
           <Reveal delay={0.3}>
@@ -141,9 +146,6 @@ export default function LabourCodes() {
       <section className="chapter section-deep relative overflow-hidden" id="classify">
         <div className="shell">
           <div className="mb-20">
-            <Reveal>
-              <div className="font-serif italic text-[120px] leading-none text-[var(--accent)] opacity-10 mb-4">29</div>
-            </Reveal>
             <Reveal><span className="eyebrow mb-6 text-[var(--accent)]">Worker classification grid</span></Reveal>
             <Reveal delay={0.1}><h2 className="h-statement">Six categories, <em className="text-[var(--accent)]">each with its own architecture.</em></h2></Reveal>
             <Reveal delay={0.2}><p className="lead text-[var(--fg-3)] mt-6 max-w-[52ch]">Classification drives everything downstream — compensation, social security, OSH, and governance. The codes do not merely consolidate language; they redraw the boundaries of who counts as what.</p></Reveal>
@@ -151,26 +153,28 @@ export default function LabourCodes() {
 
           <div className="relative h-[520px] flex items-center justify-center">
             {/* Navigation Arrows */}
-            <button 
+            <button
               onClick={prevCls}
-              className="absolute left-0 z-20 w-12 h-12 rounded-full border border-[var(--line)] flex items-center justify-center text-[var(--fg-3)] hover:text-[var(--accent)] hover:border-[var(--accent)] transition-all duration-300 bg-[rgba(10,12,16,0.5)] backdrop-blur-sm"
+              disabled={activeCls === 0}
+              aria-label="Previous category"
+              className="disabled:opacity-25 disabled:pointer-events-none absolute left-0 z-20 w-12 h-12 rounded-full border border-[var(--line)] flex items-center justify-center text-[var(--fg-3)] hover:text-[var(--accent)] hover:border-[var(--accent)] transition-all duration-300 bg-[rgba(10,12,16,0.5)] backdrop-blur-sm"
             >
               ←
             </button>
-            <button 
+            <button
               onClick={nextCls}
-              className="absolute right-0 z-20 w-12 h-12 rounded-full border border-[var(--line)] flex items-center justify-center text-[var(--fg-3)] hover:text-[var(--accent)] hover:border-[var(--accent)] transition-all duration-300 bg-[rgba(10,12,16,0.5)] backdrop-blur-sm"
+              disabled={activeCls === classifications.length - 1}
+              aria-label="Next category"
+              className="disabled:opacity-25 disabled:pointer-events-none absolute right-0 z-20 w-12 h-12 rounded-full border border-[var(--line)] flex items-center justify-center text-[var(--fg-3)] hover:text-[var(--accent)] hover:border-[var(--accent)] transition-all duration-300 bg-[rgba(10,12,16,0.5)] backdrop-blur-sm"
             >
               →
             </button>
 
             <div className="flex items-center gap-6 w-full max-w-[1000px] justify-center px-12">
-              {[
-                (activeCls - 1 + classifications.length) % classifications.length,
-                activeCls,
-                (activeCls + 1) % classifications.length
-              ].map((idx, i) => {
+              {[activeCls - 1, activeCls, activeCls + 1].map((idx, i) => {
                 const cls = classifications[idx];
+                // Before 01 and after 06 the slot stays empty, keeping the active card in the middle
+                if (!cls) return <div key={`empty-${i}`} aria-hidden className="flex-1 min-w-[300px] max-w-[340px] h-[480px]" />;
                 const isActive = i === 1;
                 return (
                   <motion.div
@@ -309,12 +313,12 @@ export default function LabourCodes() {
             <div className="p-10 border-b lg:border-b-0 lg:border-r border-[rgba(255,255,255,0.06)]">
               <div className="grid grid-cols-2 gap-8 mb-8">
                 <div className="flex flex-col gap-3">
-                  <label className="font-mono text-[10px] tracking-widest uppercase text-[var(--fg-4)]">Total headcount</label>
-                  <input type="number" value={inputs.hc} onChange={e => setInputs({...inputs, hc: +e.target.value})} className={inp} />
+                  <label htmlFor="calc-1" className="font-mono text-[10px] tracking-widest uppercase text-[var(--fg-4)]">Total headcount</label>
+                  <input id="calc-1" type="number" value={inputs.hc} onChange={e => setInputs({...inputs, hc: +e.target.value})} className={inp} />
                 </div>
                 <div className="flex flex-col gap-3">
-                  <label className="font-mono text-[10px] tracking-widest uppercase text-[var(--fg-4)]">State</label>
-                  <select value={inputs.state} onChange={e => setInputs({...inputs, state: e.target.value})} className={inp + " cursor-pointer [&>option]:bg-[#0E1117]"}>
+                  <label htmlFor="calc-2" className="font-mono text-[10px] tracking-widest uppercase text-[var(--fg-4)]">State</label>
+                  <select id="calc-2" value={inputs.state} onChange={e => setInputs({...inputs, state: e.target.value})} className={inp + " cursor-pointer [&>option]:bg-[#0E1117]"}>
                     <option value="TN">Tamil Nadu · Statute</option>
                     <option value="KA">Karnataka · Statute</option>
                     <option value="MH">Maharashtra · Draft</option>
@@ -324,24 +328,24 @@ export default function LabourCodes() {
                   </select>
                 </div>
                 <div className="flex flex-col gap-3">
-                  <label className="font-mono text-[10px] tracking-widest uppercase text-[var(--fg-4)]">Workers % of HC</label>
-                  <input type="number" value={inputs.workers} onChange={e => setInputs({...inputs, workers: +e.target.value})} className={inp} />
+                  <label htmlFor="calc-3" className="font-mono text-[10px] tracking-widest uppercase text-[var(--fg-4)]">Workers % of HC</label>
+                  <input id="calc-3" type="number" value={inputs.workers} onChange={e => setInputs({...inputs, workers: +e.target.value})} className={inp} />
                 </div>
                 <div className="flex flex-col gap-3">
-                  <label className="font-mono text-[10px] tracking-widest uppercase text-[var(--fg-4)]">Contract labour %</label>
-                  <input type="number" value={inputs.contract} onChange={e => setInputs({...inputs, contract: +e.target.value})} className={inp} />
+                  <label htmlFor="calc-4" className="font-mono text-[10px] tracking-widest uppercase text-[var(--fg-4)]">Contract labour %</label>
+                  <input id="calc-4" type="number" value={inputs.contract} onChange={e => setInputs({...inputs, contract: +e.target.value})} className={inp} />
                 </div>
                 <div className="flex flex-col gap-3">
-                  <label className="font-mono text-[10px] tracking-widest uppercase text-[var(--fg-4)]">Gig & platform %</label>
-                  <input type="number" value={inputs.gig} onChange={e => setInputs({...inputs, gig: +e.target.value})} className={inp} />
+                  <label htmlFor="calc-5" className="font-mono text-[10px] tracking-widest uppercase text-[var(--fg-4)]">Gig & platform %</label>
+                  <input id="calc-5" type="number" value={inputs.gig} onChange={e => setInputs({...inputs, gig: +e.target.value})} className={inp} />
                 </div>
                 <div className="flex flex-col gap-3">
-                  <label className="font-mono text-[10px] tracking-widest uppercase text-[var(--fg-4)]">Basic % of CTC</label>
-                  <input type="number" value={inputs.basic} onChange={e => setInputs({...inputs, basic: +e.target.value})} className={inp} />
+                  <label htmlFor="calc-6" className="font-mono text-[10px] tracking-widest uppercase text-[var(--fg-4)]">Basic % of CTC</label>
+                  <input id="calc-6" type="number" value={inputs.basic} onChange={e => setInputs({...inputs, basic: +e.target.value})} className={inp} />
                 </div>
                 <div className="flex flex-col gap-3">
-                  <label className="font-mono text-[10px] tracking-widest uppercase text-[var(--fg-4)]">Avg annual CTC (₹ lakh)</label>
-                  <input type="number" value={inputs.ctc} onChange={e => setInputs({...inputs, ctc: +e.target.value})} className={inp} />
+                  <label htmlFor="calc-7" className="font-mono text-[10px] tracking-widest uppercase text-[var(--fg-4)]">Avg annual CTC (₹ lakh)</label>
+                  <input id="calc-7" type="number" value={inputs.ctc} onChange={e => setInputs({...inputs, ctc: +e.target.value})} className={inp} />
                 </div>
               </div>
               <p className="font-mono text-[10px] tracking-widest uppercase text-[var(--fg-5)] leading-[1.6]">This is an interpretive advisory tool. Outputs are estimates based on current statutory positions and should not be substituted for legal counsel.</p>
@@ -414,7 +418,7 @@ export default function LabourCodes() {
                 ))}
               </div>
               <div className="mt-12 flex gap-8">
-                <Link href="/connect" className="text-[var(--accent)] font-mono text-[11px] tracking-widest uppercase hover:underline">Continue to enquiry</Link>
+                <Link href="/connect?practice=labour-codes" className="text-[var(--accent)] font-mono text-[11px] tracking-widest uppercase hover:underline">Continue to enquiry</Link>
                 <Link href="/#practices" className="text-[var(--fg-4)] font-mono text-[11px] tracking-widest uppercase hover:underline">Other practices →</Link>
               </div>
             </div>

@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
+import { SHARE_PAGES, shareKey } from "@/config/sharePages";
 
 export const SITE_URL = "https://axionindex.org";
 export const SITE_NAME = "Axion Index";
 
 /** 1200×630 share images (public/og/*). */
 export const OG_DEFAULT = { url: "/og/axion-index.png", width: 1200, height: 630, alt: "Axion Index — From ambiguity to architecture." };
-export const OG_REPORT = { url: "/og/global-ai-report.png", width: 1200, height: 630, alt: "Axion Index · Global AI Report · Edition 01" };
 
 /**
  * Title, description and share card for one page. Next merges metadata shallowly,
@@ -18,7 +18,9 @@ export function pageMetadata(opts: {
   image?: typeof OG_DEFAULT;
   noIndex?: boolean;
 }): Metadata {
-  const image = opts.image ?? OG_DEFAULT;
+  // Every page its own share image (Fix Brief Part 6, item 35); unknown pages fall back to the default
+  const own = SHARE_PAGES[opts.path];
+  const image = opts.image ?? (own ? { url: `/share/${shareKey(opts.path)}`, width: 1200, height: 630, alt: `${own.kicker}: ${own.title}` } : OG_DEFAULT);
   const fullTitle = opts.path === "/" ? opts.title : `${opts.title} · ${SITE_NAME}`;
   return {
     title: { absolute: fullTitle },

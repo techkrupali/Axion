@@ -17,5 +17,9 @@ export const config = {
     "/api/user/:path*",
     "/api/razorpay/:path*",
     "/api/auth/register",
+    // the content Studio (Fix Brief Part 7)
+    "/studio",
+    "/studio/:path*",
+    "/api/studio/:path*",
   ],
 };

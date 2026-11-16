@@ -62,7 +62,7 @@ const readingRows = [
 
 export default function FamilyBusiness() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen overflow-x-clip">
 
       {/* HERO — full viewport */}
       <header className="relative min-h-screen flex items-center justify-center bg-transparent pt-20 overflow-hidden">

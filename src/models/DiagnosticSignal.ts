@@ -24,6 +24,10 @@ const DiagnosticSignalSchema = new Schema({
   phone:    { type: String, default: '' },
   callback: { type: String, default: '' },
 
+  // Where the conversation started (Fix Brief Part 4): the practice page it came from, and the page path
+  practiceFromPage: { type: String, default: '' },
+  sourcePage:       { type: String, default: '' },
+
   status:   { type: String, enum: ['new', 'read', 'contacted'], default: 'new' },
 }, { timestamps: true });
 

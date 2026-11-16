@@ -2,13 +2,15 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { useSession, signOut } from "next-auth/react";
 import AxionWordmark from "@/components/AxionWordmark";
+import { MAIN_BUTTON_SHAPE } from "@/components/Button";
 import { PANELS_ENABLED } from "@/config/features";
 import { openDiagnostic } from "@/lib/openDiagnostic";
+import { MENU, PRACTICES_LABEL, MAIN_CTA_LABEL } from "@/config/nav";
 import { PRACTICES, PRACTICE_ORDER, IN_DEVELOPMENT_LABEL, isLive } from "@/config/practices";
 
 const Navbar = () => {
@@ -32,13 +34,25 @@ const Navbar = () => {
   // Close mobile menu on route change
   useEffect(() => { setIsMobileOpen(false); }, [pathname]);
 
+  // Publish the menu's live height as --site-nav-h, so pages with their own
+  // sub-bar (AI Edge Lab, its diagnostic) can sit flush under the site menu.
+  const navRef = useRef<HTMLElement | null>(null);
+  useEffect(() => {
+    const el = navRef.current;
+    if (!el) return;
+    const publish = () => document.documentElement.style.setProperty("--site-nav-h", `${el.offsetHeight}px`);
+    publish();
+    const ro = new ResizeObserver(publish);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [pathname]);
+
   if (
     pathname?.startsWith("/admin") ||
+    pathname?.startsWith("/studio") ||
     pathname?.startsWith("/user") ||
     pathname === "/login" ||
-    pathname === "/register" ||
-    pathname === "/founder" ||
-    pathname?.startsWith("/expertise/ai-edge")
+    pathname === "/register"
   ) {
     return null;
   }
@@ -46,14 +60,14 @@ const Navbar = () => {
   // Practices come from src/config/practices.ts — "in development" ones render greyed out, without a link
   const expertiseLinks = PRACTICE_ORDER.map((k) => ({ ...PRACTICES[k], live: isLive(k) }));
 
+  // Menu links come from src/config/nav.ts (Fix Brief Part 2) — same on every page
   const allLinks = [
-    { label: "About", href: "/about", live: true },
     ...PRACTICE_ORDER.map((k) => ({ label: PRACTICES[k].name, href: PRACTICES[k].href, live: isLive(k) })),
-    { label: "Founder", href: "/founder", live: true },
-    { label: "Research & Journals", href: "/research", live: true },
+    ...MENU.map((l) => ({ ...l, live: true })),
   ];
 
-  const isHome = pathname === "/";
+  // Cream editorial pages (Homepage and Founder) get the cream style of the same menu
+  const isHome = pathname === "/" || pathname === "/founder";
 
   // On home: cream left / black right split nav
   // On other pages: full dark nav
@@ -61,6 +75,7 @@ const Navbar = () => {
     return (
       <>
         <motion.header
+          ref={navRef}
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
@@ -80,9 +95,8 @@ const Navbar = () => {
             <AxionWordmark />
 
             {/* Desktop links */}
-            <nav className="hidden lg:flex items-center gap-8 xl:gap-10">
-              <HomeNavLink href="/about" label="About" active={false} scrolled={isScrolled} />
-              {/* Practice Areas Dropdown */}
+            <nav aria-label="Main" className="hidden lg:flex items-center gap-8 xl:gap-10">
+              {/* Practices dropdown */}
               <div
                 className="relative"
                 onMouseEnter={() => setIsExpertiseOpen(true)}
@@ -97,7 +111,7 @@ const Navbar = () => {
                   onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = isScrolled ? "#A07830" : "#0D0D0B"; }}
                   onMouseLeave={e => { if (!pathname.startsWith("/expertise")) (e.currentTarget as HTMLElement).style.color = isScrolled ? "#F7F6F3" : "#7A7870"; }}
                 >
-                  Practice Areas
+                  {PRACTICES_LABEL}
                   <motion.span
                     animate={{ rotate: isExpertiseOpen ? 180 : 0 }}
                     transition={{ duration: 0.25 }}
@@ -168,9 +182,9 @@ const Navbar = () => {
                 </AnimatePresence>
               </div>
 
-              <HomeNavLink href="/founder" label="Founder" active={false} scrolled={isScrolled} />
-              <HomeNavLink href="/research" label="Research & Journals" active={false} scrolled={isScrolled} />
-              <HomeNavLink href="/connect" label="Reach Us" active={false} scrolled={isScrolled} />
+              {MENU.map((l) => (
+                <HomeNavLink key={l.href} href={l.href} label={l.label} active={pathname === l.href} scrolled={isScrolled} />
+              ))}
             </nav>
 
             {/* Mobile hamburger */}
@@ -202,7 +216,7 @@ const Navbar = () => {
                 borderBottom: "1px solid #0D0D0B",
               }}
             >
-              Start Diagnostic
+              {MAIN_CTA_LABEL}
             </button>
 
             <AnimatePresence>
@@ -317,7 +331,7 @@ const Navbar = () => {
                       color: "#F7F6F3",
                     }}
                   >
-                    Start Diagnostic
+                    {MAIN_CTA_LABEL}
                   </button>
                 </div>
               </div>
@@ -335,6 +349,7 @@ const Navbar = () => {
   return (
     <>
       <motion.nav
+        ref={navRef}
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
@@ -346,7 +361,6 @@ const Navbar = () => {
 
         {/* Desktop Nav Links */}
         <div className="hidden lg:flex items-center gap-6 xl:gap-8">
-          <NavLink href="/about" label="About" active={pathname === "/about"} />
 
           {/* Practice Areas Dropdown */}
           <div
@@ -361,7 +375,7 @@ const Navbar = () => {
                   : "text-[var(--fg-3)] hover:text-[var(--fg)]"
               }`}
             >
-              Practice Areas
+              {PRACTICES_LABEL}
               <motion.div
                 animate={{ rotate: isExpertiseOpen ? 180 : 0 }}
                 transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
@@ -413,15 +427,17 @@ const Navbar = () => {
             </AnimatePresence>
           </div>
 
-          <NavLink href="/founder" label="Founder" active={pathname === "/founder"} />
-          <NavLink href="/research" label="Research & Journals" active={pathname === "/research"} />
+          {MENU.map((l) => (
+            <NavLink key={l.href} href={l.href} label={l.label} active={pathname === l.href} />
+          ))}
 
-          <Link
-            href="/connect"
-            className="ml-1 px-5 py-3 font-mono text-[11px] tracking-[0.22em] uppercase font-semibold rounded-full transition-all duration-300 active:scale-[0.97] inline-flex items-center gap-2 min-h-[44px] bg-[#C9A24A] text-[#0A0A0B]"
+          <button
+            type="button"
+            onClick={openDiagnostic}
+            className={`ml-1 px-5 py-3 font-mono text-[11px] tracking-[0.22em] uppercase font-semibold ${MAIN_BUTTON_SHAPE} transition-all duration-300 active:scale-[0.97] inline-flex items-center gap-2 min-h-[44px] bg-[#C9A24A] text-[#0A0A0B] whitespace-nowrap`}
           >
-            Reach Us
-          </Link>
+            {MAIN_CTA_LABEL}
+          </button>
           {accountsOn && (loggedIn ? (
             <button
               type="button"
@@ -506,12 +522,13 @@ const Navbar = () => {
                 transition={{ delay: allLinks.length * 0.04 + 0.1 }}
                 className="pt-4 flex flex-col gap-3"
               >
-                <Link
-                  href="/connect"
-                  className="block w-full text-center py-4 font-mono text-[12px] tracking-[0.24em] uppercase border border-[rgba(201,162,74,0.25)] text-[#0A0A0B] bg-[#C9A24A] hover:bg-[rgba(201,162,74,0.9)] transition-colors rounded-lg min-h-[48px]"
+                <button
+                  type="button"
+                  onClick={() => { setIsMobileOpen(false); openDiagnostic(); }}
+                  className={`block w-full text-center py-4 font-mono text-[12px] tracking-[0.24em] uppercase border border-[rgba(201,162,74,0.25)] text-[#0A0A0B] bg-[#C9A24A] hover:bg-[rgba(201,162,74,0.9)] transition-colors ${MAIN_BUTTON_SHAPE} min-h-[48px]`}
                 >
-                  Reach Us →
-                </Link>
+                  {MAIN_CTA_LABEL} →
+                </button>
                 {accountsOn && (loggedIn ? (
                   <button
                     type="button"

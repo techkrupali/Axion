@@ -17,7 +17,7 @@ export default function PosturePage() {
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
-        <Loader2 className="w-8 h-8 animate-spin text-[#d4af37]" />
+        <Loader2 className="w-8 h-8 animate-spin text-[#C9A24A]" />
         <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#737373]">Reading Posture Data...</p>
       </div>
     );
@@ -31,17 +31,17 @@ export default function PosturePage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div className="bg-[#111] border border-[#2a2a2a] p-8 rounded-3xl group hover:border-[#d4af37]/30 transition-all">
-          <Activity className="w-6 h-6 text-[#d4af37] mb-4" />
+        <div className="bg-[#111] border border-[#2a2a2a] p-8 rounded-3xl group hover:border-[#C9A24A]/30 transition-all">
+          <Activity className="w-6 h-6 text-[#C9A24A] mb-4" />
           <p className="text-[10px] font-bold uppercase tracking-widest text-[#525252] mb-1">Account Status</p>
-          <p className="text-2xl font-bold text-[#d4af37]">{isSubscribed ? "Active" : "Inactive"}</p>
+          <p className="text-2xl font-bold text-[#C9A24A]">{isSubscribed ? "Active" : "Inactive"}</p>
         </div>
-        <div className="bg-[#111] border border-[#2a2a2a] p-8 rounded-3xl group hover:border-[#d4af37]/30 transition-all">
+        <div className="bg-[#111] border border-[#2a2a2a] p-8 rounded-3xl group hover:border-[#C9A24A]/30 transition-all">
           <ShieldCheck className="w-6 h-6 text-green-500 mb-4" />
           <p className="text-[10px] font-bold uppercase tracking-widest text-[#525252] mb-1">Assessments Run</p>
           <p className="text-2xl font-bold text-green-500">0</p>
         </div>
-        <div className="bg-[#111] border border-[#2a2a2a] p-8 rounded-3xl group hover:border-[#d4af37]/30 transition-all">
+        <div className="bg-[#111] border border-[#2a2a2a] p-8 rounded-3xl group hover:border-[#C9A24A]/30 transition-all">
           <AlertTriangle className="w-6 h-6 text-amber-500 mb-4" />
           <p className="text-[10px] font-bold uppercase tracking-widest text-[#525252] mb-1">Pending Actions</p>
           <p className="text-2xl font-bold text-amber-500">0</p>

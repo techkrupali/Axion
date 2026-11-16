@@ -4,7 +4,13 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import SmoothScroll from "@/components/SmoothScroll";
 import Providers from "@/components/Providers";
+import ConversationForm from "@/components/ConversationForm";
+import Analytics from "@/components/Analytics";
+import CookieBanner from "@/components/CookieBanner";
+import LaunchBanner from "@/components/LaunchBanner";
 import { pageMetadata, SITE_URL } from "@/lib/seo";
+import { IS_PREVIEW_SITE } from "@/config/features";
+import { JsonLd, SITE_LD } from "@/lib/jsonLd";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -65,10 +71,20 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${cormorantGaramond.variable} ${jetbrainsMono.variable} antialiased`}
       >
+        <JsonLd data={SITE_LD} />
         <Providers>
           <SmoothScroll>
             <Navbar />
             <main>{children}</main>
+            <ConversationForm />
+            <LaunchBanner />
+            <CookieBanner />
+            {!IS_PREVIEW_SITE && <Analytics />}
+            {IS_PREVIEW_SITE && (
+              <div className="fixed bottom-3 right-3 z-[400] px-3 py-1.5 bg-[#C9A24A] text-[#0A0A0B] font-mono text-[10px] tracking-[0.16em] uppercase shadow-lg pointer-events-none">
+                Preview · not the live site
+              </div>
+            )}
           </SmoothScroll>
         </Providers>
       </body>

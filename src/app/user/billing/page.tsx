@@ -27,7 +27,7 @@ export default function BillingPage() {
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
-        <Loader2 className="w-8 h-8 animate-spin text-[#d4af37]" />
+        <Loader2 className="w-8 h-8 animate-spin text-[#C9A24A]" />
         <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#737373]">Loading Billing Architecture...</p>
       </div>
     );
@@ -41,13 +41,13 @@ export default function BillingPage() {
       </div>
 
       {subscription?.isSubscribed && (
-        <div className="bg-[#111] border border-[#d4af37]/30 p-8 rounded-[32px] flex items-center justify-between">
+        <div className="bg-[#111] border border-[#C9A24A]/30 p-8 rounded-[32px] flex items-center justify-between">
           <div className="flex items-center gap-6">
-            <div className="w-12 h-12 bg-[#d4af37]/10 border border-[#d4af37]/30 rounded-2xl flex items-center justify-center">
-              <Zap className="w-6 h-6 text-[#d4af37]" />
+            <div className="w-12 h-12 bg-[#C9A24A]/10 border border-[#C9A24A]/30 rounded-2xl flex items-center justify-center">
+              <Zap className="w-6 h-6 text-[#C9A24A]" />
             </div>
             <div>
-              <p className="text-[10px] font-bold uppercase tracking-widest text-[#d4af37]">Active Subscription</p>
+              <p className="text-[10px] font-bold uppercase tracking-widest text-[#C9A24A]">Active Subscription</p>
               <h3 className="text-xl font-bold text-[#e5e5e5] uppercase tracking-wider">{subscription.subscriber.planTier} Tier</h3>
             </div>
           </div>

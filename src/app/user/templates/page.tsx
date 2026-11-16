@@ -31,7 +31,7 @@ export default function TemplatesPage() {
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
-        <Loader2 className="w-8 h-8 animate-spin text-[#d4af37]" />
+        <Loader2 className="w-8 h-8 animate-spin text-[#C9A24A]" />
         <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#737373]">Authenticating Access...</p>
       </div>
     );
@@ -59,10 +59,10 @@ export default function TemplatesPage() {
           ].map((template, idx) => (
             <div key={idx} className="bg-[#1a1a1a] border border-[#2a2a2a] p-6 rounded-2xl flex items-center justify-between group">
               <div className="flex items-center gap-4">
-                <FileText className="w-5 h-5 text-[#d4af37]" />
+                <FileText className="w-5 h-5 text-[#C9A24A]" />
                 <span className="text-sm font-medium">{template}</span>
               </div>
-              <button className="p-2 bg-[#0a0a0a] border border-[#2a2a2a] rounded-lg text-[#525252] group-hover:text-[#d4af37] transition-all">
+              <button className="p-2 bg-[#0a0a0a] border border-[#2a2a2a] rounded-lg text-[#525252] group-hover:text-[#C9A24A] transition-all">
                 <Download className="w-4 h-4" />
               </button>
             </div>

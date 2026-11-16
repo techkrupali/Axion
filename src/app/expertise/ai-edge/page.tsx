@@ -1,7 +1,12 @@
 "use client";
 
 import { Fragment, useEffect, useState } from "react";
+import AiEdgeInterestForm from "@/components/AiEdgeInterestForm";
+import { AI_EDGE_LAB, ASSESSMENTS, aiEdgeLabLive, type AssessmentCode } from "@/config/aiEdgeLab";
+import { openDiagnostic } from "@/lib/openDiagnostic";
+import { REPORT } from "@/config/report";
 import Link from "next/link";
+import SiteFooter from "@/components/Footer";
 import { motion } from "framer-motion";
 import { Bebas_Neue, DM_Sans, DM_Mono, Cormorant_Garamond } from "next/font/google";
 
@@ -19,8 +24,8 @@ const T = {
   mid: "#7A7870",
   dim: "#B0AEA8",
   gold: "#A07830",
-  gold2: "#C49848",
-  goldAccent: "#C8A24A",
+  gold2: "#C9A24A",
+  goldAccent: "#C9A24A",
   rule: "rgba(247,246,243,0.10)",
 };
 
@@ -30,18 +35,24 @@ const NAV: [string, string][] = [
   ["Doctrine", "#frame-07"],
   ["Framework", "#frame-08"],
   ["Assessments", "#frame-13"],
+  ["Early-bird", "#early-bird"],
   ["Insights", "#frame-05"],
   ["About", "/about"],
 ];
 
 function Header() {
   return (
+    // AI Edge Lab's own section bar, sitting under the site-wide menu (D-01)
     <header style={{
-      position: "sticky", top: 0, zIndex: 200, height: 56,
+      position: "sticky", top: "var(--site-nav-h, 85px)", zIndex: 70, height: 56,
       display: "flex", alignItems: "center", justifyContent: "space-between",
       padding: "0 clamp(20px,4vw,52px)", background: "rgba(13,13,11,0.88)",
       backdropFilter: "blur(12px)", borderBottom: `1px solid ${T.rule}`,
     }}>
+      <span style={{ display: "flex", alignItems: "center", gap: "clamp(12px,2vw,22px)" }}>
+      <Link href="/" className="ael-back" style={{ fontFamily: "var(--f-mono)", fontSize: 9, letterSpacing: ".16em", textTransform: "uppercase", color: T.dim, whiteSpace: "nowrap", paddingRight: "clamp(12px,2vw,22px)", borderRight: `1px solid ${T.rule}` }}>
+        ← Axion Index
+      </Link>
       <Link href="/expertise/ai-edge" style={{ display: "flex", alignItems: "center", gap: 10 }}>
         <svg viewBox="0 0 512 512" width="22" height="22" aria-hidden>
           <g transform="translate(-78,0)" fill={T.goldAccent}>
@@ -52,10 +63,11 @@ function Header() {
         </svg>
         <span style={{ display: "flex", flexDirection: "column", lineHeight: 1 }}>
           <span style={{ fontFamily: "var(--f-display)", fontSize: 18, letterSpacing: ".06em", color: T.white }}>AI EDGE LAB</span>
-          <span style={{ fontFamily: "var(--f-mono)", fontSize: 7.5, letterSpacing: ".14em", textTransform: "uppercase", color: T.mid, marginTop: 3 }}>Architecture. Not Automation.</span>
+          <span className="ael-tagline" style={{ fontFamily: "var(--f-mono)", fontSize: 7.5, letterSpacing: ".14em", textTransform: "uppercase", color: T.mid, marginTop: 3 }}>Architecture. Not Automation.</span>
         </span>
       </Link>
-      <nav className="ael-nav" style={{ display: "flex", alignItems: "center", gap: 24 }}>
+      </span>
+      <nav className="ael-nav" aria-label="AI Edge Lab sections" style={{ display: "flex", alignItems: "center", gap: 24 }}>
         {NAV.map(([lbl, href]) => (
           <Link key={lbl} href={href}
             style={{ fontFamily: "var(--f-mono)", fontSize: 10, letterSpacing: ".16em", textTransform: "uppercase", color: T.dim }}>
@@ -63,10 +75,17 @@ function Header() {
           </Link>
         ))}
       </nav>
-      <SoonButton style={{
-        fontFamily: "var(--f-mono)", fontSize: 10, letterSpacing: ".18em", textTransform: "uppercase",
-        border: `1px solid ${T.gold}`, color: T.gold2, padding: "9px 16px", whiteSpace: "nowrap",
-      }}>Find My AI Edge →</SoonButton>
+      {aiEdgeLabLive() ? (
+        <a href={AI_EDGE_LAB.siteUrl} target="_blank" rel="noopener noreferrer" style={{
+          fontFamily: "var(--f-mono)", fontSize: 10, letterSpacing: ".18em", textTransform: "uppercase",
+          border: `1px solid ${T.gold}`, color: T.gold2, padding: "9px 16px", whiteSpace: "nowrap",
+        }}>Visit AI Edge Lab ↗</a>
+      ) : (
+        <SoonButton style={{
+          fontFamily: "var(--f-mono)", fontSize: 10, letterSpacing: ".18em", textTransform: "uppercase",
+          border: `1px solid ${T.gold}`, color: T.gold2, padding: "9px 16px", whiteSpace: "nowrap",
+        }}>Find My AI Edge →</SoonButton>
+      )}
     </header>
   );
 }
@@ -74,16 +93,17 @@ function Header() {
 /* ─── Tokens ─── */
 const kicker: React.CSSProperties = { fontFamily: "var(--f-mono)", fontSize: 10, letterSpacing: ".26em", textTransform: "uppercase", color: T.gold };
 
-/* ─── "Coming soon" popup for the assessment buttons (no redirect) ─── */
+/* ─── Assessment buttons open the early-bird pop-up, no redirect (Fix Brief Part 5, item 23) ─── */
 const COMING_SOON_EVENT = "ael:coming-soon";
-const openComingSoon = () => window.dispatchEvent(new Event(COMING_SOON_EVENT));
+const openComingSoon = (assessment?: AssessmentCode) =>
+  window.dispatchEvent(new CustomEvent<{ assessment?: AssessmentCode }>(COMING_SOON_EVENT, { detail: { assessment } }));
 
-/** Looks exactly like the old link (same inline style), but opens the popup. */
-function SoonButton({ style, children }: { style: React.CSSProperties; children: React.ReactNode }) {
+/** Looks exactly like the old link (same inline style), but opens the pop-up. */
+function SoonButton({ style, children, assessment }: { style: React.CSSProperties; children: React.ReactNode; assessment?: AssessmentCode }) {
   return (
     <button
       type="button"
-      onClick={openComingSoon}
+      onClick={() => openComingSoon(assessment)}
       style={{ cursor: "pointer", border: "none", background: "transparent", padding: 0, textAlign: "left", ...style }}
     >
       {children}
@@ -93,8 +113,9 @@ function SoonButton({ style, children }: { style: React.CSSProperties; children:
 
 function ComingSoonModal() {
   const [open, setOpen] = useState(false);
+  const [assessment, setAssessment] = useState<AssessmentCode | undefined>();
   useEffect(() => {
-    const show = () => setOpen(true);
+    const show = (e: Event) => { setAssessment((e as CustomEvent<{ assessment?: AssessmentCode }>).detail?.assessment); setOpen(true); };
     const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setOpen(false); };
     window.addEventListener(COMING_SOON_EVENT, show);
     window.addEventListener("keydown", onKey);
@@ -114,21 +135,19 @@ function ComingSoonModal() {
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
         onClick={(e) => e.stopPropagation()}
-        style={{ position: "relative", width: "100%", maxWidth: 440, background: T.ink2, border: `1px solid ${T.gold}`, padding: "40px 34px 34px", textAlign: "center", boxShadow: "0 30px 80px rgba(0,0,0,0.6)" }}
+        style={{ position: "relative", width: "100%", maxWidth: 560, maxHeight: "calc(100vh - 40px)", overflowY: "auto", background: T.ink2, border: `1px solid ${T.gold}`, padding: "36px clamp(18px,4vw,34px) 30px", textAlign: "center", boxShadow: "0 30px 80px rgba(0,0,0,0.6)" }}
       >
         <button type="button" aria-label="Close" onClick={() => setOpen(false)}
           style={{ position: "absolute", top: 14, right: 16, background: "transparent", border: "none", color: T.mid, fontSize: 22, lineHeight: 1, cursor: "pointer" }}>×</button>
-        <span style={{ ...kicker, color: T.gold2 }}>AI Edge Lab · Assessment</span>
+        <span style={{ ...kicker, color: T.gold2 }}>AI Edge Lab · Early-bird</span>
         <h3 id="ael-soon-title" style={{ fontFamily: "var(--f-display)", fontSize: "clamp(40px,7vw,56px)", letterSpacing: ".02em", color: T.white, margin: "14px 0 10px", lineHeight: 1 }}>
           Coming <span style={{ color: T.gold2 }}>soon</span>
         </h3>
-        <p style={{ fontFamily: "var(--f-sans)", fontWeight: 300, fontSize: 14, lineHeight: 1.7, color: T.dim, margin: "0 auto 26px", maxWidth: "32ch" }}>
-          The AI Edge assessment is being finalised and opens shortly.
+        <p style={{ fontFamily: "var(--f-sans)", fontWeight: 300, fontSize: 14, lineHeight: 1.7, color: T.dim, margin: "0 auto 22px", maxWidth: "36ch" }}>
+          The AI Edge Lab assessments launch with the institute&apos;s own website. Register now for early-bird access and we will send you a note when it opens.
         </p>
-        <button type="button" onClick={() => setOpen(false)}
-          style={{ fontFamily: "var(--f-mono)", fontSize: 11, letterSpacing: ".16em", textTransform: "uppercase", background: T.gold2, color: T.ink, border: "none", padding: "14px 30px", cursor: "pointer", fontWeight: 500 }}>
-          Close
-        </button>
+        {/* Fix Brief Part 5, item 23: early-bird registration (separate AI Edge Lab list) */}
+        <AiEdgeInterestForm key={assessment ?? "none"} idPrefix="ael-soon" initialAssessment={assessment} />
       </motion.div>
     </div>
   );
@@ -191,14 +210,14 @@ function HeroArcs() {
       style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}>
       <defs>
         <radialGradient id="ael-glow" cx="52%" cy="60%" r="42%">
-          <stop offset="0%" stopColor="#C8A24A" stopOpacity="0.34" />
-          <stop offset="55%" stopColor="#C8A24A" stopOpacity="0.05" />
-          <stop offset="100%" stopColor="#C8A24A" stopOpacity="0" />
+          <stop offset="0%" stopColor="#C9A24A" stopOpacity="0.34" />
+          <stop offset="55%" stopColor="#C9A24A" stopOpacity="0.05" />
+          <stop offset="100%" stopColor="#C9A24A" stopOpacity="0" />
         </radialGradient>
       </defs>
       <rect width="800" height="800" fill="url(#ael-glow)" />
       {[130, 195, 260, 325, 390, 455].map((r, i) => (
-        <circle key={r} cx="410" cy="500" r={r} fill="none" stroke="#C8A24A" strokeWidth="1" strokeOpacity={0.3 - i * 0.035} />
+        <circle key={r} cx="410" cy="500" r={r} fill="none" stroke="#C9A24A" strokeWidth="1" strokeOpacity={0.3 - i * 0.035} />
       ))}
     </svg>
   );
@@ -218,7 +237,7 @@ function Frame01() {
         {/* placeholder visual (arcs + skyline) — shows until hero photo is added */}
         <div style={{ position: "absolute", inset: 0 }}><HeroArcs /><HeroSkyline /></div>
         {/* hero photo — 4-actor silhouettes + sunset skyline */}
-        <div style={{ position: "absolute", inset: 0, backgroundImage: "url('/aiedgelab.png')", backgroundSize: "cover", backgroundPosition: "0% center", backgroundRepeat: "no-repeat" }} />
+        <div style={{ position: "absolute", inset: 0, backgroundImage: "url('/aiedgelab.jpg')", backgroundSize: "cover", backgroundPosition: "0% center", backgroundRepeat: "no-repeat" }} />
         {/* left legibility gradient */}
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(90deg,#0A0A0B 0%,#0A0A0B 26%,rgba(10,10,11,0.72) 46%,rgba(10,10,11,0.15) 70%,transparent 88%)" }} />
         {/* content */}
@@ -293,6 +312,7 @@ function Frame02() {
           <div style={{ fontFamily: "var(--f-display)", fontSize: 34, color: LT.gold, lineHeight: 1 }}>02</div>
           <div style={{ width: 20, height: 1, background: LT.gold, margin: "10px 0 14px" }} />
           <div style={{ fontFamily: "var(--f-mono)", fontSize: 8.5, letterSpacing: ".1em", textTransform: "uppercase", color: LT.mid, lineHeight: 1.9, paddingRight: 6 }}>The Evolution of Value Creation</div>
+          <EvidenceLabel text="Illustrative model, not yet validated" light />
         </div>
         {/* main (scrolls horizontally on small screens) */}
         <div style={{ overflowX: "auto" }}>
@@ -309,7 +329,7 @@ function Frame02() {
               </div>
               <div style={{ position: "relative", height: 300 }}>
                 {/* fallback golden glow (AI-First) — visible if imagery not yet added */}
-                <div aria-hidden style={{ position: "absolute", right: 0, bottom: 0, width: "38%", height: "76%", background: "radial-gradient(ellipse at bottom right, rgba(196,152,72,0.26), transparent 72%)", pointerEvents: "none" }} />
+                <div aria-hidden style={{ position: "absolute", right: 0, bottom: 0, width: "38%", height: "76%", background: "radial-gradient(ellipse at bottom right, rgba(201,162,74,0.26), transparent 72%)", pointerEvents: "none" }} />
                 {/* era imagery — save the eras photo to public/ai-edge-eras.png (factory · book · network · golden mountain) */}
                 <div aria-hidden style={{ position: "absolute", inset: 0, backgroundImage: "url('/ai-edge-eras.png')", backgroundSize: "cover", backgroundPosition: "center bottom", backgroundRepeat: "no-repeat", WebkitMaskImage: "linear-gradient(to bottom, transparent 6%, #000 34%)", maskImage: "linear-gradient(to bottom, transparent 6%, #000 34%)", pointerEvents: "none" }} />
                 <svg viewBox="0 0 100 100" preserveAspectRatio="none" style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }} aria-hidden>
@@ -317,11 +337,11 @@ function Frame02() {
                     <linearGradient id="ev-line" x1="0" y1="0" x2="1" y2="0">
                       <stop offset="0%" stopColor="#C7C2B6" />
                       <stop offset="55%" stopColor="#A07830" />
-                      <stop offset="100%" stopColor="#C49848" />
+                      <stop offset="100%" stopColor="#C9A24A" />
                     </linearGradient>
                     <linearGradient id="ev-area" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#C49848" stopOpacity="0.26" />
-                      <stop offset="100%" stopColor="#C49848" stopOpacity="0" />
+                      <stop offset="0%" stopColor="#C9A24A" stopOpacity="0.26" />
+                      <stop offset="100%" stopColor="#C9A24A" stopOpacity="0" />
                     </linearGradient>
                   </defs>
                   {/* area fill under the curve */}
@@ -346,7 +366,7 @@ function Frame02() {
                         <div style={{ fontFamily: "var(--f-mono)", fontSize: 9, letterSpacing: ".06em", color: LT.mid, marginTop: 4 }}>{e.year}</div>
                       </div>
                       <motion.div initial={{ opacity: 0, scale: 0 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: 0.7 + i * 0.18, ease: [0.22, 1, 0.36, 1] }}
-                        style={{ position: "absolute", left: `${x}%`, top: `${y}%`, transform: "translate(-50%,-50%)", width: e.gold ? 18 : 10, height: e.gold ? 18 : 10, borderRadius: "50%", background: LT.gold, border: e.gold ? "2px solid #FBFAF6" : "none", boxShadow: e.gold ? "0 0 0 6px rgba(196,152,72,0.22), 0 0 18px rgba(196,152,72,0.55)" : "0 0 0 3px rgba(196,152,72,0.14)" }} />
+                        style={{ position: "absolute", left: `${x}%`, top: `${y}%`, transform: "translate(-50%,-50%)", width: e.gold ? 18 : 10, height: e.gold ? 18 : 10, borderRadius: "50%", background: LT.gold, border: e.gold ? "2px solid #FBFAF6" : "none", boxShadow: e.gold ? "0 0 0 6px rgba(201,162,74,0.22), 0 0 18px rgba(201,162,74,0.55)" : "0 0 0 3px rgba(201,162,74,0.14)" }} />
                     </div>
                   );
                 })}
@@ -402,6 +422,7 @@ function Frame03() {
           <div style={{ fontFamily: "var(--f-display)", fontSize: 34, color: T.gold, lineHeight: 1 }}>03</div>
           <div style={{ width: 20, height: 1, background: T.gold, margin: "10px 0 14px" }} />
           <div style={{ fontFamily: "var(--f-mono)", fontSize: 8.5, letterSpacing: ".1em", textTransform: "uppercase", color: T.mid, lineHeight: 1.9, paddingRight: 6 }}>The New Design Choice</div>
+          <EvidenceLabel text="Illustrative example" />
         </div>
         {/* main */}
         <div style={{ overflowX: "auto" }}>
@@ -529,6 +550,7 @@ function Frame04() {
           <div style={{ fontFamily: "var(--f-display)", fontSize: 34, color: LT.gold, lineHeight: 1 }}>04</div>
           <div style={{ width: 20, height: 1, background: LT.gold, margin: "10px 0 14px" }} />
           <div style={{ fontFamily: "var(--f-mono)", fontSize: 8.5, letterSpacing: ".1em", textTransform: "uppercase", color: LT.mid, lineHeight: 1.9, paddingRight: 6 }}>The Outcome Gap</div>
+          <EvidenceLabel text="Illustrative example, not real data" light />
         </div>
         {/* main */}
         <div style={{ overflowX: "auto" }}>
@@ -584,6 +606,7 @@ function Frame05() {
           <div style={{ fontFamily: "var(--f-display)", fontSize: 34, color: T.gold2, lineHeight: 1 }}>05</div>
           <div style={{ width: 20, height: 1, background: T.gold2, margin: "10px 0 14px" }} />
           <div style={{ fontFamily: "var(--f-mono)", fontSize: 8.5, letterSpacing: ".1em", textTransform: "uppercase", color: T.mid, lineHeight: 1.9, paddingRight: 6 }}>Following the Evidence</div>
+          <EvidenceLabel text="Our reading of published research" />
         </div>
         {/* main */}
         <div style={{ overflowX: "auto" }}>
@@ -613,6 +636,9 @@ function Frame05() {
                       style={{ background: T.ink, padding: "14px 16px", fontFamily: "var(--f-mono)", fontSize: 10, letterSpacing: ".06em", textTransform: "uppercase", color: "rgba(247,246,243,0.72)" }}>{n}</motion.div>
                   ))}
                 </div>
+                <p style={{ marginTop: 10, fontFamily: "var(--f-sans)", fontWeight: 300, fontSize: 11.5, lineHeight: 1.6, color: T.mid }}>
+                  Studies by these institutions were among those reviewed. The reading of them is AI Edge Lab&apos;s own; the institutions did not author or endorse it.
+                </p>
                 {/* question — directly under the research landscape box */}
                 <div style={{ marginTop: 26 }}>
                   <div style={{ fontFamily: "var(--f-serif)", fontSize: "clamp(18px,2vw,26px)", color: T.white, lineHeight: 1.25 }}>If every major study identified the symptoms &mdash;</div>
@@ -638,6 +664,7 @@ function Frame06() {
           <div style={{ fontFamily: "var(--f-display)", fontSize: 34, color: LT.gold, lineHeight: 1 }}>06</div>
           <div style={{ width: 20, height: 1, background: LT.gold, margin: "10px 0 14px" }} />
           <div style={{ fontFamily: "var(--f-mono)", fontSize: 8.5, letterSpacing: ".1em", textTransform: "uppercase", color: LT.mid, lineHeight: 1.9, paddingRight: 6 }}>The Hidden Fault Line</div>
+          <EvidenceLabel text="Hypothesis drawn from that research" light />
         </div>
         {/* main */}
         <div style={{ overflowX: "auto" }}>
@@ -716,6 +743,7 @@ function Frame07() {
           <div style={{ fontFamily: "var(--f-display)", fontSize: 34, color: T.gold2, lineHeight: 1 }}>07</div>
           <div style={{ width: 20, height: 1, background: T.gold2, margin: "10px 0 14px" }} />
           <div style={{ fontFamily: "var(--f-mono)", fontSize: 8.5, letterSpacing: ".1em", textTransform: "uppercase", color: T.mid, lineHeight: 1.9, paddingRight: 6 }}>Adoption Is Not the Answer</div>
+          <EvidenceLabel text="Illustrative model, not yet validated" />
         </div>
         {/* main */}
         <div style={{ overflowX: "auto" }}>
@@ -735,7 +763,7 @@ function Frame07() {
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 1, background: T.rule, border: `1px solid ${T.rule}` }}>
                 {cols.map((c, ci) => (
                   <motion.div key={c.h} initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: ci * 0.15 }}
-                    style={{ background: c.gold ? "rgba(196,152,72,0.08)" : T.ink, padding: "26px 22px" }}>
+                    style={{ background: c.gold ? "rgba(201,162,74,0.08)" : T.ink, padding: "26px 22px" }}>
                     <div style={{ fontFamily: "var(--f-mono)", fontSize: 9, letterSpacing: ".16em", textTransform: "uppercase", color: c.gold ? T.gold2 : T.mid, marginBottom: 8 }}>{c.s}</div>
                     <div style={{ fontFamily: "var(--f-display)", fontSize: "clamp(24px,2.8vw,36px)", letterSpacing: ".02em", color: c.gold ? T.gold2 : T.white, marginBottom: 16 }}>{c.h}</div>
                     {c.items.map((it) => (
@@ -765,7 +793,7 @@ const DISCIPLINES = [
   ["Building", "Blueprint"],
   ["Software", "Architecture"],
   ["Manufacturing", "Process Design"],
-  ["Work", "Universal Work Architecture™"],
+  ["Work", "Universal Work Architecture©"],
 ];
 const UWA_OUTCOMES = ["Redesign Work", "Integrate AI into Work Design", "Optimise the Human–AI Division", "Maximise Enterprise Value"];
 function Frame08() {
@@ -777,6 +805,7 @@ function Frame08() {
           <div style={{ fontFamily: "var(--f-display)", fontSize: 34, color: LT.gold, lineHeight: 1 }}>08</div>
           <div style={{ width: 20, height: 1, background: LT.gold, margin: "10px 0 14px" }} />
           <div style={{ fontFamily: "var(--f-mono)", fontSize: 8.5, letterSpacing: ".1em", textTransform: "uppercase", color: LT.mid, lineHeight: 1.9, paddingRight: 6 }}>The Universal Work Architecture</div>
+          <EvidenceLabel text="Illustrative model, not yet validated" light />
         </div>
         {/* main */}
         <div style={{ overflowX: "auto" }}>
@@ -829,7 +858,7 @@ function Frame08() {
 }
 
 /* ══════════ FRAME 09 — THE AI TRANSFORMATION ARCHITECTURE (cream) ══════════ */
-const FLOW = ["Universal Work Architecture™", "Analyse Work", "Redesign Work", "Allocate Work", "Human + AI Operating Model", "Enterprise Value"];
+const FLOW = ["Universal Work Architecture©", "Analyse Work", "Redesign Work", "Allocate Work", "Human + AI Operating Model", "Enterprise Value"];
 function Frame09() {
   const last = FLOW.length - 1;
   return (
@@ -840,6 +869,7 @@ function Frame09() {
           <div style={{ fontFamily: "var(--f-display)", fontSize: 34, color: T.gold2, lineHeight: 1 }}>09</div>
           <div style={{ width: 20, height: 1, background: T.gold2, margin: "10px 0 14px" }} />
           <div style={{ fontFamily: "var(--f-mono)", fontSize: 8.5, letterSpacing: ".1em", textTransform: "uppercase", color: T.mid, lineHeight: 1.9, paddingRight: 6 }}>The AI Transformation Architecture</div>
+          <EvidenceLabel text="Illustrative model, not yet validated" />
         </div>
         {/* main */}
         <div style={{ overflowX: "auto" }}>
@@ -851,7 +881,7 @@ function Frame09() {
                 </motion.h2>
                 <div style={{ width: 40, height: 2, background: T.gold2, margin: "22px 0 16px" }} />
                 <p style={{ fontFamily: "var(--f-sans)", fontWeight: 300, fontSize: 15, lineHeight: 1.85, color: T.mid, maxWidth: 400 }}>
-                  Once work is described through the Universal Work Architecture™, it can be systematically redesigned — every activity, decision, workflow and role. The objective: <span style={{ color: T.gold2 }}>assign every part of work to the performer best equipped to create value</span>. Not Human versus AI, but one integrated enterprise system.
+                  Once work is described through the Universal Work Architecture©, it can be systematically redesigned — every activity, decision, workflow and role. The objective: <span style={{ color: T.gold2 }}>assign every part of work to the performer best equipped to create value</span>. Not Human versus AI, but one integrated enterprise system.
                 </p>
               </div>
               {/* vertical flow */}
@@ -860,7 +890,7 @@ function Frame09() {
                   const isLast = i === last;
                   return (
                     <motion.div key={f} initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: i * 0.1 }} style={{ width: "100%", maxWidth: 380, textAlign: "center" }}>
-                      <div style={{ border: `1px solid ${isLast ? T.gold2 : T.rule}`, background: isLast ? "rgba(196,152,72,0.08)" : T.ink, padding: "15px 18px", fontFamily: "var(--f-display)", fontSize: isLast ? "clamp(24px,2.6vw,32px)" : "clamp(17px,2vw,22px)", letterSpacing: ".02em", color: isLast ? T.gold2 : "rgba(247,246,243,0.72)" }}>{f}</div>
+                      <div style={{ border: `1px solid ${isLast ? T.gold2 : T.rule}`, background: isLast ? "rgba(201,162,74,0.08)" : T.ink, padding: "15px 18px", fontFamily: "var(--f-display)", fontSize: isLast ? "clamp(24px,2.6vw,32px)" : "clamp(17px,2vw,22px)", letterSpacing: ".02em", color: isLast ? T.gold2 : "rgba(247,246,243,0.72)" }}>{f}</div>
                       {!isLast && <div style={{ color: T.gold2, fontSize: 16, lineHeight: 1, padding: "6px 0" }}>↓</div>}
                     </motion.div>
                   );
@@ -894,6 +924,7 @@ function Frame10() {
           <div style={{ fontFamily: "var(--f-display)", fontSize: 34, color: LT.gold, lineHeight: 1 }}>10</div>
           <div style={{ width: 20, height: 1, background: LT.gold, margin: "10px 0 14px" }} />
           <div style={{ fontFamily: "var(--f-mono)", fontSize: 8.5, letterSpacing: ".1em", textTransform: "uppercase", color: LT.mid, lineHeight: 1.9, paddingRight: 6 }}>Human–AI Orchestration</div>
+          <EvidenceLabel text="Illustrative model, not yet validated" light />
         </div>
         {/* main */}
         <div style={{ overflowX: "auto" }}>
@@ -954,6 +985,7 @@ function Frame11() {
           <div style={{ fontFamily: "var(--f-display)", fontSize: 34, color: T.gold2, lineHeight: 1 }}>11</div>
           <div style={{ width: 20, height: 1, background: T.gold2, margin: "10px 0 14px" }} />
           <div style={{ fontFamily: "var(--f-mono)", fontSize: 8.5, letterSpacing: ".1em", textTransform: "uppercase", color: T.mid, lineHeight: 1.9, paddingRight: 6 }}>AI Readiness</div>
+          <EvidenceLabel text="Illustrative model, not yet validated" />
         </div>
         {/* main */}
         <div style={{ overflowX: "auto" }}>
@@ -1010,6 +1042,7 @@ function Frame12() {
           <div style={{ fontFamily: "var(--f-display)", fontSize: 34, color: LT.gold, lineHeight: 1 }}>12</div>
           <div style={{ width: 20, height: 1, background: LT.gold, margin: "10px 0 14px" }} />
           <div style={{ fontFamily: "var(--f-mono)", fontSize: 8.5, letterSpacing: ".1em", textTransform: "uppercase", color: LT.mid, lineHeight: 1.9, paddingRight: 6 }}>The AI Edge Lab Evolution Journey</div>
+          <EvidenceLabel text="Illustrative model, not yet validated" light />
         </div>
         {/* main */}
         <div style={{ overflowX: "auto" }}>
@@ -1057,12 +1090,13 @@ function Frame12() {
 }
 
 /* ══════════ FRAME 13 — MEASURE YOUR AI EDGE ══════════ */
-const INSTRUMENTS = [
-  { tag: "Aspiring", code: "AAI™", name: "AI Alignment Index", desc: "For those entering the workforce. Where your foundations stay relevant as AI absorbs executional work." },
-  { tag: "Working", code: "ARI™", name: "AI Replaceability Index", desc: "For working professionals. Your structural position across the four E.D.G.E. dimensions." },
-  { tag: "Leaders", code: "BDI™", name: "Business Leaders Index", desc: "For leaders. Measure leadership in the AI era and where your edge holds." },
-  { tag: "Organisation", code: "ORG AI DARS™", name: "Organisation AI DARS", desc: "Assess and benchmark your organisation's readiness to operate with AI." },
-];
+// One name per index, settled 15 Nov (src/config/aiEdgeLab.ts)
+const INSTRUMENTS: { tag: string; code: AssessmentCode; name: string; desc: string }[] = [
+  { tag: "Aspiring", desc: "For those entering the workforce. Where your foundations stay relevant as AI absorbs executional work." },
+  { tag: "Working", desc: "For working professionals. Your structural position as AI absorbs more of the work around your role." },
+  { tag: "Leaders", desc: "For leaders. Measure leadership in the AI era and where your edge holds." },
+  { tag: "Organisation", desc: "Assess and benchmark your organisation's readiness to operate with AI." },
+].map((x, i) => ({ ...x, code: ASSESSMENTS[i].code, name: ASSESSMENTS[i].name }));
 function Frame13() {
   return (
     <section id="frame-13" style={{ background: T.ink, color: T.white, padding: "clamp(44px,6vh,72px) clamp(20px,4vw,52px)", borderBottom: `1px solid ${T.rule}` }}>
@@ -1072,6 +1106,7 @@ function Frame13() {
           <div style={{ fontFamily: "var(--f-display)", fontSize: 34, color: T.gold2, lineHeight: 1 }}>13</div>
           <div style={{ width: 20, height: 1, background: T.gold2, margin: "10px 0 14px" }} />
           <div style={{ fontFamily: "var(--f-mono)", fontSize: 8.5, letterSpacing: ".1em", textTransform: "uppercase", color: T.mid, lineHeight: 1.9, paddingRight: 6 }}>Measure Your AI Edge</div>
+          <EvidenceLabel text="In development, not yet validated" />
         </div>
         {/* main */}
         <div style={{ overflowX: "auto" }}>
@@ -1080,13 +1115,13 @@ function Frame13() {
               {/* left */}
               <div>
                 <motion.h2 {...rise} transition={{ duration: 0.6 }} style={{ fontFamily: "var(--f-serif)", fontWeight: 500, fontSize: "clamp(32px,3.6vw,54px)", lineHeight: 1.05, color: T.white }}>
-                  Evidence-based assessments.<br /><span style={{ color: T.gold2 }}>Built for every actor.</span>
+                  Research-informed assessments.<br /><span style={{ color: T.gold2 }}>Built for every actor.</span>
                 </motion.h2>
                 <div style={{ width: 40, height: 2, background: T.gold2, margin: "22px 0 16px" }} />
                 <p style={{ fontFamily: "var(--f-sans)", fontWeight: 300, fontSize: 15, lineHeight: 1.85, color: T.mid, maxWidth: 340, marginBottom: 26 }}>
-                  Every organisation begins at a different point — some need clarity, some readiness, some redesign. One evidence-based instrument for every actor in the system, from the individual to the enterprise.
+                  Every organisation begins at a different point — some need clarity, some readiness, some redesign. One instrument for every actor in the system, from the individual to the enterprise. They launch with the AI Edge Lab site.
                 </p>
-                <SoonButton style={{ display: "inline-block", fontFamily: "var(--f-mono)", fontSize: 11, letterSpacing: ".16em", textTransform: "uppercase", background: T.gold2, color: T.ink, padding: "15px 26px", fontWeight: 500 }}>Start Your Assessment →</SoonButton>
+                <SoonButton style={{ display: "inline-block", fontFamily: "var(--f-mono)", fontSize: 11, letterSpacing: ".16em", textTransform: "uppercase", background: T.gold2, color: T.ink, padding: "15px 26px", fontWeight: 500 }}>Register for early-bird access →</SoonButton>
               </div>
               {/* right: instruments */}
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 1, background: T.rule, border: `1px solid ${T.rule}` }}>
@@ -1097,7 +1132,7 @@ function Frame13() {
                     <div style={{ fontFamily: "var(--f-display)", fontSize: "clamp(22px,2.4vw,28px)", color: T.gold2 }}>{x.code}</div>
                     <div style={{ fontFamily: "var(--f-display)", fontSize: 16, letterSpacing: ".02em", color: T.white, marginBottom: 10 }}>{x.name}</div>
                     <div style={{ fontFamily: "var(--f-sans)", fontWeight: 300, fontSize: 12, color: T.mid, lineHeight: 1.6, marginBottom: 14 }}>{x.desc}</div>
-                    <SoonButton style={{ fontFamily: "var(--f-mono)", fontSize: 8, letterSpacing: ".16em", textTransform: "uppercase", color: T.gold2, marginTop: "auto", alignSelf: "flex-start" }}>Start →</SoonButton>
+                    <SoonButton assessment={x.code} style={{ fontFamily: "var(--f-mono)", fontSize: 8, letterSpacing: ".16em", textTransform: "uppercase", color: T.gold2, marginTop: "auto", alignSelf: "flex-start" }}>Register early →</SoonButton>
                   </motion.div>
                 ))}
               </div>
@@ -1130,36 +1165,112 @@ function Closing() {
   );
 }
 
-function Footer() {
+/* ══════════ EARLY-BIRD REGISTRATION (Fix Brief Part 5, item 23) ══════════ */
+function EarlyBird() {
   return (
-    <footer style={{ background: T.ink, color: T.dim, padding: "40px clamp(24px,5vw,52px)", display: "flex", flexWrap: "wrap", justifyContent: "space-between", gap: 16, borderTop: `1px solid ${T.rule}` }}>
-      <span style={{ fontFamily: "var(--f-display)", fontSize: 16, letterSpacing: ".04em", color: "rgba(247,246,243,0.3)" }}>AI EDGE LAB™</span>
+    <section id={AI_EDGE_LAB.earlyBirdAnchor} style={{ background: T.ink, color: T.white, padding: "clamp(64px,10vh,110px) clamp(24px,5vw,72px)", borderBottom: `1px solid ${T.rule}`, scrollMarginTop: "calc(var(--site-nav-h, 85px) + 64px)" }}>
+      <div className="ael-2col" style={{ maxWidth: 1080, margin: "0 auto", display: "grid", gridTemplateColumns: "0.9fr 1.1fr", gap: "clamp(28px,5vw,72px)", alignItems: "start" }}>
+        <div>
+          <span style={{ ...kicker, color: T.gold2 }}>Early-bird access</span>
+          <h2 style={{ fontFamily: "var(--f-display)", fontSize: "clamp(36px,5vw,64px)", lineHeight: 0.98, letterSpacing: ".01em", margin: "18px 0 16px" }}>
+            BE FIRST WHEN <span style={{ color: T.gold2 }}>THE INSTITUTE OPENS.</span>
+          </h2>
+          <p style={{ ...bodyText, maxWidth: 420 }}>
+            AI Edge Lab&apos;s assessments, courses and research launch with its own website. Register for the assessment that fits you and we will send you a note when it opens.
+          </p>
+        </div>
+        <AiEdgeInterestForm idPrefix="ael-reg" />
+      </div>
+    </section>
+  );
+}
+
+/* ══════════ THE BRIDGE: AI Edge Lab and Axion Index (Fix Brief Part 5, item 22) ══════════ */
+function Bridge() {
+  const live = aiEdgeLabLive();
+  const col: React.CSSProperties = { padding: "26px 24px", background: T.ink, display: "flex", flexDirection: "column", gap: 10 };
+  const head: React.CSSProperties = { fontFamily: "var(--f-mono)", fontSize: 9.5, letterSpacing: ".18em", textTransform: "uppercase", color: T.gold2 };
+  const txt: React.CSSProperties = { fontFamily: "var(--f-sans)", fontWeight: 300, fontSize: 14, lineHeight: 1.75, color: "rgba(247,246,243,0.75)" };
+  const link: React.CSSProperties = { fontFamily: "var(--f-mono)", fontSize: 10, letterSpacing: ".14em", textTransform: "uppercase", color: T.gold2, textAlign: "left", background: "none", border: "none", padding: 0, cursor: "pointer" };
+  return (
+    <section id="bridge" style={{ background: T.ink2, color: T.white, padding: "clamp(40px,6vh,64px) clamp(20px,4vw,52px)", borderBottom: `1px solid ${T.rule}` }}>
+      <div style={{ maxWidth: 1320, margin: "0 auto" }}>
+        <span style={{ ...kicker, color: T.gold2 }}>AI Edge Lab and Axion Index</span>
+        <h2 style={{ fontFamily: "var(--f-serif)", fontWeight: 500, fontSize: "clamp(26px,3vw,40px)", lineHeight: 1.1, margin: "12px 0 24px", maxWidth: "28ch" }}>
+          Two separate operations, <span style={{ color: T.gold2 }}>linked through this page.</span>
+        </h2>
+        <div className="ael-3col" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 1, background: T.rule, border: `1px solid ${T.rule}` }}>
+          <div style={col}>
+            <span style={head}>What AI Edge Lab is</span>
+            <p style={txt}>A global digital institute for the AI architecture of work, with its own assessments, courses and research, its own data, and its own website.</p>
+          </div>
+          <div style={col}>
+            <span style={head}>How it connects to Axion Index</span>
+            <p style={txt}>Axion Index is the consulting firm that works with organisations. AI Edge Lab operates separately. This page explains the link and records early interest until the institute&apos;s site is live.</p>
+          </div>
+          <div style={col}>
+            <span style={head}>Where to go next</span>
+            {live ? (
+              <a href={AI_EDGE_LAB.siteUrl} target="_blank" rel="noopener noreferrer" style={link}>Visit AI Edge Lab ↗</a>
+            ) : (
+              <a href={`#${AI_EDGE_LAB.earlyBirdAnchor}`} style={link}>Individuals: register for early-bird access →</a>
+            )}
+            <button type="button" onClick={() => openDiagnostic("aiEdge")} style={link}>Organisations: start a conversation with Axion Index →</button>
+            <Link href={REPORT.signupPath} style={link}>Axion Index report: {REPORT.name} →</Link>
+            <Link href="/reports" style={link}>Read Axion Index reports →</Link>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/** Fix Brief Part 5, item 26: say what kind of claim each frame makes. */
+function EvidenceLabel({ text, light = false }: { text: string; light?: boolean }) {
+  return (
+    <div style={{
+      marginTop: 14, padding: "6px 7px", border: `1px solid ${light ? "rgba(160,120,48,0.5)" : "rgba(201,162,74,0.45)"}`,
+      fontFamily: "var(--f-mono)", fontSize: 8, letterSpacing: ".08em", textTransform: "uppercase", lineHeight: 1.6,
+      color: light ? LT.gold : T.gold2,
+    }}>
+      {text}
+    </div>
+  );
+}
+
+/** AI Edge Lab identity line. The copyright and links live in the shared site footer (D-02). */
+function AelSignOff() {
+  return (
+    <div style={{ background: T.ink, color: T.dim, padding: "28px clamp(24px,5vw,52px)", display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", gap: 12, borderTop: `1px solid ${T.rule}` }}>
+      <span style={{ fontFamily: "var(--f-display)", fontSize: 16, letterSpacing: ".04em", color: "rgba(247,246,243,0.3)" }}>AI EDGE LAB©</span>
       <span style={{ fontFamily: "var(--f-mono)", fontSize: 9, letterSpacing: ".1em", textTransform: "uppercase" }}>The Institute for the AI Architecture of Work</span>
-      <span style={{ fontFamily: "var(--f-mono)", fontSize: 8, letterSpacing: ".06em", color: "rgba(247,246,243,0.25)" }}>© 2026 Axion Index · Private &amp; Confidential</span>
-    </footer>
+    </div>
   );
 }
 
 /* ─── Page ─── */
 export default function AIEdgeLabPage() {
   return (
-    <div className={`${bebas.variable} ${dmSans.variable} ${dmMono.variable} ${cormorant.variable}`} style={{ background: T.ink, fontFamily: "var(--f-sans)" }}>
+    <div className={`${bebas.variable} ${dmSans.variable} ${dmMono.variable} ${cormorant.variable}`} style={{ background: T.ink, fontFamily: "var(--f-sans)", paddingTop: "var(--site-nav-h, 85px)" }}>
       <style>{`
         @media (max-width: 900px){
           .ael-frame{ grid-template-columns: 1fr !important; }
           .ael-frame > div:nth-child(2){ border-left: none !important; border-top: 1px solid ${T.rule}; }
           .ael-nav{ display: none !important; }
           .ael-2col{ grid-template-columns: 1fr !important; }
+          .ael-3col{ grid-template-columns: 1fr !important; }
           .ael-4col{ grid-template-columns: 1fr 1fr !important; }
           .ael-path{ grid-template-columns: 1fr !important; gap: 10px !important; }
         }
-        @media (max-width: 520px){ .ael-4col{ grid-template-columns: 1fr !important; } }
+        @media (max-width: 520px){ .ael-4col{ grid-template-columns: 1fr !important; } .ael-tagline{ display: none !important; } }
       `}</style>
       <Header />
-      <Frame01 /><Frame02 /><Frame03 /><Frame04 /><Frame05 /><Frame06 />
+      <Frame01 /><Bridge /><Frame02 /><Frame03 /><Frame04 /><Frame05 /><Frame06 />
       <Frame07 /><Frame08 /><Frame09 /><Frame10 /><Frame11 /><Frame12 /><Frame13 />
       <Closing />
-      <Footer />
+      <EarlyBird />
+      <AelSignOff />
+      <SiteFooter />
       <ComingSoonModal />
     </div>
   );

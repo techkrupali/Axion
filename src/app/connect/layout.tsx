@@ -2,7 +2,7 @@ import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
   title: "Reach Us",
-  description: "Begin with a written intent: a short note on where the architecture is under stress and what change is being considered. Axion Index responds within 48 hours.",
+  description: "Start a conversation with Axion Index: share the signals you are seeing and what concerns you. Nitin reads every note personally and replies within 48 hours.",
   path: "/connect",
 });
 

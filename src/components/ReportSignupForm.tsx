@@ -1,17 +1,38 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { ArrowRight } from "lucide-react";
+import FormPrivacyNote from "@/components/FormPrivacyNote";
+import { track, useFormStarted, visitSource } from "@/lib/analytics";
+import { JOURNAL } from "@/config/contact";
 import { Honeypot } from "@/components/Honeypot";
 import { isEmail } from "@/lib/contact";
+import { MAIN_BUTTON_SHAPE } from "@/components/Button";
 
-const empty = { name: "", email: "", organisation: "", website: "" };
+const empty = { name: "", email: "", organisation: "", website: "", journal: false };
 
-/** Name / email / organisation sign-up for the Global AI Report. No login. */
-export default function ReportSignupForm({ releaseLong, published }: { releaseLong: string; published: boolean }) {
+/**
+ * Name / email / organisation sign-up for one report. No login.
+ *  • published + readable on the site → "Get future editions"
+ *  • otherwise → "Send it to me" (on release, if it has a date)
+ */
+export default function ReportSignupForm({
+  report,
+  releaseLong,
+  published,
+  download = false,
+}: {
+  report: string;          // library slug, e.g. "make-or-break"
+  releaseLong?: string;    // e.g. "20 November 2026"; empty when not yet dated
+  published: boolean;      // true once the report can be read on the site
+  download?: boolean;      // the report is out and has a PDF: "Download the report" (D7)
+}) {
+  const router = useRouter();
+  const formStarted = useFormStarted("report", { report });
   const [form, setForm] = useState(empty);
   const [touched, setTouched] = useState({ name: false, email: false, organisation: false });
-  const [state, setState] = useState<"idle" | "sending" | "done" | "already" | "error">("idle");
+  const [state, setState] = useState<"idle" | "sending" | "error">("idle");
   const [error, setError] = useState("");
 
   const errs = {
@@ -32,34 +53,18 @@ export default function ReportSignupForm({ releaseLong, published }: { releaseLo
       const res = await fetch("/api/report-signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, report, sourcePage: window.location.pathname, cameFrom: visitSource() }),
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok || !data.ok) throw new Error(data.error || "Something went wrong. Please try again.");
-      setState(data.already ? "already" : "done");
-      setForm(empty);
+      track("Form sent", { form: "report", report });
+      track("Report requested", { report });
+      if (form.journal) track("Newsletter sign-up", { source: "report" });
+      router.push(`/thank-you?form=report&report=${encodeURIComponent(report)}`);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
       setState("error");
     }
-  }
-
-  if (state === "done" || state === "already") {
-    return (
-      <div className="text-center py-6">
-        <div className="w-14 h-14 rounded-2xl bg-[#C9A24A]/10 border border-[#C9A24A]/25 flex items-center justify-center mx-auto mb-6">
-          <CheckCircle2 className="w-7 h-7 text-[#C9A24A]" />
-        </div>
-        <h3 className="font-serif text-[26px] leading-tight text-[var(--fg)] mb-3">
-          {state === "already" ? "You're already on the list." : "You're on the list."}
-        </h3>
-        <p className="text-[15px] leading-[1.7] text-[var(--fg-4)]">
-          {published
-            ? "We'll send you future editions as they're published."
-            : <>We&apos;ll send the report to your inbox on <span className="text-[#C9A24A]">{releaseLong}</span>.</>}
-        </p>
-      </div>
-    );
   }
 
   const fields = [
@@ -80,7 +85,7 @@ export default function ReportSignupForm({ releaseLong, published }: { releaseLo
               autoComplete={f.ac}
               placeholder={f.ph}
               value={form[f.k]}
-              onChange={(e) => setForm((s) => ({ ...s, [f.k]: e.target.value }))}
+              onChange={(e) => { formStarted(); setForm((s) => ({ ...s, [f.k]: e.target.value })); }}
               onBlur={() => setTouched((t) => ({ ...t, [f.k]: true }))}
               className={`bg-transparent border-b px-0 py-3 text-[var(--fg)] text-[16px] outline-none focus:border-[var(--accent)] transition-colors duration-300 placeholder:text-[var(--fg-5)] w-full ${showErr ? "border-red-400/70" : "border-[var(--line-strong)]"}`}
             />
@@ -90,16 +95,27 @@ export default function ReportSignupForm({ releaseLong, published }: { releaseLo
       })}
       <Honeypot value={form.website} onChange={(v) => setForm((s) => ({ ...s, website: v }))} />
 
+      {/* Unticked by default (Fix Brief Part 4, step 3) */}
+      <label className="flex items-start gap-3 cursor-pointer text-[14px] leading-snug text-[var(--fg-3)]">
+        <input
+          type="checkbox"
+          checked={form.journal}
+          onChange={(e) => setForm((s) => ({ ...s, journal: e.target.checked }))}
+          className="mt-0.5 h-4 w-4 shrink-0 accent-[#C9A24A] cursor-pointer"
+        />
+        <span>Also send me the monthly {JOURNAL.name}.</span>
+      </label>
+
       <button
         type="submit"
         disabled={state === "sending"}
-        className="mt-2 inline-flex items-center justify-center gap-3 px-8 py-4 font-mono text-[11px] tracking-[0.26em] uppercase rounded-full font-semibold bg-[#C9A24A] text-[#0A0A0B] disabled:opacity-60 transition-transform active:scale-[0.98]"
+        className={`mt-2 inline-flex items-center justify-center gap-3 px-8 py-4 font-mono text-[11px] tracking-[0.26em] uppercase ${MAIN_BUTTON_SHAPE} font-semibold bg-[#C9A24A] text-[#0A0A0B] disabled:opacity-60 transition-transform active:scale-[0.98]`}
       >
-        {state === "sending" ? "Sending…" : published ? "Get future editions" : "Send it to me on release"}
+        {state === "sending" ? "Sending…" : download ? "Download the report" : published ? "Get future editions" : releaseLong ? "Send it to me on release" : "Send it to me"}
         {state !== "sending" && <ArrowRight size={13} />}
       </button>
       {state === "error" && error && <p className="font-mono text-[11px] tracking-wide text-red-400">{error}</p>}
-      <p className="text-[12px] leading-relaxed text-[var(--fg-5)]">No login, no spam. We only use your details to send you the report.</p>
+      <FormPrivacyNote />
     </form>
   );
 }

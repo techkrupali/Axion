@@ -4,9 +4,10 @@ import Link from "next/link";
 import { useRef, useState } from "react";
 import { motion, useScroll, useTransform, useInView, AnimatePresence } from "framer-motion";
 import { ArrowRight, ChevronDown } from "lucide-react";
-import DiagnosticModal, { useReopenDiagnostic } from "@/components/DiagnosticModal";
+import { openDiagnostic } from "@/lib/openDiagnostic";
 import Footer from "@/components/Footer";
 import Button from "@/components/Button";
+import { CONVERSATION_INVITE, LINKEDIN_NITIN } from "@/config/nav";
 
 /* ─────────────────────────────────────────
    SHARED PRIMITIVES
@@ -68,7 +69,7 @@ function GridBg({ id = "g1", opacity = 0.025 }: { id?: string; opacity?: number 
       <svg className="absolute inset-0 w-full h-full" style={{ opacity }} xmlns="http://www.w3.org/2000/svg">
         <defs>
           <pattern id={id} width="72" height="72" patternUnits="userSpaceOnUse">
-            <path d="M 72 0 L 0 0 0 72" fill="none" stroke="rgba(201,168,76,1)" strokeWidth="0.5" />
+            <path d="M 72 0 L 0 0 0 72" fill="none" stroke="rgba(201,162,74,1)" strokeWidth="0.5" />
           </pattern>
         </defs>
         <rect width="100%" height="100%" fill={`url(#${id})`} />
@@ -184,7 +185,13 @@ const breakdownItems = [
   { num: "04", text: "Decision ownership became unclear" },
 ];
 
-const approachSteps = [
+/**
+ * N-04 (Fix Brief Part 3A): for each principle, the situation where it matters and the decision it
+ * changes. Nitin writes these; each block appears on the page as soon as its text is filled in.
+ */
+type ApproachStep = { step: string; label: string; title: string; desc: string; situation?: string; decision?: string };
+
+const approachSteps: ApproachStep[] = [
   { step: "01", label: "DIAGNOSE", title: "Where the system is breaking", desc: "We read the operating model before we read the org chart." },
   { step: "02", label: "CODIFY", title: "What is holding it together artificially", desc: "We surface the dependencies that live in people, not process." },
   { step: "03", label: "PREDICT", title: "What will fail next", desc: "We sequence the risk before it becomes a crisis." },
@@ -209,10 +216,16 @@ const whoWeWorkWith = [
     statement: "Read the workforce as cost, risk, and control architecture — not headcount.",
     detail: "Workforce is your largest cost line and your least-read risk register. We change that.",
   },
+  // B-02, B-04 (Fix Brief Part 8): the same words as the homepage's "Where you sit"
   {
     role: "CHRO",
-    statement: "Stop running HR programs. Start running the operating system underneath them.",
-    detail: "The programs are symptoms. The architecture is where the cause usually sits. We work there.",
+    statement: "You're running more programs than ever, and the organisation is no more durable for it.",
+    detail: "Build the operating system underneath HR, so capability is designed into structure, not dependent on who's running the program.",
+  },
+  {
+    role: "Investor / Board",
+    statement: "The thesis is sound. The question is whether the organisation can carry it.",
+    detail: "Diligence the organisation's operating architecture: what survives the founder, and what is quietly held by individuals who can leave.",
   },
 ];
 
@@ -220,8 +233,6 @@ const whoWeWorkWith = [
    PAGE
 ───────────────────────────────────────── */
 export default function About() {
-  const [diagOpen, setDiagOpen] = useState(false);
-  useReopenDiagnostic(() => setDiagOpen(true));
   return (
     <div className="min-h-screen overflow-x-hidden">
 
@@ -268,9 +279,8 @@ export default function About() {
       {/* ══════════════════════════════════════
           S9 — END NOTE / FINAL CTA
       ══════════════════════════════════════ */}
-      <EndSection onStartDiagnostic={() => setDiagOpen(true)} />
+      <EndSection onStartDiagnostic={openDiagnostic} />
 
-      {diagOpen && <DiagnosticModal onClose={() => setDiagOpen(false)} />}
 
       <Footer />
     </div>
@@ -438,7 +448,7 @@ function WhatWeDoSection() {
             {diagnosticQuestions.map((q, i) => (
               <FadeUp key={i} delay={0.08 + i * 0.1}>
                 <motion.div
-                  whileHover={{ y: -4, borderColor: "rgba(201,168,76,0.35)" }}
+                  whileHover={{ y: -4, borderColor: "rgba(201,162,74,0.35)" }}
                   transition={{ duration: 0.3 }}
                   className="group relative overflow-hidden p-7 rounded-[24px] border border-[var(--line)] cursor-default"
                   style={{ background: "rgba(12,14,20,0.55)", backdropFilter: "blur(12px)" }}
@@ -453,7 +463,7 @@ function WhatWeDoSection() {
                   {/* Hover glow */}
                   <div
                     className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-[24px]"
-                    style={{ background: "linear-gradient(135deg, rgba(201,168,76,0.06) 0%, transparent 60%)" }}
+                    style={{ background: "linear-gradient(135deg, rgba(201,162,74,0.06) 0%, transparent 60%)" }}
                   />
                   {/* Bottom accent line */}
                   <div className="absolute bottom-0 left-0 h-[1px] w-0 group-hover:w-full bg-[var(--accent)] opacity-40 transition-all duration-600" />
@@ -461,11 +471,6 @@ function WhatWeDoSection() {
               </FadeUp>
             ))}
 
-            <FadeUp delay={0.5}>
-              <p className="font-serif italic text-[clamp(20px,2.4vw,28px)] text-[var(--accent)] mt-4 leading-snug">
-                We are rewriting the operating logic of work.
-              </p>
-            </FadeUp>
           </div>
         </div>
       </div>
@@ -489,7 +494,7 @@ function StatementSection() {
       {/* Radial glow */}
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{ background: "radial-gradient(ellipse 70% 60% at 50% 50%, rgba(201,168,76,0.06) 0%, transparent 70%)" }}
+        style={{ background: "radial-gradient(ellipse 70% 60% at 50% 50%, rgba(201,162,74,0.06) 0%, transparent 70%)" }}
       />
 
       {/* Horizontal lines */}
@@ -565,7 +570,7 @@ function WhySection() {
                         viewport={{ once: true }}
                         transition={{ duration: 0.5, delay: 0.2 + i * 0.1 }}
                         className="w-10 h-10 rounded-full border border-[var(--line-gold)] flex items-center justify-center"
-                        style={{ background: "rgba(201,168,76,0.06)" }}
+                        style={{ background: "rgba(201,162,74,0.06)" }}
                       >
                         <span className="font-mono text-[9px] text-[var(--accent)] tracking-[0.2em]">{item.num}</span>
                       </motion.div>
@@ -585,7 +590,7 @@ function WhySection() {
           <FadeUp delay={0.5}>
             <div
               className="relative p-10 rounded-[28px] border border-[var(--line-gold)] mb-12 overflow-hidden"
-              style={{ background: "linear-gradient(135deg, rgba(201,168,76,0.05) 0%, rgba(12,14,20,0.8) 100%)" }}
+              style={{ background: "linear-gradient(135deg, rgba(201,162,74,0.05) 0%, rgba(12,14,20,0.8) 100%)" }}
             >
               <div className="absolute top-0 left-0 w-1 h-full bg-[var(--accent)] opacity-60 rounded-l-[28px]" />
               <p
@@ -657,7 +662,7 @@ function ApproachSection() {
                   transition={{ duration: 0.25 }}
                   className={`w-full text-left p-6 rounded-[20px] border transition-all duration-400 group ${
                     active === i
-                      ? "border-[var(--line-gold)] bg-[rgba(201,168,76,0.06)]"
+                      ? "border-[var(--line-gold)] bg-[rgba(201,162,74,0.06)]"
                       : "border-[var(--line)] bg-transparent hover:border-[var(--line-strong)]"
                   }`}
                 >
@@ -693,12 +698,12 @@ function ApproachSection() {
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                 className="relative p-12 rounded-[32px] border border-[var(--line-gold)] overflow-hidden"
-                style={{ background: "linear-gradient(135deg, rgba(201,168,76,0.06) 0%, rgba(8,10,15,0.9) 100%)" }}
+                style={{ background: "linear-gradient(135deg, rgba(201,162,74,0.06) 0%, rgba(8,10,15,0.9) 100%)" }}
               >
                 {/* Big number watermark */}
                 <div
                   className="absolute right-8 top-4 font-serif italic pointer-events-none select-none"
-                  style={{ fontSize: "120px", color: "rgba(201,168,76,0.06)", lineHeight: 1 }}
+                  style={{ fontSize: "120px", color: "rgba(201,162,74,0.06)", lineHeight: 1 }}
                 >
                   {approachSteps[active].step}
                 </div>
@@ -716,11 +721,32 @@ function ApproachSection() {
                   {approachSteps[active].desc}
                 </p>
 
+                {/* N-04: principle → situation where it matters → decision it changes (shown once written) */}
+                {(approachSteps[active].situation || approachSteps[active].decision) && (
+                  <dl className="grid grid-cols-1 sm:grid-cols-2 gap-6 border-t border-[var(--line)] pt-8 mb-10">
+                    {approachSteps[active].situation && (
+                      <div>
+                        <dt className="font-mono text-[10px] tracking-[0.3em] uppercase text-[var(--accent)] mb-2">Where it matters</dt>
+                        <dd className="text-[15px] leading-relaxed text-[var(--fg-3)]">{approachSteps[active].situation}</dd>
+                      </div>
+                    )}
+                    {approachSteps[active].decision && (
+                      <div>
+                        <dt className="font-mono text-[10px] tracking-[0.3em] uppercase text-[var(--accent)] mb-2">The decision it changes</dt>
+                        <dd className="text-[15px] leading-relaxed text-[var(--fg-3)]">{approachSteps[active].decision}</dd>
+                      </div>
+                    )}
+                  </dl>
+                )}
+
                 {/* Step dots */}
                 <div className="flex items-center gap-3">
-                  {approachSteps.map((_, i) => (
+                  {approachSteps.map((step, i) => (
                     <button
                       key={i}
+                      type="button"
+                      aria-label={`Show step ${step.step}: ${step.label.toLowerCase()}`}
+                      aria-pressed={i === active}
                       onClick={() => setActive(i)}
                       className={`transition-all duration-300 rounded-full ${
                         i === active
@@ -736,7 +762,7 @@ function ApproachSection() {
             <FadeUp delay={0.4}>
               <div className="mt-8 text-center">
                 <Link
-                  href="/#bridge"
+                  href="/#engagement"
                   className="inline-flex items-center gap-2 font-mono text-[10.5px] tracking-[0.24em] uppercase text-[var(--fg-4)] hover:text-[var(--accent)] transition-colors duration-300"
                 >
                   See how we work
@@ -771,7 +797,7 @@ function PhilosophySection() {
       >
         <div
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] rounded-full"
-          style={{ background: "radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%)" }}
+          style={{ background: "radial-gradient(circle, rgba(201,162,74,0.07) 0%, transparent 70%)" }}
         />
       </motion.div>
 
@@ -875,7 +901,7 @@ function DifferentSection() {
             {differentiators.map((item, i) => (
               <FadeIn key={i} delay={0.1 + i * 0.1} x={24}>
                 <motion.div
-                  whileHover={{ backgroundColor: "rgba(201,168,76,0.025)", x: 4 }}
+                  whileHover={{ backgroundColor: "rgba(201,162,74,0.025)", x: 4 }}
                   transition={{ duration: 0.3 }}
                   className="flex items-start gap-6 py-8 border-b border-[var(--line)] group cursor-default rounded-lg px-4 -mx-4"
                 >
@@ -942,7 +968,7 @@ function WhoSection() {
         </div>
 
         {/* Cards grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
           {whoWeWorkWith.map((item, i) => (
             <FadeUp key={i} delay={0.1 + i * 0.12}>
               <motion.div
@@ -953,11 +979,11 @@ function WhoSection() {
                 className="relative overflow-hidden rounded-[28px] border p-8 flex flex-col gap-6 cursor-default h-full"
                 style={{
                   background: hovered === i
-                    ? "linear-gradient(135deg, rgba(201,168,76,0.08) 0%, rgba(8,10,15,0.95) 100%)"
+                    ? "linear-gradient(135deg, rgba(201,162,74,0.08) 0%, rgba(8,10,15,0.95) 100%)"
                     : "rgba(12,14,20,0.6)",
-                  borderColor: hovered === i ? "rgba(201,168,76,0.35)" : "rgba(240,241,245,0.06)",
+                  borderColor: hovered === i ? "rgba(201,162,74,0.35)" : "rgba(240,241,245,0.06)",
                   backdropFilter: "blur(16px)",
-                  boxShadow: hovered === i ? "0 32px 64px rgba(0,0,0,0.5), 0 0 40px rgba(201,168,76,0.06)" : "none",
+                  boxShadow: hovered === i ? "0 32px 64px rgba(0,0,0,0.5), 0 0 40px rgba(201,162,74,0.06)" : "none",
                   transition: "all 0.4s cubic-bezier(0.22,1,0.36,1)",
                 }}
               >
@@ -967,8 +993,8 @@ function WhoSection() {
                     className="inline-block font-mono text-[9.5px] tracking-[0.35em] uppercase px-4 py-2 rounded-full border"
                     style={{
                       color: "var(--accent)",
-                      borderColor: "rgba(201,168,76,0.25)",
-                      background: "rgba(201,168,76,0.06)",
+                      borderColor: "rgba(201,162,74,0.25)",
+                      background: "rgba(201,162,74,0.06)",
                     }}
                   >
                     {item.role}
@@ -1001,7 +1027,7 @@ function WhoSection() {
                 <div
                   className="absolute top-0 right-0 w-32 h-32 pointer-events-none rounded-[28px] transition-opacity duration-400"
                   style={{
-                    background: "radial-gradient(circle at top right, rgba(201,168,76,0.08), transparent 70%)",
+                    background: "radial-gradient(circle at top right, rgba(201,162,74,0.08), transparent 70%)",
                     opacity: hovered === i ? 1 : 0,
                   }}
                 />
@@ -1032,9 +1058,9 @@ function EndSection({ onStartDiagnostic }: { onStartDiagnostic: () => void }) {
       {/* Layered glows */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] rounded-full"
-          style={{ background: "radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 65%)" }} />
+          style={{ background: "radial-gradient(circle, rgba(201,162,74,0.06) 0%, transparent 65%)" }} />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full"
-          style={{ background: "radial-gradient(circle, rgba(201,168,76,0.04) 0%, transparent 70%)" }} />
+          style={{ background: "radial-gradient(circle, rgba(201,162,74,0.04) 0%, transparent 70%)" }} />
       </div>
 
       <GridBg id="end-grid" opacity={0.02} />
@@ -1050,7 +1076,7 @@ function EndSection({ onStartDiagnostic }: { onStartDiagnostic: () => void }) {
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-serif font-bold pointer-events-none select-none whitespace-nowrap"
           style={{
             fontSize: "clamp(80px,18vw,260px)",
-            color: "rgba(201,168,76,0.025)",
+            color: "rgba(201,162,74,0.025)",
             lineHeight: 1,
             letterSpacing: "-0.04em",
           }}
@@ -1084,7 +1110,7 @@ function EndSection({ onStartDiagnostic }: { onStartDiagnostic: () => void }) {
 
         {/* Sub-lines */}
         <FadeUp delay={0.22}>
-          <div className="flex flex-col items-center gap-3 mb-16">
+          <div className="flex flex-col items-center gap-3 mb-10">
             {[
               "From compliance to control.",
               "From systems to operating intelligence.",
@@ -1098,6 +1124,11 @@ function EndSection({ onStartDiagnostic }: { onStartDiagnostic: () => void }) {
               </p>
             ))}
           </div>
+        </FadeUp>
+
+        {/* N-03: invitation */}
+        <FadeUp delay={0.3}>
+          <p className="text-[16px] leading-[1.7] text-[var(--fg-4)] max-w-[52ch] mx-auto mb-10">{CONVERSATION_INVITE}</p>
         </FadeUp>
 
         {/* CTAs */}
@@ -1119,7 +1150,7 @@ function EndSection({ onStartDiagnostic }: { onStartDiagnostic: () => void }) {
               office@axionindex.org
             </a>
             <span className="text-[var(--line-gold)]">·</span>
-            <a href="https://www.linkedin.com/in/nahatanitin" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--accent)] transition-colors">
+            <a href={LINKEDIN_NITIN} target="_blank" rel="noopener noreferrer" className="hover:text-[var(--accent)] transition-colors">
               linkedin.com/in/nahatanitin
             </a>
           </div>

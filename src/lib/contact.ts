@@ -1,48 +1,37 @@
 /**
- * Name / email / mobile that every public form collects at the top.
+ * Name / email / phone that every public form collects.
  * Used by the forms (live validation) and by the API routes (final check),
  * so both sides apply exactly the same rules.
+ *
+ * Phone (Fix Brief Part 4, item 16): optional and international. `phoneCountry` is the
+ * code picked from the list (default +91); `phone` is the digits only.
  */
+import { DEFAULT_COUNTRY_CODE, formatPhone, phoneError } from "@/lib/phone";
 
-export type ContactInput = { name: string; email: string; phone: string };
+export type ContactInput = { name: string; email: string; phone: string; phoneCountry?: string };
 
 export const cleanStr = (v: unknown, max = 200) => (typeof v === "string" ? v.trim().slice(0, max) : "");
 
 export const isEmail = (s: string) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(s.trim());
 
-/** Mobile number: digits only, exactly 10 (e.g. 9876543210). */
-export const isPhone = (s: string) => /^\d{10}$/.test(s);
-
-/**
- * Keep the mobile field to digits only, max 10, as the visitor types.
- * A pasted "+91 98765 43210" or "09876543210" becomes "9876543210".
- */
-export function toMobileDigits(v: string) {
-  let d = v.replace(/\D/g, "");
-  if (d.length === 12 && d.startsWith("91")) d = d.slice(2);
-  else if (d.length === 11 && d.startsWith("0")) d = d.slice(1);
-  return d.slice(0, 10);
-}
-
 export const contactErrors = (c: ContactInput) => ({
   name: c.name.trim().length < 2 ? "Please enter your name." : "",
   email: !isEmail(c.email) ? "Please enter a valid email address." : "",
-  phone: !isPhone(c.phone) ? "Please enter a 10-digit mobile number (numbers only)." : "",
+  phone: phoneError(c.phoneCountry || DEFAULT_COUNTRY_CODE, c.phone),
 });
 
 export const isContactValid = (c: ContactInput) => Object.values(contactErrors(c)).every((e) => !e);
 
-/** Server side: pull and validate the contact fields from a request body. */
+/** Server side: pull and validate the contact fields. `phone` comes back formatted ("+91 9876543210") or "". */
 export function readContact(data: Record<string, unknown>):
-  | { ok: true; contact: ContactInput }
+  | { ok: true; contact: { name: string; email: string; phone: string } }
   | { ok: false; error: string } {
-  const contact = {
-    name: cleanStr(data.name, 120),
-    email: cleanStr(data.email, 200).toLowerCase(),
-    phone: cleanStr(data.phone, 30), // must already be exactly 10 digits (checked below)
-  };
-  const errors = Object.values(contactErrors(contact)).filter(Boolean);
-  return errors.length ? { ok: false, error: errors[0] } : { ok: true, contact };
+  const code = cleanStr(data.phoneCountry, 6) || DEFAULT_COUNTRY_CODE;
+  const digits = cleanStr(data.phone, 30).replace(/[\s-]/g, "");
+  const input = { name: cleanStr(data.name, 120), email: cleanStr(data.email, 200).toLowerCase(), phone: digits, phoneCountry: code };
+  const errors = Object.values(contactErrors(input)).filter(Boolean);
+  if (errors.length) return { ok: false, error: errors[0] };
+  return { ok: true, contact: { name: input.name, email: input.email, phone: formatPhone(code, digits) } };
 }
 
 /** Hidden "website" field: real people never see it, bots fill it in. */

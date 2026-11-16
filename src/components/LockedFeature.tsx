@@ -24,7 +24,7 @@ export function LockedFeature({ featureId, name, description, children, isLocked
 
       {/* Paywall Overlay */}
       <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center bg-[#0a0a0a]/40 backdrop-blur-[2px]">
-        <div className="w-12 h-12 bg-[#1a1a1a] border border-[#C9A24A]/30 rounded-2xl flex items-center justify-center mb-6 shadow-[0_0_20px_rgba(212,175,55,0.1)]">
+        <div className="w-12 h-12 bg-[#1a1a1a] border border-[#C9A24A]/30 rounded-2xl flex items-center justify-center mb-6 shadow-[0_0_20px_rgba(201,162,74,0.1)]">
           <Lock className="w-5 h-5 text-[#C9A24A]" />
         </div>
         

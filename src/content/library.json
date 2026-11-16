@@ -1,0 +1,455 @@
+{
+  "_readme": "The Axion Index library (Fix Brief Part 3). One object per item. Fields mirror the tracker's Content tab: title, date, category, theme, series, originalLink, summary, cover. See src/content/README.md to add an item.",
+  "series": [
+    {
+      "slug": "the-three-laws-of-ai",
+      "name": "The Three Laws of AI",
+      "summary": "",
+      "theme": [
+        "AI & work"
+      ]
+    },
+    {
+      "slug": "the-big-ai-bet",
+      "name": "The Big AI Bet",
+      "summary": "",
+      "theme": [
+        "AI & work"
+      ]
+    },
+    {
+      "slug": "the-shift-irdai-edition",
+      "name": "The Shift: IRDAI edition",
+      "summary": "",
+      "theme": [
+        "People Architecture"
+      ]
+    }
+  ],
+  "items": [
+    {
+      "slug": "make-or-break",
+      "category": "report",
+      "title": "Make or Break: The Weakest Link in the Big AI Bet",
+      "kicker": "Axion Index Journal · Global Special Report",
+      "date": "2026-11-20",
+      "theme": [
+        "AI & work"
+      ],
+      "summary": "How AI is changing the architecture of work: where AI accelerates, and where human judgment must still hold the call.",
+      "inside": [
+        "The five phases of the AI economy, and why delivery inside organisations is the slowest link.",
+        "Why productivity has not yet become financial value (the Three Laws of AI).",
+        "What leaders and boards should check before the next AI budget cycle."
+      ],
+      "author": "Nitin Nahata",
+      "method": "Draws on published research cited in the series (Sequoia, PwC, BCG, Bain, Menlo Ventures) and Axion Index's analysis.",
+      "site": "",
+      "owner": "axion"
+    },
+    {
+      "slug": "irdai-people-architecture-playbook",
+      "category": "report",
+      "title": "IRDAI People Architecture Playbook",
+      "date": "2026-11-24",
+      "theme": [
+        "People Architecture",
+        "Governance"
+      ],
+      "summary": "A people architecture playbook for India's insurance sector.",
+      "inside": [],
+      "author": "",
+      "method": "",
+      "site": "",
+      "owner": "axion"
+    },
+    {
+      "slug": "the-architecture-gap",
+      "category": "report",
+      "title": "The Architecture Gap",
+      "kicker": "AI Edge Lab",
+      "date": null,
+      "theme": [
+        "AI & work"
+      ],
+      "summary": "",
+      "inside": [],
+      "author": "",
+      "method": "",
+      "site": "/expertise/ai-edge",
+      "owner": "ai-edge-lab"
+    },
+    {
+      "slug": "nvidia-changed-its-ceo-in-five-days",
+      "category": "essay",
+      "title": "Nvidia changed its CEO in five days. Changing its system will take much longer.",
+      "date": "2026-11-13",
+      "theme": [
+        "Governance"
+      ],
+      "summary": "",
+      "originalLink": "https://www.linkedin.com/feed/update/urn:li:activity:7526849446366703616/"
+    },
+    {
+      "slug": "irdai-reforms-incentives-targets-recognition",
+      "category": "series",
+      "series": "the-shift-irdai-edition",
+      "part": 2,
+      "title": "IRDAI reforms: incentives, targets, recognition",
+      "date": "2026-11-12",
+      "theme": [
+        "People Architecture"
+      ],
+      "summary": "",
+      "originalLink": "https://www.linkedin.com/feed/update/urn:li:activity:7526524466873384960/"
+    },
+    {
+      "slug": "in-ai-competition-is-king",
+      "category": "series",
+      "series": "the-big-ai-bet",
+      "part": 3,
+      "title": "In AI, competition is king",
+      "date": "2026-11-11",
+      "theme": [
+        "AI & work"
+      ],
+      "summary": "",
+      "originalLink": "https://www.linkedin.com/feed/update/urn:li:activity:7526161861168472065/"
+    },
+    {
+      "slug": "the-shifting-people-architecture-playbook-irdai-edition",
+      "category": "series",
+      "series": "the-shift-irdai-edition",
+      "part": 1,
+      "title": "The Shifting People Architecture Playbook: IRDAI edition",
+      "date": "2026-11-10",
+      "theme": [
+        "People Architecture"
+      ],
+      "summary": "",
+      "originalLink": "https://www.linkedin.com/feed/update/urn:li:activity:7525818661635424256/"
+    },
+    {
+      "slug": "the-future-is-being-financed",
+      "category": "series",
+      "series": "the-big-ai-bet",
+      "part": 2,
+      "title": "The future is being financed as if it has already happened",
+      "date": "2026-11-09",
+      "theme": [
+        "AI & work"
+      ],
+      "summary": "",
+      "originalLink": "https://www.linkedin.com/feed/update/urn:li:activity:7525444083851571201/"
+    },
+    {
+      "slug": "the-big-ai-bet-what-could-make-or-break-it",
+      "category": "series",
+      "series": "the-big-ai-bet",
+      "title": "The Big AI Bet: what could make or break it",
+      "date": "2026-11-03",
+      "theme": [
+        "AI & work"
+      ],
+      "summary": "",
+      "originalLink": "https://www.linkedin.com/feed/update/urn:li:activity:7523272008516927489/"
+    },
+    {
+      "slug": "five-signals-one-pattern",
+      "category": "series",
+      "series": "the-big-ai-bet",
+      "title": "Five signals, one pattern",
+      "date": "2026-11-02",
+      "theme": [
+        "AI & work"
+      ],
+      "summary": "",
+      "originalLink": "https://www.linkedin.com/feed/update/urn:li:activity:7522866732328280064/"
+    },
+    {
+      "slug": "480-billion-chinas-ai-stocks",
+      "category": "series",
+      "series": "the-big-ai-bet",
+      "title": "$480 billion: China's AI stocks",
+      "date": "2026-10-31",
+      "theme": [
+        "AI & work"
+      ],
+      "summary": "",
+      "originalLink": "https://www.linkedin.com/feed/update/urn:li:activity:7522140741259784192/"
+    },
+    {
+      "slug": "the-third-law-of-ai",
+      "category": "series",
+      "series": "the-three-laws-of-ai",
+      "part": 3,
+      "title": "The Third Law of AI: Impact ≠ Value",
+      "date": "2026-10-12",
+      "theme": [
+        "AI & work"
+      ],
+      "summary": "",
+      "originalLink": "https://www.linkedin.com/feed/update/urn:li:activity:7515268745255153664/"
+    },
+    {
+      "slug": "the-second-law-of-ai",
+      "category": "series",
+      "series": "the-three-laws-of-ai",
+      "part": 2,
+      "title": "The Second Law of AI: Productivity ≠ Impact",
+      "date": "2026-10-07",
+      "theme": [
+        "AI & work"
+      ],
+      "summary": "",
+      "originalLink": "https://www.linkedin.com/feed/update/urn:li:activity:7513459144885137408/"
+    },
+    {
+      "slug": "the-first-law-of-ai",
+      "category": "series",
+      "series": "the-three-laws-of-ai",
+      "part": 1,
+      "title": "The First Law of AI: Adoption ≠ Assimilation",
+      "date": "2026-09-30",
+      "theme": [
+        "AI & work"
+      ],
+      "summary": "",
+      "originalLink": "https://www.linkedin.com/feed/update/urn:li:activity:7510960809246642176/"
+    },
+    {
+      "slug": "the-three-laws-of-ai-for-enterprise-value-creation",
+      "category": "series",
+      "series": "the-three-laws-of-ai",
+      "title": "The Three Laws of AI for Enterprise Value Creation",
+      "date": "2026-09-21",
+      "theme": [
+        "AI & work"
+      ],
+      "summary": "",
+      "originalLink": "https://www.linkedin.com/feed/update/urn:li:activity:7507639097708953601/"
+    },
+    {
+      "slug": "why-ai-investments-fail-to-show-up",
+      "category": "essay",
+      "title": "Why do so many AI investments fail to show up in the bottom line?",
+      "date": "2026-09-15",
+      "theme": [
+        "AI & work"
+      ],
+      "summary": "",
+      "originalLink": "https://www.linkedin.com/feed/update/urn:li:activity:7505463032764870656/"
+    },
+    {
+      "slug": "outlook-india-articles",
+      "category": "media",
+      "publisher": "Outlook India",
+      "title": "Articles by Nitin Nahata in Outlook India",
+      "date": null,
+      "theme": [
+        "People Architecture"
+      ],
+      "summary": "",
+      "originalLink": "https://www.outlookindia.com/author/nitin-nahata"
+    },
+    {
+      "slug": "jobs-changing-around-people",
+      "category": "essay",
+      "title": "Your people aren't changing jobs. Their jobs are changing around them.",
+      "date": "2026-10-29",
+      "theme": [
+        "AI & work"
+      ],
+      "summary": "",
+      "originalLink": "https://www.linkedin.com/feed/update/urn:li:activity:7521458400996515840/"
+    },
+    {
+      "slug": "nvidia-who-governs-the-governors",
+      "category": "essay",
+      "title": "Nvidia: who governs the governors?",
+      "date": "2026-11-12",
+      "theme": [
+        "Governance"
+      ],
+      "summary": "",
+      "originalLink": "https://www.linkedin.com/feed/update/urn:li:activity:7526642085555228672/"
+    },
+    {
+      "slug": "fresh-outta-campus",
+      "category": "media",
+      "publisher": "All Things Talent",
+      "title": "Fresh Outta Campus, Straight Into the Game",
+      "date": "2025-06-27",
+      "theme": [
+        "People Architecture"
+      ],
+      "summary": "",
+      "originalLink": "https://allthingstalent.org/fresh-outta-campus-straight-into-the-game-how-gameskraft-is-powering-early-talent/2025/06/27/"
+    },
+    {
+      "slug": "should-ai-replace-empathy",
+      "category": "media",
+      "publisher": "All Things Talent",
+      "title": "Should AI Replace Empathy? The Limits of Technology in Hiring",
+      "date": "2024-11-18",
+      "theme": [
+        "AI & work"
+      ],
+      "summary": "",
+      "originalLink": "https://allthingstalent.org/should-ai-replace-empathy-the-limits-of-technology-in-hiring/2024/11/18/"
+    },
+    {
+      "slug": "what-does-hr-want",
+      "category": "media",
+      "publisher": "All Things Talent",
+      "title": "What Does HR Want? A Deep Dive into the Wishlist of HR Leaders",
+      "date": "2024-05-20",
+      "theme": [
+        "People Architecture"
+      ],
+      "summary": "",
+      "originalLink": "https://allthingstalent.org/what-does-hr-want-a-deep-dive-into-the-wishlist-of-hr-leaders/2024/05/20/"
+    },
+    {
+      "slug": "building-employee-experience-framework",
+      "category": "media",
+      "publisher": "All Things Talent",
+      "title": "Nitin Nahata on Building Employee Experience Framework",
+      "date": "2023-12-13",
+      "theme": [
+        "People Architecture"
+      ],
+      "summary": "",
+      "originalLink": "https://allthingstalent.org/gameskrafts-nitin-nahata-on-building-employee-experience-framework-in-the-time-of-expansion/2023/12/13/"
+    },
+    {
+      "slug": "continuous-feedback-konversations",
+      "category": "media",
+      "publisher": "BW People",
+      "title": "Continuous Feedback Through 'Konversations'",
+      "date": null,
+      "theme": [
+        "People Architecture"
+      ],
+      "summary": "",
+      "originalLink": "https://www.bwpeople.in/article/continuous-feedback-through-%E2%80%98konversations%E2%80%99-535031"
+    },
+    {
+      "slug": "the-art-of-being-relevant",
+      "category": "media",
+      "publisher": "People Matters",
+      "title": "The Art of Being Relevant: Where Does the HR Function Stand?",
+      "date": "2019-02-17",
+      "theme": [
+        "People Architecture"
+      ],
+      "summary": "Why business leaders rank HR low, and how HR can become more proactive, business-literate and distinct, using performance systems, technology and governance as levers.",
+      "originalLink": "https://www.peoplematters.in/blog/strategic-hr/the-art-of-being-relevant-where-does-the-hr-function-stand-20863"
+    },
+    {
+      "slug": "hr-in-start-ups",
+      "category": "media",
+      "publisher": "People Matters",
+      "title": "HR in Start-Ups: Unconventional Wisdom & Constant Re-Alignment",
+      "date": "2019-04-25",
+      "theme": [
+        "Founder doctrine"
+      ],
+      "summary": "Which established-company HR habits startup leaders should set aside on pay, growth, job scope and performance, and the governance and agility startups need instead.",
+      "originalLink": "https://www.peoplematters.in/article/strategic-hr/hr-in-start-ups-is-all-about-unconventional-wisdom-and-constant-re-alignment-21507"
+    },
+    {
+      "slug": "recruiting-in-house-outsourcing-or-hybrid",
+      "category": "media",
+      "publisher": "ETHRWorld",
+      "title": "Recruiting In-House, Outsourcing or Hybrid — Which Works Best?",
+      "date": null,
+      "theme": [
+        "People Architecture"
+      ],
+      "summary": "",
+      "originalLink": "https://hr.economictimes.indiatimes.com/news/hrtech/talent-acquisition-and-management/recruiting-in-house-outsourcing-or-a-hybrid-of-both-which-hiring-practice-works-best-for-startups/105546791"
+    },
+    {
+      "slug": "performance-management-that-earned-trust",
+      "category": "media",
+      "publisher": "ETHRWorld",
+      "title": "Innovative Performance Management System That Earned Employee Trust",
+      "date": null,
+      "theme": [
+        "People Architecture"
+      ],
+      "summary": "",
+      "originalLink": "https://hr.economictimes.indiatimes.com/news/workplace-4-0/performance-management/how-this-company-rolled-out-an-innovative-performance-management-system-and-earned-employees-trust/93285634"
+    },
+    {
+      "slug": "unlimited-leave-policies",
+      "category": "media",
+      "publisher": "Moneycontrol",
+      "title": "Are Unlimited, No-Questions-Asked Leave Policies Working?",
+      "date": null,
+      "theme": [
+        "People Architecture"
+      ],
+      "summary": "",
+      "originalLink": "https://www.moneycontrol.com/news/business/are-unlimited-and-no-questions-asked-leave-policies-working-9631481.html"
+    },
+    {
+      "slug": "four-and-a-half-day-workweek",
+      "category": "media",
+      "publisher": "Moneycontrol",
+      "title": "Can a 4.5-Day Workweek Module Be a Game-Changer in India?",
+      "date": null,
+      "theme": [
+        "People Architecture"
+      ],
+      "summary": "",
+      "originalLink": "https://www.moneycontrol.com/news/business/can-a-4-5-day-workweek-module-be-a-game-changer-in-india-9779941.html"
+    },
+    {
+      "slug": "online-gaming-industry-2023",
+      "category": "media",
+      "publisher": "Financial Express",
+      "title": "Online Gaming Industry in 2023: A Lot More Than Entertainment",
+      "date": null,
+      "theme": [],
+      "summary": "",
+      "originalLink": "https://www.financialexpress.com/lifestyle/online-gaming-industry-in-2023-a-lot-more-than-just-for-passing-time-and-entertainment/2948476/"
+    },
+    {
+      "slug": "beyond-tech-hr-tech-and-emotions",
+      "category": "media",
+      "publisher": "ETHRWorld",
+      "title": "Beyond Tech: How Far Can HR Tech Address Human Emotions?",
+      "date": null,
+      "theme": [
+        "AI & work"
+      ],
+      "summary": "",
+      "originalLink": "https://hr.economictimes.indiatimes.com/news/hrtech/beyond-tech-how-far-can-hr-tech-address-human-emotions/97116214"
+    },
+    {
+      "slug": "hr-tech-tools-2023",
+      "category": "media",
+      "publisher": "ETHRWorld",
+      "title": "HR Tech Tools That Could Define the Industry in 2023",
+      "date": null,
+      "theme": [
+        "AI & work"
+      ],
+      "summary": "",
+      "originalLink": "https://hr.economictimes.indiatimes.com/news/hrtech/hrtech-tools-that-could-define-the-industry-in-2023/97240548"
+    },
+    {
+      "slug": "baptism-by-chaos",
+      "category": "book",
+      "title": "Baptism by Chaos",
+      "date": null,
+      "theme": [
+        "Founder doctrine"
+      ],
+      "summary": "",
+      "statusLine": ""
+    }
+  ]
+}

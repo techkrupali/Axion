@@ -6,6 +6,12 @@ import { motion } from "framer-motion";
 
 type ButtonVariant = "primary" | "secondary";
 
+/**
+ * D-04: the main action ("Reach Us" / "Start …") has ONE shape everywhere.
+ * Square, matching the homepage, Founder and AI Edge Lab. Change it here only.
+ */
+export const MAIN_BUTTON_SHAPE = "rounded-none";
+
 interface ButtonProps {
   href?: string;
   onClick?: () => void;
@@ -25,7 +31,7 @@ export default function Button({
   showArrow = false,
   size = "md"
 }: ButtonProps) {
-  const baseClasses = "inline-flex items-center justify-center gap-3 font-mono text-[12px] sm:text-[11px] tracking-[0.28em] uppercase rounded-full font-semibold transition-all duration-500 min-h-[44px]";
+  const baseClasses = "inline-flex items-center justify-center gap-3 font-mono text-[12px] sm:text-[11px] tracking-[0.28em] uppercase font-semibold transition-all duration-500 min-h-[44px]";
   
   const sizeClasses = {
     sm: "px-6 py-3 min-h-[44px]",
@@ -34,8 +40,8 @@ export default function Button({
   };
 
   const variantClasses = {
-    primary: "bg-[#C9A24A] text-[#0A0A0B] hover:scale-105",
-    secondary: "border border-[rgba(201,162,74,0.2)] text-[#C9A24A] hover:border-[#C9A24A] hover:scale-105"
+    primary: `bg-[#C9A24A] text-[#0A0A0B] hover:scale-105 ${MAIN_BUTTON_SHAPE}`,
+    secondary: "border border-[rgba(201,162,74,0.2)] text-[#C9A24A] hover:border-[#C9A24A] hover:scale-105 rounded-full"
   };
 
   const content = (

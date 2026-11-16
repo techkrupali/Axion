@@ -13,20 +13,20 @@ export default function EntitiesPage() {
           <h1 className="text-4xl font-bold tracking-tight">Entities</h1>
           <p className="text-[#737373] font-medium">Manage your organizational entities and compliance boundaries.</p>
         </div>
-        <button className="flex items-center justify-center gap-3 bg-[#1a1a1a] border border-[#d4af37]/20 hover:border-[#d4af37]/50 text-[#d4af37] px-8 py-4 rounded-xl text-[10px] font-bold uppercase tracking-[0.2em] transition-all active:scale-[0.98]">
+        <button className="flex items-center justify-center gap-3 bg-[#1a1a1a] border border-[#C9A24A]/20 hover:border-[#C9A24A]/50 text-[#C9A24A] px-8 py-4 rounded-xl text-[10px] font-bold uppercase tracking-[0.2em] transition-all active:scale-[0.98]">
           <Plus className="w-4 h-4" />
           Add Entity
         </button>
       </div>
 
       <div className="relative group">
-        <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-4 h-4 text-[#525252] group-focus-within:text-[#d4af37] transition-colors" />
+        <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-4 h-4 text-[#525252] group-focus-within:text-[#C9A24A] transition-colors" />
         <input
           type="text"
           placeholder="Search entities by name or identifier..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full bg-[#111] border border-[#2a2a2a] rounded-2xl pl-16 pr-6 py-5 text-sm text-[#e5e5e5] placeholder-[#404040] focus:outline-none focus:ring-1 focus:ring-[#d4af37]/30 focus:border-[#d4af37]/30 transition-all"
+          className="w-full bg-[#111] border border-[#2a2a2a] rounded-2xl pl-16 pr-6 py-5 text-sm text-[#e5e5e5] placeholder-[#404040] focus:outline-none focus:ring-1 focus:ring-[#C9A24A]/30 focus:border-[#C9A24A]/30 transition-all"
         />
       </div>
 

@@ -1,11 +1,18 @@
 "use client";
 
 import { useState, useRef, useCallback, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ArrowRight, GripVertical, ChevronDown, ChevronUp } from "lucide-react";
 import { Honeypot } from "@/components/Honeypot";
-import { contactErrors, isContactValid, toMobileDigits } from "@/lib/contact";
-import { OPEN_DIAGNOSTIC_EVENT } from "@/lib/openDiagnostic";
+import PhoneField from "@/components/PhoneField";
+import FormPrivacyNote from "@/components/FormPrivacyNote";
+import { contactErrors, isContactValid } from "@/lib/contact";
+import { DEFAULT_COUNTRY_CODE } from "@/lib/phone";
+import { OPEN_DIAGNOSTIC_EVENT, type OpenDiagnosticDetail } from "@/lib/openDiagnostic";
+import { track, useFormStarted, visitSource } from "@/lib/analytics";
+import { CONVERSATION_INVITE } from "@/config/nav";
+import { practiceFromPath, practiceFromSlug, type PracticeKey } from "@/config/practices";
 
 // ── Signal list with backend routing metadata (never shown to visitor) ──
 const ALL_SIGNALS: { text: string; practice: string }[] = [
@@ -36,7 +43,8 @@ const SIZES = ["1–50", "51–200", "201–500", "501–2000", "2000+"];
 type FormData = {
   name: string;
   email: string;
-  phone: string;
+  phone: string;        // digits only; optional
+  phoneCountry: string; // "+91" by default
   website: string; // honeypot — always empty for real visitors
   signals: string[];
   rankedSignals: string[];
@@ -52,6 +60,7 @@ const empty: FormData = {
   name: '',
   email: '',
   phone: '',
+  phoneCountry: DEFAULT_COUNTRY_CODE,
   website: '',
   signals: [],
   rankedSignals: [],
@@ -95,7 +104,7 @@ function CustomSelect({
         className="w-full rounded-[12px] px-4 py-3 text-[14px] text-left flex items-center justify-between outline-none transition-colors"
         style={{
           background: "rgba(255,255,255,0.04)",
-          border: `1px solid ${open ? "rgba(201,168,76,0.5)" : "rgba(255,255,255,0.08)"}`,
+          border: `1px solid ${open ? "rgba(201,162,74,0.5)" : "rgba(255,255,255,0.08)"}`,
           color: value ? "var(--fg)" : "var(--fg-5)",
         }}
       >
@@ -119,8 +128,8 @@ function CustomSelect({
               width: dropPos.width,
               zIndex: 9999,
               background: "rgba(14,16,24,0.99)",
-              border: "1px solid rgba(201,168,76,0.25)",
-              boxShadow: "0 16px 48px rgba(0,0,0,0.8), 0 0 0 1px rgba(201,168,76,0.08)",
+              border: "1px solid rgba(201,162,74,0.25)",
+              boxShadow: "0 16px 48px rgba(0,0,0,0.8), 0 0 0 1px rgba(201,162,74,0.08)",
               backdropFilter: "blur(20px)",
               borderRadius: "14px",
               maxHeight: "240px",
@@ -135,15 +144,15 @@ function CustomSelect({
                 className="w-full text-left px-4 py-3 text-[13.5px] transition-colors"
                 style={{
                   color: value === opt ? "#C9A24A" : "rgba(237,235,227,0.75)",
-                  background: value === opt ? "rgba(201,168,76,0.08)" : "transparent",
+                  background: value === opt ? "rgba(201,162,74,0.08)" : "transparent",
                   borderBottom: i < options.length - 1 ? "1px solid rgba(255,255,255,0.04)" : "none",
                 }}
                 onMouseEnter={e => {
-                  (e.currentTarget as HTMLElement).style.background = "rgba(201,168,76,0.07)";
+                  (e.currentTarget as HTMLElement).style.background = "rgba(201,162,74,0.07)";
                   (e.currentTarget as HTMLElement).style.color = "#EDEBE3";
                 }}
                 onMouseLeave={e => {
-                  (e.currentTarget as HTMLElement).style.background = value === opt ? "rgba(201,168,76,0.08)" : "transparent";
+                  (e.currentTarget as HTMLElement).style.background = value === opt ? "rgba(201,162,74,0.08)" : "transparent";
                   (e.currentTarget as HTMLElement).style.color = value === opt ? "#C9A24A" : "rgba(237,235,227,0.75)";
                 }}
               >
@@ -203,8 +212,8 @@ function RankList({
           onDrop={handleDrop}
           className="flex items-center gap-3 rounded-[12px] px-4 py-3 cursor-grab active:cursor-grabbing select-none"
           style={{
-            background: "rgba(201,168,76,0.06)",
-            border: "1px solid rgba(201,168,76,0.2)",
+            background: "rgba(201,162,74,0.06)",
+            border: "1px solid rgba(201,162,74,0.2)",
           }}
         >
           <span className="font-mono text-[12px] text-[var(--accent)] opacity-70 w-6 shrink-0 text-center">{i + 1}</span>
@@ -251,38 +260,58 @@ function RankList({
 }
 
 /**
- * Open the modal when the page is loaded as `<page>?diagnostic=1` (e.g. the
- * Research page's "Start Diagnostic" button) or when OPEN_DIAGNOSTIC_EVENT fires.
+ * Open the form when OPEN_DIAGNOSTIC_EVENT fires (openDiagnostic()), or when the page is
+ * loaded as `<page>?diagnostic=1` (optionally `&practice=labour-codes`).
  */
-export function useReopenDiagnostic(open: () => void) {
+export function useReopenDiagnostic(open: (practice?: PracticeKey) => void) {
   useEffect(() => {
     const url = new URL(window.location.href);
     if (url.searchParams.get("diagnostic") === "1") {
+      const practice = practiceFromSlug(url.searchParams.get("practice"));
       url.searchParams.delete("diagnostic");
       window.history.replaceState(null, "", url.pathname + url.search + url.hash);
-      open();
+      open(practice);
     }
-    window.addEventListener(OPEN_DIAGNOSTIC_EVENT, open);
-    return () => window.removeEventListener(OPEN_DIAGNOSTIC_EVENT, open);
+    const onOpen = (e: Event) => open((e as CustomEvent<OpenDiagnosticDetail>).detail?.practice);
+    window.addEventListener(OPEN_DIAGNOSTIC_EVENT, onOpen);
+    return () => window.removeEventListener(OPEN_DIAGNOSTIC_EVENT, onOpen);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 }
 
-// ── Main modal ──
-export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
+/**
+ * The one "Start a conversation" form (Fix Brief Part 4, item 14): 3 steps, "Bring your signal".
+ *  • variant "modal"  → inside the pop-up every conversation button opens
+ *  • variant "inline" → embedded in a page (Reach Us)
+ * `practice` is the practice page it was started from; it is sent silently, never shown.
+ * After sending, the visitor goes to the thank-you page (item 18).
+ */
+export function ConversationFlow({
+  variant,
+  practice,
+  onClose,
+}: {
+  variant: "modal" | "inline";
+  practice?: PracticeKey;
+  onClose?: () => void;
+}) {
+  const router = useRouter();
+  const formStarted = useFormStarted("conversation", { practice });
   const [step, setStep] = useState(1);
   const [form, setForm] = useState<FormData>(empty);
-  const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   // Which contact fields to show errors for (after blur, or after pressing Continue)
   const [touched, setTouched] = useState({ name: false, email: false, phone: false });
 
-  const set = useCallback(<K extends keyof FormData>(k: K, v: FormData[K]) =>
-    setForm(f => ({ ...f, [k]: v })), []);
+  const set = useCallback(<K extends keyof FormData>(k: K, v: FormData[K]) => {
+    formStarted();
+    setForm(f => ({ ...f, [k]: v }));
+  }, [formStarted]);
 
   // Toggle signal selection
   const toggleSignal = (text: string) => {
+    formStarted();
     setForm(f => {
       const already = f.signals.includes(text);
       const signals = already
@@ -320,6 +349,7 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
           name: form.name,
           email: form.email,
           phone: form.phone,
+          phoneCountry: form.phoneCountry,
           website: form.website,
           signals: form.signals,
           rankedSignals: form.rankedSignals,
@@ -329,20 +359,25 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
           company: form.company,
           size: form.size,
           callback: form.callback,
+          // Practice page it came from: given by the button, else ?practice= (Reach Us links), else the page address
+          practice: practice ?? practiceFromSlug(new URLSearchParams(window.location.search).get("practice")) ?? practiceFromPath(window.location.pathname),
+          sourcePage: window.location.pathname,
+          cameFrom: visitSource(),
         }),
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok || !data.ok) throw new Error(data.error || "Could not send your signal. Please try again.");
-      setSubmitted(true);
+      track("Form sent", { form: "conversation", practice });
+      onClose?.();
+      router.push("/thank-you?form=conversation");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Could not send your signal. Please try again.");
-    } finally {
       setLoading(false);
     }
   }
 
   // Step 1 = the problem (signals), step 2 = role / company, step 3 = name / email / mobile (+ send)
-  const contact = { name: form.name, email: form.email, phone: form.phone };
+  const contact = { name: form.name, email: form.email, phone: form.phone, phoneCountry: form.phoneCountry };
   const errs = contactErrors(contact);
   const hasCatchAll = form.signals.includes("Something else. I'll describe it.");
   const canNext1 = form.signals.length > 0 && (!hasCatchAll || form.catchAllDetail.trim().length > 0);
@@ -359,83 +394,30 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
   };
   const errorBorder = "1px solid rgba(224,82,82,0.6)";
 
-  return (
-    <AnimatePresence>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        className="fixed inset-0 z-[200] flex items-center justify-center p-4"
-        style={{ background: "rgba(4,5,8,0.88)", backdropFilter: "blur(20px)" }}
-        onClick={onClose}
-      >
-        <motion.div
-          initial={{ opacity: 0, y: 24, scale: 0.97 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: 16, scale: 0.97 }}
-          transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-          onClick={e => e.stopPropagation()}
-          className="relative w-full max-w-[580px] rounded-[28px] flex flex-col"
-          style={{
-            background: "rgba(10,12,18,0.98)",
-            border: "1px solid rgba(201,168,76,0.35)",
-            boxShadow: "0 40px 100px rgba(0,0,0,0.8), 0 0 0 1px rgba(201,168,76,0.08)",
-            maxHeight: "85vh",
-            height: "auto",
-          }}
-        >
-          {/* Close */}
-          <button
-            onClick={onClose}
-            className="absolute top-5 right-5 z-10 text-[var(--fg-5)] hover:text-[var(--fg)] transition-colors"
-          >
-            <X size={18} />
-          </button>
+  const isModal = variant === "modal";
 
-          {/* Scrollable content area */}
-          <div className="overflow-y-scroll p-8 md:p-10 pb-4 scrollable-content" style={{ 
-            maxHeight: "70vh", 
-            scrollbarWidth: "thin", 
-            scrollbarColor: "rgba(201,168,76,0.7) rgba(201,168,76,0.15)",
-            WebkitOverflowScrolling: "touch"
-          }}>
-            <style>{`
-              /* Always show scrollbar */
-              .scrollable-content::-webkit-scrollbar {
-                width: 10px;
-                display: block !important;
-                opacity: 1 !important;
-              }
-              .scrollable-content::-webkit-scrollbar-track {
-                background: rgba(201,168,76,0.15);
-                border-radius: 5px;
-              }
-              .scrollable-content::-webkit-scrollbar-thumb {
-                background: rgba(201,168,76,0.7);
-                border-radius: 5px;
-                display: block !important;
-                opacity: 1 !important;
-                visibility: visible !important;
-              }
-              .scrollable-content::-webkit-scrollbar-thumb:hover {
-                background: rgba(201,168,76,0.9);
-              }
-              /* For Firefox */
-              .scrollable-content {
-                scrollbar-width: thin;
-                scrollbar-color: rgba(201,168,76,0.7) rgba(201,168,76,0.15);
-                overflow-y: scroll !important;
-              }
-            `}</style>
-            {!submitted ? (
+  return (
+    <>
+          {/* Scrollable content area (modal) / plain block (inline) */}
+          <div
+            className={isModal ? "overflow-y-scroll p-8 md:p-10 pb-4 scrollable-content" : "p-6 sm:p-10 pb-4"}
+            style={isModal ? { maxHeight: "70vh", scrollbarWidth: "thin", scrollbarColor: "rgba(201,162,74,0.7) rgba(201,162,74,0.15)", WebkitOverflowScrolling: "touch" } : undefined}
+          >
+            {isModal && <style>{`
+              .scrollable-content::-webkit-scrollbar { width: 10px; display: block !important; opacity: 1 !important; }
+              .scrollable-content::-webkit-scrollbar-track { background: rgba(201,162,74,0.15); border-radius: 5px; }
+              .scrollable-content::-webkit-scrollbar-thumb { background: rgba(201,162,74,0.7); border-radius: 5px; display: block !important; opacity: 1 !important; visibility: visible !important; }
+              .scrollable-content::-webkit-scrollbar-thumb:hover { background: rgba(201,162,74,0.9); }
+              .scrollable-content { scrollbar-width: thin; scrollbar-color: rgba(201,162,74,0.7) rgba(201,162,74,0.15); overflow-y: scroll !important; }
+            `}</style>}
               <>
-                {/* Progress bar */}
-                <div className="flex items-center gap-2 mb-8">
+                {/* Progress bar (room on the right for the pop-up's close button, B-09) */}
+                <div className={`flex items-center gap-2 mb-8 ${isModal ? "pr-9" : ""}`}>
                   {[1, 2, 3].map(n => (
                     <div
                       key={n}
                       className="h-[2px] flex-1 rounded-full transition-all duration-500"
-                      style={{ background: n <= step ? "#C9A24A" : "rgba(201,168,76,0.15)" }}
+                      style={{ background: n <= step ? "#C9A24A" : "rgba(201,162,74,0.15)" }}
                     />
                   ))}
                   <span className="font-mono text-[9px] tracking-[0.3em] text-[var(--fg-5)] ml-2 shrink-0">{step} OF 3</span>
@@ -452,7 +434,7 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
                       Bring your signal.
                     </h3>
                     <p className="text-[13px] text-[var(--fg-4)] mb-6 leading-relaxed">
-                      Don't pick a service. Pick what you're feeling — we'll read the architecture producing it.
+                      {CONVERSATION_INVITE}
                     </p>
 
                     {/* Select instruction */}
@@ -471,8 +453,8 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
                             onClick={() => toggleSignal(text)}
                             className="w-full text-left flex items-start gap-3 rounded-[12px] px-4 py-3 transition-all duration-200 group"
                             style={{
-                              background: selected ? "rgba(201,168,76,0.09)" : "rgba(255,255,255,0.03)",
-                              border: `1px solid ${selected ? "rgba(201,168,76,0.45)" : "rgba(255,255,255,0.07)"}`,
+                              background: selected ? "rgba(201,162,74,0.09)" : "rgba(255,255,255,0.03)",
+                              border: `1px solid ${selected ? "rgba(201,162,74,0.45)" : "rgba(255,255,255,0.07)"}`,
                             }}
                           >
                             {/* Checkbox */}
@@ -521,8 +503,8 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
                             placeholder="Describe the signal in your own words…"
                             className="w-full rounded-[12px] px-4 py-3 text-[14px] text-[var(--fg)] placeholder:text-[var(--fg-5)] resize-none outline-none"
                             style={{
-                              background: "rgba(201,168,76,0.04)",
-                              border: "1px solid rgba(201,168,76,0.25)",
+                              background: "rgba(201,162,74,0.04)",
+                              border: "1px solid rgba(201,162,74,0.25)",
                             }}
                             autoFocus
                           />
@@ -563,9 +545,9 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
                                   onClick={() => handleRankToggle(s)}
                                   className="text-[11px] font-mono px-3 py-1.5 rounded-full transition-all duration-200"
                                   style={{
-                                    background: "rgba(201,168,76,0.07)",
-                                    border: "1px solid rgba(201,168,76,0.2)",
-                                    color: "rgba(201,168,76,0.7)",
+                                    background: "rgba(201,162,74,0.07)",
+                                    border: "1px solid rgba(201,162,74,0.2)",
+                                    color: "rgba(201,162,74,0.7)",
                                   }}
                                 >
                                   + {s.length > 40 ? s.slice(0, 40) + "…" : s}
@@ -588,8 +570,8 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
                         placeholder="One line on what’s breaking. One line on why it surfaced now."
                         className="w-full rounded-[12px] px-4 py-3 text-[14px] text-[var(--fg)] placeholder:text-[var(--fg-5)] resize-none outline-none"
                         style={{
-                          background: "rgba(201,168,76,0.04)",
-                          border: "1px solid rgba(201,168,76,0.25)",
+                          background: "rgba(201,162,74,0.04)",
+                          border: "1px solid rgba(201,162,74,0.25)",
                         }}
                       />
                     </div>
@@ -642,7 +624,6 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
                     {([
                       { k: "name", label: "Name", type: "text", ph: "Your full name", ac: "name" },
                       { k: "email", label: "Email", type: "email", ph: "you@company.com", ac: "email" },
-                      { k: "phone", label: "Mobile number", type: "tel", ph: "10-digit mobile number", ac: "tel" },
                     ] as const).map(f => {
                       const showErr = touched[f.k] && errs[f.k];
                       return (
@@ -651,9 +632,8 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
                           <input
                             type={f.type}
                             autoComplete={f.ac}
-                            inputMode={f.k === "phone" ? "numeric" : undefined}
                             value={form[f.k]}
-                            onChange={e => set(f.k, f.k === "phone" ? toMobileDigits(e.target.value) : e.target.value)}
+                            onChange={e => set(f.k, e.target.value)}
                             onBlur={() => setTouched(t => ({ ...t, [f.k]: true }))}
                             placeholder={f.ph}
                             className="w-full rounded-[12px] px-4 py-3 text-[14px] text-[var(--fg)] placeholder:text-[var(--fg-5)] outline-none"
@@ -663,6 +643,18 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
                         </div>
                       );
                     })}
+
+                    <div className="mb-5">
+                      <PhoneField
+                        idPrefix={`conv-${variant}`}
+                        code={form.phoneCountry}
+                        digits={form.phone}
+                        onCode={v => set("phoneCountry", v)}
+                        onDigits={v => set("phone", v)}
+                        onBlur={() => setTouched(t => ({ ...t, phone: true }))}
+                        error={touched.phone ? errs.phone : ""}
+                      />
+                    </div>
 
                     <label className="block mb-2 font-mono text-[10px] tracking-[0.2em] uppercase text-[var(--fg-4)]">
                       Preferred callback window{" "}
@@ -684,30 +676,10 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
                   </motion.div>
                 )}
               </>
-            ) : (
-              /* ── Success ── */
-              <motion.div
-                initial={{ opacity: 0, scale: 0.96 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="text-center py-6"
-              >
-                <div
-                  className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-6"
-                  style={{ border: "1px solid rgba(201,168,76,0.5)", background: "rgba(201,168,76,0.08)" }}
-                >
-                  <span className="text-[var(--accent)] text-[22px]">✦</span>
-                </div>
-                <h3 className="font-serif text-[28px] text-[var(--fg)] mb-4">Signal received.</h3>
-                <p className="font-serif italic text-[16px] text-[var(--fg-3)] leading-relaxed max-w-[34ch] mx-auto">
-                  We'll read the architecture behind it and come back to you within 48 hours.
-                </p>
-              </motion.div>
-            )}
           </div>
 
-          {/* Fixed footer for buttons */}
-          {!submitted && (
-            <div className="p-8 md:px-10 md:pb-10 pt-4 border-t border-transparent" style={{ borderTop: "1px solid rgba(201,168,76,0.1)" }}>
+          {/* Footer with the buttons */}
+            <div className={isModal ? "p-8 md:px-10 md:pb-10 pt-4" : "p-6 sm:px-10 sm:pb-10 pt-4"} style={{ borderTop: "1px solid rgba(201,162,74,0.1)" }}>
               {step === 1 && (
                 <button
                   onClick={() => setStep(2)}
@@ -723,7 +695,7 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
                   <button
                     onClick={() => setStep(1)}
                     className="flex-1 py-4 rounded-full font-mono text-[11px] tracking-[0.28em] uppercase transition-colors"
-                    style={{ border: "1px solid rgba(201,168,76,0.25)", color: "var(--fg-4)" }}
+                    style={{ border: "1px solid rgba(201,162,74,0.25)", color: "var(--fg-4)" }}
                   >Back</button>
                   <button
                     onClick={() => setStep(3)}
@@ -740,7 +712,7 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
                   <button
                     onClick={() => setStep(2)}
                     className="flex-1 py-4 rounded-full font-mono text-[11px] tracking-[0.28em] uppercase transition-colors"
-                    style={{ border: "1px solid rgba(201,168,76,0.25)", color: "var(--fg-4)" }}
+                    style={{ border: "1px solid rgba(201,162,74,0.25)", color: "var(--fg-4)" }}
                   >Back</button>
                   <button
                     onClick={sendWithContact}
@@ -752,8 +724,57 @@ export default function DiagnosticModal({ onClose }: { onClose: () => void }) {
                   </button>
                 </div>
               )}
+              <FormPrivacyNote className="mt-4 text-center" />
             </div>
-          )}
+    </>
+  );
+}
+
+/** The pop-up that every "Start a conversation" button opens (mounted once, in ConversationForm). */
+export default function DiagnosticModal({ onClose, practice }: { onClose: () => void; practice?: PracticeKey }) {
+  // Escape closes the pop-up (B-10)
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose]);
+
+  return (
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 z-[200] flex items-center justify-center p-4"
+        style={{ background: "rgba(4,5,8,0.88)", backdropFilter: "blur(20px)" }}
+        onClick={onClose}
+      >
+        <motion.div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Start a conversation"
+          initial={{ opacity: 0, y: 24, scale: 0.97 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: 16, scale: 0.97 }}
+          transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+          onClick={e => e.stopPropagation()}
+          className="relative w-full max-w-[580px] rounded-[28px] flex flex-col"
+          style={{
+            background: "rgba(10,12,18,0.98)",
+            border: "1px solid rgba(201,162,74,0.35)",
+            boxShadow: "0 40px 100px rgba(0,0,0,0.8), 0 0 0 1px rgba(201,162,74,0.08)",
+            maxHeight: "85vh",
+            height: "auto",
+          }}
+        >
+          <button
+            onClick={onClose}
+            aria-label="Close"
+            className="absolute top-4 right-4 z-10 w-9 h-9 flex items-center justify-center text-[var(--fg-5)] hover:text-[var(--fg)] transition-colors"
+          >
+            <X size={18} />
+          </button>
+          <ConversationFlow variant="modal" practice={practice} onClose={onClose} />
         </motion.div>
       </motion.div>
     </AnimatePresence>

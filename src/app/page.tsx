@@ -5,10 +5,14 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import DiagnosticModal, { useReopenDiagnostic } from "@/components/DiagnosticModal";
+import { openDiagnostic } from "@/lib/openDiagnostic";
 import { Reveal } from "@/components/Reveal";
-import { PRACTICES as PRACTICE_STATUS, PRACTICE_ORDER, IN_DEVELOPMENT_LABEL, isLive, type PracticeKey } from "@/config/practices";
-import { reportLink } from "@/config/report";
+import Footer from "@/components/Footer";
+import { IN_DEVELOPMENT_LABEL, isLive, type PracticeKey } from "@/config/practices";
+import { REPORT, REPORT_FULL_TITLE, reportLink } from "@/config/report";
+import { CONVERSATION_INVITE } from "@/config/nav";
+import { LinkedInFeedSection } from "@/components/LinkedInFeed";
+import { HOME_EVIDENCE } from "@/config/evidence";
 
 // ─────────────────────────────────────────────
 // CSS TOKENS (cream / light theme — mirrors the HTML)
@@ -23,7 +27,7 @@ const T = {
   mid:    "#7A7870",
   dim:    "#B0AEA8",
   gold:   "#A07830",
-  gold2:  "#C49848",
+  gold2:  "#C9A24A",
   rule:   "rgba(13,13,11,0.10)",
   rule2:  "rgba(13,13,11,0.18)",
   display: "var(--font-cormorant-garamond),'Cormorant Garamond',serif",
@@ -264,11 +268,22 @@ function HeroBody({ onDiagnosticOpen }: { onDiagnosticOpen: () => void }) {
               </span>
             </motion.h1>
 
+            {/* N-01: what Axion does, in one plain line */}
+            <motion.p
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.24, ease: [0.22, 1, 0.36, 1] }}
+              className="mt-7"
+              style={{ fontFamily: T.display, fontSize: "clamp(17px,1.5vw,20px)", lineHeight: 1.6, color: T.ink3, maxWidth: "52ch" }}
+            >
+              Design principles evolved through 23 years of operating experience, applied to how your organisation decides, governs and grows its people. Shaped to your context, never to a template.
+            </motion.p>
+
             <motion.div
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.32, ease: [0.22, 1, 0.36, 1] }}
-              className="flex flex-wrap gap-4 mt-10"
+              className="flex flex-wrap gap-4 mt-8"
             >
               <Link
                 href="/connect"
@@ -284,7 +299,7 @@ function HeroBody({ onDiagnosticOpen }: { onDiagnosticOpen: () => void }) {
                 Reach Us <span style={{ display: "inline-block", width: 16, height: 1, background: "currentColor" }} />
               </Link>
               <Link
-                href="/research"
+                href="/reports"
                 className="inline-flex items-center gap-3 font-mono text-[10px] uppercase px-7 py-4 transition-all duration-250"
                 style={{
                   letterSpacing: "0.18em",
@@ -323,14 +338,10 @@ function HeroBody({ onDiagnosticOpen }: { onDiagnosticOpen: () => void }) {
               transition={{ duration: 0.85, delay: 0.36, ease: [0.22, 1, 0.36, 1] }}
               className="grid grid-cols-3 sm:flex"
             >
-              {[
-                { val: "70%", key: "Transformations fail to sustain gains", src: "McKinsey" },
-                { val: "95%", key: "GenAI pilots show no P&L impact", src: "MIT NANDA" },
-                { val: "39%", key: "Core skills change by 2030", src: "WEF" },
-              ].map((stat, i) => (
+              {HOME_EVIDENCE.map((stat, i) => (
                 <Link
                   key={i}
-                  href="/research"
+                  href="/reports#evidence"
                   className="flex-1 group block"
                   style={{
                     borderLeft: i > 0 ? `1px solid ${T.rule2}` : "none",
@@ -447,7 +458,7 @@ function LogicSection() {
       <div className="max-w-[1280px] mx-auto px-6 sm:px-12 pt-12 pb-12">
         <div className="flex items-baseline justify-between mb-14 gap-6">
           <span className="font-mono text-[17px] uppercase" style={{ letterSpacing: "0.24em", color: T.mid }}>Our operating logic</span>
-          <span className="font-mono text-[10px]" style={{ letterSpacing: "0.14em", color: T.dim }}>02 / 05</span>
+          <span className="font-mono text-[10px]" style={{ letterSpacing: "0.14em", color: T.dim }}>01 / 04</span>
         </div>
 
         <Reveal>
@@ -555,7 +566,7 @@ const PRACTICES = [
     titleEm: "Edge Lab",
     hook: "Speed without architecture just scales bad judgment.",
     chip: "The decision layer around the model, not the model",
-    signal: "When AI is making you faster, but not wiser. Speed without architecture scales bad judgment.",
+    signal: "When AI is making you faster, but not wiser.",
     build: "We build the decision layer where AI accelerates, and where a human must still hold the call.",
     href: "/expertise/ai-edge",
   },
@@ -565,9 +576,9 @@ const PRACTICES = [
     titleMain: "Family",
     titleEm: "Business",
     hook: "What holds when the founder is no longer the system?",
-    chip: "Ownership & authority built to survive the handover",
+    chip: "Five architectures built to survive the handover",
     signal: "When continuity depends on individuals, not structure, and succession is the risk no one says out loud.",
-    build: "We codify ownership, authority, and decision rights into architecture that survives the generational handover.",
+    build: "We codify the five architectures (ownership, family, institution, succession and operator) into structure that survives the generational handover.",
     href: "/expertise/family",
   },
 ];
@@ -578,13 +589,19 @@ function PracticesSection() {
       <div className="max-w-[1280px] mx-auto px-6 sm:px-12 pt-12 pb-12">
         <div className="flex items-baseline justify-between mb-14 gap-6">
           <span className="font-mono text-[17px] uppercase" style={{ letterSpacing: "0.24em", color: T.mid }}>Where the work happens</span>
-          <span className="font-mono text-[10px]" style={{ letterSpacing: "0.14em", color: T.dim }}>03 / 05</span>
+          <span className="font-mono text-[10px]" style={{ letterSpacing: "0.14em", color: T.dim }}>02 / 04</span>
         </div>
 
         <Reveal>
-          <h2 className="font-serif font-medium mb-12" style={{ fontFamily: T.display, fontSize: "clamp(30px,4.4vw,56px)", lineHeight: 1.04, color: T.ink }}>
+          <h2 className="font-serif font-medium mb-6" style={{ fontFamily: T.display, fontSize: "clamp(30px,4.4vw,56px)", lineHeight: 1.04, color: T.ink }}>
             One Operating Logic. <em style={{ color: T.gold, fontStyle: "italic" }}>Four Practices.</em>
           </h2>
+        </Reveal>
+        {/* N-02: what is open right now */}
+        <Reveal delay={0.05}>
+          <p className="mb-12" style={{ fontFamily: T.display, fontSize: "clamp(17px,1.5vw,20px)", lineHeight: 1.6, color: T.ink3, maxWidth: "62ch" }}>
+            People Architecture is open for engagements. Labour Codes and Family Business are in development; conversations are welcome. AI Edge Lab is our separate institute.
+          </p>
         </Reveal>
 
         {/* Practice rows */}
@@ -830,7 +847,7 @@ function RolesSection() {
         {/* Header */}
         <div className="flex items-baseline justify-between mb-14 gap-6">
           <span className="font-mono text-[17px] uppercase" style={{ letterSpacing: "0.24em", color: T.mid }}>Where you sit</span>
-          <span className="font-mono text-[10px]" style={{ letterSpacing: "0.14em", color: T.dim }}>04 / 05</span>
+          <span className="font-mono text-[10px]" style={{ letterSpacing: "0.14em", color: T.dim }}>03 / 04</span>
         </div>
 
         <Reveal>
@@ -944,11 +961,11 @@ const MOVES = [
 
 function MovesSection() {
   return (
-    <section style={{ borderBottom: `1px solid ${T.rule}` }}>
+    <section id="engagement" className="scroll-mt-[calc(var(--site-nav-h,74px)+16px)]" style={{ borderBottom: `1px solid ${T.rule}` }}>
       <div className="max-w-[1280px] mx-auto px-6 sm:px-12 pt-12 pb-24">
         <div className="flex items-baseline justify-between mb-6 gap-6">
           <span className="font-mono text-[17px] uppercase" style={{ letterSpacing: "0.24em", color: T.mid }}>The engagement</span>
-          <span className="font-mono text-[10px]" style={{ letterSpacing: "0.14em", color: T.dim }}>05 / 05</span>
+          <span className="font-mono text-[10px]" style={{ letterSpacing: "0.14em", color: T.dim }}>04 / 04</span>
         </div>
 
         <Reveal>
@@ -972,7 +989,7 @@ function MovesSection() {
             style={{
               borderColor: move.resolve ? T.gold : T.gold,
               borderWidth: 1,
-              background: move.resolve ? `linear-gradient(135deg, #C49848 0%, #A07830 100%)` : "transparent",
+              background: move.resolve ? `linear-gradient(135deg, #C9A24A 0%, #A07830 100%)` : "transparent",
               position: "relative",
               marginBottom: i < MOVES.length - 1 ? "0" : "0",
             }}
@@ -992,19 +1009,6 @@ function MovesSection() {
                 style={{ background: `linear-gradient(90deg, ${T.gold}, transparent 60%)` }}
               />
             )}
-
-            {/* Ghost number watermark */}
-            <div
-              className={`absolute top-1/2 -translate-y-1/2 font-serif italic leading-none pointer-events-none select-none transition-opacity duration-700 overflow-hidden ${i % 2 === 1 ? "left-52" : "left-0"}`}
-              style={{
-                fontSize: "22vw",
-                color: T.ink,
-                opacity: 0.08,
-                maxWidth: "40%",
-              }}
-            >
-              {i + 1}
-            </div>
 
             <div className="relative max-w-[1280px] mx-auto px-6 sm:px-12 py-12 lg:py-16 flex flex-col lg:flex-row items-start lg:items-center gap-6 lg:gap-0">
 
@@ -1080,6 +1084,73 @@ function MovesSection() {
 }
 
 // ─────────────────────────────────────────────
+// REPORT BAND (Fix Brief Part 10, D7: strong homepage visibility from 20 Nov)
+// ─────────────────────────────────────────────
+function ReportBand() {
+  const out = REPORT.published;
+  return (
+    <section aria-label="Report" style={{ background: T.ink, color: T.white, borderBottom: `1px solid ${T.rule}` }}>
+      <Link href={REPORT.signupPath} className="group block max-w-[1280px] mx-auto px-6 sm:px-12 py-8 sm:py-10">
+        <div className="flex flex-col lg:flex-row lg:items-center gap-5 lg:gap-12">
+          <div className="min-w-0 flex-1">
+            <span className="font-mono text-[11px] uppercase" style={{ letterSpacing: "0.22em", color: T.gold2 }}>
+              Axion Index Journal · {out ? "Out now · Free to share" : `Releasing ${REPORT.releaseShort}`}
+            </span>
+            <p className="font-serif mt-2" style={{ fontFamily: T.display, fontSize: "clamp(26px,3.4vw,44px)", lineHeight: 1.08, color: T.white }}>
+              {REPORT.name}: <em style={{ color: T.gold2, fontStyle: "italic" }}>{REPORT.subtitle}</em>
+            </p>
+          </div>
+          <span
+            className="shrink-0 self-start lg:self-center inline-flex items-center gap-3 font-mono text-[11px] uppercase px-7 py-4 transition-colors group-hover:bg-[#F7F6F3]"
+            style={{ letterSpacing: "0.18em", background: T.gold2, color: T.ink }}
+            aria-label={out ? `Download ${REPORT_FULL_TITLE}` : `Get ${REPORT_FULL_TITLE} on release`}
+          >
+            {out ? "Download the report" : "Get it on release"} <span aria-hidden>→</span>
+          </span>
+        </div>
+      </Link>
+    </section>
+  );
+}
+
+// ─────────────────────────────────────────────
+// FOUNDER (Fix Brief Part 8, B-05)
+// ─────────────────────────────────────────────
+function FounderBlock() {
+  return (
+    <section id="founder" style={{ borderBottom: `1px solid ${T.rule}` }}>
+      <div className="max-w-[1280px] mx-auto px-6 sm:px-12 py-14 sm:py-16 grid grid-cols-[112px_1fr] sm:grid-cols-[180px_1fr] gap-6 sm:gap-12 items-center">
+        <Image
+          src="/nitin-nahata-founder.jpg"
+          alt="Nitin Nahata, founder of Axion Index"
+          width={788}
+          height={1400}
+          sizes="(max-width: 640px) 112px, 180px"
+          className="w-[112px] h-[140px] sm:w-[180px] sm:h-[224px] object-cover object-top grayscale"
+          style={{ border: `1px solid ${T.gold}` }}
+        />
+        <div className="min-w-0">
+          <span className="font-mono text-[11px] uppercase" style={{ letterSpacing: "0.24em", color: T.gold }}>Founder</span>
+          <h2 className="font-serif font-medium mt-2" style={{ fontFamily: T.display, fontSize: "clamp(30px,4vw,48px)", lineHeight: 1.05, color: T.ink }}>
+            Nitin Nahata
+          </h2>
+          <p className="mt-3" style={{ fontFamily: T.display, fontSize: "clamp(17px,1.6vw,20px)", lineHeight: 1.55, color: T.ink3, maxWidth: "52ch" }}>
+            HR leadership across Standard Chartered, HSBC, Tata, Udaan and Gameskraft.
+          </p>
+          {/* G-03 (Fix Brief Part 10): sectors behind the operating experience, not a client list */}
+          <p className="font-mono text-[10.5px] uppercase mt-4 leading-relaxed" style={{ letterSpacing: "0.16em", color: T.mid }}>
+            Sectors: Banking · Group · Real Estate · FMCG · Startup · Gaming &amp; Tech
+          </p>
+          <Link href="/founder" className="inline-block font-mono text-[11px] uppercase mt-5 hover:underline" style={{ letterSpacing: "0.2em", color: T.gold }}>
+            Read the founder&apos;s story →
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─────────────────────────────────────────────
 // FINAL CTA
 // ─────────────────────────────────────────────
 function FinalSection({ onDiagnosticOpen }: { onDiagnosticOpen: () => void }) {
@@ -1101,7 +1172,7 @@ function FinalSection({ onDiagnosticOpen }: { onDiagnosticOpen: () => void }) {
         </Reveal>
         <Reveal delay={0.2}>
           <p className="mb-11" style={{ fontFamily: T.display, fontSize: 19, color: T.dim, maxWidth: "56ch", lineHeight: 1.7 }}>
-            A 30-minute architectural read. You bring the signal. We tell you what's structurally producing it. No fee, no pitch.
+            {CONVERSATION_INVITE}
           </p>
         </Reveal>
         <Reveal delay={0.3}>
@@ -1125,152 +1196,11 @@ function FinalSection({ onDiagnosticOpen }: { onDiagnosticOpen: () => void }) {
   );
 }
 
-// ─────────────────────────────────────────────
-// FOOTER (light theme version)
-// ─────────────────────────────────────────────
-function SiteFooter() {
-  return (
-    <footer style={{ background: T.ink, color: T.dim, paddingTop: "clamp(40px,8vw,80px)", paddingBottom: 40 }}>
-      <div className="max-w-[1280px] mx-auto px-6 sm:px-12">
-        {/* Grid */}
-        <div
-          className="grid gap-12 pb-14"
-          style={{
-            gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))",
-            borderBottom: "1px solid rgba(247,246,243,0.14)",
-          }}
-        >
-          {/* Brand */}
-          <div className="col-span-full lg:col-span-1" style={{ marginLeft: "0" }}>
-            <img
-              src="/axion-index-lockup-gold-transparent.svg"
-              alt="Axion Index"
-              style={{ width: "clamp(200px, 40vw, 320px)", maxWidth: "100%", height: "auto", display: "block", marginLeft: "-40px" }}
-            />
-            <p className="mt-4" style={{ fontFamily: T.display, fontSize: 14, color: T.mid, maxWidth: "34ch", lineHeight: 1.6 }}>
-              Architecture is read, not pitched.
-            </p>
-          </div>
-
-          {/* Practices */}
-          <div>
-            <h4
-              className="font-mono text-[9px] uppercase mb-5 pb-3"
-              style={{ letterSpacing: "0.22em", color: T.gold2, borderBottom: "1px solid rgba(196,152,72,0.25)" }}
-            >
-              Practices
-            </h4>
-            {PRACTICE_ORDER.map((k) => {
-              const { name, href } = PRACTICE_STATUS[k];
-              if (!isLive(k)) {
-                return (
-                  <span key={k} className="block py-1.5" style={{ fontSize: 13, color: T.mid, cursor: "default" }}>
-                    {name}{" "}
-                    <span className="font-mono uppercase" style={{ fontSize: 9, letterSpacing: "0.14em", opacity: 0.8 }}>· {IN_DEVELOPMENT_LABEL}</span>
-                  </span>
-                );
-              }
-              return (
-              <Link
-                key={k}
-                href={href}
-                className="block transition-all duration-200 py-1.5"
-                style={{ fontSize: 13, color: T.dim }}
-                onMouseEnter={e => {
-                  (e.currentTarget as HTMLElement).style.color = T.white;
-                  (e.currentTarget as HTMLElement).style.paddingLeft = "5px";
-                }}
-                onMouseLeave={e => {
-                  (e.currentTarget as HTMLElement).style.color = T.dim;
-                  (e.currentTarget as HTMLElement).style.paddingLeft = "0px";
-                }}
-              >
-                {name}
-              </Link>
-              );
-            })}
-          </div>
-
-          {/* Index */}
-          <div>
-            <h4
-              className="font-mono text-[9px] uppercase mb-5 pb-3"
-              style={{ letterSpacing: "0.22em", color: T.gold2, borderBottom: "1px solid rgba(196,152,72,0.25)" }}
-            >
-              Index
-            </h4>
-            {[
-              ["Operating Patterns", "#about"],
-              ["Story", "/founder"],
-              ["Research & Journals", "/research"],
-              ["About", "/about"],
-            ].map(([label, href]) => (
-              <Link
-                key={href}
-                href={href}
-                className="block transition-all duration-200 py-1.5"
-                style={{ fontSize: 13, color: T.dim }}
-                onMouseEnter={e => {
-                  (e.currentTarget as HTMLElement).style.color = T.white;
-                  (e.currentTarget as HTMLElement).style.paddingLeft = "5px";
-                }}
-                onMouseLeave={e => {
-                  (e.currentTarget as HTMLElement).style.color = T.dim;
-                  (e.currentTarget as HTMLElement).style.paddingLeft = "0px";
-                }}
-              >
-                {label}
-              </Link>
-            ))}
-          </div>
-
-          {/* Contact */}
-          <div>
-            <h4
-              className="font-mono text-[9px] uppercase mb-5 pb-3"
-              style={{ letterSpacing: "0.22em", color: T.gold2, borderBottom: "1px solid rgba(196,152,72,0.25)" }}
-            >
-              Contact
-            </h4>
-            <span className="block py-1.5" style={{ fontSize: 13, color: T.dim }}>Bengaluru, India</span>
-            <a
-              href="mailto:office@axionindex.org"
-              className="block py-1.5 transition-colors duration-200 hover:text-white"
-              style={{ fontSize: 13, color: T.dim }}
-            >
-              office@axionindex.org
-            </a>
-            <a
-              href="https://linkedin.com/company/axionindex"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block py-1.5 transition-colors duration-200 hover:text-white"
-              style={{ fontSize: 13, color: T.dim }}
-            >
-              LinkedIn
-            </a>
-          </div>
-        </div>
-
-        {/* Bottom bar */}
-        <div
-          className="flex flex-wrap justify-between items-center gap-4 pt-8 font-mono text-[10px] uppercase"
-          style={{ letterSpacing: "0.12em", color: T.mid }}
-        >
-          <span>© 2026 Axion Index / Operating Architecture Practice</span>
-          <span>Architecture is read, not pitched.</span>
-        </div>
-      </div>
-    </footer>
-  );
-}
 
 // ─────────────────────────────────────────────
 // PAGE
 // ─────────────────────────────────────────────
 export default function Home() {
-  const [diagOpen, setDiagOpen] = useState(false);
-  useReopenDiagnostic(() => setDiagOpen(true));
 
   return (
     <>
@@ -1285,13 +1215,13 @@ export default function Home() {
           paddingTop: 0,
         }}
       >
-        {diagOpen && <DiagnosticModal onClose={() => setDiagOpen(false)} />}
 
         {/* 1 — Hero Band */}
         <HeroBand />
 
         {/* 2 — Hero Body */}
-        <HeroBody onDiagnosticOpen={() => setDiagOpen(true)} />
+        <HeroBody onDiagnosticOpen={openDiagnostic} />
+        <ReportBand />
 
 
 
@@ -1306,12 +1236,15 @@ export default function Home() {
 
         {/* 8 — Four Moves */}
         <MovesSection />
+        <FounderBlock />
 
         {/* 9 — Final CTA */}
-        <FinalSection onDiagnosticOpen={() => setDiagOpen(true)} />
+        {/* Fix Brief Part 6, item 33: latest LinkedIn posts (only once the feed widget is set up) */}
+        <LinkedInFeedSection />
+        <FinalSection onDiagnosticOpen={openDiagnostic} />
 
         {/* 10 — Footer */}
-        <SiteFooter />
+        <Footer />
       </div>
     </>
   );

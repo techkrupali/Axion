@@ -18,6 +18,15 @@ export const authConfig = {
       const isAdminLogin = pathname === "/admin/login";
       const back = encodeURIComponent(pathname + search);
 
+      // The content Studio (Fix Brief Part 7): editors and admins only, whether or not panels are on
+      if (under(pathname, "/studio") || under(pathname, "/api/studio")) {
+        const canEdit = isLoggedIn && (role === "editor" || role === "admin");
+        if (pathname === "/studio/login") return canEdit ? Response.redirect(new URL("/studio", nextUrl)) : true;
+        if (canEdit) return true;
+        if (pathname.startsWith("/api/")) return Response.json({ error: "Please sign in to the Studio." }, { status: 401 });
+        return Response.redirect(new URL(`/studio/login?callbackUrl=${back}`, nextUrl));
+      }
+
       // Accounts switched off: hide panels, login and registration, and the APIs behind them
       if (!PANELS_ENABLED) {
         if (PANEL_API_PREFIXES.some((p) => under(pathname, p))) {

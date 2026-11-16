@@ -11,7 +11,7 @@ export default function AssessmentsPage() {
           <h1 className="text-4xl font-bold tracking-tight">Assessments</h1>
           <p className="text-[#737373] font-medium">Run six-agent compliance diagnostics on your entities.</p>
         </div>
-        <button className="flex items-center justify-center gap-3 bg-[#d4af37] text-black px-8 py-4 rounded-xl text-[10px] font-bold uppercase tracking-[0.2em] transition-all active:scale-[0.98]">
+        <button className="flex items-center justify-center gap-3 bg-[#C9A24A] text-black px-8 py-4 rounded-xl text-[10px] font-bold uppercase tracking-[0.2em] transition-all active:scale-[0.98]">
           <Plus className="w-4 h-4" />
           New Assessment
         </button>

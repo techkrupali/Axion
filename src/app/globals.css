@@ -73,7 +73,7 @@ body {
 .dropdown-scroll { scrollbar-width: thin; }
 .dropdown-scroll::-webkit-scrollbar { width: 4px; }
 .dropdown-scroll::-webkit-scrollbar-track { background: transparent; }
-.dropdown-scroll::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.35); border-radius: 2px; }
+.dropdown-scroll::-webkit-scrollbar-thumb { background: rgba(201,162,74,0.35); border-radius: 2px; }
 
 /* Selection */
 ::selection { background: rgba(201, 162, 74, 0.2); color: var(--fg); }

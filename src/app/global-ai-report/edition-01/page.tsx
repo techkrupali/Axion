@@ -1,8 +1,10 @@
 import { notFound } from "next/navigation";
 import Button from "@/components/Button";
 import Footer from "@/components/Footer";
-import { REPORT } from "@/config/report";
-import { pageMetadata, OG_REPORT } from "@/lib/seo";
+import { REPORT, REPORT_FULL_TITLE } from "@/config/report";
+import { CONVERSATION_INVITE } from "@/config/nav";
+import { pageMetadata } from "@/lib/seo";
+import { coverPath } from "@/content/library";
 
 /**
  * Full Global AI Report — hidden until launch day.
@@ -20,10 +22,11 @@ const canView = (preview?: string) =>
 
 export async function generateMetadata() {
   return pageMetadata({
-    title: `${REPORT.name} · ${REPORT.edition}`,
-    description: `${REPORT.edition} of the ${REPORT.name}: how AI is changing the architecture of work. Published ${REPORT.releaseLong}.`,
+    title: REPORT_FULL_TITLE,
+    description: `${REPORT_FULL_TITLE}, an Axion Index Journal report: how AI is changing the architecture of work. Published ${REPORT.releaseLong}.`,
     path: REPORT.readPath,
-    image: OG_REPORT,
+    // R-04: the share image carries the report's own title
+    image: { url: coverPath(REPORT.slug), width: 1200, height: 630, alt: REPORT_FULL_TITLE },
     noIndex: !REPORT.published,
   });
 }
@@ -74,10 +77,11 @@ export default async function ReportPage({ searchParams }: Props) {
           style={{ background: "radial-gradient(circle, #C9A24A 0%, transparent 70%)" }}
         />
         <div className="shell relative z-10 pt-36 sm:pt-44 pb-20">
-          <div className="eyebrow mb-8 text-[var(--accent)]">RESEARCH&nbsp;&nbsp;·&nbsp;&nbsp;{REPORT.edition.toUpperCase()}&nbsp;&nbsp;·&nbsp;&nbsp;{REPORT.releaseLong.toUpperCase()}</div>
+          <div className="eyebrow mb-8 text-[var(--accent)]">AXION INDEX JOURNAL&nbsp;&nbsp;·&nbsp;&nbsp;{REPORT.releaseLong.toUpperCase()}</div>
           <h1 className="font-serif font-normal text-[clamp(44px,6.5vw,96px)] leading-[0.98] tracking-[-0.015em] text-[var(--fg)] max-w-[14ch]">
             {REPORT.name}<span className="text-[var(--accent)]">.</span>
           </h1>
+          <p className="font-serif italic text-[clamp(22px,2.6vw,34px)] leading-snug text-[var(--accent)] mt-5 max-w-[30ch]">{REPORT.subtitle}</p>
           <div className="mt-8 max-w-[640px]">
             <Placeholder label="Report subtitle / standfirst" lines={2} />
           </div>
@@ -111,10 +115,10 @@ export default async function ReportPage({ searchParams }: Props) {
             Read what is breaking in <em className="text-[var(--accent)]">your</em> organisation.
           </h2>
           <p className="lead mx-auto text-[var(--fg-3)] max-w-[48ch] mb-10">
-            A 30-minute architectural read. You bring the signal. No fee, no pitch.
+            {CONVERSATION_INVITE}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button href="/?diagnostic=1" variant="primary" showArrow>Start Diagnostic</Button>
+            <Button href="/?diagnostic=1" variant="primary" showArrow>Start a conversation</Button>
             <Button href="/connect" variant="secondary">Reach Us</Button>
           </div>
         </div>

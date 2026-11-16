@@ -28,11 +28,11 @@ export default async function SettingsPage() {
               key={idx}
               className={`w-full flex items-center gap-4 px-6 py-4 rounded-2xl border transition-all ${
                 item.active
-                  ? "bg-[#111] border-[#d4af37]/30 text-[#e5e5e5]"
+                  ? "bg-[#111] border-[#C9A24A]/30 text-[#e5e5e5]"
                   : "bg-transparent border-transparent text-[#525252] hover:text-[#a3a3a3]"
               }`}
             >
-              <item.icon className={`w-4 h-4 ${item.active ? "text-[#d4af37]" : ""}`} />
+              <item.icon className={`w-4 h-4 ${item.active ? "text-[#C9A24A]" : ""}`} />
               <span className="text-[11px] font-bold uppercase tracking-widest">{item.label}</span>
             </button>
           ))}

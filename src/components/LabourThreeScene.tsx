@@ -70,7 +70,7 @@ function ParticleNetwork() {
         <bufferGeometry>
           <bufferAttribute attach="attributes-position" args={[positions, 3]} />
         </bufferGeometry>
-        <pointsMaterial size={0.12} color="#D4AF37" transparent opacity={0.9} sizeAttenuation blending={THREE.AdditiveBlending} />
+        <pointsMaterial size={0.12} color="#C9A24A" transparent opacity={0.9} sizeAttenuation blending={THREE.AdditiveBlending} />
       </points>
       
       <lineSegments ref={linesRef}>
@@ -113,7 +113,7 @@ function LuxuryRings() {
     <group position={[0, 0, -5]}>
       <mesh ref={ring1}>
         <torusGeometry args={[5, 0.03, 16, 100]} />
-        <meshStandardMaterial color="#D4AF37" emissive="#C9A85C" emissiveIntensity={0.4} metalness={1} roughness={0.2} transparent opacity={0.6} />
+        <meshStandardMaterial color="#C9A24A" emissive="#C9A85C" emissiveIntensity={0.4} metalness={1} roughness={0.2} transparent opacity={0.6} />
       </mesh>
       
       <mesh ref={ring2}>
@@ -158,7 +158,7 @@ function GlassSphere() {
         temporalDistortion={0.1}
         clearcoat={1}
         attenuationDistance={0.5}
-        attenuationColor="#D4AF37"
+        attenuationColor="#C9A24A"
         color="#ffffff"
         transparent
         opacity={0.8}
@@ -200,7 +200,7 @@ function AmbientDust() {
       <bufferGeometry>
         <bufferAttribute attach="attributes-position" args={[positions, 3]} />
       </bufferGeometry>
-      <pointsMaterial size={0.03} color="#D4AF37" transparent opacity={0.3} sizeAttenuation blending={THREE.AdditiveBlending} />
+      <pointsMaterial size={0.03} color="#C9A24A" transparent opacity={0.3} sizeAttenuation blending={THREE.AdditiveBlending} />
     </points>
   );
 }
@@ -211,7 +211,7 @@ function Scene() {
       <PerspectiveCamera makeDefault position={[0, 0, 18]} fov={45} />
       
       <ambientLight intensity={0.3} />
-      <pointLight position={[10, 10, 15]} intensity={2} color="#D4AF37" />
+      <pointLight position={[10, 10, 15]} intensity={2} color="#C9A24A" />
       <pointLight position={[-10, -10, 10]} intensity={1.5} color="#FFD700" />
       <spotLight position={[0, 15, 10]} intensity={1} angle={0.3} penumbra={1} color="#C9A85C" />
       

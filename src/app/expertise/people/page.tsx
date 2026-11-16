@@ -6,6 +6,8 @@ import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
 import Footer from "@/components/Footer";
 import Button from "@/components/Button";
+import CaseExamples from "@/components/CaseExamples";
+import { PEOPLE_DELIVERABLES } from "@/content/evidence";
 
 const PeopleThreeScene = dynamic(() => import("@/components/PeopleThreeScene"), { ssr: false });
 
@@ -62,7 +64,7 @@ const surfaces = [
 
 export default function PeopleArchitecture() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen overflow-x-clip">
 
       {/* HERO */}
       <header className="relative min-h-screen flex items-center justify-center bg-transparent pt-20 overflow-hidden">
@@ -209,6 +211,9 @@ export default function PeopleArchitecture() {
         </div>
       </section>
 
+      {/* N-06: anonymised examples (only shows once one exists, with client permission) */}
+      <CaseExamples practice="people" />
+
       {/* ENGAGEMENT — centered with BCR recap cards */}
       <section className="chapter section-dark relative overflow-hidden">
         <div className="shell">
@@ -232,13 +237,21 @@ export default function PeopleArchitecture() {
               <div className="mb-14 text-left">
                 <span className="eyebrow eyebrow--center mb-6 text-[var(--accent)] flex">What you get</span>
                 <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {["Diagnostic readout", "Decision rights, written down", "Succession map", "Handover"].map((item, i) => (
+                  {PEOPLE_DELIVERABLES.map((item, i) => (
                     <li
-                      key={item}
+                      key={item.name}
                       className="flex items-center gap-4 rounded-2xl border border-[var(--line-gold)] bg-[rgba(201,162,74,0.04)] px-5 py-4"
                     >
                       <span className="font-mono text-[11px] tracking-[0.2em] text-[var(--accent)] shrink-0">{String(i + 1).padStart(2, "0")}</span>
-                      <span className="font-serif text-[20px] leading-tight text-[var(--fg)]">{item}</span>
+                      <span className="flex flex-col gap-1.5">
+                        <span className="font-serif text-[20px] leading-tight text-[var(--fg)]">{item.name}</span>
+                        {/* N-07: one sample page, client details removed (shows once the file is added) */}
+                        {item.sample && (
+                          <a href={item.sample} target="_blank" rel="noopener noreferrer" className="font-mono text-[10px] tracking-[0.18em] uppercase text-[var(--accent)] hover:underline">
+                            See a sample page ↗
+                          </a>
+                        )}
+                      </span>
                     </li>
                   ))}
                 </ul>
