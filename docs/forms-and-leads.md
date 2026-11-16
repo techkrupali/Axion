@@ -7,7 +7,7 @@
 | 1. Read | Reads an essay, series or report page | Reading page, "Next in series", share buttons | Analytics event `Read` |
 | 2. Follow | Follows Nitin on LinkedIn, or joins the Journal | Axion Index Journal, monthly | Added to the Journal list only if the consent box is ticked |
 | 3. Download | Asks for a report | Report by email on release day | Saved with name, email, organisation; optional "Also send me the monthly Journal" |
-| 4. Register | Early-bird registration on the AI Edge Lab page (one or more assessments, country, consent) | A note when the institute's site opens; early-bird price | Separate AI Edge Lab list, never the leads tab. One record and one sheet row **per assessment** (filter the Assessment column); `scripts/export-ai-edge-list.mjs --assessment ARI` exports one list |
+| 4. Register | AI Edge Lab early access (Nitin, 16 Nov): one choice, "Which describes you?" (AAI / ARI / LLI), then contact details and consent. Leaders then see an optional, unticked ORG AI DARS question (headcount band, main question) | A thank-you on screen and by email; a note when the institute's site opens | Separate AI Edge Lab list, never the Leads tab: sheet tabs **Individuals** (one row per person, Track column, track changes noted) and **Organisations** (one row per organisation). Nitin: an email per organisation at once, a daily summary of individuals |
 | 5. Talk | "Start a conversation" | Thank-you page + acknowledgement email | Alert to nitin@ + row in the leads sheet |
 
 Every form: saved in MongoDB, alert to `nitin@axionindex.org`, acknowledgement to the visitor (wording in `src/lib/acknowledge.ts`), row in the sheet, thank-you page (`/thank-you`), and the privacy line underneath.
@@ -54,6 +54,14 @@ If the sheet is down, nothing is lost: every submission is still in MongoDB and 
 Each submission carries one id, and `Code.gs` skips an id it has already written. That way a retry never adds a row twice. **After updating `Code.gs` in the sheet**, keep your own `SECRET` line, then **Deploy → Manage deployments → edit → Version: New version → Deploy**. The web app URL stays the same.
 
 If a row is still missing, the server log (`pm2 logs axion`) says `[SHEET] could not add … after 4 tries`. The submission is still in the database and in nitin@'s inbox.
+
+## 2b. AI Edge Lab early access (Individuals and Organisations)
+
+- **Sheet:** the current `scripts/leads-sheet/Code.gs` creates two tabs. *Individuals*: one row per person, found by Email and updated in place; a new track fills *Track changed at* and *Previous track*. *Organisations*: one row per organisation (another leader from the same organisation goes in *Also requested by*). Both have Registered at, Consent given, Source, Invited for complimentary and Status; counts per track and of organisations are on rows 1–2. The team keeps *Invited for complimentary* and *Status* (Registered / Invited / Converted / Unsubscribed) up to date in the sheet; the website never overwrites them.
+- **Older script:** the website asks the sheet's script for its version first. An older Code.gs would put these rows in the Leads tab, so they are not sent until the script is updated (they stay in the database, and the server log says so).
+- **Daily summary to Nitin:** `scripts/ai-edge-daily-summary.mjs`, from cron on the server at 9:00 IST (`30 3 * * *`, see the file). Nothing is sent on a day with no new registrations. `--dry-run` prints it instead.
+- **Organisations:** an email to Nitin at once, for each one.
+- **Handover:** `node --env-file=.env scripts/export-ai-edge-list.mjs ai-edge-handover` writes `AAI.csv`, `ARI.csv`, `LLI.csv` and `organisations.csv`. If the team changed Status or Invited in the sheet, use the sheet's values (download its tabs too).
 
 ## 3. Analytics
 

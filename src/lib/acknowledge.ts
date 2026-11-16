@@ -91,20 +91,19 @@ export async function ackJournal(to: string, name: string) {
 }
 
 /** Step 4, Register: AI Edge Lab early-bird registration (Fix Brief Part 5, item 23). */
-export function ackAiEdgeInterest(to: string, name: string, assessments: string[]) {
-  const list = assessments.length > 1 ? `${assessments.slice(0, -1).join(", ")} and ${assessments[assessments.length - 1]}` : assessments[0];
+/** Step 1 done (Nitin, 16 Nov): one assessment, by career stage. */
+export function ackAiEdgeInterest(to: string, name: string, assessment: string) {
   return sendVisitorEmail({
     to,
-    subject: "AI Edge Lab: you are on the early-bird list",
+    subject: "AI Edge Lab: you are on the early-access list",
     email: {
-      preheader: "A note when the institute's site opens.",
+      preheader: "We'll be in touch before launch.",
       heading: `Thank you, ${first(name)}.`,
       paragraphs: [
-        `You are on the AI Edge Lab early-bird list for the ${list}.`,
+        `You're on the early-access list for the ${assessment}. We'll be in touch before launch.`,
         EARLY_BIRD.offer,
-        "We will send you a note when the institute's site opens.",
       ],
-      reason: "You are receiving this because you registered for AI Edge Lab early-bird access on axionindex.org.",
+      reason: "You are receiving this because you registered for AI Edge Lab early access on axionindex.org.",
     },
   });
 }

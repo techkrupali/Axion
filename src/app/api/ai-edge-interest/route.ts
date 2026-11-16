@@ -1,20 +1,26 @@
 import { NextRequest, NextResponse, after } from "next/server";
 import dbConnect from "@/lib/db";
 import AiEdgeInterest from "@/models/AiEdgeInterest";
-import { sendOwnerEmail } from "@/lib/mailer";
+import AiEdgeOrganisation from "@/models/AiEdgeOrganisation";
 import { cleanStr, isEmail, isBot } from "@/lib/contact";
 import { isRateLimited } from "@/lib/rateLimit";
 import { ackAiEdgeInterest } from "@/lib/acknowledge";
-import { addAiEdgeRow, cleanCameFrom, cleanSourcePage } from "@/lib/leadsSheet";
-import { assessmentName, isAssessmentCode } from "@/config/aiEdgeLab";
+import { cleanCameFrom, cleanSourcePage, sheetTime, upsertIndividualRow } from "@/lib/leadsSheet";
+import { signEmail } from "@/lib/signedToken";
+import { LEADER_TRACK, assessmentName, isTrackCode } from "@/config/aiEdgeLab";
+
+type Individual = {
+  email: string; name: string; organisation: string; role: string; country: string; track: string;
+  previousTrack?: string; trackChangedAt?: Date; consentAt?: Date; createdAt: Date;
+  sourcePage?: string; cameFrom?: string;
+};
 
 /**
- * PUBLIC: AI Edge Lab early-bird registration (Fix Brief Part 5, item 23). No login.
- * Body: name, email, organisation, role, country, assessments (one or more of AAI | ARI | LLI |
- * ORG AI DARS; a single "assessment" also works), consent (must be true), sourcePage. Saved to the
- * separate AI Edge Lab list and the "AI Edge Lab" sheet tab, never the Axion leads.
- * Each assessment is its own record and its own sheet row (Nitin, 16 Nov). Registering again for
- * the same assessment updates that record; a new assessment adds a record and alerts Nitin.
+ * PUBLIC: AI Edge Lab early access, Step 1 (Nitin, 16 Nov). The same form for everyone: one track by
+ * career stage (AAI, ARI or LLI), name, email, organisation, role, country, consent. No login.
+ * One record per person: registering again updates it, and a new track is noted with its date.
+ * Nitin gets a daily summary of individuals (scripts/ai-edge-daily-summary.mjs), not an email each.
+ * Leaders get a signed token for Step 2 (/api/ai-edge-interest/organisation).
  */
 export async function POST(req: NextRequest) {
   try {
@@ -29,69 +35,72 @@ export async function POST(req: NextRequest) {
     const organisation = cleanStr(data.organisation, 200);
     const role = cleanStr(data.role, 100);
     const country = cleanStr(data.country, 80);
-    const asked: unknown[] = Array.isArray(data.assessments) ? data.assessments.slice(0, 10) : [data.assessment];
-    const assessments = [...new Set(asked.filter(isAssessmentCode))];
+    const track: unknown = data.track ?? data.assessment;
     const sourcePage = cleanSourcePage(data.sourcePage);
     const cameFrom = cleanCameFrom(data.cameFrom);
+    if (!isTrackCode(track)) return NextResponse.json({ ok: false, error: "Please choose which describes you." }, { status: 400 });
     if (name.length < 2) return NextResponse.json({ ok: false, error: "Please enter your name." }, { status: 400 });
     if (!isEmail(email)) return NextResponse.json({ ok: false, error: "Please enter a valid email address." }, { status: 400 });
     if (country.length < 2) return NextResponse.json({ ok: false, error: "Please enter your country." }, { status: 400 });
-    if (assessments.length === 0) return NextResponse.json({ ok: false, error: "Please choose at least one assessment." }, { status: 400 });
     if (data.consent !== true) return NextResponse.json({ ok: false, error: "Please tick the consent box." }, { status: 400 });
 
     await dbConnect();
-    const fields = { name, organisation, role, country, consentAt: new Date() };
-    const before = (await AiEdgeInterest.find({ email }, { assessment: 1 }).lean<{ assessment: string }[]>()).map((r) => r.assessment);
+    const now = new Date();
+    const before = await AiEdgeInterest.findOne({ email }).lean<Individual>();
+    const changed = !!before && before.track !== track;
+    let saved: Individual;
 
-    // One record per assessment: update the ones they already had, add the new ones
-    const added: string[] = [];
-    for (const assessment of assessments) {
-      if (before.includes(assessment)) {
-        await AiEdgeInterest.updateOne({ email, assessment }, fields);
-        continue;
-      }
+    if (!before) {
       try {
-        await AiEdgeInterest.create({ email, assessment, sourcePage, ...fields });
-        added.push(assessment);
+        saved = (await AiEdgeInterest.create({
+          name, email, organisation, role, country, track, consentAt: now, sourcePage, cameFrom, summaryPendingSince: now,
+        })).toObject() as Individual;
       } catch (e) {
-        if ((e as { code?: number }).code !== 11000) throw e; // sent twice at once: already saved
+        if ((e as { code?: number }).code !== 11000) throw e;
+        return NextResponse.json({ ok: true, track, already: true }); // sent twice at once
       }
+    } else {
+      const set: Record<string, unknown> = {
+        name, role, country, consentAt: now,
+        ...(organisation ? { organisation } : {}), // a blank field never wipes what they gave before
+        ...(changed ? { track, previousTrack: before.track, trackChangedAt: now, summaryPendingSince: now } : {}),
+      };
+      saved = (await AiEdgeInterest.findOneAndUpdate({ email }, { $set: set }, { new: true }).lean<Individual>())!;
     }
-    if (added.length === 0) return NextResponse.json({ ok: true, already: true });
 
-    const labels = added.map(assessmentName);
-    const earlier = before.map(assessmentName);
+    const trackName = assessmentName(track);
+    const leader = track === LEADER_TRACK;
+    const orgRegistered = leader && !!(await AiEdgeOrganisation.exists({ $or: [{ leaderEmail: email }, { alsoRequestedBy: email }] }));
+
+    // The sheet's "Individuals" tab: update the row in place; the team keeps Status and Invited there
+    const consent = `Yes · ${sheetTime(now)}`;
+    const row: Record<string, string> = {
+      Name: saved.name, Email: email, Track: track, Organisation: saved.organisation, Role: saved.role, Country: saved.country,
+      "Consent given": consent,
+      ...(changed ? { "Track changed at": sheetTime(now), "Previous track": before!.track } : {}),
+    };
+    const insert: Record<string, string> = {
+      "Registered at": sheetTime(before?.createdAt ? new Date(before.createdAt) : now),
+      Name: saved.name, Email: email, Track: track, Organisation: saved.organisation, Role: saved.role, Country: saved.country,
+      "Consent given": consent,
+      Source: [saved.sourcePage || sourcePage, saved.cameFrom || cameFrom].filter(Boolean).join(" · "),
+      "Invited for complimentary": "No",
+      Status: "Registered",
+      ...(changed ? { "Track changed at": sheetTime(now), "Previous track": before!.track } : {}),
+    };
     after(() => Promise.all([
-      sendOwnerEmail({
-        subject: `[Axion] AI Edge Lab early-bird — ${name} · ${added.join(", ")}`,
-        replyTo: email,
-        email: {
-          badge: "AI Edge Lab",
-          heading: "New AI Edge Lab early-bird registration",
-          subheading: [name, organisation].filter(Boolean).join(" · "),
-          preheader: `${labels.join(", ")} · ${country} (separate AI Edge Lab list)`,
-          contact: { name, email, phone: "" },
-          sections: [{
-            type: "fields", title: "Registration",
-            rows: [
-              [added.length > 1 ? "Assessments" : "Assessment", labels.join(", ")],
-              ["Registered earlier for", earlier.join(", ")],
-              ["Organisation", organisation], ["Role", role], ["Country", country], ["Consent", "Ticked"],
-              ["Page", sourcePage], ["Came from", cameFrom], ["List", "AI Edge Lab (not the Axion leads)"],
-            ],
-          }],
-        },
-      }),
-      ackAiEdgeInterest(email, name, labels),
-      // One sheet row per assessment, so each assessment's list can be filtered on its own
-      ...added.map((code) => addAiEdgeRow({
-        form: "AI Edge Lab early-bird",
-        name, email, organisation, role, sourcePage, cameFrom,
-        extra: { Country: country, Assessment: assessmentName(code) },
-      })),
+      upsertIndividualRow(row, insert),
+      // A thank-you by email when they join, or move to another assessment
+      ...(!before || changed ? [ackAiEdgeInterest(email, name, trackName)] : []),
     ]));
 
-    return NextResponse.json({ ok: true });
+    return NextResponse.json({
+      ok: true,
+      track,
+      trackName,
+      leader,
+      ...(leader ? { orgToken: signEmail(email), needsOrganisation: !saved.organisation, orgRegistered } : {}),
+    });
   } catch (err) {
     console.error("[AI-EDGE-INTEREST POST]", err);
     return NextResponse.json({ ok: false, error: "Something went wrong. Please try again." }, { status: 500 });

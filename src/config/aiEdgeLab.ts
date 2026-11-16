@@ -27,6 +27,28 @@ export type AssessmentCode = (typeof ASSESSMENTS)[number]["code"];
 export const isAssessmentCode = (v: unknown): v is AssessmentCode => ASSESSMENTS.some((a) => a.code === v);
 export const assessmentName = (code: string) => ASSESSMENTS.find((a) => a.code === code)?.name ?? code;
 
+/**
+ * Early access (Nitin, 16 Nov): every visitor registers once, for one assessment, by career stage.
+ * ORG AI DARS is never on the registration form; leaders are asked about their organisation
+ * afterwards, on the confirmation screen.
+ */
+export const TRACKS = [
+  { code: "AAI", stage: "Student / early career" },
+  { code: "ARI", stage: "Working professional" },
+  { code: "LLI", stage: "Leader / CXO" },
+] as const;
+export type TrackCode = (typeof TRACKS)[number]["code"];
+export const isTrackCode = (v: unknown): v is TrackCode => TRACKS.some((t) => t.code === v);
+export const LEADER_TRACK: TrackCode = "LLI";
+
+/** ORG AI DARS early access (leaders only, after registering). */
+export const ORG_ASSESSMENT = { code: "ORG AI DARS", name: "ORG AI DARS©" } as const;
+export const HEADCOUNT_BANDS = ["Under 100", "100–499", "500–999", "1,000–4,999", "5,000–19,999", "20,000+"] as const;
+export const isHeadcountBand = (v: unknown): v is (typeof HEADCOUNT_BANDS)[number] => HEADCOUNT_BANDS.includes(v as never);
+
+/** The lists' statuses, kept in the sheet by the team (and in the database). */
+export const EARLY_ACCESS_STATUSES = ["Registered", "Invited", "Converted", "Unsubscribed"] as const;
+
 /** Early-bird offer (item 23). Nitin approves the wording. */
 export const EARLY_BIRD = {
   offer: "Early-bird registrants get a special launch price; a chosen few get a complimentary assessment and report.",

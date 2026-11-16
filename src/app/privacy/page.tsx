@@ -26,7 +26,7 @@ export default function PrivacyPage() {
           <li><strong>Report requests:</strong> name, email, organisation, and whether you also asked for the {JOURNAL.name}.</li>
           <li><strong>{JOURNAL.name}:</strong> name and email, and when you ticked the box to receive it.</li>
           <li><strong>The earlier AI Edge diagnostic</strong> (no longer offered): results already submitted (name, email, phone number if given, role, answers and score) are kept securely and are not shared with the AI Edge Lab institute. Write to us to have yours deleted.</li>
-          <li><strong>AI Edge Lab early-bird registration:</strong> name, email, country, the assessment you chose and, if you give them, your organisation and role. This is kept on a separate AI Edge Lab list. With your consent, it is passed to the AI Edge Lab institute when its own website opens.</li>
+          <li><strong>AI Edge Lab early access:</strong> name, email, country, the assessment that matches your career stage and, if you give them, your organisation and role. Leaders who also ask for early access to ORG AI DARS for their organisation give its headcount band and its main question. This is kept on a separate AI Edge Lab list. With your consent, it is passed to the AI Edge Lab institute when its own website opens.</li>
         </ul>
         <p>
           Like most websites, our web server also keeps standard technical logs (such as IP address and browser type) for security
