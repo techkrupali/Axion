@@ -91,7 +91,8 @@ export async function ackJournal(to: string, name: string) {
 }
 
 /** Step 4, Register: AI Edge Lab early-bird registration (Fix Brief Part 5, item 23). */
-export function ackAiEdgeInterest(to: string, name: string, assessment: string) {
+export function ackAiEdgeInterest(to: string, name: string, assessments: string[]) {
+  const list = assessments.length > 1 ? `${assessments.slice(0, -1).join(", ")} and ${assessments[assessments.length - 1]}` : assessments[0];
   return sendVisitorEmail({
     to,
     subject: "AI Edge Lab: you are on the early-bird list",
@@ -99,7 +100,7 @@ export function ackAiEdgeInterest(to: string, name: string, assessment: string) 
       preheader: "A note when the institute's site opens.",
       heading: `Thank you, ${first(name)}.`,
       paragraphs: [
-        `You are on the AI Edge Lab early-bird list for the ${assessment}.`,
+        `You are on the AI Edge Lab early-bird list for the ${list}.`,
         EARLY_BIRD.offer,
         "We will send you a note when the institute's site opens.",
       ],

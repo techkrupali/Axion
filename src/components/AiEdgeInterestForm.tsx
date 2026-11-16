@@ -16,14 +16,17 @@ const empty = { name: "", email: "", organisation: "", role: "", country: "", we
 
 /**
  * AI Edge Lab early-bird registration (Fix Brief Part 5, item 23): name, email, organisation,
- * role, country, which assessment, and a consent box. Saved to the separate AI Edge Lab list.
+ * role, country, one or more assessments, and a consent box. Saved to the separate AI Edge Lab
+ * list, one record per assessment (Nitin, 16 Nov).
  * Styled for the AI Edge Lab page (dark, square corners).
  */
 export default function AiEdgeInterestForm({ idPrefix = "ael", initialAssessment }: { idPrefix?: string; initialAssessment?: AssessmentCode }) {
   const router = useRouter();
   const formStarted = useFormStarted("ai-edge-interest");
   const [form, setForm] = useState(empty);
-  const [assessment, setAssessment] = useState<AssessmentCode | "">(initialAssessment ?? "");
+  const [assessments, setAssessments] = useState<AssessmentCode[]>(initialAssessment ? [initialAssessment] : []);
+  const toggle = (code: AssessmentCode) =>
+    setAssessments((s) => (s.includes(code) ? s.filter((c) => c !== code) : ASSESSMENTS.map((a) => a.code).filter((c) => c === code || s.includes(c))));
   const [touched, setTouched] = useState(false);
   const [state, setState] = useState<"idle" | "sending" | "error">("idle");
   const [error, setError] = useState("");
@@ -32,7 +35,7 @@ export default function AiEdgeInterestForm({ idPrefix = "ael", initialAssessment
     name: form.name.trim().length < 2 ? "Please enter your name." : "",
     email: !isEmail(form.email) ? "Please enter a valid email address." : "",
     country: form.country.trim().length < 2 ? "Please enter your country." : "",
-    assessment: !assessment ? "Please choose an assessment." : "",
+    assessment: assessments.length === 0 ? "Please choose at least one assessment." : "",
     consent: !form.consent ? "Please tick the box to register." : "",
   };
   const show = (k: keyof typeof errs) => (touched ? errs[k] : "");
@@ -47,11 +50,11 @@ export default function AiEdgeInterestForm({ idPrefix = "ael", initialAssessment
       const res = await fetch("/api/ai-edge-interest", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, assessment, sourcePage: window.location.pathname, cameFrom: visitSource() }),
+        body: JSON.stringify({ ...form, assessments, sourcePage: window.location.pathname, cameFrom: visitSource() }),
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok || !data.ok) throw new Error(data.error || "Something went wrong. Please try again.");
-      track("Form sent", { form: "ai-edge-interest", assessment });
+      track("Form sent", { form: "ai-edge-interest", assessment: assessments.join(", ") });
       router.push("/thank-you?form=ai-edge");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
@@ -88,19 +91,19 @@ export default function AiEdgeInterestForm({ idPrefix = "ael", initialAssessment
       <p className="text-[13.5px] leading-[1.65] text-[#C9A24A]">{EARLY_BIRD.offer}</p>
 
       <fieldset className="mt-1">
-        <legend className="mb-2 font-mono text-[10px] tracking-[0.16em] uppercase text-[#B0AEA8]">Which assessment?</legend>
+        <legend className="mb-2 font-mono text-[10px] tracking-[0.16em] uppercase text-[#B0AEA8]">Which assessments? Choose one or more</legend>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
           {ASSESSMENTS.map((a) => {
-            const on = assessment === a.code;
+            const on = assessments.includes(a.code);
             return (
               <label key={a.code} className="flex items-start gap-2.5 px-3 py-2.5 cursor-pointer"
                 style={{ border: `1px solid ${on ? "#C9A24A" : "rgba(247,246,243,0.14)"}`, background: on ? "rgba(201,162,74,0.08)" : "transparent" }}>
                 <input
-                  type="radio"
+                  type="checkbox"
                   name={`${idPrefix}-assessment`}
                   value={a.code}
                   checked={on}
-                  onChange={() => { formStarted(); setAssessment(a.code); }}
+                  onChange={() => { formStarted(); toggle(a.code); }}
                   className="mt-1 accent-[#C9A24A]"
                 />
                 <span className="min-w-0">
