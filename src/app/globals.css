@@ -394,6 +394,43 @@ body::before {
    ============================================================ */
 .font-serif { font-family: var(--font-serif); }
 .font-mono  { font-family: var(--font-mono); }
+/* Cormorant, named directly: --font-serif is set on <html>, before <body> loads the font variable,
+   so `font-serif` falls back to Geist. Article pages use this instead. */
+.font-display { font-family: var(--font-cormorant-garamond), 'Cormorant Garamond', Georgia, serif; }
+
+/* ============================================================
+   ARTICLE PAGES (essays, series parts, media, podcasts)
+   ============================================================ */
+.article-prose { font-size: 18px; line-height: 1.85; color: var(--fg-2); }
+.article-prose > * + * { margin-top: 1.5em; }
+.article-prose > p:first-child { font-size: 20px; line-height: 1.75; color: var(--fg); }
+.article-prose > p:first-child::first-letter {
+  float: left; font-family: var(--font-cormorant-garamond), 'Cormorant Garamond', Georgia, serif;
+  font-size: 4.6em; line-height: 0.82; padding: 0.08em 0.1em 0 0; color: var(--accent); font-weight: 500;
+}
+.article-prose h2 {
+  font-family: var(--font-cormorant-garamond), 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(28px, 3.2vw, 34px); line-height: 1.15; font-weight: 500; color: var(--fg); margin-top: 2.2em;
+}
+.article-prose h3 {
+  font-family: var(--font-cormorant-garamond), 'Cormorant Garamond', Georgia, serif;
+  font-size: 25px; line-height: 1.2; font-weight: 500; color: var(--fg); margin-top: 1.9em;
+}
+.article-prose h2 + *, .article-prose h3 + * { margin-top: 0.7em; }
+.article-prose ul { list-style: disc; padding-left: 1.4em; }
+.article-prose ol { list-style: decimal; padding-left: 1.4em; }
+.article-prose li + li { margin-top: 0.5em; }
+.article-prose li::marker { color: var(--accent); }
+.article-prose blockquote {
+  margin: 2.4em 0; padding-left: 1.4em; border-left: 1px solid var(--accent);
+  font-family: var(--font-cormorant-garamond), 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(24px, 2.6vw, 29px); line-height: 1.35; font-style: italic; color: var(--fg);
+}
+.article-prose a { color: var(--accent); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.article-prose strong { color: var(--fg); font-weight: 600; }
+.article-prose ul + ul, .article-prose ol + ol { margin-top: 0.5em; } /* bullets pasted with blank lines between them */
+.article-prose hr { border: 0; height: auto; overflow: visible; text-align: center; margin: 2.6em 0; }
+.article-prose hr::after { content: "· · ·"; display: block; color: var(--accent); letter-spacing: 0.6em; font-size: 18px; line-height: 1; }
 
 /* ============================================================
    RESPONSIVE & MOBILE READABILITY

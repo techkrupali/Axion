@@ -9,12 +9,15 @@ export default async function LibraryShell({
   title,
   intro,
   crumbs,
+  hero,
   children,
 }: {
-  eyebrow: string;
-  title: React.ReactNode;
+  eyebrow?: string;
+  title?: React.ReactNode;
   intro?: React.ReactNode;
   crumbs?: { label: string; href: string }[];
+  /** Replaces the standard header (article pages draw their own). */
+  hero?: React.ReactNode;
   children: React.ReactNode;
 }) {
   const preview = (await draftMode()).isEnabled;
@@ -29,14 +32,14 @@ export default async function LibraryShell({
         </div>
       )}
       {crumbs && crumbs.length > 0 && <JsonLd data={breadcrumbLd(crumbs)} />}
-      <header className="relative overflow-hidden pt-36 sm:pt-44 pb-12">
+      {hero ?? <header className="relative overflow-hidden pt-36 sm:pt-44 pb-12">
         <div className="shell relative z-10">
           {crumbs && crumbs.length > 0 && (
             <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 font-mono text-[10px] tracking-[0.18em] uppercase text-[var(--fg-5)] mb-6">
               {crumbs.map((c, i) => (
                 <span key={c.href} className="flex items-center gap-2">
                   {i > 0 && <span aria-hidden>/</span>}
-                  <Link href={c.href} className="hover:text-[var(--accent)] transition-colors">{c.label}</Link>
+                  <Link href={c.href} className="inline-flex items-center hover:text-[var(--accent)] transition-colors">{c.label}</Link>
                 </span>
               ))}
             </nav>
@@ -45,7 +48,7 @@ export default async function LibraryShell({
           <h1 className="font-serif font-normal text-[clamp(34px,5vw,68px)] leading-[1.06] tracking-[-0.01em] text-[var(--fg)] max-w-[22ch]">{title}</h1>
           {intro && <div className="lead text-[var(--fg-3)] max-w-[58ch] mt-6">{intro}</div>}
         </div>
-      </header>
+      </header>}
       {children}
       <Footer />
     </div>
