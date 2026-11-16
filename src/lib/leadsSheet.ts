@@ -65,7 +65,9 @@ async function post(url: string | undefined, tab: string, row: LeadRow): Promise
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ secret: process.env.LEADS_SHEET_SECRET ?? "", tab, row: toColumns(row) }),
       redirect: "follow",
-      signal: AbortSignal.timeout(10_000),
+      // Runs after the visitor already has their answer, so waiting longer costs nobody anything.
+      // Google Apps Script can take 10 s+ on its first call after a quiet spell, or when rows queue up.
+      signal: AbortSignal.timeout(30_000),
     });
     const data = await res.json().catch(() => null);
     if (!res.ok || !data?.ok) {

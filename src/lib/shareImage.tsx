@@ -8,17 +8,22 @@ import { join } from "node:path";
  */
 const font = (pkg: string, file: string) => readFile(join(process.cwd(), "node_modules/@fontsource", pkg, "files", file));
 
-export async function shareImage({ label, kicker, title, meta }: { label: string; kicker: string; title: string; meta?: string }) {
+type Photo = { src: string; fit?: "cover" | "contain" };
+
+/** With a `photo` (a data: URL), the photo fills the right side and the text keeps the left. */
+export async function shareImage({ label, kicker, title, meta, photo }: { label: string; kicker: string; title: string; meta?: string; photo?: Photo | null }) {
   const [serif, serifItalic, mono] = await Promise.all([
     font("cormorant-garamond", "cormorant-garamond-latin-500-normal.woff"),
     font("cormorant-garamond", "cormorant-garamond-latin-500-italic.woff"),
     font("jetbrains-mono", "jetbrains-mono-latin-500-normal.woff"),
   ]);
-  const titleSize = title.length > 70 ? 54 : title.length > 45 ? 64 : title.length > 25 ? 78 : 96;
+  const titleSize = photo
+    ? (title.length > 70 ? 42 : title.length > 45 ? 50 : title.length > 25 ? 60 : 74)
+    : (title.length > 70 ? 54 : title.length > 45 ? 64 : title.length > 25 ? 78 : 96);
+  const PHOTO_W = 500;
 
-  return new ImageResponse(
-    (
-      <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-between", padding: "64px 76px", background: "radial-gradient(120% 140% at 80% 0%, #26251f 0%, #15150f 45%, #0B0B09 100%)", color: "#F7F6F3", position: "relative" }}>
+  const text = (
+      <div style={{ width: photo ? 1200 - PHOTO_W : "100%", height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-between", padding: photo ? "56px 56px 56px 68px" : "64px 76px", background: "radial-gradient(120% 140% at 80% 0%, #26251f 0%, #15150f 45%, #0B0B09 100%)", color: "#F7F6F3", position: "relative" }}>
         <div style={{ position: "absolute", top: 0, right: 0, width: 6, height: "100%", background: "linear-gradient(#C9A24A, rgba(201,162,74,0))" }} />
         {/* top row */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
@@ -37,7 +42,7 @@ export async function shareImage({ label, kicker, title, meta }: { label: string
         {/* title */}
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div style={{ fontFamily: "Mono", fontSize: 18, letterSpacing: 6, color: "#C9A24A", textTransform: "uppercase", marginBottom: 22 }}>{kicker}</div>
-          <div style={{ fontFamily: "Serif", fontSize: titleSize, lineHeight: 1.04, maxWidth: 1000 }}>{title}</div>
+          <div style={{ fontFamily: "Serif", fontSize: titleSize, lineHeight: 1.04, maxWidth: photo ? 560 : 1000 }}>{title}</div>
         </div>
         {/* bottom row */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", borderTop: "1px solid rgba(247,246,243,0.14)", paddingTop: 24 }}>
@@ -45,7 +50,18 @@ export async function shareImage({ label, kicker, title, meta }: { label: string
           <div style={{ fontFamily: "SerifItalic", fontSize: 26, color: "#C9A24A" }}>axionindex.org</div>
         </div>
       </div>
-    ),
+  );
+
+  return new ImageResponse(
+    photo ? (
+      <div style={{ width: "100%", height: "100%", display: "flex", background: "#0B0B09" }}>
+        {text}
+        <div style={{ width: PHOTO_W, height: "100%", display: "flex", alignItems: "center", justifyContent: "center", background: "#0B0B09", padding: photo.fit === "contain" ? 36 : 0 }}>
+          {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text */}
+          <img src={photo.src} width={photo.fit === "contain" ? PHOTO_W - 72 : PHOTO_W} height={photo.fit === "contain" ? 630 - 72 : 630} style={{ objectFit: photo.fit ?? "cover", width: "100%", height: "100%" }} />
+        </div>
+      </div>
+    ) : text,
     {
       width: 1200,
       height: 630,

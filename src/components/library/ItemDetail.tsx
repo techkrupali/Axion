@@ -48,7 +48,7 @@ export default function ItemDetail({ lib, item }: { lib: Library; item: LibraryI
             headline: item.title,
             description: item.summary || undefined,
             ...(item.date ? { datePublished: item.date } : {}),
-            image: SITE_URL + coverPath(item.slug),
+            image: SITE_URL + coverPath(item.slug, item.cover),
             url: SITE_URL + itemPath(item),
             mainEntityOfPage: SITE_URL + itemPath(item),
             author: NITIN,
@@ -69,7 +69,7 @@ export default function ItemDetail({ lib, item }: { lib: Library; item: LibraryI
 
         <div className="max-w-[760px]">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={coverPath(item.slug)} alt="" width={1200} height={630} className="w-full h-auto rounded-2xl border border-[var(--line)] mb-12" />
+          <img src={coverPath(item.slug, item.cover)} alt={item.coverAlt ?? ""} width={1200} height={630} className="w-full h-auto rounded-2xl border border-[var(--line)] mb-12" />
 
           {text ? (
             <>

@@ -29,7 +29,106 @@ const toInput = (i: Partial<LibraryItem> & { category: Category }): ItemInput =>
   owner: i.owner ?? "axion",
   embed: i.embed ?? "",
   statusLine: i.statusLine ?? "",
+  cover: i.cover ?? "",
+  coverAlt: i.coverAlt ?? "",
 });
+
+/* ── Photo ───────────────────────────────────────────────────────────────────
+ * Shrunk in the browser before upload (at most 1600 px on the long side, JPEG, under 900 KB),
+ * so any phone or camera photo works and the upload stays small. */
+const MAX_BYTES = 900 * 1024;
+
+async function shrinkPhoto(file: File): Promise<{ blob: Blob; width: number; height: number }> {
+  if (!/^image\//.test(file.type) && !/\.(jpe?g|png|webp|heic|heif|gif)$/i.test(file.name)) throw new Error("Please choose a photo (JPG, PNG or WebP).");
+  let bmp: ImageBitmap;
+  try { bmp = await createImageBitmap(file, { imageOrientation: "from-image" }); }
+  catch { throw new Error("This photo could not be opened. Please save it as JPG or PNG and try again."); }
+  const steps: [number, number][] = [[1600, 0.85], [1600, 0.72], [1280, 0.72], [1024, 0.65]];
+  for (const [max, quality] of steps) {
+    const scale = Math.min(1, max / Math.max(bmp.width, bmp.height));
+    const w = Math.max(1, Math.round(bmp.width * scale)), h = Math.max(1, Math.round(bmp.height * scale));
+    const canvas = document.createElement("canvas");
+    canvas.width = w; canvas.height = h;
+    const ctx = canvas.getContext("2d")!;
+    ctx.fillStyle = "#0B0B09"; // transparent parts of a PNG become the site's dark background
+    ctx.fillRect(0, 0, w, h);
+    ctx.drawImage(bmp, 0, 0, w, h);
+    const blob = await new Promise<Blob | null>((res) => canvas.toBlob(res, "image/jpeg", quality));
+    if (blob && blob.size <= MAX_BYTES) { bmp.close(); return { blob, width: w, height: h }; }
+  }
+  bmp.close();
+  throw new Error("This photo is too large. Please choose a smaller one.");
+}
+
+function PhotoField({ category, value, alt, onChange, onAlt, labelClass, inputClass, hintClass }: {
+  category: Category; value: string; alt: string;
+  onChange: (v: string) => void; onAlt: (v: string) => void;
+  labelClass: string; inputClass: string; hintClass: string;
+}) {
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+
+  async function pick(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    e.target.value = ""; // choosing the same file again still works
+    if (!file) return;
+    setError(""); setBusy(true);
+    try {
+      const { blob, width, height } = await shrinkPhoto(file);
+      const form = new FormData();
+      form.append("photo", blob, "photo.jpg");
+      form.append("width", String(width));
+      form.append("height", String(height));
+      const res = await fetch("/api/studio/upload", { method: "POST", body: form });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.ok) throw new Error(data.error || "Could not upload the photo. Please try again.");
+      onChange(data.url);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Could not upload the photo.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  const btn = "inline-flex items-center px-4 py-2.5 font-mono text-[10.5px] tracking-[0.16em] uppercase border border-[var(--line-strong)] text-[var(--fg-2)] hover:border-[#C9A24A] focus-within:border-[#C9A24A] focus-within:outline focus-within:outline-1 focus-within:outline-[#C9A24A] cursor-pointer";
+  return (
+    <div>
+      <span className={labelClass}>Photo (optional)</span>
+      <div className="flex flex-col sm:flex-row gap-5 items-start">
+        {value && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={value} alt="" className={`rounded-lg border border-[var(--line-strong)] bg-[#0B0B09] ${category === "book" ? "w-[120px] h-[160px] object-contain" : "w-[220px] h-[140px] object-cover"}`} />
+        )}
+        <div className="flex flex-col gap-3 min-w-0 flex-1">
+          <div className="flex flex-wrap items-center gap-3">
+            <label className={`${btn} ${busy ? "opacity-50 pointer-events-none" : ""}`}>
+              <input type="file" accept="image/jpeg,image/png,image/webp,image/heic,image/heif" className="sr-only" onChange={pick} disabled={busy} aria-label={value ? "Replace photo" : "Choose a photo"} />
+              {busy ? "Uploading…" : value ? "Replace photo" : "Choose a photo"}
+            </label>
+            {value && !busy && (
+              <button type="button" onClick={() => { onChange(""); onAlt(""); }} className="font-mono text-[10.5px] tracking-[0.16em] uppercase text-[var(--fg-4)] hover:text-red-400">
+                Remove photo
+              </button>
+            )}
+          </div>
+          {error && <p role="alert" className="text-[13px] text-red-400">{error}</p>}
+          <p className={hintClass}>
+            {category === "book"
+              ? "The book cover, shown whole beside the title on the cover image, the book page and LinkedIn previews."
+              : "Shown beside the title on the cover image: in every list, on the page and in LinkedIn previews. JPG or PNG; large photos are made smaller automatically."}
+            {" "}Save to see it on the site.
+          </p>
+          {value && (
+            <div>
+              <label htmlFor="f-coverAlt" className={labelClass}>What the photo shows (for screen readers)</label>
+              <input id="f-coverAlt" value={alt} maxLength={200} onChange={(e) => onAlt(e.target.value)} placeholder="e.g. Nitin Nahata speaking at a panel in Mumbai" className={inputClass} />
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 const LINK_LABEL: Partial<Record<Category, string>> = {
   essay: "LinkedIn post link (turns on “Discuss on LinkedIn”)",
@@ -157,6 +256,9 @@ export default function ItemEditor({ item, series, live, everPublished }: {
         <textarea id="f-summary" rows={2} value={f.summary} onChange={(e) => set("summary", e.target.value)} className={input} placeholder="In our words. Never copy the publisher's text." />
         <p className={hint}>{f.summary.length} characters · aim for under 200</p>
       </div>
+
+      <PhotoField category={c} value={f.cover} alt={f.coverAlt} onChange={(v) => set("cover", v)} onAlt={(v) => set("coverAlt", v)}
+        labelClass={label} inputClass={input} hintClass={hint} />
 
       {/* Category-specific fields */}
       {c === "series" && (

@@ -53,7 +53,7 @@ export default async function ReportPage({ params }: Props) {
           name: item.title,
           description: item.summary || undefined,
           ...(item.date ? { datePublished: item.date } : {}),
-          image: SITE_URL + coverPath(item.slug),
+          image: SITE_URL + coverPath(item.slug, item.cover),
           url: `${SITE_URL}/reports/${item.slug}`,
           // The Author field from the Studio once filled in; until then the owner organisation
           author: item.author ? { "@type": "Person", name: item.author } : item.owner === "ai-edge-lab" ? { "@type": "Organization", name: "AI Edge Lab" } : ORGANIZATION,
@@ -74,7 +74,7 @@ export default async function ReportPage({ params }: Props) {
             </div>
 
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={coverPath(item.slug)} alt="" width={1200} height={630} className="w-full h-auto rounded-2xl border border-[var(--line)]" />
+            <img src={coverPath(item.slug, item.cover)} alt={item.coverAlt ?? ""} width={1200} height={630} className="w-full h-auto rounded-2xl border border-[var(--line)]" />
 
             {item.inside && item.inside.length > 0 && (
               <div>

@@ -16,7 +16,8 @@ const LibraryItemSchema = new Schema({
   part:         { type: Number },
   originalLink: { type: String },
   publisher:    { type: String },
-  cover:        { type: String },
+  cover:        { type: String },                       // photo: /uploads/<id>.jpg (Studio) or a /public file
+  coverAlt:     { type: String },                       // what the photo shows (screen readers)
   kicker:       { type: String },
   inside:       { type: [String], default: undefined },
   author:       { type: String },

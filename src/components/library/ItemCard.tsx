@@ -13,7 +13,7 @@ export default function ItemCard({ item }: { item: LibraryItem }) {
       className="group flex flex-col h-full rounded-2xl border border-[var(--line)] hover:border-[var(--line-gold)] bg-[rgba(255,255,255,0.015)] overflow-hidden transition-colors duration-300"
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={coverPath(item.slug)} alt="" width={1200} height={630} loading="lazy" className="w-full h-auto aspect-[1200/630] object-cover" />
+      <img src={coverPath(item.slug, item.cover)} alt="" width={1200} height={630} loading="lazy" className="w-full h-auto aspect-[1200/630] object-cover" />
       <div className="flex flex-col gap-2.5 p-5 flex-1">
         <div className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[10px] tracking-[0.18em] uppercase">
           <span className="text-[var(--accent)]">{CATEGORIES[item.category].label}</span>

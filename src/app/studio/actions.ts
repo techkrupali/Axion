@@ -8,6 +8,7 @@ import LibraryItemModel from "@/models/LibraryItem";
 import LibrarySeriesModel from "@/models/LibrarySeries";
 import { LIBRARY_TAG, loadLibraryFresh } from "@/content/store";
 import { CATEGORIES, THEMES, itemPath, slugify, type Category, type LibraryItem, type Theme } from "@/content/library";
+import { dropPhotoIfUnused, isCoverPath } from "@/lib/libraryImages";
 
 /**
  * The Studio's actions (Fix Brief Part 7): save, preview, publish. Every change is live on the
@@ -69,6 +70,8 @@ export type ItemInput = {
   owner: string;
   embed: string;
   statusLine: string;
+  cover: string;                   // photo: "/uploads/<id>.jpg" from the upload, or empty
+  coverAlt: string;
 };
 
 /** Check and tidy what the editor typed. Returns the fields to store, or the first problem in plain words. */
@@ -93,7 +96,12 @@ function validate(input: ItemInput): { ok: true; item: Omit<LibraryItem, "draft"
   const pdf = str(input.pdf, 500);
   if (pdf && !isHttps(pdf) && !/^\/[\w\-./]*\.pdf$/i.test(pdf)) return { ok: false, error: "The report PDF should be a link starting with https:// (or a /….pdf file on this site)." };
 
+  const cover = str(input.cover, 300);
+  if (cover && !isCoverPath(cover)) return { ok: false, error: "The photo could not be used. Please upload it again." };
+  const coverAlt = str(input.coverAlt, 200);
+
   const item: Omit<LibraryItem, "draft"> = { slug, category, title, date: date || null, theme, summary };
+  if (cover) { item.cover = cover; if (coverAlt) item.coverAlt = coverAlt; }
   if (body.trim() && (category === "essay" || category === "series")) item.body = body;
   if (originalLink) item.originalLink = originalLink;
 
@@ -141,7 +149,7 @@ export async function saveItem(input: ItemInput, mode: "draft" | "publish" | "up
     if (!v.ok) return v;
     await ensureSeeded();
 
-    const original = input.originalSlug ? await LibraryItemModel.findOne({ slug: input.originalSlug }).lean<{ slug: string; publishedAt?: Date; draft?: boolean }>() : null;
+    const original = input.originalSlug ? await LibraryItemModel.findOne({ slug: input.originalSlug }).lean<{ slug: string; publishedAt?: Date; draft?: boolean; cover?: string }>() : null;
     if (input.originalSlug && !original) return { ok: false, error: "This item no longer exists. Reload the Studio." };
     // A published address must not change: links to it would break
     const slug = original?.publishedAt ? original.slug : v.item.slug;
@@ -162,11 +170,13 @@ export async function saveItem(input: ItemInput, mode: "draft" | "publish" | "up
     };
     // Clear fields that no longer apply (e.g. a body removed, a category changed)
     const unset = Object.fromEntries(
-      ["body", "series", "part", "originalLink", "publisher", "kicker", "inside", "author", "method", "site", "pdf", "owner", "embed", "statusLine"]
+      ["body", "series", "part", "originalLink", "publisher", "cover", "coverAlt", "kicker", "inside", "author", "method", "site", "pdf", "owner", "embed", "statusLine"]
         .filter((k) => !(k in doc)).map((k) => [k, ""]),
     );
     if (original) await LibraryItemModel.updateOne({ slug: original.slug }, { $set: doc, $unset: unset });
     else await LibraryItemModel.create(doc);
+    // A replaced or removed photo is deleted once nothing uses it
+    if (original?.cover && original.cover !== doc.cover) await dropPhotoIfUnused(original.cover);
 
     refreshSite(slug);
     return { ok: true, slug, path: itemPath({ ...v.item, slug, draft } as LibraryItem) };
@@ -192,7 +202,8 @@ export async function deleteItem(slug: string): Promise<Result> {
   try {
     await requireEditor();
     await ensureSeeded();
-    await LibraryItemModel.deleteOne({ slug });
+    const gone = await LibraryItemModel.findOneAndDelete({ slug }).lean<{ cover?: string }>();
+    if (gone?.cover) await dropPhotoIfUnused(gone.cover);
     refreshSite(slug);
     return { ok: true };
   } catch (err) {

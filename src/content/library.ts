@@ -32,7 +32,8 @@ export type LibraryItem = {
   part?: number;                // order within the series
   originalLink?: string;        // LinkedIn post, publisher article, recording…
   publisher?: string;           // In the media
-  cover?: string;               // optional; covers are generated from one template
+  cover?: string;               // optional photo (Studio upload "/uploads/<id>.jpg", or a /public file); drawn into the cover template
+  coverAlt?: string;            // what the photo shows, for screen readers
   kicker?: string;              // small line above a report title
   inside?: string[];            // reports: what's inside
   author?: string;              // reports
@@ -102,7 +103,10 @@ export function itemPath(item: LibraryItem): string {
   }
 }
 
-export const coverPath = (slug: string) => `/cover/${slug}`;
+/** The item's cover image (one template; with its photo when it has one). `cover` changes the
+ *  address when the photo changes, so browsers and LinkedIn fetch the new one. */
+export const coverPath = (slug: string, cover?: string) =>
+  cover ? `/cover/${slug}?p=${cover.replace(/^.*\//, "").replace(/\.[a-z]+$/i, "").slice(0, 32)}` : `/cover/${slug}`;
 
 export function formatDate(date: string | null | undefined, style: "long" | "short" = "long"): string {
   if (!date) return "";

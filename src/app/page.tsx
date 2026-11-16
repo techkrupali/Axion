@@ -10,7 +10,7 @@ import { Reveal } from "@/components/Reveal";
 import Footer from "@/components/Footer";
 import { IN_DEVELOPMENT_LABEL, isLive, type PracticeKey } from "@/config/practices";
 import { REPORT, REPORT_FULL_TITLE, reportLink } from "@/config/report";
-import { CONVERSATION_INVITE } from "@/config/nav";
+import { CONVERSATION_INVITE, LINKEDIN_NITIN } from "@/config/nav";
 import { LinkedInFeedSection } from "@/components/LinkedInFeed";
 import { HOME_EVIDENCE } from "@/config/evidence";
 
@@ -1117,34 +1117,62 @@ function ReportBand() {
 // FOUNDER (Fix Brief Part 8, B-05)
 // ─────────────────────────────────────────────
 function FounderBlock() {
+  const SECTORS = ["Banking", "Group", "Real Estate", "FMCG", "Startup", "Gaming & Tech"];
   return (
     <section id="founder" style={{ borderBottom: `1px solid ${T.rule}` }}>
-      <div className="max-w-[1280px] mx-auto px-6 sm:px-12 py-14 sm:py-16 grid grid-cols-[112px_1fr] sm:grid-cols-[180px_1fr] gap-6 sm:gap-12 items-center">
-        <Image
-          src="/nitin-nahata-founder.jpg"
-          alt="Nitin Nahata, founder of Axion Index"
-          width={788}
-          height={1400}
-          sizes="(max-width: 640px) 112px, 180px"
-          className="w-[112px] h-[140px] sm:w-[180px] sm:h-[224px] object-cover object-top grayscale"
-          style={{ border: `1px solid ${T.gold}` }}
-        />
-        <div className="min-w-0">
-          <span className="font-mono text-[11px] uppercase" style={{ letterSpacing: "0.24em", color: T.gold }}>Founder</span>
-          <h2 className="font-serif font-medium mt-2" style={{ fontFamily: T.display, fontSize: "clamp(30px,4vw,48px)", lineHeight: 1.05, color: T.ink }}>
-            Nitin Nahata
-          </h2>
-          <p className="mt-3" style={{ fontFamily: T.display, fontSize: "clamp(17px,1.6vw,20px)", lineHeight: 1.55, color: T.ink3, maxWidth: "52ch" }}>
-            HR leadership across Standard Chartered, HSBC, Tata, Udaan and Gameskraft.
-          </p>
-          {/* G-03 (Fix Brief Part 10): sectors behind the operating experience, not a client list */}
-          <p className="font-mono text-[10.5px] uppercase mt-4 leading-relaxed" style={{ letterSpacing: "0.16em", color: T.mid }}>
-            Sectors: Banking · Group · Real Estate · FMCG · Startup · Gaming &amp; Tech
-          </p>
-          <Link href="/founder" className="inline-block font-mono text-[11px] uppercase mt-5 hover:underline" style={{ letterSpacing: "0.2em", color: T.gold }}>
-            Read the founder&apos;s story →
-          </Link>
-        </div>
+      <div className="max-w-[1280px] mx-auto px-6 sm:px-12 py-16 sm:py-24 grid grid-cols-1 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-12 lg:gap-20 items-center">
+        {/* Photo: in colour, large, with an offset gold frame */}
+        <Reveal>
+          <div className="w-full max-w-[358px] sm:max-w-[418px] lg:max-w-[458px] pr-[18px] pb-[18px]">
+           <div className="relative">
+            <div aria-hidden className="absolute inset-0 translate-x-[18px] translate-y-[18px]" style={{ border: `1px solid ${T.gold2}` }} />
+            <Image
+              src="/nitin-nahata-founder.jpg"
+              alt="Nitin Nahata, founder of Axion Index"
+              width={788}
+              height={1400}
+              sizes="(max-width: 640px) 340px, 440px"
+              className="relative w-full aspect-[4/5] object-cover"
+              style={{ objectPosition: "50% 18%", boxShadow: "0 24px 60px -28px rgba(13,13,11,0.45)" }}
+            />
+           </div>
+          </div>
+        </Reveal>
+
+        <Reveal delay={0.1}>
+          <div className="min-w-0">
+            <span className="font-mono text-[11px] uppercase" style={{ letterSpacing: "0.28em", color: T.gold }}>Founder</span>
+            <h2 className="font-serif font-medium mt-4" style={{ fontFamily: T.display, fontSize: "clamp(42px,5.4vw,76px)", lineHeight: 1, color: T.ink, letterSpacing: "-0.01em" }}>
+              Nitin Nahata
+            </h2>
+            <div aria-hidden className="w-14 h-px mt-7" style={{ background: T.gold2 }} />
+            <p className="mt-7" style={{ fontFamily: T.display, fontSize: "clamp(20px,2.1vw,27px)", lineHeight: 1.45, color: T.ink3, maxWidth: "32ch" }}>
+              HR leadership across Standard Chartered, HSBC, Tata, Udaan and Gameskraft.
+            </p>
+
+            {/* G-03 (Fix Brief Part 10): sectors behind the operating experience, not a client list */}
+            <div className="mt-9">
+              <span className="font-mono text-[10.5px] uppercase block mb-3" style={{ letterSpacing: "0.22em", color: T.mid }}>Sectors</span>
+              <ul className="flex flex-wrap gap-2">
+                {SECTORS.map((s) => (
+                  <li key={s} className="font-mono text-[10.5px] uppercase px-3 py-1.5" style={{ letterSpacing: "0.14em", color: T.ink3, border: `1px solid ${T.rule2}` }}>
+                    {s}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
+              <Link href="/founder" className="group inline-flex items-center gap-3 font-mono text-[11px] uppercase px-6 py-4 border border-[#0D0D0B] text-[#0D0D0B] transition-colors duration-300 hover:bg-[#0D0D0B] hover:text-[#F7F6F3] focus-visible:bg-[#0D0D0B] focus-visible:text-[#F7F6F3]"
+                style={{ letterSpacing: "0.2em" }}>
+                Read the founder&apos;s story <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+              </Link>
+              <a href={LINKEDIN_NITIN} target="_blank" rel="noopener noreferrer" className="font-mono text-[11px] uppercase hover:underline" style={{ letterSpacing: "0.2em", color: T.gold }}>
+                Nitin on LinkedIn ↗
+              </a>
+            </div>
+          </div>
+        </Reveal>
       </div>
     </section>
   );

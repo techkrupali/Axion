@@ -12,7 +12,7 @@ export function itemMetadata(item: LibraryItem) {
     title: item.title,
     description: item.summary || fallback,
     path: itemPath(item),
-    image: { url: coverPath(item.slug), width: 1200, height: 630, alt: item.title },
+    image: { url: coverPath(item.slug, item.cover), width: 1200, height: 630, alt: item.title },
   });
 }
 

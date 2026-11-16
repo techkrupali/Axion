@@ -15,7 +15,7 @@ export async function generateMetadata() {
     title: book.title,
     description: book.summary || `${book.title}, Nitin Nahata's book.`,
     path: CATEGORIES.book.path,
-    image: { url: coverPath(book.slug), width: 1200, height: 630, alt: book.title },
+    image: { url: coverPath(book.slug, book.cover), width: 1200, height: 630, alt: book.title },
   });
 }
 
@@ -28,7 +28,7 @@ export default async function Page() {
       crumbs={[{ label: "Articles & Publications", href: "/publications" }]}>
       <section className="shell pb-24 max-w-[760px]">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={coverPath(book.slug)} alt="" width={1200} height={630} className="w-full h-auto rounded-2xl border border-[var(--line)] mb-10" />
+        <img src={coverPath(book.slug, book.cover)} alt={book.coverAlt ?? ""} width={1200} height={630} className="w-full h-auto rounded-2xl border border-[var(--line)] mb-10" />
         <div className="rounded-2xl border border-[var(--line-gold)] bg-[rgba(201,162,74,0.04)] p-7">
           <span className="font-mono text-[10px] tracking-[0.25em] uppercase text-[var(--accent)]">Status</span>
           <p className="text-[17px] leading-[1.7] text-[var(--fg-2)] mt-3">{book.statusLine || "In progress."}</p>

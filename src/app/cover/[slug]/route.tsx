@@ -1,6 +1,7 @@
 import { CATEGORIES, findItem, formatDate, publicItems } from "@/content/library";
 import { getLibrary, loadLibraryFresh } from "@/content/store";
 import { shareImage } from "@/lib/shareImage";
+import { coverPhotoDataUrl } from "@/lib/libraryImages";
 
 /**
  * One cover template (Fix Brief Part 3, item 13): 1200 × 630, site fonts and gold,
@@ -23,5 +24,8 @@ export async function GET(_req: Request, { params }: { params: Promise<{ slug: s
     : item.category === "media" ? item.publisher ?? "In the media"
     : item.kicker ?? CATEGORIES[item.category].label;
   const meta = [formatDate(item.date), item.theme[0]].filter(Boolean).join("  ·  ");
-  return shareImage({ label: CATEGORIES[item.category].label, kicker, title: item.title, meta });
+  // The item's photo (Studio → Photo), beside the title. A book cover is shown whole.
+  const src = await coverPhotoDataUrl(item.cover);
+  const photo = src ? { src, fit: item.category === "book" ? ("contain" as const) : ("cover" as const) } : null;
+  return shareImage({ label: CATEGORIES[item.category].label, kicker, title: item.title, meta, photo });
 }
