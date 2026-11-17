@@ -2,6 +2,7 @@
 
 import { Fragment, useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { Rise } from "@/components/Rise";
 import Image from "next/image";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { ArrowRight } from "lucide-react";
@@ -134,9 +135,10 @@ function HeroBand() {
           {/* Right — all text content */}
           <div>
             {/* Practice line */}
-            <div className="flex flex-nowrap items-baseline gap-0 whitespace-nowrap">
+            {/* Wraps onto two lines on phones instead of cutting off "AI Edge Lab" and "Family Business" */}
+            <div className="band-links flex flex-wrap md:flex-nowrap items-baseline gap-0 md:whitespace-nowrap">
               {["People Architecture", "Labour Codes", "AI Edge Lab", "Family Business"].map((p, i, arr) => (
-                <span key={p} className="inline-flex items-baseline">
+                <span key={p} className="inline-flex items-baseline whitespace-nowrap">
                   <Link
                     href="#practices"
                     className="font-mono text-[11px] uppercase transition-colors duration-200"
@@ -216,20 +218,16 @@ function HeroBody({ onDiagnosticOpen }: { onDiagnosticOpen: () => void }) {
         <div className="grid grid-cols-1 md:grid-cols-[1.3fr_1fr] gap-12 md:gap-16 items-center">
           {/* Left */}
           <div>
-            <motion.p
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            <Rise as="p"
+              y={14} duration={0.8}
               className="font-mono text-[17px] uppercase mb-7"
               style={{ letterSpacing: "0.24em", color: T.mid }}
             >
               Operating Architecture Practice
-            </motion.p>
+            </Rise>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.85, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
+            <Rise as="h1"
+              y={18} duration={0.85} delay={0.12}
               className="font-serif font-medium"
               style={{
                 fontFamily: T.display,
@@ -266,23 +264,19 @@ function HeroBody({ onDiagnosticOpen }: { onDiagnosticOpen: () => void }) {
                 to{" "}
                 <em style={{ fontStyle: "italic", color: T.gold, fontWeight: 500 }}>architecture.</em>
               </span>
-            </motion.h1>
+            </Rise>
 
             {/* N-01: what Axion does, in one plain line */}
-            <motion.p
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.24, ease: [0.22, 1, 0.36, 1] }}
+            <Rise as="p"
+              y={14} duration={0.8} delay={0.24}
               className="mt-7"
               style={{ fontFamily: T.display, fontSize: "clamp(17px,1.5vw,20px)", lineHeight: 1.6, color: T.ink3, maxWidth: "52ch" }}
             >
               Design principles evolved through 23 years of operating experience, applied to how your organisation decides, governs and grows its people. Shaped to your context, never to a template.
-            </motion.p>
+            </Rise>
 
-            <motion.div
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.32, ease: [0.22, 1, 0.36, 1] }}
+            <Rise
+              y={14} duration={0.8} delay={0.32}
               className="flex flex-wrap gap-4 mt-8"
             >
               <Link
@@ -317,25 +311,21 @@ function HeroBody({ onDiagnosticOpen }: { onDiagnosticOpen: () => void }) {
               >
                 Read the signals <span style={{ display: "inline-block", width: 16, height: 1, background: "currentColor" }} />
               </Link>
-            </motion.div>
+            </Rise>
           </div>
 
           {/* Right */}
           <div className="pt-3 md:pt-4 md:pl-10 lg:pl-16">
-            <motion.p
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.85, delay: 0.22, ease: [0.22, 1, 0.36, 1] }}
+            <Rise as="p"
+              y={14} duration={0.85} delay={0.22}
               style={{ fontFamily: T.display, fontSize: "clamp(17px,2vw,20px)", lineHeight: 1.75, color: T.ink3, fontWeight: 300, maxWidth: "46ch", marginBottom: "clamp(28px,4vw,46px)" }}
             >
               Most organisations don't fail when strategy breaks. They fail when their internal architecture cannot carry what they are becoming.
-            </motion.p>
+            </Rise>
 
             {/* Stats */}
-            <motion.div
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.85, delay: 0.36, ease: [0.22, 1, 0.36, 1] }}
+            <Rise
+              y={14} duration={0.85} delay={0.36}
               className="grid grid-cols-3 sm:flex"
             >
               {HOME_EVIDENCE.map((stat, i) => (
@@ -373,7 +363,7 @@ function HeroBody({ onDiagnosticOpen }: { onDiagnosticOpen: () => void }) {
                   </span>
                 </Link>
               ))}
-            </motion.div>
+            </Rise>
           </div>
         </div>
       </motion.div>

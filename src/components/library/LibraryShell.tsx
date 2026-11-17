@@ -35,7 +35,7 @@ export default async function LibraryShell({
       {hero ?? <header className="relative overflow-hidden pt-36 sm:pt-44 pb-12">
         <div className="shell relative z-10">
           {crumbs && crumbs.length > 0 && (
-            <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 font-mono text-[10px] tracking-[0.18em] uppercase text-[var(--fg-5)] mb-6">
+            <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-x-2 gap-y-0 font-mono text-[10px] tracking-[0.18em] uppercase text-[var(--fg-5)] mb-6">
               {crumbs.map((c, i) => (
                 <span key={c.href} className="flex items-center gap-2">
                   {i > 0 && <span aria-hidden>/</span>}

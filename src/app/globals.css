@@ -458,6 +458,16 @@ body::before {
     min-height: 44px;
     min-width: 44px;
   }
+  /* …but rows of small text links that wrap (breadcrumbs, the homepage practice line) would get a
+     44px-tall empty line between rows; 32px is still comfortably tappable */
+  nav[aria-label="Breadcrumb"] a, .band-links a {
+    min-height: 32px;
+  }
+
+  /* iPhone Safari zooms the whole page in when a form field's text is under 16px, and stays zoomed */
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]), select, textarea {
+    font-size: 16px !important;
+  }
 
   /* Prevent horizontal overflow */
   img, iframe, video {
@@ -474,3 +484,17 @@ body::before {
 
 /* Smooth image rendering */
 img { image-rendering: -webkit-optimize-contrast; }
+
+/* Opening fade-in for the first screen of a page (Rise, src/components/Rise.tsx). Plain CSS, so it starts
+   as soon as the page is drawn instead of waiting for the JavaScript: the headline and photo show up
+   seconds sooner on phones (PageSpeed "largest contentful paint", SEO-04). */
+@keyframes rise-in {
+  from { opacity: 0; transform: translate(var(--rise-x, 0px), var(--rise-y, 0px)); }
+  to { opacity: 1; transform: none; }
+}
+.rise {
+  animation: rise-in var(--rise-dur, 0.8s) cubic-bezier(0.22, 1, 0.36, 1) var(--rise-delay, 0s) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .rise { animation: none; }
+}

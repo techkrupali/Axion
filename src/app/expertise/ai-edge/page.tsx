@@ -6,6 +6,7 @@ import { AI_EDGE_LAB, ASSESSMENTS, aiEdgeLabLive, type AssessmentCode } from "@/
 import { openDiagnostic } from "@/lib/openDiagnostic";
 import { REPORT } from "@/config/report";
 import Link from "next/link";
+import Image from "next/image";
 import SiteFooter from "@/components/Footer";
 import { motion } from "framer-motion";
 import { Bebas_Neue, DM_Sans, DM_Mono, Cormorant_Garamond } from "next/font/google";
@@ -81,9 +82,9 @@ function Header() {
           border: `1px solid ${T.gold}`, color: T.gold2, padding: "9px 16px", whiteSpace: "nowrap",
         }}>Visit AI Edge Lab ↗</a>
       ) : (
-        <SoonButton style={{
+        <SoonButton className="ael-head-cta" style={{
           fontFamily: "var(--f-mono)", fontSize: 10, letterSpacing: ".18em", textTransform: "uppercase",
-          border: `1px solid ${T.gold}`, color: T.gold2, padding: "9px 16px", whiteSpace: "nowrap",
+          border: `1px solid ${T.gold}`, color: T.gold2, padding: "9px 16px", whiteSpace: "nowrap", flexShrink: 0,
         }}>Find My AI Edge →</SoonButton>
       )}
     </header>
@@ -99,10 +100,11 @@ const openComingSoon = (assessment?: AssessmentCode) =>
   window.dispatchEvent(new CustomEvent<{ assessment?: AssessmentCode }>(COMING_SOON_EVENT, { detail: { assessment } }));
 
 /** Looks exactly like the old link (same inline style), but opens the pop-up. */
-function SoonButton({ style, children, assessment }: { style: React.CSSProperties; children: React.ReactNode; assessment?: AssessmentCode }) {
+function SoonButton({ style, children, assessment, className }: { style: React.CSSProperties; children: React.ReactNode; assessment?: AssessmentCode; className?: string }) {
   return (
     <button
       type="button"
+      className={className}
       onClick={() => openComingSoon(assessment)}
       style={{ cursor: "pointer", border: "none", background: "transparent", padding: 0, textAlign: "left", ...style }}
     >
@@ -237,7 +239,10 @@ function Frame01() {
         {/* placeholder visual (arcs + skyline) — shows until hero photo is added */}
         <div style={{ position: "absolute", inset: 0 }}><HeroArcs /><HeroSkyline /></div>
         {/* hero photo — 4-actor silhouettes + sunset skyline */}
-        <div style={{ position: "absolute", inset: 0, backgroundImage: "url('/aiedgelab.jpg')", backgroundSize: "cover", backgroundPosition: "0% center", backgroundRepeat: "no-repeat" }} />
+        {/* An <Image> rather than a CSS background: sized for the screen, modern format, fetched first (SEO-04) */}
+        <div style={{ position: "absolute", inset: 0 }}>
+          <Image src="/aiedgelab.jpg" alt="" fill sizes="100vw" preload style={{ objectFit: "cover", objectPosition: "0% 50%" }} />
+        </div>
         {/* left legibility gradient */}
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(90deg,#0A0A0B 0%,#0A0A0B 26%,rgba(10,10,11,0.72) 46%,rgba(10,10,11,0.15) 70%,transparent 88%)" }} />
         {/* content */}
@@ -1263,6 +1268,10 @@ export default function AIEdgeLabPage() {
           .ael-path{ grid-template-columns: 1fr !important; gap: 10px !important; }
         }
         @media (max-width: 520px){ .ael-4col{ grid-template-columns: 1fr !important; } .ael-tagline{ display: none !important; } }
+        /* Small phones: the bar's button keeps its arrow inside the box */
+        @media (max-width: 400px){ .ael-head-cta{ letter-spacing: .08em !important; padding: 8px 10px !important; } }
+        /* Under 350px there is no room; the same button sits in the hero just below */
+        @media (max-width: 350px){ .ael-head-cta{ display: none !important; } }
       `}</style>
       <Header />
       <Frame01 /><Bridge /><Frame02 /><Frame03 /><Frame04 /><Frame05 /><Frame06 />

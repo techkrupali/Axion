@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { Rise } from "@/components/Rise";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import Footer from "@/components/Footer";
 import { CONVERSATION_INVITE, FOUNDER_SUBNAV, LINKEDIN_AXION, LINKEDIN_NITIN } from "@/config/nav";
@@ -615,16 +616,13 @@ export default function FounderPage({ latest }: { latest: LatestItem[] }) {
         }} />
 
         {/* ── PORTRAIT — framed box, perfect match to photo, moved higher ── */}
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+        <Rise
+          x={-20} duration={1.2}
           className="portrait-container fn-hero-portrait"
           style={{
             position: "absolute",
             left: "19%",
             top: "12%",
-            transform: "translateY(-50%)",
             width: "clamp(300px, 34%, 480px)",
             height: "clamp(480px, 70vh, 680px)",
             zIndex: 10,
@@ -662,19 +660,21 @@ export default function FounderPage({ latest }: { latest: LatestItem[] }) {
             className="portrait-wrap"
             style={{ position: "absolute", inset: 0, zIndex: 1 }}
           >
-            <img
+            {/* The page's main image: sized for the screen, modern format, and fetched first (SEO-04) */}
+            <Image
               src="/nitin-nahata-founder.jpg"
               alt="Nitin Nahata — Founder, Axion Index"
               className="portrait-img"
+              fill
+              sizes="(max-width: 768px) 100vw, 480px"
+              preload
             />
           </div>
-        </motion.div>
+        </Rise>
 
         {/* ── Line and text below portrait ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
+        <Rise
+          y={20} duration={1} delay={0.3}
           className="fn-hero-tag"
           style={{
             position: "absolute",
@@ -716,7 +716,7 @@ export default function FounderPage({ latest }: { latest: LatestItem[] }) {
               Axion Index
             </span>
           </div>
-        </motion.div>
+        </Rise>
 
         {/* ── CONTENT — sits over the right portion, perfectly aligned ── */}
         <div
@@ -734,10 +734,8 @@ export default function FounderPage({ latest }: { latest: LatestItem[] }) {
           }}
         >
           {/* Kicker — above headline */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+          <Rise
+            y={12} duration={0.7} delay={0.3}
             className="font-mono"
             style={{
               fontSize: 9,
@@ -748,14 +746,12 @@ export default function FounderPage({ latest }: { latest: LatestItem[] }) {
             }}
           >
             Founder Doctrine&nbsp;&nbsp;·&nbsp;&nbsp;Axion Index
-          </motion.div>
+          </Rise>
 
           {/* Main headline — stacked, large serif */}
-          <motion.h1
+          <Rise as="h1"
             className="font-serif"
-            initial={{ opacity: 0, y: 36 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.0, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+            y={36} duration={1.0} delay={0.15}
             style={{
               fontFamily: T.display,
               fontWeight: 500,
@@ -771,15 +767,13 @@ export default function FounderPage({ latest }: { latest: LatestItem[] }) {
             <span style={{ display: "block" }}>of the</span>
             <em style={{ display: "block", fontStyle: "italic", color: "#C9A24A", fontWeight: 400 }}>Operating</em>
             <span style={{ display: "block" }}>Architect.</span>
-          </motion.h1>
+          </Rise>
 
           {/* Name label like target photo with vertical line */}
           <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 18, marginTop: 8 }}>
             <div style={{ width: 1, height: 40, background: "rgba(201,162,74,.6)" }} />
-            <motion.p
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            <Rise as="p"
+              y={12} duration={0.8} delay={0.4}
               className="font-mono"
               style={{
                 fontSize: 12,
@@ -790,14 +784,12 @@ export default function FounderPage({ latest }: { latest: LatestItem[] }) {
               }}
             >
               NITIN NAHATA
-            </motion.p>
+            </Rise>
           </div>
 
           {/* Body text */}
-          <motion.p
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.85, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          <Rise as="p"
+            y={14} duration={0.85} delay={0.5}
             className="font-serif"
             style={{
               fontFamily: T.display,
@@ -810,7 +802,7 @@ export default function FounderPage({ latest }: { latest: LatestItem[] }) {
             }}
           >
             A 23-year journey through institutions, scale, crisis, and unfinished organisations.
-          </motion.p>
+          </Rise>
         </div>
 
         {/* ── Vertical "FOUNDER" text — far right ── */}
@@ -840,10 +832,8 @@ export default function FounderPage({ latest }: { latest: LatestItem[] }) {
         </div>
 
         {/* ── "Not a biography" sub-note — below body text, visible in photo ── */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        <Rise
+          duration={0.8} delay={0.7}
           className="fn-hero-note"
           style={{
             position: "absolute",
@@ -867,7 +857,7 @@ export default function FounderPage({ latest }: { latest: LatestItem[] }) {
           >
             Not a biography. The operating evidence behind Axion Index.
           </p>
-        </motion.div>
+        </Rise>
 
         {/* ── Bottom meta bar — company list left + SCROLL right ── */}
         <div
