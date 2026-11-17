@@ -7,7 +7,8 @@
  * Tabs (each is created on first use):
  *  • Leads          one row per form submission, added at the bottom.
  *  • Individuals    AI Edge Lab early access: one row per person, found by Email and updated in place.
- *  • Organisations  ORG AI DARS early access: one row per organisation, found by Organisation.
+ *  • Organisations  ORG AI DARS early access: one row per organisation, found by Org ID (the leader's
+ *                   work-email domain; with a personal email the name, and "To check" is filled in).
  *  Individuals and Organisations show counts on rows 1–2; their column headings are on row 4.
  *  The team keeps "Invited for complimentary" and "Status" up to date in the sheet; the website never
  *  changes them once a row exists.

@@ -46,7 +46,8 @@ for (const track of ["AAI", "ARI", "LLI"]) {
 
 const orgs = await db.collection("aiedgeorganisations").find().sort({ createdAt: 1 }).toArray();
 const ORG = [
-  ["Registered at", (r) => r.createdAt], ["Organisation", (r) => r.organisation], ["Leader name", (r) => r.leaderName],
+  ["Registered at", (r) => r.createdAt], ["Organisation", (r) => r.organisation], ["Domain", (r) => r.domain],
+  ["To check", (r) => (r.toCheck ? "personal email, matched by name" : "")], ["Leader name", (r) => r.leaderName],
   ["Leader email", (r) => r.leaderEmail], ["Headcount", (r) => r.headcount], ["Main question", (r) => r.question],
   ["Also requested by", (r) => r.alsoRequestedBy], ["Consent given", (r) => r.consentAt],
   ["Source", (r) => [r.sourcePage, r.cameFrom].filter(Boolean).join(" · ")],

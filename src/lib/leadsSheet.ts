@@ -149,9 +149,9 @@ async function upsert(tab: "Individuals" | "Organisations", key: string, row: Re
 export const upsertIndividualRow = (row: Record<string, string>, insert: Record<string, string>) =>
   upsert("Individuals", "Email", row, insert, row.Email ?? "");
 
-/** An organisation (found by name): update its row, or add it. */
+/** An organisation (found by its Org ID: work-email domain, or name when matched by name): update its row, or add it. */
 export const upsertOrganisationRow = (row: Record<string, string>, insert: Record<string, string>) =>
-  upsert("Organisations", "Organisation", row, insert, row.Organisation ?? "");
+  upsert("Organisations", "Org ID", row, insert, row.Organisation ?? "");
 
 /** "Came from" as sent by the browser: plain text, short. */
 export const cleanCameFrom = (v: unknown) => (typeof v === "string" ? v.replace(/[\u0000-\u001f<>]/g, "").trim().slice(0, 150) : "");

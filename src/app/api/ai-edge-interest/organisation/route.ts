@@ -7,12 +7,10 @@ import { isRateLimited } from "@/lib/rateLimit";
 import { sendOwnerEmail } from "@/lib/mailer";
 import { sheetTime, upsertIndividualRow, upsertOrganisationRow } from "@/lib/leadsSheet";
 import { verifyEmail } from "@/lib/signedToken";
-import { LEADER_TRACK, ORG_ASSESSMENT, assessmentName, isHeadcountBand } from "@/config/aiEdgeLab";
+import { LEADER_TRACK, ORG_ASSESSMENT, assessmentName, emailDomain, isHeadcountBand, isPersonalEmail, orgNameKey } from "@/config/aiEdgeLab";
 
 type Leader = { name: string; email: string; organisation: string; role: string; country: string; track: string; consentAt?: Date; sourcePage?: string; cameFrom?: string };
-type Org = { orgKey: string; organisation: string; leaderEmail: string; leaderName: string; headcount: string; question: string; alsoRequestedBy: string[]; createdAt: Date; consentAt?: Date; sourcePage?: string; cameFrom?: string };
-
-const orgKeyOf = (name: string) => name.toLowerCase().replace(/\s+/g, " ").trim();
+type Org = { orgKey: string; domain: string; toCheck: boolean; organisation: string; leaderEmail: string; leaderName: string; headcount: string; question: string; alsoRequestedBy: string[]; createdAt: Date; consentAt?: Date; sourcePage?: string; cameFrom?: string };
 
 /**
  * PUBLIC: AI Edge Lab early access, Step 2, leaders only (Nitin, 16 Nov). Optional: early access to
@@ -42,14 +40,20 @@ export async function POST(req: NextRequest) {
     if (organisation.length < 2) return NextResponse.json({ ok: false, error: "Please enter your organisation's name." }, { status: 400 });
     if (!leader.organisation) await AiEdgeInterest.updateOne({ email }, { $set: { organisation } });
 
-    const orgKey = orgKeyOf(organisation);
+    // Which organisation (Nitin, 17 Nov): by work-email domain; with a personal email, by name, marked to check
+    const personal = isPersonalEmail(email);
+    const domain = personal ? "" : emailDomain(email);
+    const nameKey = orgNameKey(organisation) || organisation.toLowerCase();
     const now = new Date();
-    const existing = await AiEdgeOrganisation.findOne({ orgKey }).lean<Org>();
+    const existing = personal
+      ? await AiEdgeOrganisation.findOne({ nameKey }).sort({ createdAt: 1 }).lean<Org>()
+      : await AiEdgeOrganisation.findOne({ orgKey: `domain:${domain}` }).lean<Org>();
     let org: Org;
     if (!existing) {
       try {
         org = (await AiEdgeOrganisation.create({
-          orgKey, organisation, leaderEmail: email, leaderName: leader.name, headcount, question,
+          orgKey: personal ? `name:${nameKey}` : `domain:${domain}`, domain, nameKey, toCheck: personal,
+          organisation, leaderEmail: email, leaderName: leader.name, headcount, question,
           consentAt: leader.consentAt ?? now, sourcePage: leader.sourcePage ?? "", cameFrom: leader.cameFrom ?? "",
         })).toObject() as Org;
       } catch (e) {
@@ -57,16 +61,19 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ ok: true, organisation }); // sent twice at once
       }
     } else if (existing.leaderEmail === email) {
-      org = (await AiEdgeOrganisation.findOneAndUpdate({ orgKey }, { $set: { headcount, question, leaderName: leader.name } }, { new: true }).lean<Org>())!;
+      org = (await AiEdgeOrganisation.findOneAndUpdate({ orgKey: existing.orgKey }, { $set: { headcount, question, leaderName: leader.name } }, { new: true }).lean<Org>())!;
     } else {
-      // Another leader from the same organisation: noted on the same row
-      org = (await AiEdgeOrganisation.findOneAndUpdate({ orgKey }, { $addToSet: { alsoRequestedBy: email } }, { new: true }).lean<Org>())!;
+      // Another leader from the same organisation: noted on the same row (a match by name is checked by Nitin)
+      org = (await AiEdgeOrganisation.findOneAndUpdate({ orgKey: existing.orgKey },
+        { $addToSet: { alsoRequestedBy: email }, ...(personal ? { $set: { toCheck: true } } : {}) }, { new: true }).lean<Org>())!;
     }
+    const checkNote = org.toCheck ? "Yes: personal email, matched by name" : "";
 
     const isNew = !existing;
     const otherLeader = !!existing && existing.leaderEmail !== email;
     const row: Record<string, string> = {
-      Organisation: org.organisation, "Leader name": org.leaderName, "Leader email": org.leaderEmail,
+      "Org ID": org.orgKey, Organisation: org.organisation, Domain: org.domain, "To check": checkNote,
+      "Leader name": org.leaderName, "Leader email": org.leaderEmail,
       Headcount: org.headcount, "Main question": org.question, "Also requested by": (org.alsoRequestedBy ?? []).join(", "),
     };
     const insert: Record<string, string> = {
@@ -86,7 +93,7 @@ export async function POST(req: NextRequest) {
       }),
       // Every organisation registration: an email to Nitin straight away
       sendOwnerEmail({
-        subject: `[Axion] ORG AI DARS early access — ${org.organisation}${otherLeader ? " (another leader)" : isNew ? "" : " (updated)"}`,
+        subject: `[Axion] ORG AI DARS early access — ${org.organisation}${otherLeader ? " (another leader)" : isNew ? "" : " (updated)"}${personal ? " · to check" : ""}`,
         replyTo: email,
         email: {
           badge: "AI Edge Lab",
@@ -95,7 +102,7 @@ export async function POST(req: NextRequest) {
           preheader: `${leader.name} · ${leader.role || assessmentName(LEADER_TRACK)} (separate AI Edge Lab list)`,
           contact: { name: leader.name, email, phone: "" },
           sections: [
-            { type: "fields", title: "Organisation", rows: [["Organisation", org.organisation], ["Headcount", headcount], ["Leader", `${leader.name}${leader.role ? `, ${leader.role}` : ""}`], ["Country", leader.country], ["Also requested by", (org.alsoRequestedBy ?? []).join(", ")]] },
+            { type: "fields", title: "Organisation", rows: [["Organisation", org.organisation], ["Email domain", org.domain || "None (personal email)"], ["To check", personal ? "Yes: personal email, so matched by name. Please review." : ""], ["Headcount", headcount], ["Leader", `${leader.name}${leader.role ? `, ${leader.role}` : ""}`], ["Country", leader.country], ["Also requested by", (org.alsoRequestedBy ?? []).join(", ")]] },
             { type: "quote", title: "Their main question for the organisation", text: question },
             { type: "fields", title: "List", rows: [["List", "AI Edge Lab (not the Axion leads)"], ["First leader", org.leaderEmail]] },
           ],
