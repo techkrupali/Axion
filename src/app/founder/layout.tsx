@@ -1,8 +1,10 @@
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
-  title: "Founder · Nitin Nahata",
-  description: "Nitin Nahata, founder of Axion Index, on the operating doctrine behind the practice: lessons from Wipro, Standard Chartered, HSBC, Tata, Udaan and Gameskraft.",
+  // SEO-02 (approved by Nitin, 17 Nov): "Nitin Nahata"; the description uses the approved one-line bio (L-08)
+  title: "Nitin Nahata · Founder of Axion Index",
+  exactTitle: true,
+  description: "Nitin Nahata, founder of Axion Index: HR leadership across Standard Chartered, HSBC, Tata, Udaan and Gameskraft, and the operating doctrine behind the practice.",
   path: "/founder",
 });
 

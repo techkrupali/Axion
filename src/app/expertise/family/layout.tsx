@@ -3,8 +3,9 @@ import { isLive } from "@/config/practices";
 import InDevelopmentBanner from "@/components/InDevelopmentBanner";
 
 export const metadata = pageMetadata({
-  title: "Family Business",
-  description: "Family enterprises don't fail at strategy. They fail at architecture. Ownership, authority and succession built to survive the generational handover.",
+  // SEO-02 (approved by Nitin, 17 Nov): "family business succession planning"; counts once the page launches
+  title: "Family business succession: five architectures",
+  description: "Ownership, family, institution, succession and operator: the five architectures an Indian family enterprise needs to survive the generational handover.",
   path: "/expertise/family",
   // B-23: not indexed by search engines while the practice is in development
   noIndex: !isLive("family"),

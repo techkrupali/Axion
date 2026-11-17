@@ -5,9 +5,14 @@ import ThemeFilter from "@/components/library/ThemeFilter";
 import { CATEGORIES, CATEGORY_ORDER, publicItems, type Category } from "@/content/library";
 import { libraryForPage } from "@/content/store";
 import { pageMetadata } from "@/lib/seo";
+import { offListsForLaunch } from "@/config/report";
+
+// Rebuilt hourly as well as on every Studio publish, so date rules (launch week) apply on time
+export const revalidate = 3600;
 
 export const metadata = pageMetadata({
-  title: "Articles & Publications",
+  // SEO-02 (approved by Nitin, 17 Nov): "Nitin Nahata articles"
+  title: "Articles by Nitin Nahata on AI, work and people",
   description: "Reports, series, essays, press and talks by Nitin Nahata and Axion Index, on AI and work, people architecture, governance and the labour codes.",
   path: "/publications",
 });
@@ -16,7 +21,7 @@ const LATEST = 3;
 
 /** The library hub (Fix Brief Part 3, item 9): the latest 3 from each category, plus a theme filter across everything. */
 export default async function PublicationsHub() {
-  const all = publicItems(await libraryForPage());
+  const all = publicItems(await libraryForPage()).filter((i) => !offListsForLaunch(i.slug));
   const by = (c: Category) => all.filter((i) => i.category === c);
 
   return (

@@ -12,7 +12,12 @@ const KEY = "axion:cookie-consent";
 const EVENT = "axion:consent";
 export type Consent = "granted" | "denied";
 
+// GA4 sets cookies. Nitin (17 Nov): it may track only after the visitor accepts, so once a GA4 ID is set
+// every visitor is asked first, wherever they are.
+const GA_ON = /^G-[A-Z0-9]+$/.test(process.env.NEXT_PUBLIC_GA_ID ?? "");
+
 export function consentRequired(): boolean {
+  if (GA_ON) return true;
   try {
     const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
     return tz.startsWith("Europe/") || ["Atlantic/Canary", "Atlantic/Madeira", "Atlantic/Azores", "Atlantic/Faroe", "Atlantic/Reykjavik"].includes(tz);

@@ -6,6 +6,7 @@ import { SITE_URL } from "@/lib/seo";
 import ShareButtons from "@/components/library/ShareButtons";
 import TrackRead from "@/components/library/TrackRead";
 import { JsonLd, NITIN, ORGANIZATION } from "@/lib/jsonLd";
+import { offListsForLaunch } from "@/config/report";
 
 const MONO = "font-mono text-[10.5px] tracking-[0.2em] uppercase";
 
@@ -16,7 +17,7 @@ function relatedTo(lib: Library, item: LibraryItem): LibraryItem[] {
     (o.theme.some((t) => item.theme.includes(t)) ? 2 : 0) +
     (o.category === item.category ? 1 : 0);
   return publicItems(lib)
-    .filter((o) => o.slug !== item.slug && o.category !== "book")
+    .filter((o) => o.slug !== item.slug && o.category !== "book" && !offListsForLaunch(o.slug))
     .map((o, i) => ({ o, s: score(o), i }))
     .sort((a, b) => b.s - a.s || a.i - b.i)
     .slice(0, 3)

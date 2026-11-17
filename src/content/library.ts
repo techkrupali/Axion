@@ -9,12 +9,13 @@ export type Theme = (typeof THEMES)[number];
 
 export type Category = "report" | "series" | "essay" | "media" | "podcast" | "book";
 
-export const CATEGORIES: Record<Category, { label: string; plural: string; path: string; blurb: string }> = {
+// `meta`: the description Google shows, where the on-page `blurb` is too short for it (SEO-02, 17 Nov)
+export const CATEGORIES: Record<Category, { label: string; plural: string; path: string; blurb: string; meta?: string }> = {
   report:  { label: "Report",          plural: "Reports",          path: "/reports",               blurb: "Long research pieces, each with its own page and a form to get the report." },
-  series:  { label: "Series",          plural: "Series",           path: "/publications/series",   blurb: "Multi-part series by Nitin Nahata, best read in order." },
-  essay:   { label: "Essay",           plural: "Essays",           path: "/publications/essays",   blurb: "Single pieces by Nitin Nahata, published here in full." },
+  series:  { label: "Series",          plural: "Series",           path: "/publications/series",   blurb: "Multi-part series by Nitin Nahata, best read in order.", meta: "Multi-part series by Nitin Nahata, founder of Axion Index, on AI and work, people architecture and governance. Best read in order." },
+  essay:   { label: "Essay",           plural: "Essays",           path: "/publications/essays",   blurb: "Single pieces by Nitin Nahata, published here in full.", meta: "Essays by Nitin Nahata, founder of Axion Index, on AI and work, governance and people architecture. Each links to its LinkedIn conversation." },
   media:   { label: "In the media",    plural: "In the media",     path: "/publications/media",    blurb: "Articles by and interviews with Nitin Nahata in other publications. Read them on the publisher's site." },
-  podcast: { label: "Podcast or talk", plural: "Podcasts & talks", path: "/publications/podcasts", blurb: "Conversations and talks, with the recording on the page." },
+  podcast: { label: "Podcast or talk", plural: "Podcasts & talks", path: "/publications/podcasts", blurb: "Conversations and talks, with the recording on the page.", meta: "Podcasts and talks with Nitin Nahata, founder of Axion Index, on AI and work and people architecture, with the recording on each page." },
   book:    { label: "Book",            plural: "Book",             path: "/publications/book",     blurb: "Baptism by Chaos, Nitin Nahata's book." },
 };
 

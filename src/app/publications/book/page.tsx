@@ -10,10 +10,10 @@ const findBook = (lib: Library) => lib.items.find((i) => i.category === "book" &
 
 export async function generateMetadata() {
   const book = findBook(await libraryForPage());
-  if (!book) return pageMetadata({ title: "Book", description: "Nitin Nahata's book.", path: CATEGORIES.book.path });
+  if (!book) return pageMetadata({ title: "Book", description: "Baptism by Chaos, the book by Nitin Nahata, founder of Axion Index. Details and release news on this page.", path: CATEGORIES.book.path });
   return pageMetadata({
     title: book.title,
-    description: book.summary || `${book.title}, Nitin Nahata's book.`,
+    description: book.summary && book.summary.length >= 70 ? book.summary : `${book.summary ? `${book.summary} ` : ""}${book.title}, the book by Nitin Nahata, founder of Axion Index. Details and release news on this page.`,
     path: CATEGORIES.book.path,
     image: { url: coverPath(book.slug, book.cover), width: 1200, height: 630, alt: book.title },
   });

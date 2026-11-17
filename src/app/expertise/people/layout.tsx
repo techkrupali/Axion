@@ -1,8 +1,9 @@
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
-  title: "People Architecture",
-  description: "The architecture that lets the organisation survive the person: judgment, decision rights and succession codified into structure the company keeps after people leave.",
+  // SEO-02 (approved by Nitin, 17 Nov): main search phrase "people architecture"
+  title: "People Architecture: succession & decision rights",
+  description: "When the organisation depends on who is in the room, not on how it is built. We codify judgment, decision rights and succession into structure that stays.",
   path: "/expertise/people",
 });
 

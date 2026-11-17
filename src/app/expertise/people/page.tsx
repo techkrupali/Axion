@@ -7,6 +7,7 @@ import dynamic from "next/dynamic";
 import Footer from "@/components/Footer";
 import Button from "@/components/Button";
 import CaseExamples from "@/components/CaseExamples";
+import { SECTORS } from "@/config/sectors";
 import { PEOPLE_DELIVERABLES } from "@/content/evidence";
 
 const PeopleThreeScene = dynamic(() => import("@/components/PeopleThreeScene"), { ssr: false });
@@ -208,6 +209,27 @@ export default function PeopleArchitecture() {
               ))}
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* G-03 (Nitin, 17 Nov: People Architecture only): sectors behind the operating experience, not a client list */}
+      <section aria-labelledby="sectors-title" className="relative border-t border-[rgba(255,255,255,0.05)] py-12 sm:py-14">
+        <div className="shell">
+          <Reveal>
+            <div className="flex flex-col lg:flex-row lg:items-center gap-6 lg:gap-12">
+              <div className="lg:w-[300px] shrink-0">
+                <span id="sectors-title" className="font-mono text-[10px] tracking-widest uppercase text-[var(--accent)] opacity-70 block mb-2">Sectors</span>
+                <p className="text-[15px] leading-[1.6] text-[var(--fg-3)]">The operating experience this practice is built on.</p>
+              </div>
+              <ul className="flex flex-wrap gap-2.5">
+                {SECTORS.map((s) => (
+                  <li key={s} className="font-mono text-[11px] tracking-[0.14em] uppercase px-4 py-2 border border-[rgba(201,162,74,0.3)] text-[var(--fg-2)]">
+                    {s}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Reveal>
         </div>
       </section>
 

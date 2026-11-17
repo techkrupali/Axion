@@ -1,8 +1,10 @@
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
-  title: "AI Edge Lab",
-  description: "AI can now perform parts of the work itself. AI Edge Lab builds the decision layer around the model: where AI accelerates, and where a human must still hold the call.",
+  // SEO-02 (approved by Nitin, 17 Nov): "AI readiness assessment"; moves to the AI Edge Lab site when it launches
+  title: "AI Edge Lab · AI readiness assessments, early access",
+  exactTitle: true,
+  description: "Four AI Edge Lab assessments (AAI, ARI, LLI, ORG AI DARS), designed to show where AI accelerates your work and where your judgment still holds. Early access.",
   path: "/expertise/ai-edge",
 });
 

@@ -333,10 +333,9 @@ function Frame02() {
                 <p style={{ fontFamily: "var(--f-sans)", fontWeight: 300, fontSize: 13.5, lineHeight: 1.7, color: LT.mid, maxWidth: 220 }}>Every era rewards a different source of value.</p>
               </div>
               <div style={{ position: "relative", height: 300 }}>
-                {/* fallback golden glow (AI-First) — visible if imagery not yet added */}
+                {/* golden glow behind the AI-first end of the curve. The eras photo that was meant to sit here is out
+                    for launch (Nitin, 17 Nov); if it comes back, add it as an <Image> in this box. */}
                 <div aria-hidden style={{ position: "absolute", right: 0, bottom: 0, width: "38%", height: "76%", background: "radial-gradient(ellipse at bottom right, rgba(201,162,74,0.26), transparent 72%)", pointerEvents: "none" }} />
-                {/* era imagery — save the eras photo to public/ai-edge-eras.png (factory · book · network · golden mountain) */}
-                <div aria-hidden style={{ position: "absolute", inset: 0, backgroundImage: "url('/ai-edge-eras.png')", backgroundSize: "cover", backgroundPosition: "center bottom", backgroundRepeat: "no-repeat", WebkitMaskImage: "linear-gradient(to bottom, transparent 6%, #000 34%)", maskImage: "linear-gradient(to bottom, transparent 6%, #000 34%)", pointerEvents: "none" }} />
                 <svg viewBox="0 0 100 100" preserveAspectRatio="none" style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }} aria-hidden>
                   <defs>
                     <linearGradient id="ev-line" x1="0" y1="0" x2="1" y2="0">

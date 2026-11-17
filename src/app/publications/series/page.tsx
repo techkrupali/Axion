@@ -6,7 +6,7 @@ import { libraryForPage } from "@/content/store";
 import { pageMetadata } from "@/lib/seo";
 
 const cat = CATEGORIES.series;
-export const metadata = pageMetadata({ title: cat.plural, description: cat.blurb, path: cat.path });
+export const metadata = pageMetadata({ title: cat.plural, description: cat.meta ?? cat.blurb, path: cat.path });
 
 export default async function Page() {
   const lib = await libraryForPage();

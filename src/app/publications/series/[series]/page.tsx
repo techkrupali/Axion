@@ -22,7 +22,7 @@ function load(lib: Library, slug: string) {
 
 export async function generateMetadata({ params }: Props) {
   const { s } = load(await libraryForPage(), (await params).series);
-  return pageMetadata({ title: s.name, description: s.summary || `${s.name}: a series by Nitin Nahata, read in order.`, path: `/publications/series/${s.slug}` });
+  return pageMetadata({ title: s.name, description: s.summary && s.summary.length >= 70 ? s.summary : `${s.summary ? `${s.summary} ` : ""}${s.name}: a series by Nitin Nahata, founder of Axion Index. Every part on one page, best read in order.`, path: `/publications/series/${s.slug}` });
 }
 
 /** One series, parts in reading order (Fix Brief Part 3: /publications/series/[name]). */

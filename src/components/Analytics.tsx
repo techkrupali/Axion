@@ -14,7 +14,7 @@ import { useConsent } from "@/lib/consent";
  */
 export default function Analytics() {
   const inStudio = (usePathname() ?? "").startsWith("/studio"); // editors' visits are not counted
-  const { allowed } = useConsent(); // GA4 sets cookies: EU/UK visitors must accept first (G-04)
+  const { allowed } = useConsent(); // GA4 sets cookies: it loads only after the visitor accepts (G-04; Nitin, 17 Nov)
   const plausible = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN;
   const plausibleSrc = process.env.NEXT_PUBLIC_PLAUSIBLE_SRC || "https://plausible.io/js/script.js";
   const ga = process.env.NEXT_PUBLIC_GA_ID;
@@ -30,6 +30,12 @@ export default function Analytics() {
     return () => document.removeEventListener("click", onClick, true);
   }, []);
 
+  // Consent mode: if the visitor withdraws consent later ("Cookie settings"), GA4 stops at once
+  useEffect(() => {
+    const w = window as unknown as { gtag?: (...a: unknown[]) => void };
+    w.gtag?.("consent", "update", { analytics_storage: allowed ? "granted" : "denied" });
+  }, [allowed]);
+
   return (
     <>
       {plausible && !inStudio && (
@@ -43,8 +49,9 @@ export default function Analytics() {
       {ga && !inStudio && allowed && /^G-[A-Z0-9]+$/.test(ga) && (
         <>
           <Script src={`https://www.googletagmanager.com/gtag/js?id=${ga}`} strategy="afterInteractive" />
+          {/* Consent mode: loaded only after "Accept"; analytics on, advertising signals off */}
           <Script id="ga-init" strategy="afterInteractive">
-            {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}window.gtag=gtag;gtag('js',new Date());gtag('config','${ga}',{anonymize_ip:true});`}
+            {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}window.gtag=gtag;gtag('consent','default',{analytics_storage:'granted',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});gtag('js',new Date());gtag('config','${ga}',{anonymize_ip:true});`}
           </Script>
         </>
       )}

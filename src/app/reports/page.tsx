@@ -4,12 +4,17 @@ import { CATEGORIES, itemsIn } from "@/content/library";
 import { libraryForPage } from "@/content/store";
 import { HOME_EVIDENCE } from "@/config/evidence";
 import { pageMetadata } from "@/lib/seo";
+import { offListsForLaunch } from "@/config/report";
 
 const cat = CATEGORIES.report;
 
+// Rebuilt hourly as well as on every Studio publish, so date rules (launch week) apply on time
+export const revalidate = 3600;
+
 export const metadata = pageMetadata({
-  title: "Reports",
-  description: "Research reports from Axion Index on how AI and regulation are changing the architecture of work. Each report has its own page and a form to get it.",
+  // SEO-02 (approved by Nitin, 17 Nov): "AI and the future of work report"
+  title: "Reports on AI and the future of work",
+  description: "Research reports from Axion Index on how AI and regulation are changing the architecture of work: where AI accelerates, and where judgment must still hold.",
   path: cat.path,
 });
 
@@ -23,7 +28,7 @@ export default async function ReportsPage() {
       intro="Long research pieces on how AI and regulation are changing the architecture of work. Open a report to see what is inside and to get it."
       crumbs={[{ label: "Articles & Publications", href: "/publications" }]}
     >
-      <CategoryList items={itemsIn(lib, "report")} empty="No reports published yet." />
+      <CategoryList items={itemsIn(lib, "report").filter((i) => !offListsForLaunch(i.slug))} empty="No reports published yet." />
 
       {/* B-16 (Fix Brief Part 8): the evidence behind the homepage figures */}
       <section id="evidence" className="shell pb-24 scroll-mt-[calc(var(--site-nav-h,74px)+24px)]" aria-labelledby="evidence-title">

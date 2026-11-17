@@ -33,6 +33,14 @@ export const REPORT = {
 export const inLaunchWeek = (now: number) =>
   now >= Date.parse(REPORT.launchWeek.from) && now < Date.parse(REPORT.launchWeek.until);
 
+/**
+ * Kept off the Reports and Articles & Publications lists until launch week ends, so Make or Break has the
+ * stage (Nitin, 17 Nov). Their own pages stay live. The list pages rebuild hourly, so they come back by themselves.
+ */
+const OFF_LISTS_FOR_LAUNCH = ["the-architecture-gap"];
+export const offListsForLaunch = (slug: string, now = Date.now()) =>
+  OFF_LISTS_FOR_LAUNCH.includes(slug) && now < Date.parse(REPORT.launchWeek.until);
+
 export const REPORT_FULL_TITLE = `${REPORT.name}: ${REPORT.subtitle}`;
 
 /** Where report links should point right now, and what they say. */
