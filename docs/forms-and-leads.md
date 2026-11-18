@@ -16,17 +16,17 @@ There is one conversation form. Every "Start a conversation / Begin a diagnostic
 
 ## 1. Sender and reply address (support@)
 
-`support@axionindex.org` (the helpdesk) is the only public address (Nitin, 16 Nov). office@ and admin@ do not exist. Every visitor email already has **Reply-To: support@**, so replies land in the helpdesk.
+`support@axionindex.org` is the only public address (Nitin, 16 Nov). office@ and admin@ do not exist. Every visitor email has **Reply-To: support@**.
 
-Emails are sent through the mailbox in `SMTP_USER` (today nitin@, with an app password). To show support@ as the **sender** as well:
+**Done 18 Nov.** support@ is an **alias of nitin@** (Google Admin → Users → Nitin Nahata → Alternative emails), not a separate mailbox: its mail lands in nitin@'s inbox, with no extra password or licence. The website sends **from** support@:
 
-1. In the nitin@ Gmail: **Settings → Accounts → Send mail as → Add another email address**, enter `support@axionindex.org`, untick "Treat as an alias", and confirm with the code Google sends to support@ (it arrives in the helpdesk).
-2. In the server `.env`, set:
+1. In the nitin@ Gmail: **Settings → Accounts → Send mail as**: `Axion Index <support@axionindex.org>` is added and confirmed ("Treat as an alias" ticked). nitin@ stays the default. **When replying to a message: Reply from the same address to which the message was sent**, so replies to support@ mail go from support@.
+2. The server `.env` has:
    ```
    SMTP_FROM="Axion Index <support@axionindex.org>"
    ```
-   Keep `SMTP_USER`, `SMTP_PASSWORD` and `ADMIN_EMAIL=nitin@axionindex.org` as they are.
-3. Restart: `pm2 restart axion`.
+   with `SMTP_USER`, `SMTP_PASSWORD` (nitin@ app password) and `ADMIN_EMAIL=nitin@axionindex.org` unchanged.
+3. After any change: `pm2 restart axion`. Tested 18 Nov: From support@, SPF, DKIM and DMARC all PASS.
 
 Without step 1, Gmail quietly replaces the sender with nitin@. Alerts always go to nitin@ (`ADMIN_EMAIL`); that address is never shown on the site.
 
