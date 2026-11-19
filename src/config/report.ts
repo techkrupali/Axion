@@ -55,6 +55,10 @@ export const offListsForLaunch = (slug: string, now = Date.now()) =>
 
 export const REPORT_FULL_TITLE = `${REPORT.name}: ${REPORT.subtitle}`;
 
+/** Make or Break comes first in the report lists once it is out (19 Nov), whatever the other dates. */
+export const reportFirst = <T extends { slug: string }>(items: T[]): T[] =>
+  REPORT.published ? [...items.filter((i) => i.slug === REPORT.slug), ...items.filter((i) => i.slug !== REPORT.slug)] : items;
+
 /** Where report links should point right now, and what they say. */
 export const reportLink = REPORT.published
   ? { href: REPORT.signupPath, label: `${REPORT.name} · Out now →` }

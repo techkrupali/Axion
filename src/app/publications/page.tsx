@@ -5,7 +5,7 @@ import ThemeFilter from "@/components/library/ThemeFilter";
 import { CATEGORIES, CATEGORY_ORDER, publicItems, type Category } from "@/content/library";
 import { libraryForPage } from "@/content/store";
 import { pageMetadata } from "@/lib/seo";
-import { offListsForLaunch } from "@/config/report";
+import { offListsForLaunch, reportFirst } from "@/config/report";
 
 // Rebuilt hourly as well as on every Studio publish, so date rules (launch week) apply on time
 export const revalidate = 3600;
@@ -21,7 +21,7 @@ const LATEST = 3;
 
 /** The library hub (Fix Brief Part 3, item 9): the latest 3 from each category, plus a theme filter across everything. */
 export default async function PublicationsHub() {
-  const all = publicItems(await libraryForPage()).filter((i) => !offListsForLaunch(i.slug));
+  const all = reportFirst(publicItems(await libraryForPage()).filter((i) => !offListsForLaunch(i.slug)));
   const by = (c: Category) => all.filter((i) => i.category === c);
 
   return (
