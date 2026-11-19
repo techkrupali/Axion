@@ -18,37 +18,35 @@ type Text = {
 
 /**
  * The report download (Nitin, 19 Nov): name and work email required, organisation optional, an
- * unticked opt-in. On submit the PDF starts downloading at once (the reader never waits for the
- * email); the details are saved and the email is sent in the background; the form becomes a
- * thank-you with share buttons. GA4: download_form_open, download_form_submit, pdf_download.
+ * unticked opt-in. Nothing downloads on the page: on submit the details are saved and Nitin's email
+ * with the download link is sent (we wait for it), then the form becomes "check your inbox" with
+ * share buttons. The PDF comes from the link in the email. GA4: download_form_open, download_form_submit.
  */
-export default function ReportDownloadForm({ report, pdf, fileName, pageUrl, shareText, t }: {
-  report: string; pdf: string; fileName: string; pageUrl: string; shareText: string; t: Text;
+export default function ReportDownloadForm({ report, pageUrl, shareText, t }: {
+  report: string; pageUrl: string; shareText: string; t: Text;
 }) {
   const formStarted = useFormStarted("report", { report });
   const [form, setForm] = useState({ name: "", email: "", organisation: "", website: "", journal: false });
   const [touched, setTouched] = useState({ name: false, email: false });
-  const [state, setState] = useState<"idle" | "done">("idle");
-  const [emailFailed, setEmailFailed] = useState(false);
+  const [state, setState] = useState<"idle" | "sending" | "done">("idle");
+  const [error, setError] = useState("");
   const [highlight, setHighlight] = useState(false);
   const box = useRef<HTMLDivElement>(null);
   const done = useRef(false);
   useEffect(() => { done.current = state === "done"; }, [state]);
 
-  // The hero's "Download the PDF": the form lights up and the name field gets the cursor;
-  // someone who has already signed up gets the PDF again straight away
+  // The hero's "Download the PDF": the form (or, once sent, the "check your inbox" note) lights up
+  // and the name field gets the cursor
   useEffect(() => {
     const timers: ReturnType<typeof setTimeout>[] = [];
     function onRequest() {
-      if (done.current) { startDownload(); track("pdf_download", { report, again: true }); return; }
       setHighlight(true);
-      timers.push(setTimeout(() => (document.getElementById("report-name") as HTMLInputElement | null)?.focus({ preventScroll: true }), 450));
+      if (!done.current) timers.push(setTimeout(() => (document.getElementById("report-name") as HTMLInputElement | null)?.focus({ preventScroll: true }), 450));
       timers.push(setTimeout(() => setHighlight(false), 2200));
     }
     window.addEventListener(DOWNLOAD_REQUEST, onRequest);
     return () => { window.removeEventListener(DOWNLOAD_REQUEST, onRequest); timers.forEach(clearTimeout); };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [report]);
+  }, []);
 
   // "Download form shown": once, when the form scrolls into view (or the hero button brings it there)
   useEffect(() => {
@@ -66,34 +64,28 @@ export default function ReportDownloadForm({ report, pdf, fileName, pageUrl, sha
     email: !isEmail(form.email) ? "Please enter a valid work email." : "",
   };
 
-  function startDownload() {
-    const a = document.createElement("a");
-    a.href = pdf;
-    a.download = fileName;
-    a.rel = "noopener";
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-  }
-
-  function submit(e: React.FormEvent) {
+  async function submit(e: React.FormEvent) {
     e.preventDefault();
+    if (state === "sending") return;
     if (errs.name || errs.email) { setTouched({ name: true, email: true }); return; }
-    // 1. The download starts now, inside the click, so no browser blocks it
-    startDownload();
-    track("download_form_submit", { report, journal: form.journal });
-    track("pdf_download", { report });
-    track("Form sent", { form: "report", report });
-    if (form.journal) track("Newsletter sign-up", { source: "report" });
-    setState("done");
-    // 2. Save the details and send the email in the background
-    fetch("/api/report-signup", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...form, report, download: true, sourcePage: window.location.pathname, cameFrom: visitSource() }),
-    })
-      .then((r) => r.json().catch(() => ({})).then((d) => { if (!r.ok || !d.ok) setEmailFailed(true); }))
-      .catch(() => setEmailFailed(true));
+    setState("sending");
+    setError("");
+    try {
+      const r = await fetch("/api/report-signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...form, report, download: true, sourcePage: window.location.pathname, cameFrom: visitSource() }),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || "");
+      track("download_form_submit", { report, journal: form.journal });
+      track("Form sent", { form: "report", report });
+      if (form.journal) track("Newsletter sign-up", { source: "report" });
+      setState("done");
+    } catch (err) {
+      setState("idle");
+      setError((err as Error).message || "We couldn't send the email just now. Please try again in a minute.");
+    }
   }
 
   const input = (bad: boolean) =>
@@ -107,11 +99,6 @@ export default function ReportDownloadForm({ report, pdf, fileName, pageUrl, sha
           <span className="font-mono text-[10px] tracking-[0.25em] uppercase text-[var(--accent)]">Thank you</span>
           <h2 className="font-display font-medium text-[clamp(32px,3.4vw,42px)] leading-tight text-[var(--fg)] mt-3">{t.thanksHeading}</h2>
           <p className="text-[16px] leading-[1.7] text-[var(--fg-3)] mt-4">{t.thanksText}</p>
-          {emailFailed && (
-            <p className="text-[14px] leading-[1.6] text-[var(--fg-4)] mt-3">
-              We couldn&apos;t send the email copy just now, but your download has started. If it didn&apos;t, <a href={pdf} download={fileName} className="text-[var(--accent)] underline underline-offset-2">download it here</a>.
-            </p>
-          )}
           <div className="mt-7">
             <ReportShare url={pageUrl} text={shareText} channels={["LinkedIn", "WhatsApp"]} report={report} size="lg" />
           </div>
@@ -151,8 +138,9 @@ export default function ReportDownloadForm({ report, pdf, fileName, pageUrl, sha
             <span>{t.optIn}</span>
           </label>
 
-          <button type="submit" className={`inline-flex items-center justify-center gap-3 px-8 py-4 min-h-[52px] font-mono text-[11px] tracking-[0.24em] uppercase font-semibold ${MAIN_BUTTON_SHAPE} bg-[#C9A24A] text-[#0A0A0B] hover:bg-[#d6b25c] transition-colors active:scale-[0.98]`}>
-            {t.button} <span aria-hidden>↓</span>
+          {error && <p role="alert" className="text-[14px] leading-[1.6] text-red-400">{error}</p>}
+          <button type="submit" disabled={state === "sending"} className={`inline-flex items-center justify-center gap-3 px-8 py-4 min-h-[52px] font-mono text-[11px] tracking-[0.24em] uppercase font-semibold ${MAIN_BUTTON_SHAPE} bg-[#C9A24A] text-[#0A0A0B] hover:bg-[#d6b25c] transition-colors active:scale-[0.98] disabled:opacity-70 disabled:cursor-wait`}>
+            {state === "sending" ? "Sending…" : <>{t.button} <span aria-hidden>→</span></>}
           </button>
           <p className="text-[13px] leading-[1.6] text-[var(--fg-4)]">
             {t.smallPrint}{" "}

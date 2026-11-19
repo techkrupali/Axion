@@ -58,12 +58,13 @@ export const MAKE_OR_BREAK = {
 
   form: {
     heading: "Get the full report",
-    text: "Enter your details and we'll send the 48-page PDF to your inbox, and start the download now.",
+    // 19 Nov: the PDF comes only from the link in the email (no download on the page)
+    text: "Enter your details and we'll email you a link to download the 48-page PDF.",
     optIn: "Send me The Architecture Gap (January 2027) and the monthly Axion Index Journal",
     button: "Send me the report",
     smallPrint: "We'll use your email to send this report and, if you tick the box, future Axion Index research. No spam.",
     thanksHeading: "Your report is on its way.",
-    thanksText: "The download has started, and a copy is in your inbox. If you find it useful, share it with a colleague who owns an AI budget.",
+    thanksText: "Check your inbox: we've emailed you the link to download the PDF. If it isn't there in a minute or two, look in your spam folder. If you find the report useful, share it with a colleague who owns an AI budget.",
   },
 
   method: {

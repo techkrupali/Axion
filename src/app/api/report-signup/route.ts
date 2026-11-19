@@ -14,6 +14,10 @@ import { MAKE_OR_BREAK } from "@/content/reports/makeOrBreak";
 import { addLeadRow, cleanCameFrom, cleanSourcePage } from "@/lib/leadsSheet";
 import { joinJournal } from "@/lib/journal";
 
+/** The download email could not be sent: the form says so and the reader can try again. */
+const emailFailed = () =>
+  NextResponse.json({ ok: false, error: "We couldn't send the email just now. Please try again in a minute." }, { status: 502 });
+
 /**
  * PUBLIC: ask for a report (Fix Brief Part 4, step 3), no login.
  * Body: name, email, organisation, report (slug), journal (the unticked "Also send me the
@@ -50,7 +54,7 @@ export async function POST(req: NextRequest) {
     const reportName = item.kicker ? `${item.title} (${item.kicker})` : item.title;
     const release = item.date ? formatDate(item.date) : "Date to be announced";
     const { released, when } = reportState(item);
-    // Make or Break's download form (Nitin, 19 Nov): the PDF already started in the browser; email Nitin's note with the link
+    // Make or Break's download form (19 Nov): no download on the page; Nitin's note with the download link is emailed
     const pdf = pdfUrl(item);
     const downloadMode = data.download === true && item.slug === REPORT.slug && !!pdf;
     const sendDownloadEmail = (to: string, n: string) =>
@@ -69,7 +73,8 @@ export async function POST(req: NextRequest) {
       { name, ...(organisation ? { organisation } : {}), ...(journal ? { journal: true } : {}), ...(downloadMode ? { $inc: { downloads: 1 } } : {}) },
     );
     if (existing) {
-      if (downloadMode) after(() => sendDownloadEmail(email, name)); // they asked again: send their copy again
+      // They asked again: send their copy again (the email is the only way to the PDF, so wait for it)
+      if (downloadMode && !(await sendDownloadEmail(email, name))) return emailFailed();
       return NextResponse.json({ ok: true, already: true });
     }
 
@@ -81,6 +86,9 @@ export async function POST(req: NextRequest) {
       if ((e as { code?: number }).code === 11000) return NextResponse.json({ ok: true, already: true });
       throw e;
     }
+
+    // Make or Break: the PDF comes only from the link in this email (19 Nov), so it is sent before we answer
+    const sent = downloadMode ? await sendDownloadEmail(doc.email, doc.name) : null;
 
     after(() => Promise.all([
       sendOwnerEmail({
@@ -100,7 +108,9 @@ export async function POST(req: NextRequest) {
                 ["Organisation", doc.organisation || "(not given)"],
                 ["Report", reportName],
                 ["Release", release],
-                ["Status", downloadMode ? "Downloaded; the PDF link was emailed automatically" : released ? "Published: send the report" : "Upcoming: send it on release day"],
+                ["Status", downloadMode
+                  ? (sent ? "The download link was emailed to them automatically" : "The email to them FAILED: please send them the PDF")
+                  : released ? "Published: send the report" : "Upcoming: send it on release day"],
                 [JOURNAL.name, journal ? (journalResult === "already" ? "Ticked (already on the list)" : "Ticked: added to the list") : "Not ticked"],
                 ["Page", doc.sourcePage],
                 ["Came from", cameFrom],
@@ -109,7 +119,7 @@ export async function POST(req: NextRequest) {
           ],
         },
       }),
-      downloadMode ? sendDownloadEmail(doc.email, doc.name) : ackReport(doc.email, doc.name, { title: item.title, released, when, pdf }, journal),
+      ...(downloadMode ? [] : [ackReport(doc.email, doc.name, { title: item.title, released, when, pdf }, journal)]),
       addLeadRow({
         form: `${downloadMode ? "Report download" : "Report"}: ${item.title}`,
         name: doc.name,
@@ -121,6 +131,7 @@ export async function POST(req: NextRequest) {
       }),
     ]));
 
+    if (downloadMode && !sent) return emailFailed();
     return NextResponse.json({ ok: true });
   } catch (err) {
     console.error("[REPORT-SIGNUP POST]", err);

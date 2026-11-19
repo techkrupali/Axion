@@ -50,7 +50,7 @@ export default function MakeOrBreakPage({ previewKey }: { previewKey?: string } 
             <p className="mt-6 font-mono text-[11px] tracking-[0.14em] uppercase text-[var(--fg-4)]">{R.hero.meta.join("  ·  ")}</p>
           </div>
           <div id="download" className="scroll-mt-[calc(var(--site-nav-h,74px)+16px)] min-w-0">
-            <ReportDownloadForm report={REPORT.slug} pdf={R.pdf} fileName={R.pdfFileName} pageUrl={pageUrl} shareText={R.shareText} t={R.form} />
+            <ReportDownloadForm report={REPORT.slug} pageUrl={pageUrl} shareText={R.shareText} t={R.form} />
           </div>
         </div>
       </div>
