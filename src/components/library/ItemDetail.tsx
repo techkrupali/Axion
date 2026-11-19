@@ -145,7 +145,9 @@ export default function ItemDetail({ lib, item }: { lib: Library; item: LibraryI
           }} />
         )}
 
-        {photo && (
+        {/* A podcast with its recording shows the player only (its photo is the video's thumbnail,
+            used on the cards and as the share image) */}
+        {photo && !(item.category === "podcast" && item.embed) && (
           <figure className="mx-auto max-w-[980px] mt-14 sm:mt-20">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={photo} alt={item.coverAlt ?? ""} className="w-full h-auto border border-[var(--line)]" />
