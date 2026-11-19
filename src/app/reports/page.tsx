@@ -4,7 +4,8 @@ import { CATEGORIES, itemsIn } from "@/content/library";
 import { libraryForPage } from "@/content/store";
 import { HOME_EVIDENCE } from "@/config/evidence";
 import { pageMetadata } from "@/lib/seo";
-import { offListsForLaunch } from "@/config/report";
+import { REPORT, offListsForLaunch } from "@/config/report";
+import ReportBanner from "@/components/reports/ReportBanner";
 
 const cat = CATEGORIES.report;
 
@@ -28,6 +29,12 @@ export default async function ReportsPage() {
       intro="Long research pieces on how AI and regulation are changing the architecture of work. Open a report to see what is inside and to get it."
       crumbs={[{ label: "Articles & Publications", href: "/publications" }]}
     >
+      {/* Nitin's Make or Break banner above the list, once the report is out (19 Nov) */}
+      {REPORT.published && (
+        <section aria-label="Make or Break" className="shell pb-10">
+          <ReportBanner place="reports" maxWidth={1280} />
+        </section>
+      )}
       <CategoryList items={itemsIn(lib, "report").filter((i) => !offListsForLaunch(i.slug))} empty="No reports published yet." />
 
       {/* B-16 (Fix Brief Part 8): the evidence behind the homepage figures */}

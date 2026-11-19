@@ -21,7 +21,7 @@ export default async function ReportPreview({ params, searchParams }: Props) {
       <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-[300] px-5 py-2.5 rounded-full bg-[#C9A24A] text-[#0A0A0B] font-mono text-[10px] tracking-[0.25em] uppercase shadow-2xl pointer-events-none">
         Preview · goes live {REPORT.releaseShort}, 8:30 am
       </div>
-      <MakeOrBreakPage />
+      <MakeOrBreakPage previewKey={key} />
     </>
   );
 }

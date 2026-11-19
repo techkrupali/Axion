@@ -11,6 +11,21 @@ export const MAKE_OR_BREAK = {
     description: "Why AI's value isn't reaching the bottom line, and why organisations are the weakest link.",
   },
   coverAlt: "Make or Break report cover, Axion Index Journal Special Report No. 01",
+  /** Nitin's banner (19 Nov): top of the homepage once the report is out, a wide image on tablets and
+   *  laptops and a 4:5 one on phones (public/reports/, not in git). Remove it to go back to the coded band. */
+  banner: {
+    image: "/reports/make-or-break-banner.jpg",
+    imageMobile: "/reports/make-or-break-banner-mobile.jpg",
+    alt: "Make or Break: The weakest link in the big AI bet. Axion Index Journal, Special Report No. 01. Read the free report.",
+  },
+  /** What LinkedIn, WhatsApp and email show when the link is shared (Nitin's banner pack, 19 Nov).
+   *  The picture is cut from his desktop banner until his own 1200×630 file arrives (public/reports/, not in git). */
+  share: {
+    title: "Make or Break: The weakest link in the big AI bet",
+    description: "Axion Index Journal, Special Report No. 01. Are we pricing the promise of AI faster than organisations can turn it into value? Free 48-page report.",
+    image: "/reports/make-or-break-share.jpg",
+    imageAlt: "Make or Break: The weakest link in the big AI bet. Axion Index Journal, Special Report No. 01. Read the free report.",
+  },
 
   hero: {
     label: "Axion Index Journal · Special Report No. 01",

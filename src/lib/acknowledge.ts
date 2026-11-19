@@ -42,7 +42,7 @@ export async function ackReportDownload(to: string, name: string, report: { titl
       preheader: "Your PDF is here. Page 3 suggests a twenty-minute reading path for your role.",
       heading: `Thank you, ${first(name)}.`,
       paragraphs: [
-        `Thank you for downloading ${report.title}. Your PDF is here.`,
+        [`Thank you for downloading ${report.title}. Your PDF is `, { label: "here", href: report.pdf }, "."],
         "If you have twenty minutes, page 3 suggests a reading path for your role.",
         "I'd value your view on which link in the chain breaks first: just reply to this email.",
         ...(journal ? ["You'll also receive The Architecture Gap (January 2027) and the monthly Axion Index Journal, as you asked. You can unsubscribe at any time."] : []),

@@ -19,8 +19,10 @@ const H2 = "font-display font-medium text-[clamp(32px,3.6vw,46px)] leading-tight
  * what's inside, reading paths by role, the download form, method, author, citation and sharing,
  * and what comes next. Text: src/content/reports/makeOrBreak.ts.
  */
-export default function MakeOrBreakPage() {
+export default function MakeOrBreakPage({ previewKey }: { previewKey?: string } = {}) {
   const pageUrl = `${SITE_URL}/reports/${REPORT.slug}`;
+  // "Read online" = the report's pages on our own site (the private preview keeps its key)
+  const readHref = previewKey ? `${REPORT.onlinePath}?key=${encodeURIComponent(previewKey)}` : REPORT.onlinePath;
 
   const hero = (
     <header className="relative overflow-hidden pt-28 sm:pt-36 lg:pt-40 pb-14 sm:pb-20">
@@ -31,27 +33,34 @@ export default function MakeOrBreakPage() {
           <span aria-hidden>/</span>
           <Link href="/reports" className="inline-flex items-center hover:text-[var(--accent)] transition-colors">Reports</Link>
         </nav>
-        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] gap-10 lg:gap-16 items-center">
-          {/* Cover: first on phones, right on desktop */}
-          <div className="order-first lg:order-last flex justify-center lg:justify-end">
-            <ReadOnlineLink href={R.pdf} report={REPORT.slug} label={`${R.hero.readOnline}: ${R.hero.headline} (PDF)`} className="block w-[68%] max-w-[300px] sm:max-w-[340px] lg:w-full lg:max-w-[400px] shadow-[0_30px_80px_-30px_rgba(0,0,0,0.8)] border border-[var(--line)] hover:border-[var(--line-gold)] transition-colors">
-              <Image src={R.cover} alt={R.coverAlt} width={990} height={1400} sizes="(max-width: 1024px) 70vw, 400px" preload className="w-full h-auto block" />
-            </ReadOnlineLink>
+        <div className="min-w-0 max-w-[980px]">
+          <span className={LABEL}>{R.hero.label}</span>
+          <h1 className="font-display font-medium text-[clamp(40px,5.6vw,72px)] leading-[1.02] tracking-[-0.005em] text-[var(--fg)] mt-5 max-w-[20ch]">{R.hero.headline}</h1>
+          <p className="text-[17px] sm:text-[18px] leading-[1.7] text-[var(--fg-3)] mt-6 max-w-[66ch]">{R.hero.standfirst}</p>
+          <div className="mt-8 flex flex-wrap items-center gap-4">
+            <span className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-[var(--line-gold)] bg-[rgba(201,162,74,0.08)] font-mono text-[11px] tracking-[0.22em] uppercase text-[var(--accent)]">
+              <span aria-hidden className="h-2 w-2 rounded-full bg-[var(--accent)]" />
+              {R.hero.badge}
+            </span>
           </div>
-          <div className="min-w-0">
-            <span className={LABEL}>{R.hero.label}</span>
-            <h1 className="font-display font-medium text-[clamp(40px,5.6vw,72px)] leading-[1.02] tracking-[-0.005em] text-[var(--fg)] mt-5 max-w-[18ch]">{R.hero.headline}</h1>
-            <p className="text-[17px] sm:text-[18px] leading-[1.7] text-[var(--fg-3)] mt-6 max-w-[60ch]">{R.hero.standfirst}</p>
-            <div className="mt-8 flex flex-wrap items-center gap-4">
-              <span className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-[var(--line-gold)] bg-[rgba(201,162,74,0.08)] font-mono text-[11px] tracking-[0.22em] uppercase text-[var(--accent)]">
-                <span aria-hidden className="h-2 w-2 rounded-full bg-[var(--accent)]" />
-                {R.hero.badge}
-              </span>
-            </div>
-            <div className="mt-6">
-              <ReportHeroButtons pdf={R.pdf} readLabel={R.hero.readOnline} downloadLabel={R.hero.download} report={REPORT.slug} />
-            </div>
-            <p className="mt-6 font-mono text-[11px] tracking-[0.14em] uppercase text-[var(--fg-4)]">{R.hero.meta.join("  ·  ")}</p>
+          <div className="mt-6">
+            <ReportHeroButtons readHref={readHref} readLabel={R.hero.readOnline} downloadLabel={R.hero.download} report={REPORT.slug} />
+          </div>
+          <p className="mt-6 font-mono text-[11px] tracking-[0.14em] uppercase text-[var(--fg-4)]">{R.hero.meta.join("  ·  ")}</p>
+        </div>
+
+        {/* The cover (opens Read online) with the download form beside it (19 Nov) */}
+        <div className="mt-12 sm:mt-16 grid grid-cols-1 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] gap-10 lg:gap-16 items-start">
+          <div className="flex flex-col items-center lg:items-start">
+            <ReadOnlineLink href={readHref} report={REPORT.slug} label={`${R.hero.readOnline}: ${R.hero.headline}`} className="group block w-[62%] max-w-[300px] sm:max-w-[340px] lg:w-full lg:max-w-[440px] shadow-[0_30px_80px_-30px_rgba(0,0,0,0.8)] border border-[var(--line)] hover:border-[var(--line-gold)] transition-colors">
+              <Image src={R.cover} alt={R.coverAlt} width={990} height={1400} sizes="(max-width: 1024px) 62vw, 440px" preload className="w-full h-auto block" />
+            </ReadOnlineLink>
+            <Link href={readHref} className="mt-4 font-mono text-[10.5px] tracking-[0.2em] uppercase text-[var(--accent)] hover:underline underline-offset-4">
+              {R.hero.readOnline}, no sign-up →
+            </Link>
+          </div>
+          <div id="download" className="scroll-mt-[calc(var(--site-nav-h,74px)+16px)] min-w-0">
+            <ReportDownloadForm report={REPORT.slug} pdf={R.pdf} fileName={R.pdfFileName} pageUrl={pageUrl} shareText={R.shareText} t={R.form} />
           </div>
         </div>
       </div>
@@ -134,11 +143,6 @@ export default function MakeOrBreakPage() {
             </details>
           ))}
         </div>
-      </section>
-
-      {/* 6. Download */}
-      <section id="download" aria-label="Download the report" className="scroll-mt-[calc(var(--site-nav-h,74px)+16px)] shell py-14 sm:py-20 border-t border-[var(--line)]">
-        <ReportDownloadForm report={REPORT.slug} pdf={R.pdf} fileName={R.pdfFileName} pageUrl={pageUrl} shareText={R.shareText} t={R.form} />
       </section>
 
       {/* 7–9. Method, author, citation and sharing */}

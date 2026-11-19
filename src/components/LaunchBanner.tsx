@@ -32,7 +32,7 @@ function close() {
 export default function LaunchBanner() {
   const show = useSyncExternalStore(subscribe, snapshot, serverSnapshot);
   const pathname = usePathname() ?? "";
-  if (!show || pathname.startsWith("/studio") || pathname === REPORT.signupPath || pathname === BANNER_HREF || pathname.startsWith("/thank-you")) return null;
+  if (!show || pathname.startsWith("/studio") || pathname.startsWith(REPORT.signupPath) || pathname === BANNER_HREF || pathname.startsWith("/thank-you")) return null;
   return (
     <>
       {/* keeps the end of the page (footer) clear of the banner */}

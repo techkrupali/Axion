@@ -33,10 +33,10 @@ export default function PrivacyPage() {
           id: "collect", title: "What we collect",
           content: (
             <>
-              <p>Only what you type into a form on this site, and the page you sent it from:</p>
+              <p>Only what you type into a form on this site, the page you sent it from, and the link that brought you to the site (for example a LinkedIn post):</p>
               <ul>
               <li><strong>Start a conversation</strong> (also on the Reach us page): name, email, phone number if you give one, role, company, company size, the signals you choose, any notes you add and a preferred callback time.</li>
-              <li><strong>Report requests:</strong> name, email, organisation, and whether you also asked for the {JOURNAL.name}.</li>
+              <li><strong>Report downloads and requests:</strong> name, email, organisation if you give it, and whether you ticked the box for future Axion Index research (the next report and the {JOURNAL.name}).</li>
               <li><strong>{JOURNAL.name}:</strong> name and email, and when you ticked the box to receive it.</li>
               <li><strong>The earlier AI Edge diagnostic</strong> (no longer offered): results already submitted (name, email, phone number if given, role, answers and score) are kept securely and are not shared with the AI Edge Lab institute. Write to us to have yours deleted.</li>
               <li><strong>AI Edge Lab early access:</strong> name, email, country, the assessment that matches your career stage and, if you give them, your organisation and role. Leaders who also ask for early access to ORG AI DARS for their organisation give its headcount band and its main question. This is kept on a separate AI Edge Lab list. With your consent, it is passed to the AI Edge Lab institute when its own website opens.</li>
@@ -55,7 +55,8 @@ export default function PrivacyPage() {
               <ul>
               <li>To read what you sent, reply to you, and prepare for a conversation you asked for.</li>
               <li>To send you an email confirming we received your form.</li>
-              <li>To send you the report, the {JOURNAL.name} or the AI Edge Lab launch note you asked for. The Journal goes only to people who ticked the box for it.</li>
+              <li>To send you the report, the {JOURNAL.name} or the AI Edge Lab launch note you asked for. Future research and the Journal go only to people who ticked the box for them.</li>
+              <li>To see which links bring readers to the site (for example a LinkedIn post), so we know where to share our work.</li>
               </ul>
               <p>We do not sell your details, and we do not use them for advertising.</p>
             </>

@@ -1,25 +1,24 @@
 "use client";
 
+import Link from "next/link";
 import { track } from "@/lib/analytics";
 import { MAIN_BUTTON_SHAPE } from "@/components/Button";
 
 /**
- * "Read online" opens the PDF in a new tab, no form (keeps reach high for LinkedIn readers).
- * "Download the PDF" scrolls to the download form (Nitin, 19 Nov).
+ * "Read online" opens the report's pages on our own site, no form (keeps reach high for LinkedIn readers).
+ * "Download the PDF" scrolls to the download form next to the cover (Nitin, 19 Nov).
  */
-export default function ReportHeroButtons({ pdf, readLabel, downloadLabel, report }: { pdf: string; readLabel: string; downloadLabel: string; report: string }) {
+export default function ReportHeroButtons({ readHref, readLabel, downloadLabel, report }: { readHref: string; readLabel: string; downloadLabel: string; report: string }) {
   const base = `inline-flex items-center justify-center gap-3 px-7 py-4 font-mono text-[11px] tracking-[0.24em] uppercase ${MAIN_BUTTON_SHAPE} min-h-[52px] w-full sm:w-auto transition-colors`;
   return (
     <div className="flex flex-col sm:flex-row gap-3">
-      <a
-        href={pdf}
-        target="_blank"
-        rel="noopener"
+      <Link
+        href={readHref}
         onClick={() => track("read_online_click", { report })}
         className={`${base} bg-[#C9A24A] text-[#0A0A0B] font-semibold hover:bg-[#d6b25c]`}
       >
-        {readLabel} <span aria-hidden>↗</span>
-      </a>
+        {readLabel} <span aria-hidden>→</span>
+      </Link>
       <a
         href="#download"
         onClick={(e) => {

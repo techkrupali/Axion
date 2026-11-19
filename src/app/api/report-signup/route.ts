@@ -54,7 +54,8 @@ export async function POST(req: NextRequest) {
     const pdf = pdfUrl(item);
     const downloadMode = data.download === true && item.slug === REPORT.slug && !!pdf;
     const sendDownloadEmail = (to: string, n: string) =>
-      ackReportDownload(to, n, { title: item.title, pdf, fromName: MAKE_OR_BREAK.email.fromName, subject: MAKE_OR_BREAK.email.subject }, journal);
+      // "here" and the button always download the PDF (not open it): /reports/make-or-break/download
+      ackReportDownload(to, n, { title: item.title, pdf: `https://axionindex.org${REPORT.downloadPath}`, fromName: MAKE_OR_BREAK.email.fromName, subject: MAKE_OR_BREAK.email.subject }, journal);
 
     await dbConnect();
     const edition = signupKey(item.slug);

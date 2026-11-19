@@ -20,7 +20,10 @@ export type AnalyticsEvent =
   | "download_form_open"
   | "download_form_submit"
   | "pdf_download"
-  | "share_click";
+  | "share_click"
+  // Homepage report banner/band clicks. Counted with an event, not utm tags: utm tags on links inside
+  // the site would restart the visit as "website / banner" and lose where the reader came from (e.g. LinkedIn)
+  | "banner_click";
 
 /** Which form an event is about. */
 export type FormName = "conversation" | "report" | "newsletter" | "ai-edge-interest" | "ai-edge-assessment";

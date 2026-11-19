@@ -7,13 +7,17 @@ import { CATEGORIES, coverPath, findItem, isPublic, itemPath, type Category, typ
  * Google title and description for items where Nitin approved specific wording (SEO-02, 17 Nov).
  * Only what Google shows changes; the page itself keeps the item's title and summary from the Studio.
  */
-const SEO_OVERRIDES: Record<string, { title?: string; exactTitle?: boolean; description?: string; imageAlt?: string }> = {
-  // Nitin's report page brief (19 Nov) replaces the SEO-02 wording for this report
+const SEO_OVERRIDES: Record<string, { title?: string; exactTitle?: boolean; description?: string; imageAlt?: string; image?: string; share?: { title: string; description: string }; type?: "article" }> = {
+  // Nitin's report page brief (19 Nov) replaces the SEO-02 wording for this report;
+  // link previews use the wording and picture from his banner pack
   "make-or-break": {
     title: MAKE_OR_BREAK.seo.title,
     exactTitle: true,
     description: MAKE_OR_BREAK.seo.description,
-    imageAlt: MAKE_OR_BREAK.coverAlt,
+    image: MAKE_OR_BREAK.share.image,
+    imageAlt: MAKE_OR_BREAK.share.imageAlt,
+    share: { title: MAKE_OR_BREAK.share.title, description: MAKE_OR_BREAK.share.description },
+    type: "article",
   },
   "irdai-people-architecture-playbook": {
     title: "IRDAI People Architecture Playbook for insurers",
@@ -55,7 +59,9 @@ export function itemMetadata(item: LibraryItem) {
     exactTitle: o.exactTitle ?? `${title} · Axion Index`.length > MAX_TITLE,
     description: o.description ?? googleDescription(item),
     path: itemPath(item),
-    image: { url: coverPath(item.slug, item.cover), width: 1200, height: 630, alt: o.imageAlt ?? item.title },
+    image: { url: o.image ?? coverPath(item.slug, item.cover), width: 1200, height: 630, alt: o.imageAlt ?? item.title },
+    share: o.share,
+    type: o.type,
   });
 }
 

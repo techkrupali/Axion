@@ -12,6 +12,9 @@ import { Reveal } from "@/components/Reveal";
 import Footer from "@/components/Footer";
 import { IN_DEVELOPMENT_LABEL, isLive, type PracticeKey } from "@/config/practices";
 import { REPORT, REPORT_FULL_TITLE, reportLink } from "@/config/report";
+import { MAKE_OR_BREAK } from "@/content/reports/makeOrBreak";
+import { track } from "@/lib/analytics";
+import ReportBanner from "@/components/reports/ReportBanner";
 import { CONVERSATION_INVITE, LINKEDIN_NITIN } from "@/config/nav";
 import { LinkedInFeedSection } from "@/components/LinkedInFeed";
 import { HOME_EVIDENCE } from "@/config/evidence";
@@ -121,8 +124,9 @@ function HeroBand() {
       />
 
       {/* Content */}
-      {/* Kept compact so the single headline + buttons below sit above the fold */}
-      <div className="relative z-10 max-w-[1280px] mx-auto px-6 sm:px-12 pt-[96px] pb-[84px]">
+      {/* Kept compact so the single headline + buttons below sit above the fold. The report band
+          above now clears the fixed menu, so this band needs no room for it. */}
+      <div className="relative z-10 max-w-[1280px] mx-auto px-6 sm:px-12 pt-[30px] pb-[84px]">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           {/* Left — monogram mark */}
           <div className="hidden md:flex items-start">
@@ -1076,27 +1080,39 @@ function MovesSection() {
 
 // ─────────────────────────────────────────────
 // REPORT BAND (Fix Brief Part 10, D7: strong homepage visibility from 20 Nov)
+// The first thing under the menu (19 Nov), so it is seen without scrolling on laptops and phones.
 // ─────────────────────────────────────────────
 function ReportBand() {
   const out = REPORT.published;
+  const banner = out ? MAKE_OR_BREAK.banner : null;
+  // Once the report is out: Nitin's banner (19 Nov). The whole image opens the report page.
+  if (banner) {
+    return (
+      <section aria-label="Report" style={{ background: "#14171B", paddingTop: 74 /* the fixed menu */ }}>
+        <div className="max-w-[1920px] mx-auto">
+          <ReportBanner place="home" maxWidth={1920} preload />
+        </div>
+      </section>
+    );
+  }
   return (
-    <section aria-label="Report" style={{ background: T.ink, color: T.white, borderBottom: `1px solid ${T.rule}` }}>
-      <Link href={REPORT.signupPath} className="group block max-w-[1280px] mx-auto px-6 sm:px-12 py-8 sm:py-10">
-        <div className="flex flex-col lg:flex-row lg:items-center gap-5 lg:gap-12">
+    <section aria-label="Report" style={{ background: T.ink, color: T.white, borderBottom: "1px solid rgba(201,162,74,0.35)", paddingTop: 74 /* the fixed menu */ }}>
+      <Link href={REPORT.signupPath} className="group block max-w-[1280px] mx-auto px-6 sm:px-12 py-4 sm:py-5" onClick={() => track("banner_click", { report: REPORT.slug, banner: "band" })}>
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-10">
           <div className="min-w-0 flex-1">
-            <span className="font-mono text-[11px] uppercase" style={{ letterSpacing: "0.22em", color: T.gold2 }}>
-              Axion Index Journal · {out ? "Out now · Free to share" : `Releasing ${REPORT.releaseShort}`}
+            <span className="font-mono text-[10.5px] sm:text-[11px] uppercase" style={{ letterSpacing: "0.22em", color: T.gold2 }}>
+              Axion Index Journal · {out ? <>Out now<span className="hidden sm:inline"> · Free to share</span></> : `Releasing ${REPORT.releaseShort}`}
             </span>
-            <p className="font-serif mt-2" style={{ fontFamily: T.display, fontSize: "clamp(26px,3.4vw,44px)", lineHeight: 1.08, color: T.white }}>
+            <p className="font-serif mt-1" style={{ fontFamily: T.display, fontSize: "clamp(22px,2.5vw,34px)", lineHeight: 1.12, color: T.white }}>
               {REPORT.name}: <em style={{ color: T.gold2, fontStyle: "italic" }}>{REPORT.subtitle}</em>
             </p>
           </div>
           <span
-            className="shrink-0 self-start lg:self-center inline-flex items-center gap-3 font-mono text-[11px] uppercase px-7 py-4 transition-colors group-hover:bg-[#F7F6F3]"
+            className="shrink-0 self-start sm:self-center inline-flex items-center gap-3 font-mono text-[10.5px] sm:text-[11px] uppercase px-5 sm:px-7 py-3 sm:py-4 transition-colors group-hover:bg-[#F7F6F3]"
             style={{ letterSpacing: "0.18em", background: T.gold2, color: T.ink }}
-            aria-label={out ? `Download ${REPORT_FULL_TITLE}` : `Get ${REPORT_FULL_TITLE} on release`}
+            aria-label={out ? `Get ${REPORT_FULL_TITLE} now` : `Get ${REPORT_FULL_TITLE} on release`}
           >
-            {out ? "Download the report" : "Get it on release"} <span aria-hidden>→</span>
+            {out ? "Get it now" : "Get it on release"} <span aria-hidden>→</span>
           </span>
         </div>
       </Link>
@@ -1234,12 +1250,14 @@ export default function Home() {
         }}
       >
 
+        {/* 0 — The report, first thing under the menu (seen without scrolling) */}
+        <ReportBand />
+
         {/* 1 — Hero Band */}
         <HeroBand />
 
         {/* 2 — Hero Body */}
         <HeroBody onDiagnosticOpen={openDiagnostic} />
-        <ReportBand />
 
 
 

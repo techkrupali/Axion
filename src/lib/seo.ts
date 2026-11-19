@@ -19,6 +19,10 @@ export function pageMetadata(opts: {
   noIndex?: boolean;
   /** Use the title as given, without " · Axion Index" (SEO-02: titles that already name us, or would run past 60 characters) */
   exactTitle?: boolean;
+  /** Different wording for link previews (LinkedIn, WhatsApp) than for Google */
+  share?: { title: string; description: string };
+  /** og:type; "website" unless the page is a single piece of writing */
+  type?: "website" | "article";
 }): Metadata {
   // Every page its own share image (Fix Brief Part 6, item 35); unknown pages fall back to the default
   const own = SHARE_PAGES[opts.path];
@@ -29,18 +33,18 @@ export function pageMetadata(opts: {
     description: opts.description,
     alternates: { canonical: opts.path },
     openGraph: {
-      title: fullTitle,
-      description: opts.description,
+      title: opts.share?.title ?? fullTitle,
+      description: opts.share?.description ?? opts.description,
       url: opts.path,
       siteName: SITE_NAME,
       locale: "en_IN",
-      type: "website",
+      type: opts.type ?? "website",
       images: [image],
     },
     twitter: {
       card: "summary_large_image",
-      title: fullTitle,
-      description: opts.description,
+      title: opts.share?.title ?? fullTitle,
+      description: opts.share?.description ?? opts.description,
       images: [image.url],
     },
     ...(opts.noIndex ? { robots: { index: false, follow: false } } : {}),

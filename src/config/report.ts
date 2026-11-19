@@ -30,6 +30,13 @@ export const REPORT = {
   /** The PDF (public/reports/): "Read online" opens it; the download form saves it under `pdfFileName` (Nitin, 19 Nov) */
   pdfPath: "/reports/make-or-break.pdf",
   pdfFileName: "Axion_Index_Make_or_Break_Special_Report_2026.pdf",
+  /** Always downloads the PDF (src/app/reports/[slug]/download): used in the "Your copy" email */
+  downloadPath: "/reports/make-or-break/download",
+  /** "Read online": the report's pages on our own site (src/app/reports/[slug]/read), no form. The page
+   *  images are rendered from the PDF into public/reports/make-or-break-pages/p-01.jpg … (not in git). */
+  onlinePath: "/reports/make-or-break/read",
+  pagesDir: "/reports/make-or-break-pages",
+  pageCount: 48,
   /** Page 1 of the PDF, for the report page's hero */
   coverImage: "/reports/make-or-break-cover.png",
 } as const;

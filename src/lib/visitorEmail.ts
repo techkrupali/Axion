@@ -6,10 +6,13 @@ import { esc } from "@/lib/emailTemplate";
 import { PUBLIC_EMAIL } from "@/config/contact";
 import { SITE_URL } from "@/lib/seo";
 
+/** A paragraph: plain text, or text with links in it, e.g. ["Your PDF is ", { label: "here", href }, "."] */
+export type Paragraph = string | (string | { label: string; href: string })[];
+
 export type VisitorEmail = {
   preheader: string;
   heading: string;
-  paragraphs: string[];
+  paragraphs: Paragraph[];
   /** Optional recap, e.g. the signals they chose */
   list?: { title: string; items: string[] };
   /** Main link, e.g. the next read */
@@ -22,9 +25,19 @@ const C = { page: "#F3F1EC", card: "#FFFFFF", ink: "#0D0D0B", gold: "#C9A24A", g
 const SERIF = "Georgia,'Times New Roman',serif";
 const SANS = "-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif";
 
+const paraHtml = (p: Paragraph) =>
+  (typeof p === "string" ? [p] : p)
+    .map((x) => typeof x === "string"
+      ? esc(x).replace(/\n/g, "<br>")
+      : `<a href="${esc(x.href)}" style="color:${C.goldDeep};font-weight:600;text-decoration:underline;">${esc(x.label)}</a>`)
+    .join("");
+
+const paraText = (p: Paragraph) =>
+  typeof p === "string" ? p : p.map((x) => (typeof x === "string" ? x : `${x.label} (${x.href})`)).join("");
+
 export function renderVisitorEmail(e: VisitorEmail): { html: string; text: string } {
   const paras = e.paragraphs
-    .map((p) => `<p style="margin:0 0 14px;font-family:${SANS};font-size:15px;line-height:1.7;color:${C.text};">${esc(p).replace(/\n/g, "<br>")}</p>`)
+    .map((p) => `<p style="margin:0 0 14px;font-family:${SANS};font-size:15px;line-height:1.7;color:${C.text};">${paraHtml(p)}</p>`)
     .join("");
 
   const list = e.list && e.list.items.length
@@ -80,7 +93,7 @@ export function renderVisitorEmail(e: VisitorEmail): { html: string; text: strin
     "",
     e.heading,
     "",
-    ...e.paragraphs.flatMap((p) => [p, ""]),
+    ...e.paragraphs.flatMap((p) => [paraText(p), ""]),
     ...(e.list && e.list.items.length ? [e.list.title.toUpperCase(), ...e.list.items.map((i) => `- ${i}`), ""] : []),
     ...(e.cta ? [...(e.cta.intro ? [e.cta.intro] : []), `${e.cta.label}: ${e.cta.href}`, ""] : []),
     "--",
