@@ -21,7 +21,7 @@ import seed from "./library.json";
  */
 export const LIBRARY_TAG = "library";
 
-const FIELDS = ["slug", "category", "title", "date", "theme", "summary", "body", "series", "part", "originalLink", "publisher", "cover", "coverAlt", "kicker", "inside", "author", "method", "site", "pdf", "owner", "embed", "statusLine", "draft"] as const;
+const FIELDS = ["slug", "category", "title", "date", "theme", "summary", "body", "series", "part", "originalLink", "format", "publisher", "cover", "coverAlt", "kicker", "inside", "author", "method", "site", "pdf", "owner", "embed", "statusLine", "draft"] as const;
 
 /** A plain object with only the item's fields (no database ids or dates). */
 function plainItem(raw: Record<string, unknown>): LibraryItem {

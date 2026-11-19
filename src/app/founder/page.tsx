@@ -1,5 +1,5 @@
 import FounderPage, { type LatestItem } from "./FounderPage";
-import { CATEGORIES, formatDate, itemPath, publicItems, type Category, type Library } from "@/content/library";
+import { formatDate, itemKind, itemPath, publicItems, type Category, type Library } from "@/content/library";
 import { libraryForPage } from "@/content/store";
 import { AXION_PROFILES, FOUNDER_PROFILES } from "@/config/founder";
 import { SITE_URL } from "@/lib/seo";
@@ -17,7 +17,7 @@ function latestWriting(lib: Library): LatestItem[] {
       return {
         slug: i.slug,
         href: itemPath(i),
-        label: [CATEGORIES[i.category].label, source].filter(Boolean).join(" · "),
+        label: [itemKind(i), source].filter(Boolean).join(" · "),
         title: i.title,
         date: formatDate(i.date, "short"),
       };

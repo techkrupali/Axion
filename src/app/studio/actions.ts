@@ -73,6 +73,7 @@ export type ItemInput = {
   series: string;
   part: string;
   originalLink: string;
+  format: string;                  // essays and series parts: "post", "article" or empty
   publisher: string;
   kicker: string;
   inside: string;                  // one point per line
@@ -117,6 +118,7 @@ function validate(input: ItemInput): { ok: true; item: Omit<LibraryItem, "draft"
   if (cover) { item.cover = cover; if (coverAlt) item.coverAlt = coverAlt; }
   if (body.trim() && (category === "essay" || category === "series")) item.body = body;
   if (originalLink) item.originalLink = originalLink;
+  if ((category === "essay" || category === "series") && (input.format === "post" || input.format === "article")) item.format = input.format;
 
   if (category === "series") {
     const series = str(input.series, 80);
@@ -183,7 +185,7 @@ export async function saveItem(input: ItemInput, mode: "draft" | "publish" | "up
     };
     // Clear fields that no longer apply (e.g. a body removed, a category changed)
     const unset = Object.fromEntries(
-      ["body", "series", "part", "originalLink", "publisher", "cover", "coverAlt", "kicker", "inside", "author", "method", "site", "pdf", "owner", "embed", "statusLine"]
+      ["body", "series", "part", "originalLink", "format", "publisher", "cover", "coverAlt", "kicker", "inside", "author", "method", "site", "pdf", "owner", "embed", "statusLine"]
         .filter((k) => !(k in doc)).map((k) => [k, ""]),
     );
     if (original) await LibraryItemModel.updateOne({ slug: original.slug }, { $set: doc, $unset: unset });

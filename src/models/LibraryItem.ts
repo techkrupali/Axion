@@ -15,6 +15,7 @@ const LibraryItemSchema = new Schema({
   series:       { type: String },
   part:         { type: Number },
   originalLink: { type: String },
+  format:       { type: String, enum: ['post', 'article'] }, // essays and series parts: LinkedIn post or article
   publisher:    { type: String },
   cover:        { type: String },                       // photo: /uploads/<id>.jpg (Studio) or a /public file
   coverAlt:     { type: String },                       // what the photo shows (screen readers)

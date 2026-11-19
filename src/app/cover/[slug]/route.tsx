@@ -1,4 +1,4 @@
-import { CATEGORIES, findItem, formatDate, publicItems } from "@/content/library";
+import { findItem, formatDate, itemKind, publicItems } from "@/content/library";
 import { getLibrary, loadLibraryFresh } from "@/content/store";
 import { photoCover, shareImage } from "@/lib/shareImage";
 import { coverPhotoDataUrl } from "@/lib/libraryImages";
@@ -23,10 +23,10 @@ export async function GET(_req: Request, { params }: { params: Promise<{ slug: s
   const kicker =
     item.category === "series" ? item.seriesName ?? "Series"
     : item.category === "media" ? item.publisher ?? "In the media"
-    : item.kicker ?? CATEGORIES[item.category].label;
+    : item.kicker ?? itemKind(item);
   const meta = [formatDate(item.date), item.theme[0]].filter(Boolean).join("  ·  ");
   // With a photo (Studio → Photo) the cover is the whole photo; without one, the title card
   const src = await coverPhotoDataUrl(item.cover);
   if (src) return photoCover(src);
-  return shareImage({ label: CATEGORIES[item.category].label, kicker, title: item.title, meta });
+  return shareImage({ label: itemKind(item), kicker, title: item.title, meta });
 }

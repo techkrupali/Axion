@@ -1,6 +1,6 @@
 import Link from "next/link";
 import LibraryShell from "@/components/library/LibraryShell";
-import { CATEGORIES, coverPath, findSeries, formatDate, seriesParts, itemPath, publicItems, type Library, type LibraryItem } from "@/content/library";
+import { CATEGORIES, coverPath, findSeries, formatDate, itemKind, seriesParts, itemPath, publicItems, type Library, type LibraryItem } from "@/content/library";
 import { markdownToHtml } from "@/lib/markdown";
 import { SITE_URL } from "@/lib/seo";
 import ShareButtons from "@/components/library/ShareButtons";
@@ -59,7 +59,7 @@ export default function ItemDetail({ lib, item }: { lib: Library; item: LibraryI
     ...(series ? [{ label: series.name, href: `/publications/series/${series.slug}` }] : []),
   ];
   const kicker = [
-    cat.label,
+    itemKind(item),
     series ? `${series.name}${item.part ? ` · Part ${item.part}` : ""}` : item.category === "media" ? item.publisher : item.theme[0],
   ].filter(Boolean).join("  ·  ");
 
@@ -194,7 +194,7 @@ export default function ItemDetail({ lib, item }: { lib: Library; item: LibraryI
               {related.map((r) => (
                 <Link key={r.slug} href={itemPath(r)} className="group flex flex-col bg-[var(--bg)] p-7 sm:p-8 min-h-[220px] hover:bg-[rgba(201,162,74,0.04)] transition-colors">
                   <span className={`${MONO} text-[var(--accent)]`}>
-                    {CATEGORIES[r.category].label}{r.date ? <span className="text-[var(--fg-5)]">{"  ·  "}{formatDate(r.date, "short")}</span> : null}
+                    {itemKind(r)}{r.date ? <span className="text-[var(--fg-5)]">{"  ·  "}{formatDate(r.date, "short")}</span> : null}
                   </span>
                   <span className="font-display text-[24px] leading-[1.2] text-[var(--fg)] group-hover:text-[var(--accent)] mt-4 transition-colors [text-wrap:balance]">{r.title}</span>
                   {r.summary && <span className="text-[14px] leading-[1.65] text-[var(--fg-4)] mt-3 line-clamp-2">{r.summary}</span>}

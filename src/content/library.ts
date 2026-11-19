@@ -32,6 +32,7 @@ export type LibraryItem = {
   series?: string;              // series slug (series parts only)
   part?: number;                // order within the series
   originalLink?: string;        // LinkedIn post, publisher article, recording…
+  format?: "post" | "article";  // essays and series parts: a LinkedIn post or an article (shown as the card label)
   publisher?: string;           // In the media
   cover?: string;               // optional photo (Studio upload "/uploads/<id>.jpg", or a /public file); drawn into the cover template
   coverAlt?: string;            // what the photo shows, for screen readers
@@ -53,6 +54,11 @@ export type Series = { slug: string; name: string; summary: string; theme: Theme
 
 /** Everything in the library, as loaded by src/content/store.ts. */
 export type Library = { items: LibraryItem[]; series: Series[] };
+
+/** What the item is, for its label: "LinkedIn post" or "Article" when the Studio says so, else the category. */
+export const FORMAT_LABEL = { post: "LinkedIn post", article: "Article" } as const;
+export const itemKind = (item: Pick<LibraryItem, "category" | "format">) =>
+  (item.category === "essay" || item.category === "series") && item.format ? FORMAT_LABEL[item.format] : CATEGORIES[item.category].label;
 
 // ── Visibility ──────────────────────────────────────────────────────────────
 /** Essays and series parts need their full text (or a link); podcasts need a recording. Drafts never show. */

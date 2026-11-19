@@ -22,6 +22,7 @@ const toInput = (i: Partial<LibraryItem> & { category: Category }): ItemInput =>
   series: i.series ?? "",
   part: i.part ? String(i.part) : "",
   originalLink: i.originalLink ?? "",
+  format: i.format ?? "",
   publisher: i.publisher ?? "",
   kicker: i.kicker ?? "",
   inside: (i.inside ?? []).join("\n"),
@@ -303,6 +304,17 @@ export default function ItemEditor({ item, series, live, everPublished, visible 
             intro={c === "essay" || c === "series" ? "The LinkedIn post. It turns on “Read it on LinkedIn”, and “Join the conversation” when the full text is here." : undefined}>
             {c === "media" && field("publisher", "Publication", { ph: "e.g. ETHRWorld, People Matters" })}
             {LINK_LABEL[c] && field("originalLink", LINK_LABEL[c]!, { type: "url", ph: "https://…" })}
+            {(c === "essay" || c === "series") && (
+              <div>
+                <label htmlFor="f-format" className={label}>Format</label>
+                <select id="f-format" value={f.format} onChange={(e) => set("format", e.target.value)} className={input} style={{ colorScheme: "dark" }}>
+                  <option value="">Not set (label: {CATEGORIES[c].label})</option>
+                  <option value="post">LinkedIn post</option>
+                  <option value="article">Article</option>
+                </select>
+                <p className={hint}>The label on its card and page, e.g. &ldquo;LinkedIn post&rdquo; or &ldquo;Article&rdquo;.</p>
+              </div>
+            )}
             {c === "podcast" && field("embed", "Player link (optional)", { type: "url", ph: "https://www.youtube.com/embed/…", help: "The embed address from YouTube or Spotify's Share → Embed. Shows the player on the page." })}
           </Section>
         )}
