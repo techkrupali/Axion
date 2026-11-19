@@ -12,9 +12,7 @@ import { Reveal } from "@/components/Reveal";
 import Footer from "@/components/Footer";
 import { IN_DEVELOPMENT_LABEL, isLive, type PracticeKey } from "@/config/practices";
 import { REPORT, REPORT_FULL_TITLE, reportLink } from "@/config/report";
-import { MAKE_OR_BREAK } from "@/content/reports/makeOrBreak";
 import { track } from "@/lib/analytics";
-import ReportBanner from "@/components/reports/ReportBanner";
 import { CONVERSATION_INVITE, LINKEDIN_NITIN } from "@/config/nav";
 import { LinkedInFeedSection } from "@/components/LinkedInFeed";
 import { HOME_EVIDENCE } from "@/config/evidence";
@@ -1083,18 +1081,9 @@ function MovesSection() {
 // The first thing under the menu (19 Nov), so it is seen without scrolling on laptops and phones.
 // ─────────────────────────────────────────────
 function ReportBand() {
+  // The coded band stays on the homepage once the report is out too (19 Nov: Nitin's big banner image
+  // was taken off the homepage); "Out now · Get it now" then
   const out = REPORT.published;
-  const banner = out ? MAKE_OR_BREAK.banner : null;
-  // Once the report is out: Nitin's banner (19 Nov). The whole image opens the report page.
-  if (banner) {
-    return (
-      <section aria-label="Report" style={{ background: "#14171B", paddingTop: 74 /* the fixed menu */ }}>
-        <div className="max-w-[1920px] mx-auto">
-          <ReportBanner place="home" maxWidth={1920} preload />
-        </div>
-      </section>
-    );
-  }
   return (
     <section aria-label="Report" style={{ background: T.ink, color: T.white, borderBottom: "1px solid rgba(201,162,74,0.35)", paddingTop: 74 /* the fixed menu */ }}>
       <Link href={REPORT.signupPath} className="group block max-w-[1280px] mx-auto px-6 sm:px-12 py-4 sm:py-5" onClick={() => track("banner_click", { report: REPORT.slug, banner: "band" })}>
