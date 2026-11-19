@@ -8,6 +8,9 @@ import { isEmail } from "@/lib/contact";
 import { MAIN_BUTTON_SHAPE } from "@/components/Button";
 import ReportShare from "@/components/reports/ReportShare";
 
+/** Sent by the hero's "Download the PDF" button: light up the form and put the cursor in the name field. */
+export const DOWNLOAD_REQUEST = "report-download-request";
+
 type Text = {
   heading: string; text: string; optIn: string; button: string; smallPrint: string;
   thanksHeading: string; thanksText: string;
@@ -27,7 +30,25 @@ export default function ReportDownloadForm({ report, pdf, fileName, pageUrl, sha
   const [touched, setTouched] = useState({ name: false, email: false });
   const [state, setState] = useState<"idle" | "done">("idle");
   const [emailFailed, setEmailFailed] = useState(false);
+  const [highlight, setHighlight] = useState(false);
   const box = useRef<HTMLDivElement>(null);
+  const done = useRef(false);
+  useEffect(() => { done.current = state === "done"; }, [state]);
+
+  // The hero's "Download the PDF": the form lights up and the name field gets the cursor;
+  // someone who has already signed up gets the PDF again straight away
+  useEffect(() => {
+    const timers: ReturnType<typeof setTimeout>[] = [];
+    function onRequest() {
+      if (done.current) { startDownload(); track("pdf_download", { report, again: true }); return; }
+      setHighlight(true);
+      timers.push(setTimeout(() => (document.getElementById("report-name") as HTMLInputElement | null)?.focus({ preventScroll: true }), 450));
+      timers.push(setTimeout(() => setHighlight(false), 2200));
+    }
+    window.addEventListener(DOWNLOAD_REQUEST, onRequest);
+    return () => { window.removeEventListener(DOWNLOAD_REQUEST, onRequest); timers.forEach(clearTimeout); };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [report]);
 
   // "Download form shown": once, when the form scrolls into view (or the hero button brings it there)
   useEffect(() => {
@@ -80,7 +101,7 @@ export default function ReportDownloadForm({ report, pdf, fileName, pageUrl, sha
   const label = "font-mono text-[10px] tracking-widest uppercase text-[var(--fg-4)]";
 
   return (
-    <div ref={box} className="w-full max-w-[560px] mx-auto rounded-[24px] border border-[var(--line-gold)] bg-[rgba(201,162,74,0.03)] p-7 sm:p-10">
+    <div ref={box} className={`w-full max-w-[560px] mx-auto rounded-[24px] border bg-[rgba(201,162,74,0.03)] p-7 sm:p-10 transition-[box-shadow,border-color] duration-500 ${highlight ? "border-[#C9A24A] shadow-[0_0_0_4px_rgba(201,162,74,0.25),0_0_70px_rgba(201,162,74,0.28)]" : "border-[var(--line-gold)]"}`}>
       {state === "done" ? (
         <div role="status" aria-live="polite">
           <span className="font-mono text-[10px] tracking-[0.25em] uppercase text-[var(--accent)]">Thank you</span>

@@ -112,11 +112,16 @@ export default function MakeOrBreakPage({ previewKey }: { previewKey?: string } 
         </div>
         <div>
           <h2 className={LABEL}>{R.author.heading}</h2>
-          <div className="mt-5 flex flex-col sm:flex-row gap-5 sm:gap-6 items-start">
-            <Image src={R.author.photo} alt="Nitin Nahata" width={160} height={200} sizes="120px" className="w-[110px] sm:w-[120px] h-auto object-cover border border-[var(--line)] grayscale" />
-            <div>
-              <p className="text-[16px] leading-[1.8] text-[var(--fg-2)]">{R.author.text}</p>
-              <Link href="/founder" className="inline-block mt-3 font-mono text-[10.5px] tracking-[0.18em] uppercase text-[var(--accent)] hover:underline underline-offset-4">Read Nitin&apos;s story →</Link>
+          {/* Author card (19 Nov redesign): portrait on the left, name, role, bio and the founder page link */}
+          <div className="mt-5 grid grid-cols-[104px_minmax(0,1fr)] sm:grid-cols-[150px_minmax(0,1fr)] rounded-[20px] overflow-hidden border border-[var(--line-gold)] bg-[rgba(201,162,74,0.04)]">
+            <div className="relative min-h-[150px] sm:min-h-[200px]">
+              <Image src={R.author.photo} alt={R.author.name} fill sizes="(max-width: 640px) 104px, 150px" className="object-cover object-[25%_15%] sm:object-[40%_15%]" />
+            </div>
+            <div className="p-5 sm:p-7 min-w-0">
+              <p className="font-display font-medium text-[24px] sm:text-[30px] leading-tight text-[var(--fg)]">{R.author.name}</p>
+              <p className="font-mono text-[9.5px] sm:text-[10px] tracking-[0.18em] uppercase text-[var(--accent)] mt-2 leading-[1.6]">{R.author.role}</p>
+              <p className="text-[14.5px] sm:text-[15.5px] leading-[1.75] text-[var(--fg-3)] mt-4">{R.author.text}</p>
+              <Link href="/founder" className="inline-flex items-center gap-2 mt-5 font-mono text-[10.5px] tracking-[0.18em] uppercase text-[var(--accent)] hover:underline underline-offset-4">Read Nitin&apos;s story <span aria-hidden>→</span></Link>
             </div>
           </div>
         </div>

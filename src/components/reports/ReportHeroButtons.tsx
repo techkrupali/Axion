@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { track } from "@/lib/analytics";
 import { MAIN_BUTTON_SHAPE } from "@/components/Button";
+import { DOWNLOAD_REQUEST } from "@/components/reports/ReportDownloadForm";
 
 /**
  * "Read online" opens the report's pages on our own site, no form (keeps reach high for LinkedIn readers).
@@ -23,8 +24,14 @@ export default function ReportHeroButtons({ readHref, readLabel, downloadLabel, 
         href="#download"
         onClick={(e) => {
           e.preventDefault();
-          document.getElementById("download")?.scrollIntoView({ behavior: "smooth", block: "start" });
-          setTimeout(() => (document.getElementById("report-name") as HTMLInputElement | null)?.focus({ preventScroll: true }), 600);
+          // Take the reader to the sign-up form: scroll there, then the form lights up and the name
+          // field gets the cursor (or, for someone who already signed up, the PDF downloads again)
+          const form = document.getElementById("download");
+          if (form) {
+            const navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--site-nav-h")) || 74;
+            window.scrollTo({ top: Math.max(0, form.getBoundingClientRect().top + window.scrollY - navH - 16), behavior: "smooth" });
+          }
+          window.dispatchEvent(new CustomEvent(DOWNLOAD_REQUEST));
         }}
         className={`${base} border border-[#C9A24A] text-[#C9A24A] hover:bg-[rgba(201,162,74,0.08)]`}
       >

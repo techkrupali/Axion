@@ -73,8 +73,11 @@ export const MAKE_OR_BREAK = {
 
   author: {
     heading: "About the author",
+    name: "Nitin Nahata",
+    role: "Founder, Axion Index · The Operating Architect",
     text: "Nitin Nahata is the founder of Axion Index. He has spent 23 years in HR leadership at Standard Chartered, HSBC, Tata Global Beverages and Udaan.",
-    photo: "/nitin-nahata-founder.jpg",
+    /** The media kit's colour portrait (as on the report's last page) */
+    photo: "/media-kit-nitin-nahata-colour.jpg",
   },
 
   cite: {
