@@ -8,7 +8,7 @@ import { formatDate, isUpcoming, type LibraryItem } from "@/content/library";
 export function reportState(item: LibraryItem) {
   const isGlobal = item.slug === REPORT.slug;
   const released = isGlobal ? REPORT.published : !!item.date && !isUpcoming(item);
-  const readHref = isGlobal && REPORT.published ? REPORT.readPath : undefined;
+  const readHref = undefined as string | undefined; // read online = the PDF (Nitin, 19 Nov), not a long-form page
   const when = item.date ? formatDate(item.date) : "";
   const status = released
     ? (when ? `Published ${when}` : "Published")
@@ -19,8 +19,10 @@ export function reportState(item: LibraryItem) {
 }
 
 /** The report's PDF as a full address (for emails and the thank-you page), once it is out. */
-export const pdfUrl = (item: LibraryItem) =>
-  item.pdf ? (item.pdf.startsWith("/") ? `https://axionindex.org${item.pdf}` : item.pdf) : "";
+export const pdfUrl = (item: LibraryItem) => {
+  const pdf = item.pdf || (item.slug === REPORT.slug ? REPORT.pdfPath : "");
+  return pdf ? (pdf.startsWith("/") ? `https://axionindex.org${pdf}` : pdf) : "";
+};
 
 /** Sign-ups are stored per report. The Global AI Report keeps its original key so earlier sign-ups still count. */
 export const signupKey = (slug: string) => (slug === REPORT.slug ? REPORT.edition : slug);

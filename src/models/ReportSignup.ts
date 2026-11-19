@@ -5,9 +5,11 @@ const ReportSignupSchema = new Schema({
   edition:      { type: String, required: true },
   name:         { type: String, required: true, trim: true },
   email:        { type: String, required: true, lowercase: true, trim: true },
-  organisation: { type: String, required: true, trim: true },
+  organisation: { type: String, default: '', trim: true },   // optional on the download form (Nitin, 19 Nov)
   journal:      { type: Boolean, default: false },   // ticked "Also send me the monthly Journal"
   sourcePage:   { type: String, default: '' },
+  cameFrom:     { type: String, default: '' },          // UTM tags or referring site, e.g. "linkedin / social / make-or-break"
+  downloads:    { type: Number, default: 0 },           // download-form submissions by this person
   sentAt:       { type: Date },                       // set by scripts/send-report.mjs on release day
 }, { timestamps: true });
 

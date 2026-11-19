@@ -46,14 +46,17 @@ export async function sendOwnerEmail(opts: { subject: string; replyTo?: string; 
  * Acknowledgement to the visitor (item 17). Replies go to the public address.
  * Never throws, for the same reason as above.
  */
-export async function sendVisitorEmail(opts: { to: string; subject: string; email: VisitorEmail }): Promise<boolean> {
+export async function sendVisitorEmail(opts: { to: string; subject: string; email: VisitorEmail; fromName?: string }): Promise<boolean> {
   if (!process.env.SMTP_HOST) {
     console.warn(`[MAILER] SMTP_HOST not set — skipped acknowledgement "${opts.subject}"`);
     return false;
   }
   try {
     const { html, text } = renderVisitorEmail(opts.email);
-    await transport().sendMail({ from: fromLine(), to: opts.to, replyTo: PUBLIC_EMAIL, subject: opts.subject, html, text });
+    // `fromName` changes only the name shown (e.g. "Nitin Nahata, Axion Index"); the address stays the sending one
+    const address = fromLine().match(/<([^>]+)>/)?.[1] ?? fromLine();
+    const from = opts.fromName ? `"${opts.fromName.replace(/"/g, "")}" <${address}>` : fromLine();
+    await transport().sendMail({ from, to: opts.to, replyTo: PUBLIC_EMAIL, subject: opts.subject, html, text });
     return true;
   } catch (err) {
     console.error(`[MAILER] failed to send acknowledgement "${opts.subject}":`, err);

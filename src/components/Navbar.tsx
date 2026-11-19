@@ -102,7 +102,8 @@ const Navbar = () => {
                 onMouseEnter={() => setIsExpertiseOpen(true)}
                 onMouseLeave={() => setIsExpertiseOpen(false)}
               >
-                <button
+                <Link
+                  href="/#practices"
                   className="font-mono text-[11px] uppercase flex items-center gap-1.5 outline-none transition-colors duration-300 min-h-[44px]"
                   style={{
                     letterSpacing: "0.18em",
@@ -119,7 +120,7 @@ const Navbar = () => {
                   >
                     <ChevronDown size={10} />
                   </motion.span>
-                </button>
+                </Link>
 
                 <AnimatePresence>
                   {isExpertiseOpen && (
@@ -204,9 +205,9 @@ const Navbar = () => {
             onMouseEnter={() => { if (accountsOn) setIsCtaOpen(true); }}
             onMouseLeave={() => setIsCtaOpen(false)}
           >
-            <button
-              type="button"
-              onClick={() => (accountsOn ? setIsCtaOpen(o => !o) : openDiagnostic())}
+            <a
+              href="/connect"
+              onClick={(e) => { e.preventDefault(); if (accountsOn) setIsCtaOpen(o => !o); else openDiagnostic(); }}
               className="flex items-center justify-center px-8 xl:px-10 font-mono text-[11px] uppercase whitespace-nowrap transition-colors duration-300 cursor-pointer outline-none"
               style={{
                 letterSpacing: "0.22em",
@@ -217,7 +218,7 @@ const Navbar = () => {
               }}
             >
               {MAIN_CTA_LABEL}
-            </button>
+            </a>
 
             <AnimatePresence>
               {isCtaOpen && (
@@ -321,9 +322,9 @@ const Navbar = () => {
                   </motion.div>
                 ))}
                 <div className="pt-5 pb-2">
-                  <button
-                    type="button"
-                    onClick={() => { setIsMobileOpen(false); openDiagnostic(); }}
+                  <a
+                    href="/connect"
+                    onClick={(e) => { e.preventDefault(); setIsMobileOpen(false); openDiagnostic(); }}
                     className="block w-full text-center py-4 font-mono text-[12px] uppercase min-h-[48px] transition-colors duration-200"
                     style={{
                       letterSpacing: "0.2em",
@@ -332,7 +333,7 @@ const Navbar = () => {
                     }}
                   >
                     {MAIN_CTA_LABEL}
-                  </button>
+                  </a>
                 </div>
               </div>
             </motion.div>
@@ -368,7 +369,8 @@ const Navbar = () => {
             onMouseEnter={() => setIsExpertiseOpen(true)}
             onMouseLeave={() => setIsExpertiseOpen(false)}
           >
-            <button
+            <Link
+              href="/#practices"
               className={`text-[13px] font-mono tracking-[0.24em] uppercase flex items-center gap-2 outline-none transition-colors duration-300 min-h-[44px] ${
                 pathname.startsWith("/expertise")
                   ? "text-[#C9A24A]"
@@ -382,7 +384,7 @@ const Navbar = () => {
               >
                 <ChevronDown size={12} />
               </motion.div>
-            </button>
+            </Link>
 
             <AnimatePresence>
               {isExpertiseOpen && (
@@ -431,13 +433,13 @@ const Navbar = () => {
             <NavLink key={l.href} href={l.href} label={l.label} active={pathname === l.href} />
           ))}
 
-          <button
-            type="button"
-            onClick={openDiagnostic}
+          <a
+            href="/connect"
+            onClick={(e) => { e.preventDefault(); openDiagnostic(); }}
             className={`ml-1 px-5 py-3 font-mono text-[11px] tracking-[0.22em] uppercase font-semibold ${MAIN_BUTTON_SHAPE} transition-all duration-300 active:scale-[0.97] inline-flex items-center gap-2 min-h-[44px] bg-[#C9A24A] text-[#0A0A0B] whitespace-nowrap`}
           >
             {MAIN_CTA_LABEL}
-          </button>
+          </a>
           {accountsOn && (loggedIn ? (
             <button
               type="button"
@@ -522,13 +524,13 @@ const Navbar = () => {
                 transition={{ delay: allLinks.length * 0.04 + 0.1 }}
                 className="pt-4 flex flex-col gap-3"
               >
-                <button
-                  type="button"
-                  onClick={() => { setIsMobileOpen(false); openDiagnostic(); }}
+                <a
+                  href="/connect"
+                  onClick={(e) => { e.preventDefault(); setIsMobileOpen(false); openDiagnostic(); }}
                   className={`block w-full text-center py-4 font-mono text-[12px] tracking-[0.24em] uppercase border border-[rgba(201,162,74,0.25)] text-[#0A0A0B] bg-[#C9A24A] hover:bg-[rgba(201,162,74,0.9)] transition-colors ${MAIN_BUTTON_SHAPE} min-h-[48px]`}
                 >
                   {MAIN_CTA_LABEL} →
-                </button>
+                </a>
                 {accountsOn && (loggedIn ? (
                   <button
                     type="button"

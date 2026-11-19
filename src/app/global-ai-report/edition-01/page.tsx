@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import Button from "@/components/Button";
 import Footer from "@/components/Footer";
 import { REPORT, REPORT_FULL_TITLE } from "@/config/report";
@@ -8,7 +8,8 @@ import { coverPath } from "@/content/library";
 
 /**
  * Full Global AI Report — hidden until launch day.
- *  • Public only when NEXT_PUBLIC_REPORT_PUBLISHED=true.
+ *  • Never public: Make or Break is read as the PDF on its report page (Nitin, 19 Nov). Once the
+ *    report is out, this address leads to /reports/make-or-break.
  *  • Before that, the team can preview it at
  *    /global-ai-report/edition-01?preview=<REPORT_PREVIEW_KEY>  (set in the server .env).
  *
@@ -60,6 +61,7 @@ function Section({ eyebrow, title, children }: { eyebrow: string; title: string;
 
 export default async function ReportPage({ searchParams }: Props) {
   const { preview } = await searchParams;
+  if (REPORT.published) redirect(REPORT.signupPath); // the report is the PDF on its own page
   if (!canView(preview)) notFound();
 
   return (

@@ -27,6 +27,11 @@ export const REPORT = {
   published: process.env.NEXT_PUBLIC_REPORT_PUBLISHED === "true",
   /** R-03: the slim "Out now" banner shows on every page for launch week, once published (IST) */
   launchWeek: { from: "2026-11-20T00:00:00+05:30", until: "2026-11-27T00:00:00+05:30" },
+  /** The PDF (public/reports/): "Read online" opens it; the download form saves it under `pdfFileName` (Nitin, 19 Nov) */
+  pdfPath: "/reports/make-or-break.pdf",
+  pdfFileName: "Axion_Index_Make_or_Break_Special_Report_2026.pdf",
+  /** Page 1 of the PDF, for the report page's hero */
+  coverImage: "/reports/make-or-break-cover.png",
 } as const;
 
 /** True during launch week (R-03). */

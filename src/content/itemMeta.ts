@@ -1,16 +1,19 @@
 import { notFound } from "next/navigation";
 import { pageMetadata } from "@/lib/seo";
+import { MAKE_OR_BREAK } from "@/content/reports/makeOrBreak";
 import { CATEGORIES, coverPath, findItem, isPublic, itemPath, type Category, type Library, type LibraryItem } from "@/content/library";
 
 /**
  * Google title and description for items where Nitin approved specific wording (SEO-02, 17 Nov).
  * Only what Google shows changes; the page itself keeps the item's title and summary from the Studio.
  */
-const SEO_OVERRIDES: Record<string, { title?: string; exactTitle?: boolean; description?: string }> = {
+const SEO_OVERRIDES: Record<string, { title?: string; exactTitle?: boolean; description?: string; imageAlt?: string }> = {
+  // Nitin's report page brief (19 Nov) replaces the SEO-02 wording for this report
   "make-or-break": {
-    title: "Make or Break: The Weakest Link in the Big AI Bet",
-    exactTitle: true, // the confirmed title already fills the 60 characters Google shows
-    description: "Axion Index Global AI Report 2026 on the future of work: where AI investment accelerates the architecture of work, and where human judgment must hold.",
+    title: MAKE_OR_BREAK.seo.title,
+    exactTitle: true,
+    description: MAKE_OR_BREAK.seo.description,
+    imageAlt: MAKE_OR_BREAK.coverAlt,
   },
   "irdai-people-architecture-playbook": {
     title: "IRDAI People Architecture Playbook for insurers",
@@ -52,7 +55,7 @@ export function itemMetadata(item: LibraryItem) {
     exactTitle: o.exactTitle ?? `${title} · Axion Index`.length > MAX_TITLE,
     description: o.description ?? googleDescription(item),
     path: itemPath(item),
-    image: { url: coverPath(item.slug, item.cover), width: 1200, height: 630, alt: item.title },
+    image: { url: coverPath(item.slug, item.cover), width: 1200, height: 630, alt: o.imageAlt ?? item.title },
   });
 }
 

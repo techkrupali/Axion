@@ -11,6 +11,8 @@ import { SITE_URL } from "@/lib/seo";
 import ShareButtons from "@/components/library/ShareButtons";
 import TrackRead from "@/components/library/TrackRead";
 import { JsonLd, ORGANIZATION } from "@/lib/jsonLd";
+import { REPORT } from "@/config/report";
+import MakeOrBreakPage from "@/components/reports/MakeOrBreakPage";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -35,6 +37,8 @@ const LABEL = "font-mono text-[10px] tracking-[0.25em] uppercase text-[var(--acc
 export default async function ReportPage({ params }: Props) {
   const item = publicItemOr404(await libraryForPage(), (await params).slug, "report");
   const { released, readHref, when, status } = reportState(item);
+  // Make or Break, once out: Nitin's page (read online, download form, findings…), 19 Nov
+  if (item.slug === REPORT.slug && released) return <MakeOrBreakPage />;
   const download = released && !!pdfUrl(item); // out with a PDF: short sign-up, then download (D7)
   const formPublished = !download && !!readHref; // readable here → the form is for future editions
 

@@ -29,6 +29,31 @@ export async function ackConversation(to: string, name: string, signals: string[
   });
 }
 
+/**
+ * Make or Break, after the download form (Nitin, 19 Nov): from "Nitin Nahata, Axion Index" at
+ * support@, subject "Your copy of Make or Break", his words, with the PDF linked. Replies reach support@.
+ */
+export async function ackReportDownload(to: string, name: string, report: { title: string; pdf: string; fromName: string; subject: string }, journal: boolean) {
+  return sendVisitorEmail({
+    to,
+    fromName: report.fromName,
+    subject: report.subject,
+    email: {
+      preheader: "Your PDF is here. Page 3 suggests a twenty-minute reading path for your role.",
+      heading: `Thank you, ${first(name)}.`,
+      paragraphs: [
+        `Thank you for downloading ${report.title}. Your PDF is here.`,
+        "If you have twenty minutes, page 3 suggests a reading path for your role.",
+        "I'd value your view on which link in the chain breaks first: just reply to this email.",
+        ...(journal ? ["You'll also receive The Architecture Gap (January 2027) and the monthly Axion Index Journal, as you asked. You can unsubscribe at any time."] : []),
+        "Nitin Nahata\nFounder, Axion Index",
+      ],
+      cta: { label: "Download the PDF", href: report.pdf },
+      reason: `You are receiving this because you downloaded ${report.title} on axionindex.org.`,
+    },
+  });
+}
+
 /** Step 3, Download: a report sign-up. */
 export async function ackReport(to: string, name: string, report: { title: string; released: boolean; when: string; pdf?: string }, journal: boolean) {
   const read = await nextRead();

@@ -24,7 +24,7 @@ const SANS = "-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-s
 
 export function renderVisitorEmail(e: VisitorEmail): { html: string; text: string } {
   const paras = e.paragraphs
-    .map((p) => `<p style="margin:0 0 14px;font-family:${SANS};font-size:15px;line-height:1.7;color:${C.text};">${esc(p)}</p>`)
+    .map((p) => `<p style="margin:0 0 14px;font-family:${SANS};font-size:15px;line-height:1.7;color:${C.text};">${esc(p).replace(/\n/g, "<br>")}</p>`)
     .join("");
 
   const list = e.list && e.list.items.length

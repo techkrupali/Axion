@@ -1,6 +1,5 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/seo";
-import { REPORT } from "@/config/report";
 import { PRACTICES, PRACTICE_ORDER } from "@/config/practices";
 import { CATEGORIES, CATEGORY_ORDER, itemPath, publicItems, seriesParts } from "@/content/library";
 import { getLibrary } from "@/content/store";
@@ -27,7 +26,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...CATEGORY_ORDER.filter((c) => c !== "book" && items.some((i) => i.category === c)).map((c) => page(CATEGORIES[c].path, 0.7, "weekly")),
     ...lib.series.filter((s) => seriesParts(lib, s.slug).length > 0).map((s) => page(`/publications/series/${s.slug}`, 0.6)),
     ...items.map((i) => page(itemPath(i), i.category === "report" ? 0.8 : 0.6)),
-    ...(REPORT.published ? [page(REPORT.readPath, 0.9, "weekly")] : []),
     page("/connect", 0.6),
     page("/newsletter", 0.5),
     page("/privacy", 0.3),

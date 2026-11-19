@@ -41,3 +41,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Report PDFs and covers are uploaded straight to the server (the repository is public; reports go public on their release day)
+/public/reports/
